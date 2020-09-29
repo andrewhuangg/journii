@@ -26,33 +26,46 @@ const ProfileSchema = new mongoose.Schema({
   slug: String,
   address: String,
   github: String,
+  technologies: [String],
+  features: [String],
   experience: [
     {
       title: {
         type: String,
+        lowercase: true,
         required: true,
       },
       company: {
         type: String,
+        lowercase: true,
         required: true,
-      },
-      location: {
-        type: String,
       },
       from: {
         type: Date,
         required: true,
       },
-      to: {
-        type: Date,
-      },
+      to: Date,
       current: {
         type: Boolean,
         default: false,
       },
-      description: {
-        type: String,
+      location: {
+        type: {
+          type: String,
+          enum: ['Point'],
+        },
+        coordinates: {
+          type: [Number],
+          index: '2dsphere',
+        },
+        formattedAddress: String,
+        street: String,
+        city: String,
+        state: String,
+        zipcode: String,
+        country: String,
       },
+      description: String,
     },
   ],
   social: {

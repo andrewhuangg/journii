@@ -2,56 +2,52 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const UserSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, 'Please add a name'],
-    },
-    email: {
-      type: String,
-      required: [true, 'Please add an email'],
-      unique: true,
-      match: [
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        'Please  add a valid email',
-      ],
-    },
-    password: {
-      type: String,
-      required: [true, 'Please add a password'],
-      minlength: 6,
-      select: false,
-    },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
-    phone: {
-      type: String,
-      maxlength: [20, 'Phone number cannot be longer than 20 characters'],
-    },
-    role: {
-      type: String,
-      enum: ['user', 'publisher'],
-      default: 'user',
-    },
-    about: {
-      type: String,
-      maxlength: [500, 'The about cannot be more than 500 characters'],
-    },
-    photo: {
-      type: String,
-      default: 'no-photo.jpg',
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    lowercase: true,
+    required: [true, 'Please add a name'],
   },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  }
-);
+  email: {
+    type: String,
+    required: [true, 'Please add an email'],
+    losercase: true,
+    unique: true,
+    match: [
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      'Please  add a valid email',
+    ],
+  },
+  password: {
+    type: String,
+    required: [true, 'Please add a password'],
+    minlength: 6,
+    select: false,
+  },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
+  phone: {
+    type: String,
+    maxlength: [20, 'Phone number cannot be longer than 20 characters'],
+  },
+  role: {
+    type: String,
+    enum: ['user', 'publisher'],
+    default: 'user',
+  },
+  about: {
+    type: String,
+    maxlength: [500, 'The about cannot be more than 500 characters'],
+  },
+  photo: {
+    type: String,
+    default: 'no-photo.jpg',
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 // MIDDLEWARE - Encrypt password using bcryptjs
 UserSchema.pre('save', async function (next) {
