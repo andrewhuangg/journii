@@ -92,7 +92,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`User ${req.user.id} is not authorized to update this profile`, 401));
   }
 
-  const { youtube, twitter, facebook, linkedin, instagram } = req.body;
+  const { youtube, twitter, facebook, linkedin, instagram, address } = req.body;
 
   const socialFields = {};
   socialFields.social = {};
@@ -110,6 +110,10 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
       runValidators: true,
     }
   );
+
+  if (address) {
+    await profile.save();
+  }
 
   res.status(200).json({ success: true, data: profile });
 });
