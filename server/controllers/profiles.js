@@ -8,7 +8,7 @@ const User = require('../models/User');
 // @access    Private
 
 exports.getOwnProfile = asyncHandler(async (req, res, next) => {
-  const profile = await Profile.findById(req.user.id).populate({
+  const profile = await Profile.findOne({ user: req.user.id }).populate({
     path: 'user',
     select: 'name email',
   });
@@ -89,4 +89,12 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({ success: true, data: profile });
+});
+
+// @desc      Get all profiles
+// @route     GET /api/v1/profiles
+// @access    Public
+
+exports.getProfiles = asyncHandler(async (req, res, next) => {
+  res.status(200).json(res.advancedQuery);
 });
