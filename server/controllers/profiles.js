@@ -3,6 +3,29 @@ const asyncHandler = require('../middleware/async');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 
+// @desc      Get all profiles
+// @route     GET /api/v1/profiles
+// @access    Public
+
+exports.getProfiles = asyncHandler(async (req, res, next) => {
+  res.status(200).json(res.advancedQuery);
+});
+
+// @desc      Get profile by user id
+// @route     GET /api/v1/profiles/users/:userId
+// @access    Public
+
+exports.getProfile = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ user: req.params.userId }).populate({
+    path: 'user',
+    select: 'name email',
+  });
+
+  if (!profile) return next(new ErrorResponse(`profile not found with the id of ${req.user.userId}`, 404));
+
+  res.status(200).json({ success: true, data: profile });
+});
+
 // @desc      Get current users profile
 // @route     GET /api/v1/profiles/me
 // @access    Private
@@ -89,12 +112,4 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({ success: true, data: profile });
-});
-
-// @desc      Get all profiles
-// @route     GET /api/v1/profiles
-// @access    Public
-
-exports.getProfiles = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedQuery);
 });

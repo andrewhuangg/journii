@@ -1,6 +1,6 @@
 const express = require('express');
 const { protect, authorize } = require('../middleware/auth');
-const { getOwnProfile, createProfile, updateProfile, getProfiles } = require('../controllers/profiles');
+const { getOwnProfile, createProfile, updateProfile, getProfiles, getProfile } = require('../controllers/profiles');
 const advancedQuery = require('../middleware/advancedQuery');
 const Profile = require('../models/Profile');
 
@@ -18,6 +18,8 @@ router
     getProfiles
   )
   .post(protect, createProfile);
+
+router.route('/users/:userId').get(getProfile);
 
 router.route('/:id').put(protect, updateProfile);
 
