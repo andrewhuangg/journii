@@ -151,3 +151,24 @@ exports.createProfileExperience = asyncHandler(async (req, res, next) => {
     data: profile,
   });
 });
+
+// @desc      Delete profile experience
+// @route     Delete /api/v1/profiles/experience/:experienceId
+// @access    Private
+
+exports.deleteProfileExperience = asyncHandler(async (req, res, next) => {
+  // find profile for the current user by the user id
+  const profile = await Profile.findOne({ user: req.user.id });
+  if (!profile) return next(new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404));
+
+  // find the index of the experience to remove by id
+  const removeIdx = profile.experience.map((exp) => exp.id).indexOf(req.params.experienceId);
+
+  profile.experience.splice(removeIdx, 1);
+
+  await profile.save();
+  res.status(200).json({
+    success: true,
+    data: profile,
+  });
+});

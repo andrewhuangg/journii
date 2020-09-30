@@ -8,6 +8,7 @@ const {
   getProfile,
   deleteProfile,
   createProfileExperience,
+  deleteProfileExperience,
 } = require('../controllers/profiles');
 const advancedQuery = require('../middleware/advancedQuery');
 const Profile = require('../models/Profile');
@@ -16,9 +17,11 @@ const Profile = require('../models/Profile');
 const router = express.Router({ mergeParams: true });
 
 router.route('/experience').put(protect, createProfileExperience);
+router.route('/experience/:experienceId').delete(protect, deleteProfileExperience);
 router.route('/me').get(protect, getOwnProfile);
 router.route('/users/:userId').get(getProfile);
 router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
+
 router
   .route('/')
   .get(
