@@ -85,4 +85,7 @@ const ProfileSchema = new mongoose.Schema({
   },
 });
 
+// Prevent users from creating more than one profile
+ProfileSchema.index({ user: 1 }, { unique: true });
+
 module.exports = mongoose.model('Profile', ProfileSchema);
