@@ -78,7 +78,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: profile });
 });
 
-// @desc      update profile
+// @desc      Update profile
 // @route     PUT /api/v1/profiles/:id
 // @access    Private
 
@@ -112,4 +112,42 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   );
 
   res.status(200).json({ success: true, data: profile });
+});
+
+// @desc      Delete profile
+// @route     PUT /api/v1/profiles/:id
+// @access    Private
+
+exports.deleteProfile = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findById(req.params.id);
+
+  if (!profile) return next(new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404));
+
+  if (profile.user.toString() !== req.user.id) {
+    return next(new ErrorResponse(`User ${req.user.id} is not authorized to delete this profile`, 401));
+  }
+
+  await profile.remove();
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
+
+// @desc      Add profile experience
+// @route     PUT /api/v1/profiles/experience
+// @access    Private
+
+exports.createProfileExperience = asyncHandler(async (req, res, next) => {
+  // find profile for the current user by the user id
+  const profile = await Profile.findOne({ user: req.user.id });
+  if (!profile) return next(new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404));
+
+  profile.experience.unshift(req.body);
+  await profile.save();
+  res.status(200).json({
+    success: true,
+    data: profile,
+  });
 });

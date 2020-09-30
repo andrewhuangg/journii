@@ -38,7 +38,6 @@ const ProfileSchema = new mongoose.Schema({
       company: {
         type: String,
         lowercase: true,
-        required: true,
       },
       from: {
         type: Date,
