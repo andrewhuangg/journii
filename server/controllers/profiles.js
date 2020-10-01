@@ -54,7 +54,9 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
   const { technologies, features, youtube, twitter, facebook, linkedin, instagram } = req.body;
 
   // grab the user by the params, so we can check if the :userId is the actual logged in user
-  const user = await User.findById(req.params.userId);
+  const user = await User.findById(req.params.userId).select('-password');
+
+  if (!user) return next(new ErrorResponse(`user not found with the id of ${req.params.userId}`, 404));
 
   // Make sure user is the owner of the profile
   if (user._id.toString() !== req.user.id) {

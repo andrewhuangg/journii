@@ -8,7 +8,7 @@ const PostSchema = new mongoose.Schema({
   text: {
     type: String,
     required: [true, 'Please provide some text for the post'],
-    maxlength: [500, 'Text cannot be more than 500 characters'],
+    maxlength: [1000, 'Text cannot be more than 500 characters'],
   },
   name: String,
   likes: [
