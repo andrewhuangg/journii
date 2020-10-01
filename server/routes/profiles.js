@@ -9,6 +9,7 @@ const {
   deleteProfile,
   createProfileExperience,
   deleteProfileExperience,
+  getGithubRepo,
 } = require('../controllers/profiles');
 const advancedQuery = require('../middleware/advancedQuery');
 const Profile = require('../models/Profile');
@@ -21,6 +22,7 @@ router.route('/experience/:experienceId').delete(protect, deleteProfileExperienc
 router.route('/me').get(protect, getOwnProfile);
 router.route('/users/:userId').get(getProfile);
 router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
+router.route('/github/:username').get(getGithubRepo);
 
 router
   .route('/')

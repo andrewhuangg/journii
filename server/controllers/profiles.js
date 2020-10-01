@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const request = require('request');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 
@@ -174,5 +175,30 @@ exports.deleteProfileExperience = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: profile,
+  });
+});
+
+// @desc      Get user repos from Github
+// @route     GET /api/v1/profiles/github/:username
+// @access    Public
+
+exports.getGithubRepo = asyncHandler(async (req, res, next) => {
+  const options = {
+    uri: `https://api.github.com/users/${req.params.username}/repos?type=owner&per_page=5&sort=pushed&order=desc&client_id=${process.env.githubClientId}&client_secret=${process.env.githubSecret}`,
+    method: 'GET',
+    headers: { 'user-agent': 'node.js' },
+  };
+
+  request(options, (err, response, body) => {
+    if (err) console.error(err);
+    if (response.statusCode !== 200) {
+      return res.status(404).json({ success: false, message: 'No github profile found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      count: JSON.parse(body).length,
+      data: JSON.parse(body),
+    });
   });
 });
