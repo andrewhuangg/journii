@@ -204,3 +204,69 @@ exports.getGithubRepo = asyncHandler(async (req, res, next) => {
     });
   });
 });
+
+// @desc      Get all followed profiles
+// @route     GET /api/v1/users/:userId/profiles/followedprofiles
+// @access    Private
+
+exports.getFollowedProfiles = asyncHandler(async (req, res, next) => {
+  if (req.params.userId) {
+    const user = await User.findById(req.params.userId);
+    const profiles = await Profile.find();
+    const followedProfile = [];
+    profiles.map((p) => {
+      p.follows.map((follow) => {
+        if (follow.user.toString() === user._id.toString()) {
+          followedProfile.push(p);
+        }
+      });
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: followedProfile.length,
+      data: followedProfile,
+    });
+  } else {
+    res.status(200).json(res.advancedQuery);
+  }
+});
+
+// @desc      Follow a profile
+// @route     PUT /api/v1/profiles/follow/:id
+// @access    Private
+
+exports.followProfile = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findById(req.params.id);
+  if (!profile) return next(new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404));
+
+  if (profile.follows.filter((follow) => follow.user.toString() === req.user.id).length > 0) {
+    return next(new ErrorResponse(`profile ${req.params.id} has already been followed`, 400));
+  }
+
+  profile.follows.unshift({ user: req.user.id });
+  await profile.save();
+
+  res.status(200).json({ success: true, data: profile.follows });
+});
+
+// @desc      Unfollow a profile
+// @route     PUT /api/v1/profiles/unfollow/:id
+// @access    Private
+
+exports.unfollowProfile = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findById(req.params.id);
+  if (!profile) return next(new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404));
+
+  if (profile.follows.filter((follow) => follow.user.toString() === req.user.id).length === 0) {
+    return next(new ErrorResponse(`profile ${req.params.id} has not yet been followed`, 400));
+  }
+
+  // Get remove index
+  const removeIdx = profile.follows.map((follow) => follow.user.toString()).indexOf(req.user.id);
+  profile.follows.splice(removeIdx, 1);
+
+  await profile.save();
+
+  res.status(200).json({ success: true, data: profile.follows });
+});

@@ -64,6 +64,14 @@ const ProfileSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  follows: [
+    {
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    },
+  ],
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

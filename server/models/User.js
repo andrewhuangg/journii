@@ -43,14 +43,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: 'no-photo.jpg',
   },
-  follows: [
-    {
-      user: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-      },
-    },
-  ],
   date: {
     type: Date,
     default: Date.now,
