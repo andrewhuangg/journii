@@ -9,8 +9,10 @@ const {
   likePost,
   unlikePost,
   followPost,
+  unfollowPost,
   addComment,
   deleteComment,
+  getFollowedPosts,
 } = require('../controllers/posts');
 const Post = require('../models/Post');
 
@@ -28,11 +30,21 @@ router
     getPosts
   );
 
+router.route('/followedposts').get(
+  protect,
+  advancedQuery(Post, {
+    path: 'user',
+    select: 'name email',
+  }),
+  getFollowedPosts
+);
+
 router.route('/:id').get(protect, getPost).delete(protect, deletePost);
 router.route('/like/:id').put(protect, likePost);
 router.route('/unlike/:id').put(protect, unlikePost);
 router.route('/comment/:id').post(protect, addComment);
 router.route('/comment/:id/:commentId').delete(protect, deleteComment);
 router.route('/follow/:id').put(protect, followPost);
+router.route('/unfollow/:id').put(protect, unfollowPost);
 
 module.exports = router;

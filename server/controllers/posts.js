@@ -3,6 +3,7 @@ const asyncHandler = require('../middleware/async');
 const Profile = require('../models/Profile');
 const Post = require('../models/Post');
 const User = require('../models/User');
+const mongoose = require('mongoose');
 
 // @desc      Create post
 // @route     POST /api/v1/posts
@@ -23,7 +24,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: post });
 });
 
-// @desc      Get all ppsts
+// @desc      Get all posts
 // @route     GET /api/v1/posts
 // @route     GET /api/v1/users/:userId/posts
 // @access    Private
@@ -166,4 +167,64 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/posts/follow/:id
 // @access    Private
 
-exports.followPost = asyncHandler(async (req, res, next) => {});
+exports.followPost = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+
+  if (post.follows.filter((follow) => follow.user.toString() === req.user.id).length > 0) {
+    return next(new ErrorResponse(`post ${req.params.id} has already been followed`, 400));
+  }
+
+  post.follows.unshift({ user: req.user.id });
+  await post.save();
+
+  res.status(200).json({ success: true, data: post.follows });
+});
+
+// @desc      Unfollow a post
+// @route     PUT /api/v1/posts/unfollow/:id
+// @access    Private
+
+exports.unfollowPost = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+
+  if (post.follows.filter((follow) => follow.user.toString() === req.user.id).length === 0) {
+    return next(new ErrorResponse(`post ${req.params.id} has not yet been followed`, 400));
+  }
+
+  // Get remove index
+  const removeIdx = post.follows.map((follow) => follow.user.toString()).indexOf(req.user.id);
+  post.follows.splice(removeIdx, 1);
+
+  await post.save();
+
+  res.status(200).json({ success: true, data: post.follows });
+});
+
+// @desc      Get all followed posts
+// @route     GET /api/v1/users/:userId/posts/followedposts
+// @access    Private
+
+exports.getFollowedPosts = asyncHandler(async (req, res, next) => {
+  if (req.params.userId) {
+    const user = await User.findById(req.params.userId);
+    const posts = await Post.find();
+    const followedPosts = [];
+    posts.map((p) => {
+      p.follows.map((follow) => {
+        if (follow.user.toString() === user._id.toString()) {
+          followedPosts.push(p);
+        }
+      });
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: followedPosts.length,
+      data: followedPosts,
+    });
+  } else {
+    res.status(200).json(res.advancedQuery);
+  }
+});
