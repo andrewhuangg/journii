@@ -1,0 +1,65 @@
+Arguments: 
+  /Users/anhuangg/.nvm/versions/node/v10.13.0/bin/node /usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js upgrade --latest sinon
+
+PATH: 
+  /Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.nvm/versions/node/v10.13.0/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/Users/anhuangg/.rbenv/shims:/Users/anhuangg/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  10.13.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: connect EPERM 104.16.26.35:443 - Local (0.0.0.0:0)
+      at internalConnect (net.js:884:16)
+      at defaultTriggerAsyncIdScope (internal/async_hooks.js:294:19)
+      at emitLookup (net.js:1031:9)
+      at /usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:107258:29
+      at /usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:107104:25
+      at RawTask.module.exports.RawTask.call (/usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:83456:19)
+      at flush (/usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:83538:29)
+      at process._tickCallback (internal/process/next_tick.js:61:11)
+
+npm manifest: 
+  {
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "cra-template": "1.0.3",
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "react-scripts": "3.4.3"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
