@@ -1,9 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const Profile = require('../models/Profile');
 const Post = require('../models/Post');
 const User = require('../models/User');
-const mongoose = require('mongoose');
 
 // @desc      Create post
 // @route     POST /api/v1/posts
