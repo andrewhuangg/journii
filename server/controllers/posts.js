@@ -114,6 +114,54 @@ exports.unlikePost = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: post.likes });
 });
 
+// @desc      Comment on a post
+// @route     POST /api/v1/posts/comment/:id
+// @access    Private
+
+exports.addComment = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('-password');
+  if (!user) return next(new ErrorResponse(`user not found with the id of ${req.user.id}`, 404));
+
+  const post = await Post.findById(req.params.id);
+  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+
+  const newComment = {
+    user: req.user.id,
+    text: req.body.text,
+    name: user.name,
+  };
+
+  post.comments.unshift(newComment);
+
+  await post.save();
+  res.status(200).json({ success: true, data: post.comments });
+});
+
+// @desc      Delete a comment
+// @route     DELETE /api/v1/posts/comment/:id/:commentId
+// @access    Private
+
+exports.deleteComment = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+
+  // Pull out the comment
+  const comment = post.comments.find((comment) => comment.id === req.params.commentId);
+  if (!comment) return next(new ErrorResponse(`comment not found with the id of ${req.params.commentId}`, 404));
+
+  // Check comment owner
+  if (comment.user.toString() !== req.user.id) {
+    return next(new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401));
+  }
+
+  // Get remove index
+  const removeIdx = post.comments.map((comment) => comment.user.toString()).indexOf(req.user.id);
+  post.comments.splice(removeIdx, 1);
+
+  await post.save();
+  res.status(200).json({ success: true, data: post.comments });
+});
+
 // @desc      Follow a post
 // @route     PUT /api/v1/posts/follow/:id
 // @access    Private
