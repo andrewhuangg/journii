@@ -93,6 +93,27 @@ exports.likePost = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: post.likes });
 });
 
+// @desc      Unlike a post
+// @route     PUT /api/v1/posts/unlike/:id
+// @access    Private
+
+exports.unlikePost = asyncHandler(async (req, res, next) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+
+  if (post.likes.filter((like) => like.user.toString() === req.user.id).length === 0) {
+    return next(new ErrorResponse(`post ${req.params.id} has not yet been liked`, 400));
+  }
+
+  // Get remove index
+  const removeIdx = post.likes.map((like) => like.user.toString()).indexOf(req.user.id);
+  post.likes.splice(removeIdx, 1);
+
+  await post.save();
+
+  res.status(200).json({ success: true, data: post.likes });
+});
+
 // @desc      Follow a post
 // @route     PUT /api/v1/posts/follow/:id
 // @access    Private
