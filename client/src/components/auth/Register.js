@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
-const Register = ({ setAlert }) => {
+import { register } from '../../actions/auth';
+const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,7 +20,7 @@ const Register = ({ setAlert }) => {
     if (password !== confirmPassword) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log(formData);
+      register({ email, name, password });
     }
   };
 
@@ -32,7 +33,14 @@ const Register = ({ setAlert }) => {
           <input type='text' placeholder='Name' name='name' value={name} onChange={(e) => onChange(e)} required />
         </div>
         <div className='form-group'>
-          <input type='email' placeholder='Email Address' name='email' value={email} onChange={(e) => onChange(e)} />
+          <input
+            type='email'
+            placeholder='Email Address'
+            name='email'
+            value={email}
+            onChange={(e) => onChange(e)}
+            required
+          />
         </div>
         <div className='form-group'>
           <input
@@ -65,4 +73,5 @@ const Register = ({ setAlert }) => {
 
 export default connect(null, {
   setAlert,
+  register,
 })(Register);
