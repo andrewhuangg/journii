@@ -7,18 +7,18 @@ import setAuthToken from '../utils/setAuthToken';
 export const loadUser = () => async (dispatch) => {
   let token;
   if (localStorage.token) {
-    token = localStorage.token;
-    setAuthToken(token);
+    // token = localStorage.token;
+    setAuthToken(localStorage.token);
   }
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  // const config = {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // };
 
   try {
-    const res = await axios.get('/api/v1/auth/me', config);
+    const res = await axios.get('/api/v1/auth/me'); //, config);
 
     dispatch({
       type: USER_LOADED,

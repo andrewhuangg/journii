@@ -5,14 +5,14 @@ const User = require('../models/User');
 
 // Protect routes
 exports.protect = asyncHandler(async (req, res, next) => {
-  let token;
+  const token = req.header('x-auth-token');
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    // Set token from Bearer token in header
-    token = req.headers.authorization.split(' ')[1];
+  // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+  //   // Set token from Bearer token in header
+  //   token = req.headers.authorization.split(' ')[1];
 
-    // Set token from cookie
-  }
+  //   // Set token from cookie
+  // }
   // else if (req.cookies.token) {
   //   token = req.cookies.token;
   // }
@@ -27,6 +27,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
     next();
   } catch (err) {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
     return next(new ErrorResponse('Token is not valid', 401));
   }
 });

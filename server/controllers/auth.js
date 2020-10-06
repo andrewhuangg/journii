@@ -19,7 +19,9 @@ exports.register = asyncHandler(async (req, res, next) => {
     role,
   });
 
-  sendTokenResponse(user, 200, res);
+  const token = user.getSignedJwtToken();
+
+  res.status(200).json({ success: true, token });
 });
 
 // @desc      Login new user
@@ -41,7 +43,9 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   if (!isMatch) return next(new ErrorResponse('Invalid credentials', 401));
 
-  sendTokenResponse(user, 200, res);
+  const token = user.getSignedJwtToken();
+
+  res.status(200).json({ success: true, token });
 });
 
 // @desc      Get current logged in user
@@ -49,10 +53,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @access    Private
 
 exports.getMe = asyncHandler(async (req, res, next) => {
-  if (req.user) {
-    const user = await User.findById(req.user.id).select('-password');
-    res.status(200).json({ success: true, data: user });
-  }
+  const user = await User.findById(req.user.id).select('-password');
+  res.status(200).json({ success: true, data: user });
 });
 
 // @desc      Log user out
@@ -60,10 +62,10 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // @access    Private
 
 exports.logout = asyncHandler(async (req, res, next) => {
-  res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 5 * 1000),
-    httpOnly: true,
-  });
+  // res.cookie('token', 'none', {
+  //   expires: new Date(Date.now() + 5 * 1000),
+  //   httpOnly: true,
+  // });
 
   res.status(200).json({ success: true, data: {} });
 });
@@ -100,7 +102,9 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   user.password = req.body.newPassword;
   await user.save();
 
-  sendTokenResponse(user, 200, res);
+  const token = user.getSignedJwtToken();
+
+  res.status(200).json({ success: true, token });
 });
 
 // @desc      Forgot password
@@ -163,28 +167,30 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   await user.save();
 
-  sendTokenResponse(user, 200, res);
+  const token = user.getSignedJwtToken();
+
+  res.status(200).json({ success: true, token });
 });
 
 // HELPER FUNCTION => Get token from model, create cookie and send response
-const sendTokenResponse = (user, statusCode, res) => {
-  // Create Token
-  const token = user.getSignedJwtToken();
+// const sendTokenResponse = (user, statusCode, res) => {
+// Create Token
+// const token = user.getSignedJwtToken();
 
-  // * 60 seconds * 60 minutes * 1000 milliseconds
-  // cookie accessible client side only
-  const options = {
-    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 60 * 60 * 1000),
-    httpOnly: true,
-  };
+// // * 60 seconds * 60 minutes * 1000 milliseconds
+// // cookie accessible client side only
+// const options = {
+//   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 60 * 60 * 1000),
+//   httpOnly: true,
+// };
 
-  if (process.env.NODE_ENV === 'production') {
-    options.secure = true;
-  }
+// if (process.env.NODE_ENV === 'production') {
+//   options.secure = true;
+// }
 
-  // calling our cookie 'token'
-  res.status(statusCode).cookie('token', token, options).json({
-    success: true,
-    token,
-  });
-};
+// calling our cookie 'token'
+// res.status(statusCode).cookie('token', token, options).json({
+//   success: true,
+//   token,
+// });
+// };

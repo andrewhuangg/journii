@@ -3,7 +3,7 @@ const errorHandler = require('./middleware/error');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
 // LOAD ENV VARS
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 app.use(express.json());
 
 // Cookie parser
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // MOUNT ROUTERS
 app.use('/api/v1/auth', auth);
