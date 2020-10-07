@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { createProfile } from '../../actions/profile';
+import { editProfile, getCurrentProfile } from '../../actions/profile';
 
-const CreateProfile = ({ createProfile, history, user }) => {
+const EditProfile = ({ profile: { profile, loading }, editProfile, getCurrentProfile, history, user }) => {
   const [formData, setFormData] = useState({
     bio: '',
     address: '',
@@ -20,6 +20,24 @@ const CreateProfile = ({ createProfile, history, user }) => {
   });
 
   const [displaySocial, toggleSocial] = useState(false);
+
+  useEffect(() => {
+    getCurrentProfile();
+    setFormData({
+      bio: loading || !profile.data.bio ? '' : profile.data.bio,
+      address: loading || !profile.data.location ? '' : profile.data.location.formattedAddress,
+      website: loading || !profile.data.website ? '' : profile.data.website,
+      company: loading || !profile.data.company ? '' : profile.data.company,
+      github: loading || !profile.data.github ? '' : profile.data.github,
+      technologies: loading || !profile.data.technologies ? '' : profile.data.technologies.join(','),
+      features: loading || !profile.data.features ? '' : profile.data.features.join(','),
+      youtube: loading || !profile.data.social || !profile.data.social.youtube ? '' : profile.data.social.youtube,
+      facebook: loading || !profile.data.social || !profile.data.social.facebook ? '' : profile.data.social.facebook,
+      twitter: loading || !profile.data.social || !profile.data.social.twitter ? '' : profile.data.social.twitter,
+      linkedin: loading || !profile.data.social || !profile.data.social.linkedin ? '' : profile.data.social.linkedin,
+      instagram: loading || !profile.data.social || !profile.data.social.instagram ? '' : profile.data.social.instagram,
+    });
+  }, [loading]);
 
   const {
     bio,
@@ -40,12 +58,13 @@ const CreateProfile = ({ createProfile, history, user }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history, user.data._id);
+    const id = profile.data._id;
+    editProfile(formData, id);
   };
 
   return (
     <>
-      <h1>Create Your Profile</h1>
+      <h1>Edit Your Profile</h1>
       <small>* = required field</small>
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
@@ -159,6 +178,10 @@ const CreateProfile = ({ createProfile, history, user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  profile: state.profile,
 });
 
-export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));
+export default connect(mapStateToProps, {
+  editProfile,
+  getCurrentProfile,
+})(withRouter(EditProfile));

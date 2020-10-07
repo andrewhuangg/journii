@@ -4,6 +4,7 @@ const geocoder = require('../utils/geocoder');
 const ProfileSchema = new mongoose.Schema({
   bio: {
     type: String,
+    required: [true, 'Please provide a brief bio'],
     maxlength: [500, 'The description cannot be more than 500 characters'],
   },
   location: {
