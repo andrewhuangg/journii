@@ -170,7 +170,7 @@ const EditProfile = ({ profile: { profile, loading }, editProfile, getCurrentPro
           </>
         )}
         <input type='submit' />
-        <a href='dashboard.html'>Go Back</a>
+        <Link to='/dashboard'>Go Back</Link>
       </form>
     </>
   );

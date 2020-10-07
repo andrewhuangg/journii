@@ -151,7 +151,7 @@ const CreateProfile = ({ createProfile, history, user }) => {
           </>
         )}
         <input type='submit' />
-        <a href='dashboard.html'>Go Back</a>
+        <Link to='/dashboard'>Go Back</Link>
       </form>
     </>
   );
