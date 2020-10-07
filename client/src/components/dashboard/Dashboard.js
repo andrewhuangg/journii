@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
+import Experience from './Experience';
 
 const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentProfile }) => {
   useEffect(() => {
@@ -17,12 +18,15 @@ const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentPr
       <h1>Dashboard</h1>
       <p>Welcome {user && user.data.name}</p>
       {profile !== null ? (
-        <DashboardActions> has</DashboardActions>
-      ) : (
         <>
+          <DashboardActions />
+          <Experience experience={profile.data.experience} />
+        </>
+      ) : (
+        <Experience>
           <p>you have not yet setup a profile, please add some info</p>
           <Link to='/createprofile'>Create Profile</Link>
-        </>
+        </Experience>
       )}
     </>
   );
