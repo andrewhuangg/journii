@@ -124,6 +124,9 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   // Remove user posts
   await Post.deleteMany({ user: req.user.id });
 
+  // Remove user profile
+  await Profile.deleteMany({ user: req.user.id });
+
   await user.remove();
 
   res.status(200).json({ success: true, data: {} });
