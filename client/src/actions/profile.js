@@ -1,8 +1,79 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { CLEAR_PROFILE, GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, DELETE_PROFILE } from './types';
+import {
+  CLEAR_PROFILE,
+  GET_PROFILE,
+  GET_PROFILES,
+  PROFILE_ERROR,
+  UPDATE_PROFILE,
+  DELETE_PROFILE,
+  GET_REPOS,
+  GET_FOLLOWED_PROFILES,
+  FOLLOW_PROFILE,
+  UNFOLLOW_PROFILE,
+} from './types';
 
-// Get current users profile
+export const getFollowedProfiles = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/v1/profiles/followedprofiles');
+
+    dispatch({
+      type: GET_FOLLOWED_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const followProfile = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/v1/profiles/follow/${id}`);
+    dispatch({
+      type: FOLLOW_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const unFollowProfile = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/v1/profiles/unfollow/${id}`);
+    dispatch({
+      type: UNFOLLOW_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/v1/profiles/me');
@@ -12,14 +83,82 @@ export const getCurrentProfile = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: err.response.data.error.split(','),
+      payload: errors,
     });
   }
 };
 
-// Create profile
+export const getProfileByUserId = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/v1/profiles/users/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const getProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/v1/profiles');
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/v1/profiles/github/${username}`);
+
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
 export const createProfile = (formData, history, userId) => async (dispatch) => {
   try {
     const config = {
