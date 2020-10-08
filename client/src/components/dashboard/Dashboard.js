@@ -5,8 +5,9 @@ import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
+import { deleteAccount } from '../../actions/auth';
 
-const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentProfile }) => {
+const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentProfile, deleteAccount }) => {
   useEffect(() => {
     getCurrentProfile();
   }, []);
@@ -21,6 +22,10 @@ const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentPr
         <>
           <DashboardActions />
           <Experience experience={profile.data.experience} />
+
+          <div>
+            <button onClick={() => deleteAccount(user.data._id)}>Delete Account</button>
+          </div>
         </>
       ) : (
         <Experience>
@@ -37,4 +42,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(Dashboard);

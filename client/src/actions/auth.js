@@ -9,12 +9,12 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_PROFILE,
+  DELETE_ACCOUNT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
 // Load user
 export const loadUser = () => async (dispatch) => {
-  let token;
   if (localStorage.token) {
     // token = localStorage.token;
     setAuthToken(localStorage.token);
@@ -60,8 +60,10 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     dispatch(loadUser());
   } catch (err) {
     let errors = err.response.data.error;
-    errors = errors.split(',');
-    if (errors) errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
 
     dispatch({
       type: REGISTER_FAIL,
@@ -89,8 +91,10 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loadUser());
   } catch (err) {
     let errors = err.response.data.error;
-    errors = errors.split(',');
-    if (errors) errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
 
     dispatch({
       type: LOGIN_FAIL,
@@ -106,4 +110,25 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+};
+
+export const deleteAccount = (id) => async (dispatch) => {
+  if (window.confirm('Are you sure? This can Not be undoned!')) {
+    try {
+      const res = await axios.delete(`/api/v1/auth/${id}`);
+      dispatch({ type: DELETE_ACCOUNT });
+      dispatch(setAlert('Account was permanently removed'));
+    } catch (err) {
+      let errors = err.response.data.error;
+      if (errors) {
+        errors = errors.split(',');
+        errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+      }
+
+      dispatch({
+        type: AUTH_ERROR,
+        payload: errors,
+      });
+    }
+  }
 };

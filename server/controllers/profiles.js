@@ -121,7 +121,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: profile });
 });
 
-// @desc      Delete profile
+// @desc      Delete profile & user
 // @route     PUT /api/v1/profiles/:id
 // @access    Private
 

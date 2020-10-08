@@ -1,8 +1,10 @@
 const crypto = require('crypto');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
+const User = require('../models/User');
+const Post = require('../models/Post');
+const Profile = require('../models/Profile');
 
 // @desc      Register new user
 // @route     POST /api/v1/auth/register
@@ -54,6 +56,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('-password');
+  if (!user) return next(new ErrorResponse(`User ${req.user.id} was not found`, 400));
   res.status(200).json({ success: true, data: user });
 });
 
@@ -105,6 +108,25 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   const token = user.getSignedJwtToken();
 
   res.status(200).json({ success: true, token });
+});
+
+// @desc      Delete Usere
+// @route     PUT /api/v1/auth/:id
+// @access    Private
+
+exports.deleteUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (user._id.toString() !== req.user.id) {
+    return next(new ErrorResponse(`User ${req.params.id} is not authorized to delete this profile`, 401));
+  }
+
+  // Remove user posts
+  await Post.deleteMany({ user: req.user.id });
+
+  await user.remove();
+
+  res.status(200).json({ success: true, data: {} });
 });
 
 // @desc      Forgot password

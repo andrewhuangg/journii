@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './types';
+import { CLEAR_PROFILE, GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, DELETE_PROFILE } from './types';
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
@@ -38,8 +38,10 @@ export const createProfile = (formData, history, userId) => async (dispatch) => 
     history.push('./dashboard');
   } catch (err) {
     let errors = err.response.data.error;
-    errors = errors.split(',');
-    if (errors) errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
 
     dispatch({
       type: PROFILE_ERROR,
@@ -64,8 +66,10 @@ export const editProfile = (formData, profileId) => async (dispatch) => {
     dispatch(setAlert('Profile Updated'));
   } catch (err) {
     let errors = err.response.data.error;
-    errors = errors.split(',');
-    if (errors) errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
 
     dispatch({
       type: PROFILE_ERROR,
@@ -92,8 +96,52 @@ export const addExperience = (formData, history) => async (dispatch) => {
     history.push('./dashboard');
   } catch (err) {
     let errors = err.response.data.error;
-    errors = errors.split(',');
-    if (errors) errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const deleteExperience = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/v1/profiles/experience/${id}`);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Experience Removed'));
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: errors,
+    });
+  }
+};
+
+export const deleteProfile = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/v1/profiles/${id}`);
+    dispatch({ type: DELETE_PROFILE });
+    dispatch(setAlert('Profile has been removed'));
+  } catch (err) {
+    let errors = err.response.data.error;
+    if (errors) {
+      errors = errors.split(',');
+      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
+    }
 
     dispatch({
       type: PROFILE_ERROR,
