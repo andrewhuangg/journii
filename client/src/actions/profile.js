@@ -272,7 +272,7 @@ export const deleteExperience = (id) => async (dispatch) => {
 
 export const deleteProfile = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/api/v1/profiles/${id}`);
+    await axios.delete(`/api/v1/profiles/${id}`);
     dispatch({ type: DELETE_PROFILE });
     dispatch(setAlert('Profile has been removed'));
   } catch (err) {

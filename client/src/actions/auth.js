@@ -16,18 +16,11 @@ import setAuthToken from '../utils/setAuthToken';
 // Load user
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
-    // token = localStorage.token;
     setAuthToken(localStorage.token);
   }
 
-  // const config = {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // };
-
   try {
-    const res = await axios.get('/api/v1/auth/me'); //, config);
+    const res = await axios.get('/api/v1/auth/me');
 
     dispatch({
       type: USER_LOADED,
@@ -115,7 +108,7 @@ export const logout = () => (dispatch) => {
 export const deleteAccount = (id) => async (dispatch) => {
   if (window.confirm('Are you sure? This can Not be undoned!')) {
     try {
-      const res = await axios.delete(`/api/v1/auth/${id}`);
+      await axios.delete(`/api/v1/auth/${id}`);
       dispatch({ type: DELETE_ACCOUNT });
       dispatch(setAlert('Account was permanently removed'));
     } catch (err) {

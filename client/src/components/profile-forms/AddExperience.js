@@ -42,7 +42,7 @@ const AddExperience = ({ addExperience, history }) => {
         <div>
           <input
             type='text'
-            placeholder='* Company'
+            placeholder='Company'
             name='company'
             value={company}
             onChange={(e) => onChange(e)}

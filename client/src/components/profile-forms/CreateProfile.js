@@ -63,7 +63,7 @@ const CreateProfile = ({ createProfile, history, user }) => {
         <div>
           <input
             type='text'
-            placeholder='* Technologies'
+            placeholder='Technologies'
             name='technologies'
             value={technologies}
             onChange={(e) => onChange(e)}
@@ -71,7 +71,7 @@ const CreateProfile = ({ createProfile, history, user }) => {
           <small>Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)</small>
         </div>
         <div>
-          <input type='text' placeholder='* Features' name='features' value={features} onChange={(e) => onChange(e)} />
+          <input type='text' placeholder='Features' name='features' value={features} onChange={(e) => onChange(e)} />
           <small>
             Please use comma separated values (eg. Create Follow and Unfollow API, Users Create Posts, Like a Post)
           </small>
@@ -82,7 +82,7 @@ const CreateProfile = ({ createProfile, history, user }) => {
         </div>
         <div>
           <textarea
-            placeholder='A short bio of yourself'
+            placeholder='* A short bio of yourself'
             name='bio'
             value={bio}
             onChange={(e) => onChange(e)}

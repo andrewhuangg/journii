@@ -10,7 +10,7 @@ import { deleteAccount } from '../../actions/auth';
 const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentProfile, deleteAccount }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
 
   return loading && profile === null ? (
     <Spinner />
@@ -28,10 +28,10 @@ const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentPr
           </div>
         </>
       ) : (
-        <Experience>
+        <>
           <p>you have not yet setup a profile, please add some info</p>
           <Link to='/createprofile'>Create Profile</Link>
-        </Experience>
+        </>
       )}
     </>
   );
