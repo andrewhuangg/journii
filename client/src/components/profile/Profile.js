@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
+import ProfileGithub from './ProfileGithub'
 
 const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, match }) => {
   useEffect(() => {
@@ -38,6 +39,7 @@ const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, matc
                 <h4>No Credentials</h4>
               )}
             </div>
+            {profile.data.github && <ProfileGithub username={profile.data.github}/>}
           </div>
         </>
       )}

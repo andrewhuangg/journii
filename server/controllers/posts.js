@@ -29,7 +29,9 @@ exports.createPost = asyncHandler(async (req, res, next) => {
 
 exports.getPosts = asyncHandler(async (req, res, next) => {
   if (req.params.userId) {
-    const posts = await Post.find({ user: req.params.userId }).sort({ date: -1 });
+    const posts = await Post.find({ user: req.params.userId }).sort({
+      date: -1,
+    });
 
     return res.status(200).json({
       success: true,
@@ -66,7 +68,9 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
   if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
 
   if (post.user.toString() !== req.user.id) {
-    return next(new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401));
+    return next(
+      new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401)
+    );
   }
 
   await post.remove();
@@ -146,11 +150,14 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 
   // Pull out the comment
   const comment = post.comments.find((comment) => comment.id === req.params.commentId);
-  if (!comment) return next(new ErrorResponse(`comment not found with the id of ${req.params.commentId}`, 404));
+  if (!comment)
+    return next(new ErrorResponse(`comment not found with the id of ${req.params.commentId}`, 404));
 
   // Check comment owner
   if (comment.user.toString() !== req.user.id) {
-    return next(new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401));
+    return next(
+      new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401)
+    );
   }
 
   // Get remove index
@@ -173,7 +180,12 @@ exports.followPost = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`post ${req.params.id} has already been followed`, 400));
   }
 
+  if (post.user.toString() === req.user._id.toString()) {
+    return next(new ErrorResponse(`unable to follow own post`, 400));
+  }
+
   post.follows.unshift({ user: req.user.id });
+
   await post.save();
 
   res.status(200).json({ success: true, data: post.follows });
