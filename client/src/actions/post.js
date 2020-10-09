@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_POSTS, POST_ERROR } from './types';
+import { GET_POSTS, POST_ERROR, UPDATE_LIKES } from './types';
 
 export const getPosts = (userId) => async (dispatch) => {
   try {
@@ -18,4 +18,56 @@ export const getPosts = (userId) => async (dispatch) => {
       payload: err,
     });
   }
+};
+
+export const addLike = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/v1/posts/like/${postId}`);
+    dispatch({
+      type: UPDATE_LIKES,
+      payload: {
+        postId,
+        likes: res.data,
+      },
+    });
+  } catch (err) {}
+};
+
+export const removeLike = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/v1/posts/unlike/${postId}`);
+    dispatch({
+      type: UPDATE_LIKES,
+      payload: {
+        postId,
+        likes: res.data,
+      },
+    });
+  } catch (err) {}
+};
+
+export const followPost = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/v1/posts/follow/${postId}`);
+    dispatch({
+      type: UPDATE_LIKES,
+      payload: {
+        postId,
+        follows: res.data,
+      },
+    });
+  } catch (err) {}
+};
+
+export const unFollowPost = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/v1/posts/unfollow/${postId}`);
+    dispatch({
+      type: UPDATE_LIKES,
+      payload: {
+        postId,
+        follows: res.data,
+      },
+    });
+  } catch (err) {}
 };

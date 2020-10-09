@@ -3,35 +3,27 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 
-const PostItem = ({
-  post: { _id, user, text, name, likes, comments, follows },
-}) => {
+const PostItem = ({ post: { _id, user, text, name, likes, comments, follows, date }, auth }) => {
   return (
     <div>
       <div>
         <a>
           img
-          <h4>John Doe</h4>
+          <h4>{name}</h4>
         </a>
       </div>
       <div>
+        <p>{text}</p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint possimus
-          corporis sunt necessitatibus! Minus nesciunt soluta suscipit nobis.
-          Amet accusamus distinctio cupiditate blanditiis dolor? Illo
-          perferendis eveniet cum cupiditate aliquam?
+          Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
         </p>
-        <p>Posted on 04/16/2019</p>
-        <button type='button'>
-          likes
-          <span>4</span>
-        </button>
+        <button type='button'>likes {likes.length > 0 && <span>{likes.length}</span>}</button>
         <button type='button'>dislike</button>
-        <a>
-          Discussion comments
-          <span>2</span>
-        </a>
-        <button type='button'>delet</button>
+        <Link to={`/posts/${_id}`}>
+          Discussion {comments.length > 0 && <span>{comments.length}</span>}
+        </Link>
+        <button type='button'>follow {follows.length > 0 && <span>{follows.length}</span>}</button>
+        {!auth.loading && user._id === auth.user.data._id && <button type='button'>delete</button>}
       </div>
     </div>
   );
