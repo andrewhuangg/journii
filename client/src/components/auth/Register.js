@@ -34,7 +34,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       <p className='lead'>Create Your Account</p>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
-          <input type='text' placeholder='Name' name='name' value={name} onChange={(e) => onChange(e)} required />
+          <input type='text' placeholder='First and Last name' name='name' value={name} onChange={(e) => onChange(e)} required />
         </div>
         <div className='form-group'>
           <input

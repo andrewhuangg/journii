@@ -40,6 +40,7 @@ const ProfileSchema = new mongoose.Schema({
       company: {
         type: String,
         lowercase: true,
+        required: true,
       },
       from: {
         type: Date,
@@ -87,7 +88,7 @@ ProfileSchema.index({ user: 1 }, { unique: true });
 ProfileSchema.pre('save', async function (next) {
   let loc;
 
-  if (this.address !== undefined) {
+  if (this.address) {
     loc = await geocoder.geocode(this.address);
 
     this.location = {

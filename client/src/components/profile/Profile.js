@@ -4,6 +4,8 @@ import Spinner from '../layout/Spinner';
 import { getProfileByUserId } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
+import ProfileExperience from './ProfileExperience';
 
 const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, match }) => {
   useEffect(() => {
@@ -23,6 +25,19 @@ const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, matc
           <div>
             grid
             <ProfileTop profile={profile.data} />
+            <ProfileAbout profile={profile.data} />
+            <div>
+              <h2>Experience</h2>
+              {profile.data.experience.length > 0 ? (
+                <>
+                  {profile.data.experience.map((exp) => (
+                    <ProfileExperience key={exp._id} experience={exp} />
+                  ))}
+                </>
+              ) : (
+                <h4>No Credentials</h4>
+              )}
+            </div>
           </div>
         </>
       )}

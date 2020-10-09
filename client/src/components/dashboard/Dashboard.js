@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profile';
-import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import { deleteAccount } from '../../actions/auth';
@@ -12,9 +11,7 @@ const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentPr
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading && profile === null ? (
-    <Spinner />
-  ) : (
+  return (
     <>
       <h1>Dashboard</h1>
       <p>Welcome {user && user.data.name}</p>
