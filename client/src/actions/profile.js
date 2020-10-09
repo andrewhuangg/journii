@@ -22,14 +22,9 @@ export const getFollowedProfiles = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -42,14 +37,9 @@ export const followProfile = (id) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -62,14 +52,9 @@ export const unFollowProfile = (id) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -83,14 +68,9 @@ export const getCurrentProfile = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -104,14 +84,9 @@ export const getProfileByUserId = (userId) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -126,14 +101,9 @@ export const getProfiles = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -147,14 +117,9 @@ export const getGithubRepos = (username) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -176,15 +141,9 @@ export const createProfile = (formData, history, userId) => async (dispatch) => 
 
     history.push('./dashboard');
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
-
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -204,15 +163,9 @@ export const editProfile = (formData, profileId) => async (dispatch) => {
     });
     dispatch(setAlert('Profile Updated'));
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
-
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -234,15 +187,9 @@ export const addExperience = (formData, history) => async (dispatch) => {
 
     history.push('./dashboard');
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
-
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -257,15 +204,9 @@ export const deleteExperience = (id) => async (dispatch) => {
 
     dispatch(setAlert('Experience Removed'));
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
-
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
@@ -276,15 +217,9 @@ export const deleteProfile = (id) => async (dispatch) => {
     dispatch({ type: DELETE_PROFILE });
     dispatch(setAlert('Profile has been removed'));
   } catch (err) {
-    let errors = err.response.data.error;
-    if (errors) {
-      errors = errors.split(',');
-      errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-    }
-
     dispatch({
       type: PROFILE_ERROR,
-      payload: errors,
+      payload: err,
     });
   }
 };
