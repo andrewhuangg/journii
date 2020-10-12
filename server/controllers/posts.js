@@ -36,7 +36,7 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
 
     return res.status(200).json(posts);
   } else {
-    posts = await Post.find();
+    posts = await Post.find().sort({ date: -1 });
     res.status(200).json(posts);
   }
 });
