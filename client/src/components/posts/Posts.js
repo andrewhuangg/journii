@@ -17,7 +17,7 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
       <p>Welcome to the community</p>
       {/* PostForm */}
       <div>
-        {posts.data.map((post) => (
+        {posts.map((post) => (
           <PostItem key={post._id} post={post} />
         ))}
       </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES } from './types';
+import { GET_POSTS, POST_ERROR, UPDATE_LIKES, UPDATE_FOLLOWS } from './types';
 
 export const getPosts = (userId) => async (dispatch) => {
   try {
@@ -50,7 +50,7 @@ export const followPost = (postId) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/v1/posts/follow/${postId}`);
     dispatch({
-      type: UPDATE_LIKES,
+      type: UPDATE_FOLLOWS,
       payload: {
         postId,
         follows: res.data,
@@ -63,7 +63,7 @@ export const unFollowPost = (postId) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/v1/posts/unfollow/${postId}`);
     dispatch({
-      type: UPDATE_LIKES,
+      type: UPDATE_FOLLOWS,
       payload: {
         postId,
         follows: res.data,

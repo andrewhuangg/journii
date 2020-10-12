@@ -19,7 +19,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
   };
 
   const post = await Post.create(newPost);
-  res.status(200).json({ success: true, data: post });
+  res.status(200).json(post);
 });
 
 // @desc      Get all posts
@@ -28,18 +28,16 @@ exports.createPost = asyncHandler(async (req, res, next) => {
 // @access    Private
 
 exports.getPosts = asyncHandler(async (req, res, next) => {
+  let posts;
   if (req.params.userId) {
-    const posts = await Post.find({ user: req.params.userId }).sort({
+    posts = await Post.find({ user: req.params.userId }).sort({
       date: -1,
     });
 
-    return res.status(200).json({
-      success: true,
-      count: posts.length,
-      data: posts,
-    });
+    return res.status(200).json(posts);
   } else {
-    res.status(200).json(res.advancedQuery);
+    posts = await Post.find();
+    res.status(200).json(posts);
   }
 });
 
@@ -55,7 +53,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 
   if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
 
-  res.status(200).json({ success: true, data: post });
+  res.status(200).json(post);
 });
 
 // @desc      Delete post
@@ -75,7 +73,7 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 
   await post.remove();
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({ msg: 'post removed' });
 });
 
 // @desc      Like a post
@@ -93,7 +91,7 @@ exports.likePost = asyncHandler(async (req, res, next) => {
   post.likes.unshift({ user: req.user.id });
   await post.save();
 
-  res.status(200).json({ success: true, data: post.likes });
+  res.status(200).json(post.likes);
 });
 
 // @desc      Unlike a post
@@ -114,7 +112,7 @@ exports.unlikePost = asyncHandler(async (req, res, next) => {
 
   await post.save();
 
-  res.status(200).json({ success: true, data: post.likes });
+  res.status(200).json(post.likes);
 });
 
 // @desc      Comment on a post
@@ -137,7 +135,7 @@ exports.addComment = asyncHandler(async (req, res, next) => {
   post.comments.unshift(newComment);
 
   await post.save();
-  res.status(200).json({ success: true, data: post.comments });
+  res.status(200).json(post.comments);
 });
 
 // @desc      Delete a comment
@@ -165,7 +163,7 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
   post.comments.splice(removeIdx, 1);
 
   await post.save();
-  res.status(200).json({ success: true, data: post.comments });
+  res.status(200).json(post.comments);
 });
 
 // @desc      Follow a post
@@ -188,7 +186,7 @@ exports.followPost = asyncHandler(async (req, res, next) => {
 
   await post.save();
 
-  res.status(200).json({ success: true, data: post.follows });
+  res.status(200).json(post.follows);
 });
 
 // @desc      Unfollow a post
@@ -209,7 +207,7 @@ exports.unfollowPost = asyncHandler(async (req, res, next) => {
 
   await post.save();
 
-  res.status(200).json({ success: true, data: post.follows });
+  res.status(200).json(post.follows);
 });
 
 // @desc      Get all followed posts
