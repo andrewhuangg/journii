@@ -3,7 +3,6 @@ import React from 'react';
 const ProfileTop = ({
   profile: {
     website,
-    company,
     social,
     location,
     user: { name },
@@ -13,7 +12,6 @@ const ProfileTop = ({
     <div>
       img
       <h1>{name}</h1>
-      <p>{company && <span>{company}</span>}</p>
       <p>{location && location.formattedAddress && <span>{location.formattedAddress}</span>}</p>
       <div>
         {website && (

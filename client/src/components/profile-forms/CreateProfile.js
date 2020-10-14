@@ -8,12 +8,10 @@ import Spinner from '../layout/Spinner';
 const CreateProfile = ({ createProfile, history, user }) => {
   const [formData, setFormData] = useState({
     bio: '',
+    username: '',
     address: '',
     website: '',
-    company: '',
     github: '',
-    technologies: '',
-    features: '',
     facebook: '',
     youtube: '',
     twitter: '',
@@ -28,12 +26,10 @@ const CreateProfile = ({ createProfile, history, user }) => {
 
   const {
     bio,
+    username,
     address,
     website,
-    company,
     github,
-    technologies,
-    features,
     facebook,
     youtube,
     twitter,
@@ -93,8 +89,14 @@ const CreateProfile = ({ createProfile, history, user }) => {
           {uploading && <Spinner />}
         </div>
         <div>
-          <input type='text' placeholder='Company' onChange={(e) => onChange(e)} />
-          <small>Could be your own company or one you work for</small>
+          <input
+            type='text'
+            placeholder='Username'
+            name='username'
+            value={username}
+            onChange={(e) => onChange(e)}
+          />
+          <small>Feel free to give your profile a username</small>
         </div>
         <div>
           <input
@@ -116,29 +118,6 @@ const CreateProfile = ({ createProfile, history, user }) => {
           />
           <small>
             Could be your own or your company address (eg. 103 john st, oakland, california, 96213)
-          </small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Technologies'
-            name='technologies'
-            value={technologies}
-            onChange={(e) => onChange(e)}
-          />
-          <small>Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)</small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Features'
-            name='features'
-            value={features}
-            onChange={(e) => onChange(e)}
-          />
-          <small>
-            Please use comma separated values (eg. Create Follow and Unfollow API, Users Create
-            Posts, Like a Post)
           </small>
         </div>
         <div>

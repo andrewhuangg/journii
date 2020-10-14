@@ -18,7 +18,7 @@ const CommentItem = ({ postId, comment: { _id, text, name, user, date }, auth, d
         <p>
           Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
         </p>
-        {!auth.loading && user === auth.user.data._id && (
+        {!auth.loading && user === auth.user._id && (
           <button onClick={(e) => deleteComment(postId, _id)} type='button'>
             Delete
           </button>

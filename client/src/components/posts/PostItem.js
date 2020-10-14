@@ -46,7 +46,7 @@ const PostItem = ({
             <button onClick={(e) => unFollowPost(_id)} type='button'>
               unfollow
             </button>
-            {!auth.loading && user === auth.user.data._id && (
+            {!auth.loading && user === auth.user._id && (
               <button onClick={(e) => deletePost(_id)} type='button'>
                 delete
               </button>

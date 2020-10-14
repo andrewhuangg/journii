@@ -6,13 +6,12 @@ import { Link } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
-import ProfileGithub from './ProfileGithub'
+import ProfileGithub from './ProfileGithub';
 
 const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, match }) => {
   useEffect(() => {
     getProfileByUserId(match.params.id);
   }, [getProfileByUserId, match.params.id]);
-
   return (
     <>
       {profile === null || loading ? (
@@ -20,18 +19,18 @@ const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, matc
       ) : (
         <>
           <Link to='/profiles'>Back to profiles</Link>
-          {auth.isAuthenticated && auth.loading === false && auth.user.data._id === profile.data.user._id && (
+          {auth.isAuthenticated && auth.loading === false && auth.user._id === profile.user._id && (
             <Link to='/editprofile'>Edit Profile</Link>
           )}
           <div>
             grid
-            <ProfileTop profile={profile.data} />
-            <ProfileAbout profile={profile.data} />
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
             <div>
               <h2>Experience</h2>
-              {profile.data.experience.length > 0 ? (
+              {profile.experience.length > 0 ? (
                 <>
-                  {profile.data.experience.map((exp) => (
+                  {profile.experience.map((exp) => (
                     <ProfileExperience key={exp._id} experience={exp} />
                   ))}
                 </>
@@ -39,7 +38,7 @@ const Profile = ({ getProfileByUserId, profile: { profile, loading }, auth, matc
                 <h4>No Credentials</h4>
               )}
             </div>
-            {profile.data.github && <ProfileGithub username={profile.data.github}/>}
+            {profile.github && <ProfileGithub username={profile.github} />}
           </div>
         </>
       )}

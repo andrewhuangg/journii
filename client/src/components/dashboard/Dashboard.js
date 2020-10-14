@@ -6,7 +6,12 @@ import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import { deleteAccount } from '../../actions/auth';
 
-const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentProfile, deleteAccount }) => {
+const Dashboard = ({
+  auth: { user },
+  profile: { profile, loading },
+  getCurrentProfile,
+  deleteAccount,
+}) => {
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
@@ -14,14 +19,14 @@ const Dashboard = ({ auth: { user }, profile: { profile, loading }, getCurrentPr
   return (
     <>
       <h1>Dashboard</h1>
-      <p>Welcome {user && user.data.name}</p>
+      <p>Welcome {user && user.name}</p>
       {profile !== null ? (
         <>
           <DashboardActions />
-          <Experience experience={profile.data.experience} />
+          <Experience experience={profile.experience} />
 
           <div>
-            <button onClick={() => deleteAccount(user.data._id)}>Delete Account</button>
+            <button onClick={() => deleteAccount(user._id)}>Delete Account</button>
           </div>
         </>
       ) : (

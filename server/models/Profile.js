@@ -28,7 +28,6 @@ const ProfileSchema = new mongoose.Schema({
     country: String,
   },
   website: String,
-  company: String,
   slug: String,
   address: String,
   github: String,

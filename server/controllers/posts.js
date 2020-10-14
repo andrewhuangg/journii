@@ -227,11 +227,7 @@ exports.getFollowedPosts = asyncHandler(async (req, res, next) => {
       });
     });
 
-    return res.status(200).json({
-      success: true,
-      count: followedPosts.length,
-      data: followedPosts,
-    });
+    return res.status(200).json(followedPosts);
   } else {
     res.status(200).json(res.advancedQuery);
   }

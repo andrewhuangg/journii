@@ -12,8 +12,7 @@ const ProfileAbout = ({
     <div>
       <h2>{name.trim().split(' ')[0]}s Bio</h2>
       <p>{bio}</p>
-      <div></div>
-      <h2>Skill Set</h2>
+      {/* <h2>Skill Set</h2>
       <div>
         {technologies.length > 0 && (
           <>
@@ -31,7 +30,7 @@ const ProfileAbout = ({
             ))}
           </>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

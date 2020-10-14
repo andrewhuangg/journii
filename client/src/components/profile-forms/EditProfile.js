@@ -3,15 +3,19 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { editProfile, getCurrentProfile } from '../../actions/profile';
 
-const EditProfile = ({ profile: { profile, loading }, editProfile, getCurrentProfile, history, user }) => {
+const EditProfile = ({
+  profile: { profile, loading },
+  editProfile,
+  getCurrentProfile,
+  history,
+  user,
+}) => {
   const [formData, setFormData] = useState({
     bio: '',
+    username: '',
     address: '',
     website: '',
-    company: '',
     github: '',
-    technologies: '',
-    features: '',
     facebook: '',
     youtube: '',
     twitter: '',
@@ -24,29 +28,28 @@ const EditProfile = ({ profile: { profile, loading }, editProfile, getCurrentPro
   useEffect(() => {
     getCurrentProfile();
     setFormData({
-      bio: loading || !profile.data.bio ? '' : profile.data.bio,
-      address: loading || !profile.data.location ? '' : profile.data.location.formattedAddress,
-      website: loading || !profile.data.website ? '' : profile.data.website,
-      company: loading || !profile.data.company ? '' : profile.data.company,
-      github: loading || !profile.data.github ? '' : profile.data.github,
-      technologies: loading || !profile.data.technologies ? '' : profile.data.technologies.join(','),
-      features: loading || !profile.data.features ? '' : profile.data.features.join(','),
-      youtube: loading || !profile.data.social || !profile.data.social.youtube ? '' : profile.data.social.youtube,
-      facebook: loading || !profile.data.social || !profile.data.social.facebook ? '' : profile.data.social.facebook,
-      twitter: loading || !profile.data.social || !profile.data.social.twitter ? '' : profile.data.social.twitter,
-      linkedin: loading || !profile.data.social || !profile.data.social.linkedin ? '' : profile.data.social.linkedin,
-      instagram: loading || !profile.data.social || !profile.data.social.instagram ? '' : profile.data.social.instagram,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      username: loading || !profile.username ? '' : profile.username,
+      address: loading || !profile.location ? '' : profile.location.formattedAddress,
+      website: loading || !profile.website ? '' : profile.website,
+      github: loading || !profile.github ? '' : profile.github,
+      youtube: loading || !profile.social || !profile.social.youtube ? '' : profile.social.youtube,
+      facebook:
+        loading || !profile.social || !profile.social.facebook ? '' : profile.social.facebook,
+      twitter: loading || !profile.social || !profile.social.twitter ? '' : profile.social.twitter,
+      linkedin:
+        loading || !profile.social || !profile.social.linkedin ? '' : profile.social.linkedin,
+      instagram:
+        loading || !profile.social || !profile.social.instagram ? '' : profile.social.instagram,
     });
   }, [loading, getCurrentProfile]);
 
   const {
     bio,
+    username,
     address,
     website,
-    company,
     github,
-    technologies,
-    features,
     facebook,
     youtube,
     twitter,
@@ -58,7 +61,7 @@ const EditProfile = ({ profile: { profile, loading }, editProfile, getCurrentPro
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const id = profile.data._id;
+    const id = profile._id;
     editProfile(formData, id);
   };
 
@@ -68,35 +71,45 @@ const EditProfile = ({ profile: { profile, loading }, editProfile, getCurrentPro
       <small>* = required field</small>
       <form onSubmit={(e) => onSubmit(e)}>
         <div>
-          <input type='text' placeholder='Company' name='company' value={company} onChange={(e) => onChange(e)} />
-          <small>Could be your own company or one you work for</small>
-        </div>
-        <div>
-          <input type='text' placeholder='Website' name='website' value={website} onChange={(e) => onChange(e)} />
-          <small>Could be your own or a company website</small>
-        </div>
-        <div>
-          <input type='text' placeholder='Address' name='address' value={address} onChange={(e) => onChange(e)} />
-          <small>Could be your own or your company address (eg. 103 john st, oakland, california, 96213)</small>
+          <input
+            type='text'
+            placeholder='Username'
+            name='username'
+            value={username}
+            onChange={(e) => onChange(e)}
+          />
+          <small>Feel free to give your profile a username</small>
         </div>
         <div>
           <input
             type='text'
-            placeholder='* Technologies'
-            name='technologies'
-            value={technologies}
+            placeholder='Website'
+            name='website'
+            value={website}
             onChange={(e) => onChange(e)}
           />
-          <small>Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)</small>
+          <small>Could be your own or a company website</small>
         </div>
         <div>
-          <input type='text' placeholder='* Features' name='features' value={features} onChange={(e) => onChange(e)} />
+          <input
+            type='text'
+            placeholder='Address'
+            name='address'
+            value={address}
+            onChange={(e) => onChange(e)}
+          />
           <small>
-            Please use comma separated values (eg. Create Follow and Unfollow API, Users Create Posts, Like a Post)
+            Could be your own or your company address (eg. 103 john st, oakland, california, 96213)
           </small>
         </div>
         <div>
-          <input type='text' placeholder='Github Username' name='github' value={github} onChange={(e) => onChange(e)} />
+          <input
+            type='text'
+            placeholder='Github Username'
+            name='github'
+            value={github}
+            onChange={(e) => onChange(e)}
+          />
           <small>If you want your latest repos and a Github link, include your username</small>
         </div>
         <div>

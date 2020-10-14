@@ -23,7 +23,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({ success: true, token });
+  res.status(200).json({ token });
 });
 
 // @desc      Login new user
@@ -34,7 +34,8 @@ exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   // Validate email & password
-  if (!email || !password) return next(new ErrorResponse('Please provide an email nad password', 400));
+  if (!email || !password)
+    return next(new ErrorResponse('Please provide an email nad password', 400));
 
   // Check for user
   const user = await User.findOne({ email }).select('+password');
@@ -47,7 +48,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({ success: true, token });
+  res.status(200).json({ token });
 });
 
 // @desc      Get current logged in user
@@ -57,7 +58,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('-password');
   if (!user) return next(new ErrorResponse(`User ${req.user.id} was not found`, 400));
-  res.status(200).json({ success: true, data: user });
+  res.status(200).json(user);
 });
 
 // @desc      Log user out
@@ -70,7 +71,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
   //   httpOnly: true,
   // });
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({ msg: 'User successfully logged out' });
 });
 
 // @desc      Update user details
@@ -87,7 +88,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-  res.status(200).json({ success: true, data: user });
+  res.status(200).json(user);
 });
 
 // @desc      Update password
@@ -107,7 +108,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({ success: true, token });
+  res.status(200).json({ token });
 });
 
 // @desc      Delete Usere
@@ -118,7 +119,9 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (user._id.toString() !== req.user.id) {
-    return next(new ErrorResponse(`User ${req.params.id} is not authorized to delete this profile`, 401));
+    return next(
+      new ErrorResponse(`User ${req.params.id} is not authorized to delete this profile`, 401)
+    );
   }
 
   // Remove user posts
@@ -129,7 +132,7 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 
   await user.remove();
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({ msg: 'User successfully removed ' });
 });
 
 // @desc      Forgot password
@@ -157,7 +160,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
       message,
     });
 
-    res.status(200).json({ success: true, data: 'Email sent' });
+    res.status(200).json({ msg: 'Email sent' });
   } catch (err) {
     console.log(err);
     user.resetPasswordToken = undefined;
@@ -174,7 +177,10 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
   // Get hashed token
-  const resetPasswordToken = crypto.createHash('sha256').update(req.params.resettoken).digest('hex');
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.resettoken)
+    .digest('hex');
 
   const user = await User.findOne({
     resetPasswordToken,
@@ -194,7 +200,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({ success: true, token });
+  res.status(200).json({ token });
 });
 
 // HELPER FUNCTION => Get token from model, create cookie and send response
