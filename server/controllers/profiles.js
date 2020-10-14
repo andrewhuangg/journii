@@ -25,7 +25,7 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   if (!profile)
     return next(new ErrorResponse(`profile not found with the id of ${req.user.userId}`, 404));
 
-  res.status(200).json({ success: true, data: profile });
+  res.status(200).json(profile);
 });
 
 // @desc      Get current users profile
@@ -41,7 +41,7 @@ exports.getOwnProfile = asyncHandler(async (req, res, next) => {
   if (!profile)
     return next(new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404));
 
-  res.status(200).json({ success: true, data: profile });
+  res.status(200).json(profile);
 });
 
 // @desc      Create a new profile
@@ -83,7 +83,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
 
   const profile = await Profile.create({ ...req.body, ...socialFields });
 
-  res.status(201).json({ success: true, data: profile });
+  res.status(201).json(profile);
 });
 
 // @desc      Update profile
@@ -122,11 +122,9 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     }
   );
 
-  if (address) {
-    await profile.save();
-  }
+  if (address) await profile.save();
 
-  res.status(200).json({ success: true, data: profile });
+  res.status(200).json(profile);
 });
 
 // @desc      Delete profile & user
@@ -147,10 +145,43 @@ exports.deleteProfile = asyncHandler(async (req, res, next) => {
 
   await profile.remove();
 
-  res.status(200).json({
-    success: true,
-    data: {},
-  });
+  res.status(200).json({ msg: 'Profile deleted' });
+});
+
+// @desc      Add profile project
+// @route     PUT /api/v1/profiles/project
+// @access    Private
+
+exports.createProfileProject = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ user: req.user.id });
+  if (!profile)
+    return next(new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404));
+
+  const { technologies, features } = req.body;
+  if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
+  if (features) req.body.features = features.split(',').map((feat) => feat.trim());
+
+  profile.project.unshift(req.body);
+  await profile.save();
+  res.status(200).json(project);
+});
+
+// @desc      Delete profile project
+// @route     Delete /api/v1/profiles/project/:projectId
+// @access    Private
+
+exports.deleteProfileProject = asyncHandler(async (req, res, next) => {
+  const profile = await Profile.findOne({ user: req.user.id });
+  if (!profile)
+    return next(new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404));
+
+  // find the index of the experience to remove by id
+  const removeIdx = profile.project.map((proj) => proj.id).indexOf(req.params.projectId);
+
+  profile.project.splice(removeIdx, 1);
+
+  await profile.save();
+  res.status(200).json(profile);
 });
 
 // @desc      Add profile experience
@@ -165,10 +196,7 @@ exports.createProfileExperience = asyncHandler(async (req, res, next) => {
 
   profile.experience.unshift(req.body);
   await profile.save();
-  res.status(200).json({
-    success: true,
-    data: profile,
-  });
+  res.status(200).json(profile);
 });
 
 // @desc      Delete profile experience
@@ -187,10 +215,7 @@ exports.deleteProfileExperience = asyncHandler(async (req, res, next) => {
   profile.experience.splice(removeIdx, 1);
 
   await profile.save();
-  res.status(200).json({
-    success: true,
-    data: profile,
-  });
+  res.status(200).json(profile);
 });
 
 // @desc      Get user repos from Github
@@ -235,11 +260,7 @@ exports.getFollowedProfiles = asyncHandler(async (req, res, next) => {
       });
     });
 
-    return res.status(200).json({
-      success: true,
-      count: followedProfile.length,
-      data: followedProfile,
-    });
+    return res.status(200).json(followedProfile);
   } else {
     res.status(200).json(res.advancedQuery);
   }
@@ -265,7 +286,7 @@ exports.followProfile = asyncHandler(async (req, res, next) => {
   profile.follows.unshift({ user: req.user.id });
   await profile.save();
 
-  res.status(200).json({ success: true, data: profile.follows });
+  res.status(200).json(profile.follows);
 });
 
 // @desc      Unfollow a profile
@@ -287,5 +308,5 @@ exports.unfollowProfile = asyncHandler(async (req, res, next) => {
 
   await profile.save();
 
-  res.status(200).json({ success: true, data: profile.follows });
+  res.status(200).json(profile.follows);
 });

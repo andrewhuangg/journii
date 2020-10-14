@@ -39,10 +39,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxlength: [500, 'The about cannot be more than 500 characters'],
   },
-  photo: {
-    type: String,
-    default: 'no-photo.jpg',
-  },
+  image: String,
   date: {
     type: Date,
     default: Date.now,

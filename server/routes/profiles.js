@@ -9,6 +9,8 @@ const {
   deleteProfile,
   createProfileExperience,
   deleteProfileExperience,
+  createProfileProject,
+  deleteProfileProject,
   getGithubRepo,
   getFollowedProfiles,
   followProfile,

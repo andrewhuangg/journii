@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const geocoder = require('../utils/geocoder');
 const ProfileSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    default: 'New Profile',
+  },
   bio: {
     type: String,
     required: [true, 'Please provide a brief bio'],
-    maxlength: [500, 'The description cannot be more than 500 characters'],
+    maxlength: [500, 'The bio cannot be more than 500 characters'],
   },
   location: {
     type: {
@@ -28,8 +32,31 @@ const ProfileSchema = new mongoose.Schema({
   slug: String,
   address: String,
   github: String,
-  technologies: [String],
-  features: [String],
+  project: [
+    {
+      name: {
+        type: String,
+        lowercase: true,
+        required: true,
+      },
+      description: {
+        type: String,
+        maxlength: [500, 'The description cannot be more than 500 characters'],
+      },
+      technologies: [String],
+      features: [String],
+      from: {
+        type: Date,
+        required: true,
+      },
+      to: Date,
+      current: {
+        type: Boolean,
+        default: false,
+      },
+      website: String,
+    },
+  ],
   experience: [
     {
       title: {
