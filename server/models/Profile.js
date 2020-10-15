@@ -1,110 +1,111 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const geocoder = require('../utils/geocoder');
-const ProfileSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    default: 'New Profile',
-  },
-  bio: {
-    type: String,
-    required: [true, 'Please provide a brief bio'],
-    maxlength: [500, 'The bio cannot be more than 500 characters'],
-  },
-  location: {
-    type: {
+const ProfileSchema = new mongoose.Schema(
+  {
+    username: {
       type: String,
-      enum: ['Point'],
+      default: 'New Profile',
     },
-    coordinates: {
-      type: [Number],
-      index: '2dsphere',
+    bio: {
+      type: String,
+      required: [true, 'Please provide a brief bio'],
+      maxlength: [500, 'The bio cannot be more than 500 characters'],
     },
-    formattedAddress: String,
-    street: String,
-    city: String,
-    state: String,
-    zipcode: String,
-    country: String,
-  },
-  website: String,
-  slug: String,
-  address: String,
-  github: String,
-  project: [
-    {
-      name: {
+    location: {
+      type: {
         type: String,
-        lowercase: true,
-        required: true,
+        enum: ['Point'],
       },
-      description: {
-        type: String,
-        maxlength: [500, 'The description cannot be more than 500 characters'],
+      coordinates: {
+        type: [Number],
+        index: '2dsphere',
       },
-      technologies: [String],
-      features: [String],
-      from: {
-        type: Date,
-        required: true,
-      },
-      to: Date,
-      current: {
-        type: Boolean,
-        default: false,
-      },
-      website: String,
+      formattedAddress: String,
+      street: String,
+      city: String,
+      state: String,
+      zipcode: String,
+      country: String,
     },
-  ],
-  experience: [
-    {
-      title: {
-        type: String,
-        lowercase: true,
-        required: true,
+    website: String,
+    slug: String,
+    address: String,
+    github: String,
+    project: [
+      {
+        name: {
+          type: String,
+          lowercase: true,
+          required: true,
+        },
+        description: {
+          type: String,
+          maxlength: [500, 'The description cannot be more than 500 characters'],
+        },
+        technologies: [String],
+        features: [String],
+        from: {
+          type: Date,
+          required: true,
+        },
+        to: Date,
+        current: {
+          type: Boolean,
+          default: false,
+        },
+        website: String,
       },
-      company: {
-        type: String,
-        lowercase: true,
-        required: true,
+    ],
+    experience: [
+      {
+        title: {
+          type: String,
+          lowercase: true,
+          required: true,
+        },
+        company: {
+          type: String,
+          lowercase: true,
+          required: true,
+        },
+        from: {
+          type: Date,
+          required: true,
+        },
+        to: Date,
+        current: {
+          type: Boolean,
+          default: false,
+        },
+        address: String,
+        description: String,
       },
-      from: {
-        type: Date,
-        required: true,
-      },
-      to: Date,
-      current: {
-        type: Boolean,
-        default: false,
-      },
-      address: String,
-      description: String,
+    ],
+    social: {
+      youtube: String,
+      twitter: String,
+      facebook: String,
+      linkedin: String,
+      instagram: String,
     },
-  ],
-  social: {
-    youtube: String,
-    twitter: String,
-    facebook: String,
-    linkedin: String,
-    instagram: String,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  follows: [
-    {
-      user: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
+    follows: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
       },
+    ],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
-  ],
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Prevent users from creating more than one profile
 ProfileSchema.index({ user: 1 }, { unique: true });
