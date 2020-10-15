@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { addPost } from '../../actions/post';
+import { addPost } from '../../actions/postAction';
 
 const PostForm = ({ addPost }) => {
   const [text, setText] = useState('');

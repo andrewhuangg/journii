@@ -10,7 +10,30 @@ import {
   ADD_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  POST_LIST_SUCCESS,
+  POST_LIST_REQUEST,
+  POST_LIST_FAIL,
 } from './types';
+
+export const listPosts = (userId) => async (dispatch) => {
+  try {
+    dispatch({ type: POST_LIST_REQUEST });
+    const { data } = !userId
+      ? await axios.get('/api/v1/posts')
+      : await axios.get(`/api/v1/users/${userId}/posts`);
+
+    dispatch({
+      type: POST_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
 
 export const getPosts = (userId) => async (dispatch) => {
   try {

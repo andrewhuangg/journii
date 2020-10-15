@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getPost } from '../../actions/post';
+import { getPost } from '../../actions/postAction';
 import Spinner from '../layout/Spinner';
 import PostItem from '../posts/PostItem';
 import CommentForm from './CommentForm';

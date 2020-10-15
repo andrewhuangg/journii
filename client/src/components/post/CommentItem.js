@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteComment } from '../../actions/post';
+import { deleteComment } from '../../actions/postAction';
 import Moment from 'react-moment';
 
 const CommentItem = ({ postId, comment: { _id, text, name, user, date }, auth, deleteComment }) => {
