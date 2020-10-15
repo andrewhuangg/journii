@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
+// const asyncHandler = require('../middleware/async');
+const asyncHandler = require('express-async-handler');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
@@ -7,10 +8,10 @@ const User = require('../models/User');
 // @route     POST /api/v1/posts
 // @access    Private
 
-exports.createPost = asyncHandler(async (req, res, next) => {
+exports.createPost = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id).select('-password');
 
-  if (!user) return next(new ErrorResponse(`user not found with the id of ${req.user.id}`, 404));
+  if (!user) throw new ErrorResponse(`user not found with the id of ${req.user.id}`, 404);
 
   const newPost = {
     user: req.user.id,
@@ -27,7 +28,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/users/:userId/posts
 // @access    Private
 
-exports.getPosts = asyncHandler(async (req, res, next) => {
+exports.getPosts = asyncHandler(async (req, res) => {
   let posts;
   if (req.params.userId) {
     posts = await Post.find({ user: req.params.userId }).sort({
@@ -45,13 +46,13 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/posts/:id
 // @access    Private
 
-exports.getPost = asyncHandler(async (req, res, next) => {
+exports.getPost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id).populate({
     path: 'user',
     select: 'name email',
   });
 
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
   res.status(200).json(post);
 });
@@ -60,16 +61,13 @@ exports.getPost = asyncHandler(async (req, res, next) => {
 // @route     DELETE /api/v1/posts/:id
 // @access    Private
 
-exports.deletePost = asyncHandler(async (req, res, next) => {
+exports.deletePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
 
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
-  if (post.user.toString() !== req.user.id) {
-    return next(
-      new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401)
-    );
-  }
+  if (post.user.toString() !== req.user.id)
+    throw new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401);
 
   await post.remove();
 
@@ -80,13 +78,12 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/posts/like/:id
 // @access    Private
 
-exports.likePost = asyncHandler(async (req, res, next) => {
+exports.likePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
-  if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
-    return next(new ErrorResponse(`post ${req.params.id} has already been liked`, 400));
-  }
+  if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0)
+    throw new ErrorResponse(`post ${req.params.id} has already been liked`, 400);
 
   post.likes.unshift({ user: req.user.id });
   await post.save();
@@ -98,13 +95,12 @@ exports.likePost = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/posts/unlike/:id
 // @access    Private
 
-exports.unlikePost = asyncHandler(async (req, res, next) => {
+exports.unlikePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
-  if (post.likes.filter((like) => like.user.toString() === req.user.id).length === 0) {
-    return next(new ErrorResponse(`post ${req.params.id} has not yet been liked`, 400));
-  }
+  if (post.likes.filter((like) => like.user.toString() === req.user.id).length === 0)
+    throw new ErrorResponse(`post ${req.params.id} has not yet been liked`, 400);
 
   // Get remove index
   const removeIdx = post.likes.map((like) => like.user.toString()).indexOf(req.user.id);
@@ -119,12 +115,12 @@ exports.unlikePost = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/posts/comment/:id
 // @access    Private
 
-exports.addComment = asyncHandler(async (req, res, next) => {
+exports.addComment = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id).select('-password');
-  if (!user) return next(new ErrorResponse(`user not found with the id of ${req.user.id}`, 404));
+  if (!user) throw new ErrorResponse(`user not found with the id of ${req.user.id}`, 404);
 
   const post = await Post.findById(req.params.id);
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
   const newComment = {
     user: req.user.id,
@@ -142,21 +138,18 @@ exports.addComment = asyncHandler(async (req, res, next) => {
 // @route     DELETE /api/v1/posts/comment/:id/:commentId
 // @access    Private
 
-exports.deleteComment = asyncHandler(async (req, res, next) => {
+exports.deleteComment = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
   // Pull out the comment
   const comment = post.comments.find((comment) => comment.id === req.params.commentId);
   if (!comment)
-    return next(new ErrorResponse(`comment not found with the id of ${req.params.commentId}`, 404));
+    throw new ErrorResponse(`comment not found with the id of ${req.params.commentId}`, 404);
 
   // Check comment owner
-  if (comment.user.toString() !== req.user.id) {
-    return next(
-      new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401)
-    );
-  }
+  if (comment.user.toString() !== req.user.id)
+    throw new ErrorResponse(`User ${req.user.id} is not authorized to delete this post`, 401);
 
   // Get remove index
   const removeIdx = post.comments.map((comment) => comment.user.toString()).indexOf(req.user.id);
@@ -170,17 +163,15 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/posts/follow/:id
 // @access    Private
 
-exports.followPost = asyncHandler(async (req, res, next) => {
+exports.followPost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
-  if (post.follows.filter((follow) => follow.user.toString() === req.user.id).length > 0) {
-    return next(new ErrorResponse(`post ${req.params.id} has already been followed`, 400));
-  }
+  if (post.follows.filter((follow) => follow.user.toString() === req.user.id).length > 0)
+    throw new ErrorResponse(`post ${req.params.id} has already been followed`, 400);
 
-  if (post.user.toString() === req.user._id.toString()) {
-    return next(new ErrorResponse(`unable to follow own post`, 400));
-  }
+  if (post.user.toString() === req.user._id.toString())
+    throw new ErrorResponse(`unable to follow own post`, 400);
 
   post.follows.unshift({ user: req.user.id });
 
@@ -193,13 +184,12 @@ exports.followPost = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/posts/unfollow/:id
 // @access    Private
 
-exports.unfollowPost = asyncHandler(async (req, res, next) => {
+exports.unfollowPost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
-  if (!post) return next(new ErrorResponse(`post not found with the id of ${req.params.id}`, 404));
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
-  if (post.follows.filter((follow) => follow.user.toString() === req.user.id).length === 0) {
-    return next(new ErrorResponse(`post ${req.params.id} has not yet been followed`, 400));
-  }
+  if (post.follows.filter((follow) => follow.user.toString() === req.user.id).length === 0)
+    throw new ErrorResponse(`post ${req.params.id} has not yet been followed`, 400);
 
   // Get remove index
   const removeIdx = post.follows.map((follow) => follow.user.toString()).indexOf(req.user.id);
@@ -214,7 +204,7 @@ exports.unfollowPost = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/users/:userId/posts/followedposts
 // @access    Private
 
-exports.getFollowedPosts = asyncHandler(async (req, res, next) => {
+exports.getFollowedPosts = asyncHandler(async (req, res) => {
   if (req.params.userId) {
     const user = await User.findById(req.params.userId);
     const posts = await Post.find();
