@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,7 +17,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setAlert('Passwords do not match', 'danger');
+      return <Redirect to='/register' />;
     } else {
       register({ email, name, password });
     }
@@ -34,7 +33,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       <p className='lead'>Create Your Account</p>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
-          <input type='text' placeholder='First and Last name' name='name' value={name} onChange={(e) => onChange(e)} required />
+          <input
+            type='text'
+            placeholder='First and Last name'
+            name='name'
+            value={name}
+            onChange={(e) => onChange(e)}
+            required
+          />
         </div>
         <div className='form-group'>
           <input
@@ -80,6 +86,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  setAlert,
   register,
 })(Register);

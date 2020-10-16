@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { setAlert } from './alert';
 import {
-  GET_POSTS,
   GET_POST,
   POST_ERROR,
   UPDATE_LIKES,
@@ -13,6 +11,9 @@ import {
   POST_LIST_SUCCESS,
   POST_LIST_REQUEST,
   POST_LIST_FAIL,
+  POST_DETAILS_REQUEST,
+  POST_DETAILS_SUCCESS,
+  POST_DETAILS_FAIL,
 } from './types';
 
 export const listPosts = (userId) => async (dispatch) => {
@@ -35,20 +36,19 @@ export const listPosts = (userId) => async (dispatch) => {
   }
 };
 
-export const getPosts = (userId) => async (dispatch) => {
+export const listPostDetails = (id) => async (dispatch) => {
   try {
-    const res = !userId
-      ? await axios.get('/api/v1/posts')
-      : await axios.get(`/api/v1/users/${userId}/posts`);
-
+    dispatch({ type: POST_DETAILS_REQUEST });
+    const { data } = await axios.get(`/api/v1/posts/${id}`);
     dispatch({
-      type: GET_POSTS,
-      payload: res.data,
+      type: POST_DETAILS_SUCCESS,
+      payload: data,
     });
-  } catch (err) {
+  } catch (error) {
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
@@ -142,7 +142,6 @@ export const deletePost = (postId) => async (dispatch) => {
       type: DELETE_POST,
       payload: postId,
     });
-    dispatch(setAlert('Post removed'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -164,8 +163,6 @@ export const addPost = (formData) => async (dispatch) => {
       type: ADD_POST,
       payload: res.data,
     });
-
-    dispatch(setAlert('Post created'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -187,8 +184,6 @@ export const addComment = (postId, formData) => async (dispatch) => {
       type: ADD_COMMENT,
       payload: res.data,
     });
-
-    dispatch(setAlert('Comment added'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -204,8 +199,6 @@ export const deleteComment = (postId, commentId) => async (dispatch) => {
       type: REMOVE_COMMENT,
       payload: commentId,
     });
-
-    dispatch(setAlert('Comment removed'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,

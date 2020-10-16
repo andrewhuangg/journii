@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { setAlert } from './alert';
 import {
   CLEAR_PROFILE,
   GET_PROFILE,
@@ -68,7 +67,7 @@ export const getCurrentProfile = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispatch({type: CLEAR_PROFILE })
+    dispatch({ type: CLEAR_PROFILE });
     dispatch({
       type: PROFILE_ERROR,
       payload: err,
@@ -138,7 +137,6 @@ export const createProfile = (formData, history, userId) => async (dispatch) => 
       type: GET_PROFILE,
       payload: res.data,
     });
-    dispatch(setAlert('Profile Created'));
 
     history.push('./dashboard');
   } catch (err) {
@@ -162,7 +160,6 @@ export const editProfile = (formData, profileId) => async (dispatch) => {
       type: UPDATE_PROFILE,
       payload: res.data,
     });
-    dispatch(setAlert('Profile Updated'));
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
@@ -184,7 +181,6 @@ export const addExperience = (formData, history) => async (dispatch) => {
       type: UPDATE_PROFILE,
       payload: res.data,
     });
-    dispatch(setAlert('Experience Added'));
 
     history.push('./dashboard');
   } catch (err) {
@@ -202,8 +198,6 @@ export const deleteExperience = (id) => async (dispatch) => {
       type: UPDATE_PROFILE,
       payload: res.data,
     });
-
-    dispatch(setAlert('Experience Removed'));
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
@@ -216,7 +210,6 @@ export const deleteProfile = (id) => async (dispatch) => {
   try {
     await axios.delete(`/api/v1/profiles/${id}`);
     dispatch({ type: DELETE_PROFILE });
-    dispatch(setAlert('Profile has been removed'));
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,

@@ -3,7 +3,7 @@ import alert from './alert';
 import auth from './auth';
 import profile from './profile';
 import post from './post';
-import { postListReducer } from './postReducer';
+import { postDetailsReducer, postListReducer } from './postReducer';
 
 export default combineReducers({
   alert,
@@ -11,4 +11,5 @@ export default combineReducers({
   profile,
   post,
   postList: postListReducer,
+  postDetails: postDetailsReducer,
 });

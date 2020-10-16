@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPosts } from '../../actions/postAction';
 import Spinner from '../layout/Spinner';
+import AlertMessage from '../layout/AlertMessage';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
 
@@ -13,18 +14,24 @@ const Posts = () => {
     dispatch(listPosts());
   }, [dispatch]);
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  return (
     <>
       <h1>Posts</h1>
-      <p>Welcome to the community</p>
-      <PostForm />
-      <div>
-        {posts.map((post) => (
-          <PostItem key={post._id} post={post} />
-        ))}
-      </div>
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <AlertMessage variant='danger'>{error}</AlertMessage>
+      ) : (
+        <>
+          <p>Welcome to the community</p>
+          <PostForm />
+          <div>
+            {posts.map((post) => (
+              <PostItem key={post._id} post={post} />
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 };

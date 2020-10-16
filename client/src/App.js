@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LOGOUT } from './actions/types';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-import Alert from './components/layout/Alert';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
@@ -42,8 +41,7 @@ const App = () => {
         <>
           <Navbar />
           <Route exact path='/' component={Landing} />
-          <main className='container'>
-            <Alert />
+          <main>
             <Switch>
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
