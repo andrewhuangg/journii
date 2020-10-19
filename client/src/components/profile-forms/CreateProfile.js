@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { createProfile } from '../../actions/profile';
+import { createProfile } from '../../actions/profileAction';
 import axios from 'axios';
 import Spinner from '../layout/Spinner';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { deleteExperience } from '../../actions/profile';
+import { deleteExperience } from '../../actions/profileAction';
 
 const Experience = ({ experience, deleteExperience }) => {
   const experiences = experience.map((exp) => (

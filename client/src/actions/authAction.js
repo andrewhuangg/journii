@@ -9,28 +9,11 @@ import {
   LOGOUT,
   CLEAR_PROFILE,
   DELETE_ACCOUNT,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
+  USER_LOGOUT,
 } from './types';
-import setAuthToken from '../utils/setAuthToken';
-
-// Load user
-export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
-
-  try {
-    const res = await axios.get('/api/v1/auth/me');
-
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-    });
-  }
-};
 
 // Register User
 export const register = ({ name, email, password }) => async (dispatch) => {
@@ -48,7 +31,6 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-    dispatch(loadUser());
   } catch (err) {
     dispatch({
       type: REGISTER_FAIL,
@@ -56,38 +38,37 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   }
 };
 
-// Login User
 export const login = (email, password) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  const body = JSON.stringify({ email, password });
-
   try {
-    const res = await axios.post('/api/v1/auth/login', body, config);
     dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
+      type: USER_LOGIN_REQUEST,
     });
-    dispatch(loadUser());
-  } catch (err) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.post('/api/v1/auth/login', { email, password }, config);
     dispatch({
-      type: LOGIN_FAIL,
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
 
 // Logout / Clear profile
 export const logout = () => (dispatch) => {
-  dispatch({
-    type: CLEAR_PROFILE,
-  });
-  dispatch({
-    type: LOGOUT,
-  });
+  localStorage.removeItem('userInfo');
+  dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: USER_LOGOUT });
 };
 
 export const deleteAccount = (id) => async (dispatch) => {

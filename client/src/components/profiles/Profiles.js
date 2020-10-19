@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux';
-import { getProfiles } from '../../actions/profile';
+import { getProfiles } from '../../actions/profileAction';
 import ProfileItem from './ProfileItem';
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {

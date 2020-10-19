@@ -12,19 +12,24 @@ const Profile = require('../models/Profile');
 // @access    Public
 
 exports.register = asyncHandler(async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password } = req.body;
+
+  const userExists = await User.findOne({ email });
+  if (userExists) throw new ErrorResponse('User already exists', 400);
 
   // Create user
   const user = await User.create({
     name,
     email,
     password,
-    role,
   });
 
-  const token = user.getSignedJwtToken();
-
-  res.status(200).json({ token });
+  if (user) {
+    const token = user.getSignedJwtToken();
+    res.status(200).json({ token });
+  } else {
+    throw new ErrorResponse('Invalid user data', 400);
+  }
 });
 
 // @desc      Login new user
@@ -35,20 +40,19 @@ exports.login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   // Validate email & password
-  if (!email || !password) throw new ErrorResponse('Please provide an email nad password', 400);
+  if (!email || !password) throw new ErrorResponse('Please provide an email and password', 400);
 
   // Check for user
   const user = await User.findOne({ email }).select('+password');
-  if (!user) throw new ErrorResponse('Invalid credentials', 401);
-
   // Check if password matches
   const isMatch = await user.matchPassword(password);
 
-  if (!isMatch) throw new ErrorResponse('Invalid credentials', 401);
-
-  const token = user.getSignedJwtToken();
-
-  res.status(200).json({ token });
+  if (user && isMatch) {
+    const token = user.getSignedJwtToken();
+    res.status(200).json({ token });
+  } else {
+    throw new ErrorResponse('Invalid credentials', 401);
+  }
 });
 
 // @desc      Get current logged in user
@@ -56,8 +60,8 @@ exports.login = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.getMe = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id).select('-password');
-  if (!user) throw new ErrorResponse(`User ${req.user.id} was not found`, 400);
+  const user = await User.findById(req.user._id).select('-password');
+  if (!user) throw new ErrorResponse(`User ${req.user._id} was not found`, 400);
   res.status(200).json(user);
 });
 
@@ -84,7 +88,7 @@ exports.updateDetails = asyncHandler(async (req, res) => {
     email: req.body.email,
   };
 
-  const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
+  const user = await User.findByIdAndUpdate(req.user._id, fieldsToUpdate, {
     new: true,
     runValidators: true,
   });
@@ -96,7 +100,7 @@ exports.updateDetails = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.updatePassword = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user._id).select('+password');
 
   // Check current password
   if (!(await user.matchPassword(req.body.currentPassword))) {
@@ -118,14 +122,14 @@ exports.updatePassword = asyncHandler(async (req, res) => {
 exports.deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
-  if (user._id.toString() !== req.user.id)
+  if (user._id.toString() !== req.user._id)
     throw new ErrorResponse(`User ${req.params.id} is not authorized to delete this profile`, 401);
 
   // Remove user posts
-  await Post.deleteMany({ user: req.user.id });
+  await Post.deleteMany({ user: req.user._id });
 
   // Remove user profile
-  await Profile.deleteMany({ user: req.user.id });
+  await Profile.deleteMany({ user: req.user._id });
 
   await user.remove();
 

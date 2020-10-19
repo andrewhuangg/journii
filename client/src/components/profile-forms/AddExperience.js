@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { addExperience } from '../../actions/profile';
+import { addExperience } from '../../actions/profileAction';
 
 const AddExperience = ({ addExperience, history }) => {
   const [formData, setFormData] = useState({
@@ -50,7 +50,13 @@ const AddExperience = ({ addExperience, history }) => {
           />
         </div>
         <div>
-          <input type='text' placeholder='Address' name='address' value={address} onChange={(e) => onChange(e)} />
+          <input
+            type='text'
+            placeholder='Address'
+            name='address'
+            value={address}
+            onChange={(e) => onChange(e)}
+          />
         </div>
         <div>
           <h4>From Date</h4>

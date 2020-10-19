@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { register } from '../../actions/auth';
+import { register } from '../../actions/authAction';
 const Register = ({ register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',

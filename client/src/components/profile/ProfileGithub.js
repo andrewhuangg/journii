@@ -1,28 +1,25 @@
-import React, {useEffect} from 'react'
-import { connect } from 'react-redux'
-import Spinner from '../layout/Spinner'
-import { getGithubRepos} from '../../actions/profile'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
+import { getGithubRepos } from '../../actions/profileAction';
 
-const ProfileGithub = ({username, repos, getGithubRepos}) => {
-
+const ProfileGithub = ({ username, repos, getGithubRepos }) => {
   useEffect(() => {
-    getGithubRepos(username)
-  }, [getGithubRepos])
+    getGithubRepos(username);
+  }, [getGithubRepos]);
 
   return (
     <div>
       <h2>Github Repos</h2>
-      {!repos ? 
-        <Spinner /> :
-        (repos.data && repos.data.map(repo => (
+      {!repos ? (
+        <Spinner />
+      ) : (
+        repos.data &&
+        repos.data.map((repo) => (
           <div key={repo.id}>
-            <div> 
+            <div>
               <h4>
-                <a 
-                  href={repo.html_url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
+                <a href={repo.html_url} target='_blank' rel='noopener noreferrer'>
                   {repo.name}
                 </a>
               </h4>
@@ -30,26 +27,20 @@ const ProfileGithub = ({username, repos, getGithubRepos}) => {
             </div>
             <div>
               <ul>
-                <li>
-                  Stars: {repo.stargazers_cunt}
-                </li>
-                <li>
-                  Watchers: {repo.watchers_count}
-                </li>
-                <li>
-                  Forks: {repo.forks_count}
-                </li>
+                <li>Stars: {repo.stargazers_cunt}</li>
+                <li>Watchers: {repo.watchers_count}</li>
+                <li>Forks: {repo.forks_count}</li>
               </ul>
             </div>
           </div>
-        )))
-      }
+        ))
+      )}
     </div>
-  )
-}
+  );
+};
 
-const mapStateToProps = state => ({
-  repos: state.profile.repos
-})
+const mapStateToProps = (state) => ({
+  repos: state.profile.repos,
+});
 
-export default connect(mapStateToProps, {getGithubRepos})(ProfileGithub)
+export default connect(mapStateToProps, { getGithubRepos })(ProfileGithub);

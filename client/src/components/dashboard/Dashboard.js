@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profile';
+import { getCurrentProfile } from '../../actions/profileAction';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
-import { deleteAccount } from '../../actions/auth';
+import { deleteAccount } from '../../actions/authAction';
 
 const Dashboard = ({
   auth: { user },

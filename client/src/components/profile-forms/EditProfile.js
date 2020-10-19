@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { editProfile, getCurrentProfile } from '../../actions/profile';
+import { editProfile, getCurrentProfile } from '../../actions/profileAction';
 
 const EditProfile = ({
   profile: { profile, loading },

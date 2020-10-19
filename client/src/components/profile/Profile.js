@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import { getProfileByUserId } from '../../actions/profile';
+import { getProfileByUserId } from '../../actions/profileAction';
 import { Link } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
