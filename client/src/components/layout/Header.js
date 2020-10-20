@@ -27,8 +27,8 @@ const Header = () => {
                   <LinkContainer to='/posts'>
                     <NavDropdown.Item>Posts</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/profiles'>
-                    <NavDropdown.Item>Profiles</NavDropdown.Item>
+                  <LinkContainer to='/userprofile'>
+                    <NavDropdown.Item>Profile Settings</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to='/dashboard'>
                     <NavDropdown.Item>Dashboard</NavDropdown.Item>

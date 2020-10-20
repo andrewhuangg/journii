@@ -18,11 +18,11 @@ const { protect } = require('../middleware/auth');
 router.route('/register').post(register);
 router.route('/login').post(login);
 router.route('/logout').get(logout);
-router.route('/:id').delete(protect, deleteUser).get(protect, getUserById);
 router.route('/forgotpassword').post(forgotPassword);
 router.route('/resetpassword/:resettoken').put(resetPassword);
 router.route('/me').get(protect, getMe);
 router.route('/updatedetails').put(protect, updateDetails);
 router.route('/updatepassword').put(protect, updatePassword);
+router.route('/:id').get(protect, getUserById).delete(protect, deleteUser);
 
 module.exports = router;

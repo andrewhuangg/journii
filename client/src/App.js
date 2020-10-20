@@ -7,7 +7,6 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import UserProfile from './components/auth/UserProfile';
 import Dashboard from './components/dashboard/Dashboard';
-import PrivateRoute from './components/routing/PrivateRoute';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import AddExperience from './components/profile-forms/AddExperience';
@@ -35,13 +34,13 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:id' component={Profile} />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/userprofile' component={UserProfile} />
-              <PrivateRoute exact path='/createprofile' component={CreateProfile} />
-              <PrivateRoute exact path='/editprofile' component={EditProfile} />
-              <PrivateRoute exact path='/addexperience' component={AddExperience} />
-              <PrivateRoute exact path='/posts' component={Posts} />
-              <PrivateRoute exact path='/posts/:id' component={Post} />
+              <Route exact path='/dashboard' component={Dashboard} />
+              <Route exact path='/userprofile' component={UserProfile} />
+              <Route exact path='/createprofile' component={CreateProfile} />
+              <Route exact path='/editprofile' component={EditProfile} />
+              <Route exact path='/addexperience' component={AddExperience} />
+              <Route exact path='/posts' component={Posts} />
+              <Route exact path='/posts/:id' component={Post} />
             </Switch>
           </main>
         </>

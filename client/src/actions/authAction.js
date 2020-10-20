@@ -103,7 +103,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     });
 
     const {
-      userlogin: { userInfo },
+      userLogin: { userInfo },
     } = getState();
 
     const config = {
@@ -112,7 +112,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
     const { data } = await axios.get(`/api/v1/auth/${id}`, config);
     dispatch({
       type: USER_DETAILS_SUCCESS,
