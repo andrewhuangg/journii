@@ -5,6 +5,7 @@ import Header from './components/layout/Header';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import UserProfile from './components/auth/UserProfile';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
 import CreateProfile from './components/profile-forms/CreateProfile';
@@ -35,6 +36,7 @@ const App = () => {
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:id' component={Profile} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/userprofile' component={UserProfile} />
               <PrivateRoute exact path='/createprofile' component={CreateProfile} />
               <PrivateRoute exact path='/editprofile' component={EditProfile} />
               <PrivateRoute exact path='/addexperience' component={AddExperience} />

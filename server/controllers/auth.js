@@ -70,11 +70,6 @@ exports.getMe = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.logout = asyncHandler(async (req, res) => {
-  // res.cookie('token', 'none', {
-  //   expires: new Date(Date.now() + 5 * 1000),
-  //   httpOnly: true,
-  // });
-
   res.status(200).json({ msg: 'User successfully logged out' });
 });
 
@@ -83,15 +78,23 @@ exports.logout = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.updateDetails = asyncHandler(async (req, res) => {
+  let user = await User.findById(req.user.id);
+  if (!user) throw new ErrorResponse('User not found', 401);
   const fieldsToUpdate = {
-    name: req.body.name,
-    email: req.body.email,
+    name: req.body.name || user.name,
+    email: req.body.email || user.email,
+    phone: req.body.phone || user.phone,
+    about: req.body.about || user.about,
+    image: req.body.image || user.image,
   };
 
-  const user = await User.findByIdAndUpdate(req.user._id, fieldsToUpdate, {
+  user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
     new: true,
     runValidators: true,
   });
+
+  user.getSignedJwtToken();
+
   res.status(200).json(user);
 });
 
@@ -115,14 +118,14 @@ exports.updatePassword = asyncHandler(async (req, res) => {
   res.status(200).json({ token });
 });
 
-// @desc      Delete Usere
+// @desc      Delete User
 // @route     PUT /api/v1/auth/:id
 // @access    Private
 
 exports.deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
-  if (user._id.toString() !== req.user._id)
+  if (user._id.toString() !== req.user._id.toString())
     throw new ErrorResponse(`User ${req.params.id} is not authorized to delete this profile`, 401);
 
   // Remove user posts
@@ -203,25 +206,15 @@ exports.resetPassword = asyncHandler(async (req, res) => {
   res.status(200).json({ token });
 });
 
-// HELPER FUNCTION => Get token from model, create cookie and send response
-// const sendTokenResponse = (user, statusCode, res) => {
-// Create Token
-// const token = user.getSignedJwtToken();
+// @desc      Get user by id
+// @route     GET /api/v1/auth/:id
+// @access    Private
 
-// // * 60 seconds * 60 minutes * 1000 milliseconds
-// // cookie accessible client side only
-// const options = {
-//   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 60 * 60 * 1000),
-//   httpOnly: true,
-// };
-
-// if (process.env.NODE_ENV === 'production') {
-//   options.secure = true;
-// }
-
-// calling our cookie 'token'
-// res.status(statusCode).cookie('token', token, options).json({
-//   success: true,
-//   token,
-// });
-// };
+exports.getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    throw new ErrorResponse(`User ${req.params.id} was not found`, 404);
+  }
+});

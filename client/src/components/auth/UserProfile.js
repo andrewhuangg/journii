@@ -1,42 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { register } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
-import FormContainer from './FormContainer';
+import { getUserDetails } from '../../actions/authAction';
 
-const Register = ({ location, history }) => {
+const UserProfile = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
 
-  const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, error, user } = userDetails;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/dashboard';
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo) history.push(redirect);
-  }, [history, userInfo, redirect]);
+    if (!userInfo) {
+      history.push('/login');
+    } else {
+      if (!user.name) {
+        dispatch(getUserDetails('me'));
+      } else {
+        setName(user.name);
+        setName(user.email);
+      }
+    }
+  }, [dispatch, history, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
-      dispatch(register(name, email, password));
+      //dispatch update profile
     }
   };
 
   return (
-    <>
-      <FormContainer>
-        <h1 className='large text-primary'>Sign Up</h1>
+    <Row>
+      <Col md={3}>
+        <h2 className='large text-primary'>User Profile</h2>
         {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
         {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
         {loading && <Spinner />}
@@ -82,18 +93,15 @@ const Register = ({ location, history }) => {
           </Form.Group>
 
           <Button type='submit' variant='primary'>
-            Register
+            Update
           </Button>
         </Form>
-        <Row className='py-3'>
-          <Col>
-            Have an Account?{' '}
-            <Link to={redirect ? `/register?redirect=${redirect}` : '/login'}>Login</Link>
-          </Col>
-        </Row>
-      </FormContainer>
-    </>
+      </Col>
+      <Col md={9}>
+        <h2>Some info</h2>
+      </Col>
+    </Row>
   );
 };
 
-export default Register;
+export default UserProfile;

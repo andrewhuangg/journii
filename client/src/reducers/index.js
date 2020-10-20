@@ -4,7 +4,7 @@ import auth from './auth';
 import profile from './profile';
 import post from './post';
 import { postDetailsReducer, postListReducer } from './postReducer';
-import { userLoginReducer } from './authReducer';
+import { userLoginReducer, userRegisterReducer, userDetailsReducer } from './authReducer';
 
 export default combineReducers({
   alert,
@@ -14,4 +14,6 @@ export default combineReducers({
   postList: postListReducer,
   postDetails: postDetailsReducer,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
 });

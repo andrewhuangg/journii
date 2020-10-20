@@ -33,12 +33,12 @@ exports.getProfile = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.getOwnProfile = asyncHandler(async (req, res) => {
-  const profile = await Profile.findOne({ user: req.user.id }).populate({
+  const profile = await Profile.findOne({ user: req.user._id }).populate({
     path: 'user',
     select: 'name email',
   });
 
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404);
+  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   res.status(200).json(profile);
 });
@@ -49,7 +49,7 @@ exports.getOwnProfile = asyncHandler(async (req, res) => {
 
 exports.createProfile = asyncHandler(async (req, res) => {
   // assign the profiles user to the logged in user.
-  req.body.user = req.user.id;
+  req.body.user = req.user._id;
 
   // pull out the array fields to perform formatting
   const { technologies, features, youtube, twitter, facebook, linkedin, instagram } = req.body;
@@ -60,8 +60,8 @@ exports.createProfile = asyncHandler(async (req, res) => {
   if (!user) throw new ErrorResponse(`user not found with the id of ${req.params.userId}`, 404);
 
   // Make sure user is the owner of the profile
-  if (user._id.toString() !== req.user.id)
-    throw new ErrorResponse(`User ${req.user.id} is not authorized to create this spot`, 401);
+  if (user._id.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to create this spot`, 401);
 
   // format fields array
   if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
@@ -91,8 +91,8 @@ exports.updateProfile = asyncHandler(async (req, res) => {
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404);
 
   // Make sure user is profile owner
-  if (profile.user.toString() !== req.user.id)
-    throw new ErrorResponse(`User ${req.user.id} is not authorized to update this profile`, 401);
+  if (profile.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
 
   const { youtube, twitter, facebook, linkedin, instagram, address } = req.body;
 
@@ -127,8 +127,8 @@ exports.deleteProfile = asyncHandler(async (req, res) => {
 
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404);
 
-  if (profile.user.toString() !== req.user.id)
-    throw new ErrorResponse(`User ${req.user.id} is not authorized to delete this profile`, 401);
+  if (profile.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this profile`, 401);
 
   await profile.remove();
 
@@ -140,8 +140,8 @@ exports.deleteProfile = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.createProfileProject = asyncHandler(async (req, res) => {
-  const profile = await Profile.findOne({ user: req.user.id });
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404);
+  const profile = await Profile.findOne({ user: req.user._id });
+  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   const { technologies, features } = req.body;
   if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
@@ -157,8 +157,8 @@ exports.createProfileProject = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.deleteProfileProject = asyncHandler(async (req, res) => {
-  const profile = await Profile.findOne({ user: req.user.id });
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404);
+  const profile = await Profile.findOne({ user: req.user._id });
+  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   // find the index of the experience to remove by id
   const removeIdx = profile.project.map((proj) => proj.id).indexOf(req.params.projectId);
@@ -175,8 +175,8 @@ exports.deleteProfileProject = asyncHandler(async (req, res) => {
 
 exports.createProfileExperience = asyncHandler(async (req, res) => {
   // find profile for the current user by the user id
-  const profile = await Profile.findOne({ user: req.user.id });
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404);
+  const profile = await Profile.findOne({ user: req.user._id });
+  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   profile.experience.unshift(req.body);
   await profile.save();
@@ -189,8 +189,8 @@ exports.createProfileExperience = asyncHandler(async (req, res) => {
 
 exports.deleteProfileExperience = asyncHandler(async (req, res) => {
   // find profile for the current user by the user id
-  const profile = await Profile.findOne({ user: req.user.id });
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user.id}`, 404);
+  const profile = await Profile.findOne({ user: req.user._id });
+  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   // find the index of the experience to remove by id
   const removeIdx = profile.experience.map((exp) => exp.id).indexOf(req.params.experienceId);
@@ -258,13 +258,13 @@ exports.followProfile = asyncHandler(async (req, res) => {
   const profile = await Profile.findById(req.params.id);
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404);
 
-  if (profile.follows.filter((follow) => follow.user.toString() === req.user.id).length > 0)
+  if (profile.follows.filter((follow) => follow.user.toString() === req.user._id).length > 0)
     throw new ErrorResponse(`profile ${req.params.id} has already been followed`, 400);
 
   if (profile.user.toString() === req.user._id.toString())
     throw new ErrorResponse(`unable to follow own profile`, 400);
 
-  profile.follows.unshift({ user: req.user.id });
+  profile.follows.unshift({ user: req.user._id });
   await profile.save();
 
   res.status(200).json(profile.follows);
@@ -278,11 +278,14 @@ exports.unfollowProfile = asyncHandler(async (req, res) => {
   const profile = await Profile.findById(req.params.id);
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404);
 
-  if (profile.follows.filter((follow) => follow.user.toString() === req.user.id).length === 0)
+  if (
+    profile.follows.filter((follow) => follow.user.toString() === req.user._id.toString())
+      .length === 0
+  )
     throw new ErrorResponse(`profile ${req.params.id} has not yet been followed`, 400);
 
   // Get remove index
-  const removeIdx = profile.follows.map((follow) => follow.user.toString()).indexOf(req.user.id);
+  const removeIdx = profile.follows.map((follow) => follow.user.toString()).indexOf(req.user._id);
   profile.follows.splice(removeIdx, 1);
 
   await profile.save();

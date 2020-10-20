@@ -31,7 +31,9 @@ export const listPosts = (userId) => async (dispatch) => {
     dispatch({
       type: POST_LIST_FAIL,
       payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
@@ -48,7 +50,9 @@ export const listPostDetails = (id) => async (dispatch) => {
     dispatch({
       type: POST_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };

@@ -17,10 +17,7 @@ const Login = ({ location, history }) => {
   const redirect = location.search ? location.search.split('=')[1] : '/dashboard';
 
   useEffect(() => {
-    if (userInfo) {
-      console.log(location);
-      history.push(redirect);
-    }
+    if (userInfo) history.push(redirect);
   }, [history, userInfo, redirect]);
 
   const submitHandler = (e) => {
@@ -62,7 +59,7 @@ const Login = ({ location, history }) => {
         <Row className='py-3'>
           <Col>
             New User?{' '}
-            <Link to={redirect ? `/register?rediret=${redirect}` : '/register'}>Register</Link>
+            <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
           </Col>
         </Row>
       </FormContainer>
