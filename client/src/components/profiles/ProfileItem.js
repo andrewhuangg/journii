@@ -1,22 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { followProfile, unFollowProfile, getFollowedProfiles } from '../../actions/profileAction';
 
 const ProfileItem = ({
   profile: {
-    user: { _id, email, name },
     bio,
-    location,
+    github,
+    user: { _id, name, email },
+    username,
+    website,
   },
 }) => {
   return (
-    <div>
-      img
+    <>
       <div>
-        <h2>{name}</h2>
-        <p>{location && <span>residing at {location.formattedAddress}</span>}</p>
-        <Link to={`/profile/${_id}`}> View Profile</Link>
+        <p>bio: {bio}</p>
+        <p>github: {github}</p>
+        <p>name: {name}</p>
+        <p>email: {email}</p>
+        <p>username: {username}</p>
+        <p>website: {website}</p>
+        <div>
+          <Link to={`/profile/${_id}`}>view profile</Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

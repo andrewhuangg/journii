@@ -31,7 +31,7 @@ const ProfileSchema = new mongoose.Schema(
     slug: String,
     address: String,
     github: String,
-    project: [
+    projects: [
       {
         name: {
           type: String,
@@ -56,7 +56,7 @@ const ProfileSchema = new mongoose.Schema(
         website: String,
       },
     ],
-    experience: [
+    experiences: [
       {
         title: {
           type: String,

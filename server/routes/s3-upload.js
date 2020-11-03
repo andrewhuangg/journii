@@ -3,7 +3,6 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 const express = require('express');
 const path = require('path');
-const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -43,12 +42,12 @@ const upload = multer({
     },
     key: (req, file, cb) => {
       const ext = path.extname(file.originalname).toLowerCase();
-      cb(null, `photo_${file.fieldname}_${Date.now()}${ext}`);
+      cb(null, `photo_${file.fieldname}_${Date.now().toString()}${ext}`);
     },
   }),
 });
 
-router.route('/').post(protect, upload.single('image'), (req, res) => {
+router.route('/').post(upload.single('image'), (req, res) => {
   res.status(200).json(req.file.location);
 });
 

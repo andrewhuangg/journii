@@ -5,6 +5,10 @@ const ReviewSchema = new mongoose.Schema(
     name: { type: String, required: true },
     rating: { type: Number, required: true },
     comment: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     timestamps: true,
@@ -20,6 +24,10 @@ const PostSchema = new mongoose.Schema(
     text: {
       type: String,
       required: [true, 'Please provide some text for the post'],
+    },
+    title: {
+      type: String,
+      required: [true, 'Please provide a title for your post'],
     },
     name: String,
     image: String,

@@ -1,214 +1,191 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { createProfile } from '../../actions/profileAction';
-import axios from 'axios';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import Spinner from '../layout/Spinner';
+import AlertMessage from '../layout/AlertMessage';
 
-const CreateProfile = ({ createProfile, history, user }) => {
-  const [formData, setFormData] = useState({
-    bio: '',
-    username: '',
-    address: '',
-    website: '',
-    github: '',
-    facebook: '',
-    youtube: '',
-    twitter: '',
-    linkedin: '',
-    instagram: '',
-    image: '',
-  });
+const CreateProfile = ({ history }) => {
+  const dispatch = useDispatch();
 
+  const [username, setUserName] = useState('');
+  const [bio, setBio] = useState('');
+  const [website, setWebsite] = useState('');
+  const [address, setAddress] = useState('');
+  const [github, setGithub] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [facebook, setFacebook] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [instagram, setInstagram] = useState('');
+
+  const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [imageData, setImage] = useState('');
 
-  const {
-    bio,
-    username,
-    address,
-    website,
-    github,
-    facebook,
-    youtube,
-    twitter,
-    linkedin,
-    instagram,
-    image,
-  } = formData;
+  const profileCreate = useSelector((state) => state.profileCreate);
+  const { loading, success, profileInfo, error } = profileCreate;
 
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  useEffect(() => {
+    if (profileInfo) history.push('/dashboard');
+  }, [dispatch, history, profileInfo]);
 
-  const onSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    createProfile(formData, history, user.data._id);
-  };
-
-  const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
-    const imageForm = new FormData();
-    imageForm.append('image', file);
-    setUploading(true);
-
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-      const { data } = await axios.post('/api/v1/upload', imageForm, config);
-      setImage(data);
-      setUploading(false);
-    } catch (err) {
-      console.error(err);
-      setUploading(false);
+    if (!bio) {
+      setMessage('Bio cannot be empty');
+    } else {
+      setMessage(null);
+      dispatch(
+        createProfile({
+          username,
+          bio,
+          website,
+          address,
+          github,
+          youtube,
+          linkedin,
+          twitter,
+          facebook,
+          instagram,
+        })
+      );
     }
   };
 
   return (
-    <>
-      <h1>Create Your Profile</h1>
-      <small>* = required field</small>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div>
-          <input
-            type='text'
-            placeholder='enter image url'
-            value={imageData}
-            onChange={(e) => setImage(e.target.value)}
-          />
-          <input
-            type='file'
-            id='image-file'
-            label='Choose File'
-            name='image'
-            value={image}
-            onChange={uploadFileHandler}
-          />
-          {uploading && <Spinner />}
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Username'
-            name='username'
-            value={username}
-            onChange={(e) => onChange(e)}
-          />
-          <small>Feel free to give your profile a username</small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Website'
-            name='website'
-            value={website}
-            onChange={(e) => onChange(e)}
-          />
-          <small>Could be your own or a company website</small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Address'
-            name='address'
-            value={address}
-            onChange={(e) => onChange(e)}
-          />
-          <small>
-            Could be your own or your company address (eg. 103 john st, oakland, california, 96213)
-          </small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Github Username'
-            name='github'
-            value={github}
-            onChange={(e) => onChange(e)}
-          />
-          <small>If you want your latest repos and a Github link, include your username</small>
-        </div>
-        <div>
-          <textarea
-            placeholder='* A short bio of yourself'
-            name='bio'
-            value={bio}
-            onChange={(e) => onChange(e)}
-          ></textarea>
-          <small>Tell us a little about yourself</small>
-        </div>
+    <Row>
+      <Col md={6}>
+        <h2>Create Your Profile</h2>
+        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
+        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
+        {success && <AlertMessage variant='success'>Profile Created</AlertMessage>}
+        {loading && <Spinner />}
+        <small>* = required field</small>
+        <Form onSubmit={submitHandler}>
+          <Form.Group controlId='username'>
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Username'
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        <div>
-          <button onClick={() => toggleSocial(!displaySocial)} type='button'>
-            Add Social Network Links
-          </button>
-          <span>Optional</span>
-        </div>
+          <Form.Group controlId='website'>
+            <Form.Label>Website</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Website'
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-        {displaySocial && (
-          <>
-            <div>
-              <input
-                type='text'
-                placeholder='Twitter URL'
-                name='twitter'
-                value={twitter}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+          <Form.Group controlId='address'>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Address'
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
 
-            <div>
-              <input
-                type='text'
-                placeholder='Facebook URL'
-                name='facebook'
-                value={facebook}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+          <Form.Group controlId='github'>
+            <Form.Label>Github</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Github Username'
+              value={github}
+              onChange={(e) => setGithub(e.target.value)}
+            ></Form.Control>
+            <Form.Text id='githubHelpBlock' muted>
+              If you want your latest repos and a Github link, include your username. Your username
+              can be found here "github.com/YOUR_USERNAME"
+            </Form.Text>
+          </Form.Group>
 
-            <div>
-              <input
-                type='text'
-                placeholder='YouTube URL'
-                name='youtube'
-                value={youtube}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+          <Form.Group controlId='bio'>
+            <Form.Label>Bio</Form.Label>
+            <Form.Control
+              as='textarea'
+              rows={4}
+              placeholder='* A short bio of yourself'
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            ></Form.Control>
+            <Form.Text id='bioHelpBlock' muted>
+              Tell us a bit about yourself
+            </Form.Text>
+          </Form.Group>
 
-            <div>
-              <input
-                type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                value={linkedin}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+          <Form.Group controlId='displaySocial'>
+            <Button onClick={() => toggleSocial(!displaySocial)}>Add Social Network Links</Button>
+            <Form.Label>Optional</Form.Label>
+          </Form.Group>
 
-            <div>
-              <input
-                type='text'
-                placeholder='Instagram URL'
-                name='instagram'
-                value={instagram}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-          </>
-        )}
-        <input type='submit' />
-        <Link to='/dashboard'>Go Back</Link>
-      </form>
-    </>
+          {displaySocial && (
+            <>
+              <Form.Group controlId='twitter'>
+                <Form.Label>Twitter</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Twitter URL'
+                  value={twitter}
+                  onChange={(e) => setTwitter(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId='facebook'>
+                <Form.Label>Facebook</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Facebook URL'
+                  value={facebook}
+                  onChange={(e) => setFacebook(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId='youtube'>
+                <Form.Label>Youtube</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='YouTube URL'
+                  value={youtube}
+                  onChange={(e) => setYoutube(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId='linkedin'>
+                <Form.Label>LinkedIn</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Linkedin URL'
+                  value={linkedin}
+                  onChange={(e) => setLinkedin(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId='instagram'>
+                <Form.Label>Instagram</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Instagram URL'
+                  value={instagram}
+                  onChange={(e) => setInstagram(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+            </>
+          )}
+          <Button type='submit' variant='primary'>
+            Create
+          </Button>
+        </Form>
+        <Button onClick={(e) => history.push('/dashboard')}>Go Back</Button>
+      </Col>
+    </Row>
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-});
-
-export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));
+export default CreateProfile;

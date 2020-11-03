@@ -1,77 +1,68 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Image, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
-import { connect } from 'react-redux';
-import {
-  addLike,
-  removeLike,
-  followPost,
-  unFollowPost,
-  deletePost,
-} from '../../actions/postAction';
 
 const PostItem = ({
-  auth,
-  post: { _id, user, text, name, likes, comments, follows, date },
-  addLike,
-  removeLike,
-  followPost,
-  unFollowPost,
-  deletePost,
-  showActions = true,
+  post: {
+    _id,
+    text,
+    user,
+    name,
+    title,
+    image,
+    rating,
+    numReviews,
+    likes,
+    follows,
+    comments,
+    createdAt,
+  },
+  currentUserId,
+  deleteHandler,
 }) => {
   return (
-    <div>
+    <>
       <div>
-        <Link to={`/profile/${user}`}>
-          img
-          <h4>{name}</h4>
-        </Link>
-      </div>
-      <div>
+        {image && <Image src={image} alt={title} fluid />}
+        <h6>
+          <Link to={`posts/${_id}`}>{title}</Link>
+        </h6>
         <p>{text}</p>
         <p>
-          Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
+          Publisher <Link to={`profiles/${user}`}>{name}</Link>
+        </p>
+        <p>
+          Posted on <Moment format='MM/DD/YYYY'>{createdAt}</Moment>
         </p>
 
-        {showActions && (
-          <>
-            <button onClick={(e) => addLike(_id)} type='button'>
-              likes {likes.length > 0 && <span>{likes.length}</span>}
-            </button>
-            <button onClick={(e) => removeLike(_id)} type='button'>
-              dislike
-            </button>
-            <Link to={`/posts/${_id}`}>
-              Discussion {comments.length > 0 && <span>{comments.length}</span>}
+        <ul>
+          <li>
+            <Link to={`posts/${_id}`}>likes {likes.length > 0 && <span>{likes.length}</span>}</Link>
+          </li>
+          <li>
+            <Link to={`posts/${_id}`}>
+              follows {follows.length > 0 && <span>{follows.length}</span>}
             </Link>
-            {/* if already following, change follow to following */}
-            <button onClick={(e) => followPost(_id)} type='button'>
-              follow {follows.length > 0 && <span>{follows.length}</span>}
-            </button>
-            <button onClick={(e) => unFollowPost(_id)} type='button'>
-              unfollow
-            </button>
-            {!auth.loading && user === auth.user._id && (
-              <button onClick={(e) => deletePost(_id)} type='button'>
-                delete
-              </button>
-            )}
-          </>
+          </li>
+          <li>
+            <Link to={`posts/${_id}`}>
+              comments {comments.length > 0 && <span>{comments.length}</span>}
+            </Link>
+          </li>
+          <li>
+            <Link to={`posts/${_id}`}>reviews {numReviews > 0 && <span>{numReviews}</span>}</Link>
+          </li>
+        </ul>
+        {currentUserId === user && <p>{<Link to={`editpost/${_id}`}>Edit Post</Link>} </p>}
+        {currentUserId === user && (
+          <Button onClick={() => deleteHandler(_id)}>
+            <i className='fas fa-trash'></i>
+          </Button>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, {
-  addLike,
-  removeLike,
-  followPost,
-  unFollowPost,
-  deletePost,
-})(PostItem);
+export default PostItem;

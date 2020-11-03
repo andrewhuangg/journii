@@ -1,16 +1,9 @@
 import React from 'react';
 
-const ProfileTop = ({
-  profile: {
-    website,
-    social,
-    location,
-    user: { name },
-  },
-}) => {
+const ProfileTop = () => {
   return (
     <div>
-      img
+      {/* img
       <h1>{name}</h1>
       <p>{location && location.formattedAddress && <span>{location.formattedAddress}</span>}</p>
       <div>
@@ -43,8 +36,8 @@ const ProfileTop = ({
           <a href={social.linkedin} target='_blank' rel='noopener noreferrer'>
             {social.linkedin}
           </a>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
     </div>
   );
 };

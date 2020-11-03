@@ -23,15 +23,15 @@ const Profile = require('../models/Profile');
 const router = express.Router({ mergeParams: true });
 
 router.route('/experience').put(protect, createProfileExperience);
-router.route('/experience/:experienceId').delete(protect, deleteProfileExperience);
 router.route('/project').put(protect, createProfileProject);
-router.route('/project/:projectId').put(protect, deleteProfileProject);
 router.route('/me').get(protect, getOwnProfile);
+router.route('/experience/:experienceId').delete(protect, deleteProfileExperience);
+router.route('/project/:projectId').put(protect, deleteProfileProject);
 router.route('/users/:userId').get(getProfile);
-router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
 router.route('/github/:username').get(getGithubRepo);
 router.route('/follow/:id').put(protect, followProfile);
 router.route('/unfollow/:id').put(protect, unfollowProfile);
+router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
 
 router.route('/followedprofiles').get(
   protect,

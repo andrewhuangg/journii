@@ -44,7 +44,7 @@ exports.getOwnProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc      Create a new profile
-// @route     POST /api/v1/users/:userId/profiles
+// @route     POST /api/v1/profiles
 // @access    Private
 
 exports.createProfile = asyncHandler(async (req, res) => {
@@ -53,15 +53,6 @@ exports.createProfile = asyncHandler(async (req, res) => {
 
   // pull out the array fields to perform formatting
   const { technologies, features, youtube, twitter, facebook, linkedin, instagram } = req.body;
-
-  // grab the user by the params, so we can check if the :userId is the actual logged in user
-  const user = await User.findById(req.params.userId).select('-password');
-
-  if (!user) throw new ErrorResponse(`user not found with the id of ${req.params.userId}`, 404);
-
-  // Make sure user is the owner of the profile
-  if (user._id.toString() !== req.user._id.toString())
-    throw new ErrorResponse(`User ${req.user._id} is not authorized to create this spot`, 401);
 
   // format fields array
   if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());

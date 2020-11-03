@@ -26,7 +26,12 @@ exports.register = asyncHandler(async (req, res) => {
 
   if (user) {
     const token = user.getSignedJwtToken();
-    res.status(200).json({ token });
+    res.status(200).json({
+      token,
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } else {
     throw new ErrorResponse('Invalid user data', 400);
   }
@@ -49,7 +54,12 @@ exports.login = asyncHandler(async (req, res) => {
 
   if (user && isMatch) {
     const token = user.getSignedJwtToken();
-    res.status(200).json({ token });
+    res.status(200).json({
+      token,
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } else {
     throw new ErrorResponse('Invalid credentials', 401);
   }
@@ -92,8 +102,6 @@ exports.updateDetails = asyncHandler(async (req, res) => {
     new: true,
     runValidators: true,
   });
-
-  user.getSignedJwtToken();
 
   res.status(200).json(user);
 });

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { LOGOUT } from './actions/types';
 import Header from './components/layout/Header';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
@@ -10,16 +9,18 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import AddExperience from './components/profile-forms/AddExperience';
-import Profiles from './components/profiles/Profiles';
-import Profile from './components/profile/Profile';
-import Posts from './components/posts/Posts';
+import ProfileList from './components/profiles/ProfileList';
+import ProfileShow from './components/profile/ProfileShow';
+import PostList from './components/posts/PostList';
 import Post from './components/post/Post';
+import CreatePost from './components/post-forms/CreatePost';
+import EditPost from './components/post-forms/EditPost';
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
 
-import './App.css';
+import './App.scss';
 
 const App = () => {
   return (
@@ -32,14 +33,16 @@ const App = () => {
             <Switch>
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <Route exact path='/profiles' component={Profiles} />
-              <Route exact path='/profile/:id' component={Profile} />
+              <Route exact path='/profiles' component={ProfileList} />
+              <Route exact path='/profile/:id' component={ProfileShow} />
               <Route exact path='/dashboard' component={Dashboard} />
               <Route exact path='/userprofile' component={UserProfile} />
               <Route exact path='/createprofile' component={CreateProfile} />
               <Route exact path='/editprofile' component={EditProfile} />
-              <Route exact path='/addexperience' component={AddExperience} />
-              <Route exact path='/posts' component={Posts} />
+              {/* <Route exact path='/addexperience' component={AddExperience} /> */}
+              <Route exact path='/createpost' component={CreatePost} />
+              <Route exact path='/editpost/:id' component={EditPost} />
+              <Route exact path='/posts' component={PostList} />
               <Route exact path='/posts/:id' component={Post} />
             </Switch>
           </main>

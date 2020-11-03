@@ -1,27 +1,52 @@
 import axios from 'axios';
 import {
-  GET_POST,
-  POST_ERROR,
-  UPDATE_LIKES,
-  UPDATE_FOLLOWS,
-  DELETE_POST,
-  ADD_POST,
-  ADD_COMMENT,
-  REMOVE_COMMENT,
   POST_LIST_SUCCESS,
   POST_LIST_REQUEST,
   POST_LIST_FAIL,
   POST_DETAILS_REQUEST,
   POST_DETAILS_SUCCESS,
   POST_DETAILS_FAIL,
+  POST_CREATE_REQUEST,
+  POST_CREATE_SUCCESS,
+  POST_CREATE_FAIL,
+  POST_CREATE_COMMENT_REQUEST,
+  POST_CREATE_COMMENT_SUCCESS,
+  POST_CREATE_COMMENT_FAIL,
+  POST_CREATE_REVIEW_REQUEST,
+  POST_CREATE_REVIEW_SUCCESS,
+  POST_CREATE_REVIEW_FAIL,
+  POST_DELETE_REQUEST,
+  POST_DELETE_SUCCESS,
+  POST_DELETE_FAIL,
+  POST_UPDATE_LIKES_REQUEST,
+  POST_UPDATE_LIKES_SUCCESS,
+  POST_UPDATE_LIKES_FAIL,
+  POST_UPDATE_FOLLOWS_REQUEST,
+  POST_UPDATE_FOLLOWS_SUCCESS,
+  POST_UPDATE_FOLLOWS_FAIL,
+  POST_UPDATE_REQUEST,
+  POST_UPDATE_SUCCESS,
+  POST_UPDATE_FAIL,
 } from './types';
 
-export const listPosts = (userId) => async (dispatch) => {
+export const listPosts = (userId) => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_LIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
     const { data } = !userId
-      ? await axios.get('/api/v1/posts')
-      : await axios.get(`/api/v1/users/${userId}/posts`);
+      ? await axios.get('/api/v1/posts', config)
+      : await axios.get(`/api/v1/users/${userId}/posts`, config);
 
     dispatch({
       type: POST_LIST_SUCCESS,
@@ -38,10 +63,22 @@ export const listPosts = (userId) => async (dispatch) => {
   }
 };
 
-export const listPostDetails = (id) => async (dispatch) => {
+export const listPostDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/v1/posts/${id}`);
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/v1/posts/${id}`, config);
     dispatch({
       type: POST_DETAILS_SUCCESS,
       payload: data,
@@ -57,156 +94,289 @@ export const listPostDetails = (id) => async (dispatch) => {
   }
 };
 
-export const getPost = (id) => async (dispatch) => {
+export const likePost = (post, id) => async (dispatch, getState) => {
   try {
-    const res = await axios.get(`/api/v1/posts/${id}`);
-    dispatch({
-      type: GET_POST,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: POST_ERROR,
-      payload: err,
-    });
-  }
-};
+    dispatch({ type: POST_UPDATE_LIKES_REQUEST });
 
-export const addLike = (postId) => async (dispatch) => {
-  try {
-    const res = await axios.put(`/api/v1/posts/like/${postId}`);
-    dispatch({
-      type: UPDATE_LIKES,
-      payload: {
-        postId,
-        likes: res.data,
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
+    };
+
+    const { data } = await axios.put(`/api/v1/posts/like/${id}`, post, config);
+
+    dispatch({
+      type: POST_UPDATE_LIKES_SUCCESS,
+      payload: data,
     });
-  } catch (err) {}
+  } catch (error) {
+    dispatch({
+      type: POST_UPDATE_LIKES_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
 };
 
-export const removeLike = (postId) => async (dispatch) => {
+export const unlikePost = (post, id) => async (dispatch, getState) => {
   try {
-    const res = await axios.put(`/api/v1/posts/unlike/${postId}`);
-    dispatch({
-      type: UPDATE_LIKES,
-      payload: {
-        postId,
-        likes: res.data,
+    dispatch({ type: POST_UPDATE_LIKES_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
-    });
-  } catch (err) {
+    };
+
+    const { data } = await axios.put(`/api/v1/posts/unlike/${id}`, post, config);
+
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_UPDATE_LIKES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_UPDATE_LIKES_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
 
-export const followPost = (postId) => async (dispatch) => {
+export const followPost = (post, id) => async (dispatch, getState) => {
   try {
-    const res = await axios.put(`/api/v1/posts/follow/${postId}`);
-    dispatch({
-      type: UPDATE_FOLLOWS,
-      payload: {
-        postId,
-        follows: res.data,
+    dispatch({ type: POST_UPDATE_FOLLOWS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
-    });
-  } catch (err) {
+    };
+
+    const { data } = await axios.put(`/api/v1/posts/follow/${id}`, post, config);
+
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_UPDATE_FOLLOWS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_UPDATE_FOLLOWS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
 
-export const unFollowPost = (postId) => async (dispatch) => {
+export const unfollowPost = (post, id) => async (dispatch, getState) => {
   try {
-    const res = await axios.put(`/api/v1/posts/unfollow/${postId}`);
-    dispatch({
-      type: UPDATE_FOLLOWS,
-      payload: {
-        postId,
-        follows: res.data,
+    dispatch({ type: POST_UPDATE_FOLLOWS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
-    });
-  } catch (err) {
+    };
+
+    const { data } = await axios.put(`/api/v1/posts/unfollow/${id}`, post, config);
+
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_UPDATE_FOLLOWS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_UPDATE_FOLLOWS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
 
-export const deletePost = (postId) => async (dispatch) => {
+export const deletePost = (id) => async (dispatch, getState) => {
   try {
-    await axios.delete(`/api/v1/posts/${postId}`);
+    dispatch({ type: POST_DELETE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/v1/posts/${id}`, config);
+
     dispatch({
-      type: DELETE_POST,
-      payload: postId,
+      type: POST_DELETE_SUCCESS,
     });
-  } catch (err) {
+  } catch (error) {
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
 
-export const addPost = (formData) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
+export const createPost = (post) => async (dispatch, getState) => {
   try {
-    const res = await axios.post(`/api/v1/posts`, formData, config);
+    dispatch({ type: POST_CREATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/v1/posts`, post, config);
+
     dispatch({
-      type: ADD_POST,
-      payload: res.data,
+      type: POST_CREATE_SUCCESS,
+      payload: data,
     });
-  } catch (err) {
+  } catch (error) {
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
 
-export const addComment = (postId, formData) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
+export const updatePost = (post, id) => async (dispatch, getState) => {
   try {
-    const res = await axios.post(`/api/v1/posts/comment/${postId}`, formData, config);
     dispatch({
-      type: ADD_COMMENT,
-      payload: res.data,
+      type: POST_UPDATE_REQUEST,
     });
-  } catch (err) {
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/v1/posts/${id}`, post, config);
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };
 
-export const deleteComment = (postId, commentId) => async (dispatch) => {
+export const createPostComment = (postId, comment) => async (dispatch, getState) => {
   try {
-    const res = await axios.delete(`/api/v1/posts/comment/${postId}/${commentId}`);
+    dispatch({ type: POST_CREATE_COMMENT_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/v1/posts/comment/${postId}`, comment, config);
+
     dispatch({
-      type: REMOVE_COMMENT,
-      payload: commentId,
+      type: POST_CREATE_COMMENT_SUCCESS,
+      payload: data,
     });
-  } catch (err) {
+  } catch (error) {
     dispatch({
-      type: POST_ERROR,
-      payload: err,
+      type: POST_CREATE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const createPostReview = (postId, review) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: POST_CREATE_REVIEW_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/v1/posts/review/${postId}`, review, config);
+
+    dispatch({
+      type: POST_CREATE_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_CREATE_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
     });
   }
 };

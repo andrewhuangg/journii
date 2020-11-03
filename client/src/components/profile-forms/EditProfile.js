@@ -1,200 +1,195 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { editProfile, getCurrentProfile } from '../../actions/profileAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import Spinner from '../layout/Spinner';
+import AlertMessage from '../layout/AlertMessage';
+import { updateProfile, getOwnProfileDetails } from '../../actions/profileAction';
 
-const EditProfile = ({
-  profile: { profile, loading },
-  editProfile,
-  getCurrentProfile,
-  history,
-  user,
-}) => {
-  const [formData, setFormData] = useState({
-    bio: '',
-    username: '',
-    address: '',
-    website: '',
-    github: '',
-    facebook: '',
-    youtube: '',
-    twitter: '',
-    linkedin: '',
-    instagram: '',
-  });
+const EditProfile = ({ history }) => {
+  const dispatch = useDispatch();
 
+  const [username, setUserName] = useState('');
+  const [bio, setBio] = useState('');
+  const [website, setWebsite] = useState('');
+  const [address, setAddress] = useState('');
+  const [github, setGithub] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [facebook, setFacebook] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [instagram, setInstagram] = useState('');
+
+  const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
+  const profileDetails = useSelector((state) => state.profileDetails);
+  const { loading, profile, error } = profileDetails;
+
+  const profileUpdate = useSelector((state) => state.profileUpdate);
+  const { success } = profileUpdate;
+
   useEffect(() => {
-    getCurrentProfile();
-    setFormData({
-      bio: loading || !profile.bio ? '' : profile.bio,
-      username: loading || !profile.username ? '' : profile.username,
-      address: loading || !profile.location ? '' : profile.location.formattedAddress,
-      website: loading || !profile.website ? '' : profile.website,
-      github: loading || !profile.github ? '' : profile.github,
-      youtube: loading || !profile.social || !profile.social.youtube ? '' : profile.social.youtube,
-      facebook:
-        loading || !profile.social || !profile.social.facebook ? '' : profile.social.facebook,
-      twitter: loading || !profile.social || !profile.social.twitter ? '' : profile.social.twitter,
-      linkedin:
-        loading || !profile.social || !profile.social.linkedin ? '' : profile.social.linkedin,
-      instagram:
-        loading || !profile.social || !profile.social.instagram ? '' : profile.social.instagram,
-    });
-  }, [loading, getCurrentProfile]);
+    if (!profile || !profile.bio) {
+      dispatch(getOwnProfileDetails());
+    } else {
+      setUserName(profile.username);
+      setBio(profile.bio);
+      setWebsite(profile.website);
+      setAddress(profile.location.formattedAddress);
+      setGithub(profile.github);
+      setYoutube(profile.youtube);
+      setTwitter(profile.twitter);
+      setFacebook(profile.facebook);
+      setLinkedin(profile.linkedin);
+      setInstagram(profile.instagram);
+    }
+  }, [dispatch, profile]);
 
-  const {
-    bio,
-    username,
-    address,
-    website,
-    github,
-    facebook,
-    youtube,
-    twitter,
-    linkedin,
-    instagram,
-  } = formData;
-
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    const id = profile._id;
-    editProfile(formData, id);
+    if (bio.length === 0) {
+      setMessage('Bio cannot be empty');
+    } else {
+      setMessage(null);
+      dispatch(updateProfile(profile, profile._id));
+    }
   };
 
   return (
     <>
-      <h1>Edit Your Profile</h1>
-      <small>* = required field</small>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div>
-          <input
-            type='text'
-            placeholder='Username'
-            name='username'
-            value={username}
-            onChange={(e) => onChange(e)}
-          />
-          <small>Feel free to give your profile a username</small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Website'
-            name='website'
-            value={website}
-            onChange={(e) => onChange(e)}
-          />
-          <small>Could be your own or a company website</small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Address'
-            name='address'
-            value={address}
-            onChange={(e) => onChange(e)}
-          />
-          <small>
-            Could be your own or your company address (eg. 103 john st, oakland, california, 96213)
-          </small>
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Github Username'
-            name='github'
-            value={github}
-            onChange={(e) => onChange(e)}
-          />
-          <small>If you want your latest repos and a Github link, include your username</small>
-        </div>
-        <div>
-          <textarea
-            placeholder='A short bio of yourself'
-            name='bio'
-            value={bio}
-            onChange={(e) => onChange(e)}
-          ></textarea>
-          <small>Tell us a little about yourself</small>
-        </div>
-
-        <div>
-          <button onClick={() => toggleSocial(!displaySocial)} type='button'>
-            Add Social Network Links
-          </button>
-          <span>Optional</span>
-        </div>
-
-        {displaySocial && (
-          <>
-            <div>
-              <input
+      <Row>
+        <Col md={6}>
+          <h2>Update Profile</h2>
+          {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
+          {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
+          {success && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
+          {loading && <Spinner />}
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId='username'>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
                 type='text'
-                placeholder='Twitter URL'
-                name='twitter'
-                value={twitter}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+                placeholder='Username'
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-            <div>
-              <input
+            <Form.Group controlId='website'>
+              <Form.Label>Website</Form.Label>
+              <Form.Control
                 type='text'
-                placeholder='Facebook URL'
-                name='facebook'
-                value={facebook}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+                placeholder='Website'
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-            <div>
-              <input
+            <Form.Group controlId='address'>
+              <Form.Label>Address</Form.Label>
+              <Form.Control
                 type='text'
-                placeholder='YouTube URL'
-                name='youtube'
-                value={youtube}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+                placeholder='Address'
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-            <div>
-              <input
+            <Form.Group controlId='github'>
+              <Form.Label>Github</Form.Label>
+              <Form.Control
                 type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                value={linkedin}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
+                placeholder='Github Username'
+                value={github}
+                onChange={(e) => setGithub(e.target.value)}
+              ></Form.Control>
+              <Form.Text id='githubHelpBlock' muted>
+                If you want your latest repos and a Github link, include your username. Your
+                username can be found here "github.com/YOUR_USERNAME"
+              </Form.Text>
+            </Form.Group>
 
-            <div>
-              <input
-                type='text'
-                placeholder='Instagram URL'
-                name='instagram'
-                value={instagram}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-          </>
-        )}
-        <input type='submit' />
-        <Link to='/dashboard'>Go Back</Link>
-      </form>
+            <Form.Group controlId='bio'>
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                placeholder='* A short bio of yourself'
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              ></Form.Control>
+              <Form.Text id='bioHelpBlock' muted>
+                Tell us a bit about yourself
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId='displaySocial'>
+              <Button onClick={() => toggleSocial(!displaySocial)}>
+                Update Social Network Links
+              </Button>
+              <Form.Label>Optional</Form.Label>
+            </Form.Group>
+
+            {displaySocial && (
+              <>
+                <Form.Group controlId='twitter'>
+                  <Form.Label>Twitter</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Twitter URL'
+                    value={twitter}
+                    onChange={(e) => setTwitter(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='facebook'>
+                  <Form.Label>Facebook</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Facebook URL'
+                    value={facebook}
+                    onChange={(e) => setFacebook(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='youtube'>
+                  <Form.Label>Youtube</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='YouTube URL'
+                    value={youtube}
+                    onChange={(e) => setYoutube(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='linkedin'>
+                  <Form.Label>LinkedIn</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Linkedin URL'
+                    value={linkedin}
+                    onChange={(e) => setLinkedin(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='instagram'>
+                  <Form.Label>Instagram</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Instagram URL'
+                    value={instagram}
+                    onChange={(e) => setInstagram(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+              </>
+            )}
+            <Button type='submit' variant='primary'>
+              Update
+            </Button>
+          </Form>
+          <Button onClick={(e) => history.push('/dashboard')}>Go Back</Button>
+        </Col>
+      </Row>
     </>
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  profile: state.profile,
-});
-
-export default connect(mapStateToProps, {
-  editProfile,
-  getCurrentProfile,
-})(withRouter(EditProfile));
+export default EditProfile;

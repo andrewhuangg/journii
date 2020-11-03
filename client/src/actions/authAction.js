@@ -1,7 +1,5 @@
 import axios from 'axios';
 import {
-  AUTH_ERROR,
-  CLEAR_PROFILE,
   DELETE_ACCOUNT,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -13,6 +11,14 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_UPDATE_INFO_REQUEST,
+  USER_UPDATE_INFO_SUCCESS,
+  USER_UPDATE_INFO_FAIL,
+  USER_DETAILS_RESET,
+  PROFILE_DETAILS_RESET,
+  PROFILE_LIST_RESET,
+  POST_LIST_RESET,
+  POST_DETAILS_RESET,
 } from './types';
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -78,22 +84,13 @@ export const login = (email, password) => async (dispatch) => {
 // Logout / Clear profile
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
-  dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: POST_DETAILS_RESET });
+  dispatch({ type: POST_LIST_RESET });
+  dispatch({ type: PROFILE_DETAILS_RESET });
+  dispatch({ type: PROFILE_LIST_RESET });
   dispatch({ type: USER_LOGOUT });
-};
-
-export const deleteAccount = (id) => async (dispatch) => {
-  if (window.confirm('Are you sure? This can Not be undoned!')) {
-    try {
-      await axios.delete(`/api/v1/auth/${id}`);
-      dispatch({ type: DELETE_ACCOUNT });
-    } catch (err) {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: err,
-      });
-    }
-  }
+  document.location.href = '/';
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
@@ -120,6 +117,38 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const updateUserInfo = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_INFO_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/v1/auth/updatedetails`, user, config);
+    dispatch({
+      type: USER_UPDATE_INFO_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_INFO_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message.split(',').join(' ')

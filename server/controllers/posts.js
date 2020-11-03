@@ -17,9 +17,29 @@ exports.createPost = asyncHandler(async (req, res) => {
     user: req.user._id,
     text: req.body.text,
     name: user.name,
+    title: req.body.title,
+    image: req.body.image,
   };
 
   const post = await Post.create(newPost);
+  res.status(200).json(post);
+});
+
+// @desc      Update post
+// @route     PUT /api/v1/posts/:id
+// @access    Private
+
+exports.updatePost = asyncHandler(async (req, res) => {
+  let post = await Post.findById(req.params.id);
+
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
+
+  // Make sure user is post owner
+  if (post.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to update this post`, 401);
+
+  post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+
   res.status(200).json(post);
 });
 
@@ -31,13 +51,10 @@ exports.createPost = asyncHandler(async (req, res) => {
 exports.getPosts = asyncHandler(async (req, res) => {
   let posts;
   if (req.params.userId) {
-    posts = await Post.find({ user: req.params.userId }).sort({
-      date: -1,
-    });
-
+    posts = await Post.find({ user: req.params.userId }).sort('-createdAt');
     return res.status(200).json(posts);
   } else {
-    posts = await Post.find().sort({ date: -1 });
+    posts = await Post.find({}).sort('-createdAt');
     res.status(200).json(posts);
   }
 });
@@ -66,7 +83,7 @@ exports.deletePost = asyncHandler(async (req, res) => {
 
   if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
 
-  if (post.user.toString() !== req.user._id)
+  if (post.user.toString() !== req.user._id.toString())
     throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this post`, 401);
 
   await post.remove();
@@ -149,7 +166,7 @@ exports.deleteComment = asyncHandler(async (req, res) => {
 
   // Check comment owner
   if (comment.user.toString() !== req.user._id.toString())
-    throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this post`, 401);
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this comment`, 401);
 
   // Get remove index
   const removeIdx = post.comments
@@ -159,6 +176,69 @@ exports.deleteComment = asyncHandler(async (req, res) => {
 
   await post.save();
   res.status(200).json(post.comments);
+});
+
+// @desc      Create review for a post
+// @route     POST /api/v1/posts/review/:id
+// @access    Private
+
+exports.createPostReview = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  if (!user) throw new ErrorResponse(`user not found with the id of ${req.user._id}`, 404);
+
+  const post = await Post.findById(req.params.id);
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
+
+  const { rating, comment } = req.body;
+
+  if (post) {
+    const postReviewed = post.reviews.find(
+      (rev) => rev.user.toString() === req.user._id.toString()
+    );
+
+    if (postReviewed) {
+      throw new ErrorResponse(`Post ${req.params.id} already reviewed`, 400);
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+
+    post.reviews.unshift(review);
+    post.numReviews = post.reviews.length;
+    post.rating = post.reviews.reduce((acc, rev) => rev.rating + acc, 0) / post.reviews.length;
+
+    await post.save();
+    res.status(200).json(post.reviews);
+  }
+});
+
+// @desc      Delete a review
+// @route     DELETE /api/v1/posts/review/:id/:reviewId
+// @access    Private
+
+exports.deletePostReview = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  if (!post) throw new ErrorResponse(`post not found with the id of ${req.params.id}`, 404);
+
+  // Pull out the review
+  const review = post.reviews.find((rev) => rev.id === req.params.reviewId);
+  if (!review)
+    throw new ErrorResponse(`review not found with the id of ${req.params.reviewId}`, 404);
+
+  // Check review owner
+  if (review.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this review`, 401);
+
+  // Get remove index
+  const removeIdx = post.reviews.map((rev) => rev.user.toString()).indexOf(req.user._id.toString());
+  post.reviews.splice(removeIdx, 1);
+
+  await post.save();
+  res.status(200).json(post.reviews);
 });
 
 // @desc      Follow a post

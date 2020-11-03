@@ -23,27 +23,42 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               {userInfo ? (
-                <NavDropdown title='test' id='test'>
+                <>
+                  <LinkContainer to='/createpost'>
+                    <Nav.Link>Create Post</Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to='/posts'>
-                    <NavDropdown.Item>Posts</NavDropdown.Item>
+                    <Nav.Link>Posts</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to='/userprofile'>
-                    <NavDropdown.Item>Profile Settings</NavDropdown.Item>
+                  <LinkContainer to='/profiles'>
+                    <Nav.Link>Profiles</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to='/dashboard'>
-                    <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                </NavDropdown>
+                  <NavDropdown title='Menu' id='menu'>
+                    <LinkContainer to='/dashboard'>
+                      <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/userprofile'>
+                      <NavDropdown.Item>Update User</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/editprofile'>
+                      <NavDropdown.Item>Update Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/createpost'>
+                      <NavDropdown.Item>Create Post</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                  </NavDropdown>
+                </>
               ) : (
-                <> </>
+                <>
+                  <LinkContainer to='/register'>
+                    <Nav.Link>Register</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to='/login'>
+                    <Nav.Link>Login</Nav.Link>
+                  </LinkContainer>
+                </>
               )}
-              <LinkContainer to='/register'>
-                <Nav.Link>Register</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to='/login'>
-                <Nav.Link>Login</Nav.Link>
-              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>

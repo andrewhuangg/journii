@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { register } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
