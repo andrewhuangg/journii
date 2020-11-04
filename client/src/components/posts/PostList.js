@@ -8,7 +8,7 @@ import PostItem from './PostItem';
 const PostList = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, posts } = useSelector((state) => state.postList);
+  const { loading: loadingList, error: errorList, posts } = useSelector((state) => state.postList);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const postDelete = useSelector((state) => state.postDelete);
@@ -28,24 +28,21 @@ const PostList = () => {
       <p>Welcome to the community</p>
       {loadingDelete && <Spinner />}
       {errorDelete && <AlertMessage>{errorDelete} </AlertMessage>}
-      {loading ? (
-        <Spinner />
-      ) : error ? (
-        <AlertMessage variant='danger'>{error}</AlertMessage>
-      ) : (
-        <>
-          <div>
-            {posts.map((post) => (
-              <PostItem
-                key={post._id}
-                post={post}
-                currentUserId={userInfo.id}
-                deleteHandler={deleteHandler}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      {loadingList && <Spinner />}
+      {errorList && <AlertMessage variant='danger'>{errorList}</AlertMessage>}
+      <>
+        <div>
+          {posts.map((post) => (
+            <PostItem
+              key={post._id}
+              post={post}
+              currentUserId={userInfo.id}
+              deleteHandler={deleteHandler}
+            />
+          ))}
+        </div>
+      </>
+      )
     </>
   );
 };

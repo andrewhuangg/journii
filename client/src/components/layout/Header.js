@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, login, register } from '../../actions/authAction';
+import { logout } from '../../actions/authAction';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Header = () => {
   const dispatch = useDispatch();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
   const logoutHandler = () => {
     dispatch(logout());
   };
@@ -42,6 +44,9 @@ const Header = () => {
                     </LinkContainer>
                     <LinkContainer to='/editprofile'>
                       <NavDropdown.Item>Update Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/createprofile'>
+                      <NavDropdown.Item>Create Profile</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to='/createpost'>
                       <NavDropdown.Item>Create Post</NavDropdown.Item>

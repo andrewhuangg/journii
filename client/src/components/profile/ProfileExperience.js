@@ -1,19 +1,32 @@
 import React from 'react';
-import Moment from 'react-moment';
+import { useDispatch } from 'react-redux';
+import { deleteExperience } from '../../actions/profileAction';
+import ExperienceItem from './ExperienceItem';
 
-const ProfileExperience = () => (
-  <div>
-    {/* <h3>{company}</h3>
-    <h2>{title}</h2>
-    <p>
-      <Moment format='YYYY/MM/DD'>{from}</Moment>
-       - {!to ? 
-       ' Current' : 
-       <Moment format='YYYY/MM/DD'>{to}</Moment>
-      }
-    </p>
-      {description && <div>{description}</div>} */}
-  </div>
-);
+const ProfileExperience = ({ experiences, currentUserId, profileOwner }) => {
+  const dispatch = useDispatch();
+
+  const deleteHandler = (id) => {
+    dispatch(deleteExperience(id));
+  };
+
+  return (
+    <>
+      <h2>Experiences</h2>
+      <div>
+        {experiences &&
+          experiences.map((exp) => (
+            <ExperienceItem
+              key={exp._id}
+              exp={exp}
+              deleteHandler={deleteHandler}
+              currentUserId={currentUserId}
+              profileOwner={profileOwner}
+            />
+          ))}
+      </div>
+    </>
+  );
+};
 
 export default ProfileExperience;

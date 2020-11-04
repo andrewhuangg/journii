@@ -70,7 +70,7 @@ exports.login = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.getMe = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).select('-password');
+  const user = await User.findById(req.user._id).select('-password').populate('ownProfile');
   if (!user) throw new ErrorResponse(`User ${req.user._id} was not found`, 400);
   res.status(200).json(user);
 });
