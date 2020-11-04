@@ -37,7 +37,7 @@ const App = () => {
               <Route exact path='/profiles' component={ProfileList} />
               <Route exact path='/profile/:id' component={ProfileShow} />
               <Route exact path='/dashboard' component={Dashboard} />
-              <Route exact path='/userprofile' component={UserProfile} />
+              <Route exact path='/userinfo' component={UserProfile} />
               <Route exact path='/createprofile' component={CreateProfile} />
               <Route exact path='/editprofile' component={EditProfile} />
               <Route exact path='/addexperience' component={AddExperience} />
