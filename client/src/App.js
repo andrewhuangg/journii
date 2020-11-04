@@ -9,10 +9,11 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import AddExperience from './components/profile-forms/AddExperience';
+import AddProject from './components/profile-forms/AddProject';
 import ProfileList from './components/profiles/ProfileList';
 import ProfileShow from './components/profile/ProfileShow';
 import PostList from './components/posts/PostList';
-import Post from './components/post/Post';
+import PostShow from './components/post/PostShow';
 import CreatePost from './components/post-forms/CreatePost';
 import EditPost from './components/post-forms/EditPost';
 
@@ -39,11 +40,12 @@ const App = () => {
               <Route exact path='/userprofile' component={UserProfile} />
               <Route exact path='/createprofile' component={CreateProfile} />
               <Route exact path='/editprofile' component={EditProfile} />
-              {/* <Route exact path='/addexperience' component={AddExperience} /> */}
+              <Route exact path='/addexperience' component={AddExperience} />
+              <Route exact path='/addproject' component={AddProject} />
               <Route exact path='/createpost' component={CreatePost} />
               <Route exact path='/editpost/:id' component={EditPost} />
               <Route exact path='/posts' component={PostList} />
-              <Route exact path='/posts/:id' component={Post} />
+              <Route exact path='/posts/:id' component={PostShow} />
             </Switch>
           </main>
         </>

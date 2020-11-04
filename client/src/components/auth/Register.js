@@ -29,6 +29,7 @@ const Register = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
+      setMessage(null);
       dispatch(register(name, email, password));
     }
   };

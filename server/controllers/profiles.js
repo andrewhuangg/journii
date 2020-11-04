@@ -110,7 +110,7 @@ exports.updateProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc      Delete profile & user
-// @route     PUT /api/v1/profiles/:id
+// @route     Delete /api/v1/profiles/:id
 // @access    Private
 
 exports.deleteProfile = asyncHandler(async (req, res) => {
@@ -138,9 +138,9 @@ exports.createProfileProject = asyncHandler(async (req, res) => {
   if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
   if (features) req.body.features = features.split(',').map((feat) => feat.trim());
 
-  profile.project.unshift(req.body);
+  profile.projects.unshift(req.body);
   await profile.save();
-  res.status(200).json(project);
+  res.status(200).json(profile.projects);
 });
 
 // @desc      Delete profile project
@@ -152,12 +152,12 @@ exports.deleteProfileProject = asyncHandler(async (req, res) => {
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   // find the index of the experience to remove by id
-  const removeIdx = profile.project.map((proj) => proj.id).indexOf(req.params.projectId);
+  const removeIdx = profile.projects.map((proj) => proj.id).indexOf(req.params.projectId);
 
-  profile.project.splice(removeIdx, 1);
+  profile.projects.splice(removeIdx, 1);
 
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.projects);
 });
 
 // @desc      Add profile experience
@@ -169,9 +169,9 @@ exports.createProfileExperience = asyncHandler(async (req, res) => {
   const profile = await Profile.findOne({ user: req.user._id });
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
-  profile.experience.unshift(req.body);
+  profile.experiences.unshift(req.body);
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.experiences);
 });
 
 // @desc      Delete profile experience
@@ -184,12 +184,12 @@ exports.deleteProfileExperience = asyncHandler(async (req, res) => {
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   // find the index of the experience to remove by id
-  const removeIdx = profile.experience.map((exp) => exp.id).indexOf(req.params.experienceId);
+  const removeIdx = profile.experiences.map((exp) => exp.id).indexOf(req.params.experienceId);
 
-  profile.experience.splice(removeIdx, 1);
+  profile.experiences.splice(removeIdx, 1);
 
   await profile.save();
-  res.status(200).json(profile);
+  res.status(200).json(profile.experiences);
 });
 
 // @desc      Get user repos from Github

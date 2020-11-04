@@ -19,7 +19,11 @@ import {
 import {
   profileCreateReducer,
   profileDetailsReducer,
+  profileExperienceReducer,
+  profileFollowReducer,
+  profileGithubReducer,
   profileListReducer,
+  profileProjectReducer,
   profileUpdateReducer,
 } from './profileReducers';
 
@@ -33,6 +37,10 @@ export default combineReducers({
   profileDetails: profileDetailsReducer,
   profileUpdate: profileUpdateReducer,
   profileList: profileListReducer,
+  profileFollows: profileFollowReducer,
+  profileExperience: profileExperienceReducer,
+  profileProject: profileProjectReducer,
+  profileGithub: profileGithubReducer,
 
   postCreate: postCreateReducer,
   postUpdate: postUpdateReducer,

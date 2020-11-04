@@ -13,6 +13,20 @@ import {
   PROFILE_LIST_SUCCESS,
   PROFILE_LIST_FAIL,
   PROFILE_LIST_RESET,
+  PROFILE_UPDATE_FOLLOWS_REQUEST,
+  PROFILE_UPDATE_FOLLOWS_SUCCESS,
+  PROFILE_UPDATE_FOLLOWS_FAIL,
+  PROFILE_UPDATE_EXPERIENCES_REQUEST,
+  PROFILE_UPDATE_EXPERIENCES_SUCCESS,
+  PROFILE_UPDATE_EXPERIENCES_FAIL,
+  PROFILE_UPDATE_PROJECTS_REQUEST,
+  PROFILE_UPDATE_PROJECTS_SUCCESS,
+  PROFILE_UPDATE_PROJECTS_FAIL,
+  PROFILE_LIST_GITHUB_REQUEST,
+  PROFILE_LIST_GITHUB_SUCCESS,
+  PROFILE_LIST_GITHUB_FAIL,
+  PROFILE_UPDATE_EXPERIENCES_RESET,
+  PROFILE_UPDATE_PROJECTS_RESET,
 } from '../actions/types';
 
 export const profileCreateReducer = (state = {}, action) => {
@@ -81,6 +95,66 @@ export const profileListReducer = (state = { profiles: [] }, action) => {
       return { loading: false, error: payload };
     case PROFILE_LIST_RESET:
       return { profiles: [] };
+    default:
+      return state;
+  }
+};
+
+export const profileFollowReducer = (state = { follows: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PROFILE_UPDATE_FOLLOWS_REQUEST:
+      return { loading: true };
+    case PROFILE_UPDATE_FOLLOWS_SUCCESS:
+      return { loading: false, follows: payload, success: true };
+    case PROFILE_UPDATE_FOLLOWS_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const profileExperienceReducer = (state = { experiences: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PROFILE_UPDATE_EXPERIENCES_REQUEST:
+      return { loading: true };
+    case PROFILE_UPDATE_EXPERIENCES_SUCCESS:
+      return { loading: false, experiences: payload, success: true };
+    case PROFILE_UPDATE_EXPERIENCES_FAIL:
+      return { loading: false, error: payload };
+    case PROFILE_UPDATE_EXPERIENCES_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const profileProjectReducer = (state = { projects: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PROFILE_UPDATE_PROJECTS_REQUEST:
+      return { loading: true };
+    case PROFILE_UPDATE_PROJECTS_SUCCESS:
+      return { loading: false, projects: payload, success: true };
+    case PROFILE_UPDATE_PROJECTS_FAIL:
+      return { loading: false, error: payload };
+    case PROFILE_UPDATE_PROJECTS_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const profileGithubReducer = (state = { github: {} }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PROFILE_LIST_GITHUB_REQUEST:
+      return { loading: true };
+    case PROFILE_LIST_GITHUB_SUCCESS:
+      return { loading: false, github: payload, success: true };
+    case PROFILE_LIST_GITHUB_FAIL:
+      return { loading: false, error: payload };
     default:
       return state;
   }

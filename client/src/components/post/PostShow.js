@@ -17,7 +17,7 @@ import {
 } from '../../actions/postAction';
 import { POST_DETAILS_RESET } from '../../actions/types';
 
-const Post = ({ match }) => {
+const PostShow = ({ match }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -106,4 +106,4 @@ const Post = ({ match }) => {
   );
 };
 
-export default Post;
+export default PostShow;

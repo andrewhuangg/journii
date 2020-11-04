@@ -26,7 +26,7 @@ router.route('/experience').put(protect, createProfileExperience);
 router.route('/project').put(protect, createProfileProject);
 router.route('/me').get(protect, getOwnProfile);
 router.route('/experience/:experienceId').delete(protect, deleteProfileExperience);
-router.route('/project/:projectId').put(protect, deleteProfileProject);
+router.route('/project/:projectId').delete(protect, deleteProfileProject);
 router.route('/users/:userId').get(getProfile);
 router.route('/github/:username').get(getGithubRepo);
 router.route('/follow/:id').put(protect, followProfile);

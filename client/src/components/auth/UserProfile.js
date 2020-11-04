@@ -41,6 +41,7 @@ const UserProfile = ({ history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
+      setMessage(null);
       dispatch(updateUserInfo({ id: user._id, name, email, password }));
     }
   };
