@@ -43,37 +43,42 @@ const PostShow = ({ match, history }) => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    dispatch(listPostDetails(match.params.id));
-    if (successLikes || successFollows) setMessage(null);
+    if (!post._id || post._id !== match.params.id) {
+      dispatch(listPostDetails(match.params.id));
+    }
+    if (successLikes || successFollows) {
+      setMessage(null);
+      dispatch(listPostDetails(match.params.id));
+    }
     if (successDelete) {
       dispatch({ type: POST_DETAILS_RESET });
       history.push('/posts');
     }
-  }, [dispatch, match, likes, follows, successFollows, successLikes]);
+  }, [dispatch, match, successFollows, successLikes, successDelete]);
 
   const postLikeHandler = (post, id) => {
-    dispatch(likePost(post, id));
     if (errorLikes) setMessage(errorLikes);
+    dispatch(likePost(post, id));
   };
 
   const postUnlikeHandler = (post, id) => {
-    dispatch(unlikePost(post, id));
     if (errorLikes) setMessage(errorLikes);
+    dispatch(unlikePost(post, id));
   };
 
   const postFollowHandler = (post, id) => {
-    dispatch(followPost(post, id));
     if (errorFollows) setMessage(errorFollows);
+    dispatch(followPost(post, id));
   };
 
   const postUnfollowHandler = (post, id) => {
-    dispatch(unfollowPost(post, id));
     if (errorFollows) setMessage(errorFollows);
+    dispatch(unfollowPost(post, id));
   };
 
   const deleteHandler = (id) => {
-    dispatch(deletePost(id));
     if (errorDelete) setMessage(errorDelete);
+    dispatch(deletePost(id));
   };
 
   return (

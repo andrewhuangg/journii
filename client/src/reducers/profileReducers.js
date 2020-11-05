@@ -30,6 +30,7 @@ import {
   PROFILE_DELETE_REQUEST,
   PROFILE_DELETE_SUCCESS,
   PROFILE_DELETE_FAIL,
+  PROFILE_UPDATE_RESET,
 } from '../actions/types';
 
 export const profileCreateReducer = (state = {}, action) => {
@@ -87,15 +88,17 @@ export const profileDetailsReducer = (state = { profile: {} }, action) => {
   }
 };
 
-export const profileUpdateReducer = (state = {}, action) => {
+export const profileUpdateReducer = (state = { profile: {} }, action) => {
   const { type, payload } = action;
   switch (type) {
     case PROFILE_UPDATE_REQUEST:
       return { loading: true };
     case PROFILE_UPDATE_SUCCESS:
-      return { loading: false, profileInfo: payload, success: true };
+      return { loading: false, success: true };
     case PROFILE_UPDATE_FAIL:
       return { loading: false, error: payload };
+    case PROFILE_UPDATE_RESET:
+      return { profile: {} };
     default:
       return state;
   }

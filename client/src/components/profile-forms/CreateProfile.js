@@ -26,8 +26,8 @@ const CreateProfile = ({ history }) => {
   const { loading, success, profileInfo, error } = profileCreate;
 
   useEffect(() => {
-    if (profileInfo) history.push('/dashboard');
-  }, [dispatch, history, profileInfo]);
+    if (success) history.push('/dashboard');
+  }, [dispatch, history, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();

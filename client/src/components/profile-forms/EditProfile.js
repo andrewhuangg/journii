@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import { updateProfile, getOwnProfileDetails } from '../../actions/profileAction';
+import { PROFILE_UPDATE_RESET } from '../../actions/types';
 
 const EditProfile = ({ history }) => {
   const dispatch = useDispatch();
@@ -26,24 +27,31 @@ const EditProfile = ({ history }) => {
   const { loading, profile, error } = profileDetails;
 
   const profileUpdate = useSelector((state) => state.profileUpdate);
-  const { success } = profileUpdate;
+  const { success: successUpdate } = profileUpdate;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (!profile || !profile.bio) {
+    if (successUpdate) {
+      dispatch({ type: PROFILE_UPDATE_RESET });
+      history.push(`/profiles`);
+    }
+    if (!profile.user || profile.user._id !== userInfo.id) {
       dispatch(getOwnProfileDetails());
     } else {
       setUserName(profile.username);
       setBio(profile.bio);
       setWebsite(profile.website);
-      setAddress(profile.location.formattedAddress);
+      setAddress(!profile.location.formattedAddress ? '' : profile.location.formattedAddress);
       setGithub(profile.github);
-      setYoutube(profile.youtube);
-      setTwitter(profile.twitter);
-      setFacebook(profile.facebook);
-      setLinkedin(profile.linkedin);
-      setInstagram(profile.instagram);
+      setYoutube(!profile.social.youtube ? '' : profile.social.youtube);
+      setTwitter(!profile.social.twitter ? '' : profile.social.twitter);
+      setFacebook(!profile.social.facebook ? '' : profile.social.facebook);
+      setLinkedin(!profile.social.linkedin ? '' : profile.social.linkedin);
+      setInstagram(!profile.social.instagram ? '' : profile.social.instagram);
     }
-  }, [dispatch, profile]);
+  }, [dispatch, history, successUpdate, profile]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -51,7 +59,23 @@ const EditProfile = ({ history }) => {
       setMessage('Bio cannot be empty');
     } else {
       setMessage(null);
-      dispatch(updateProfile(profile, profile._id));
+      dispatch(
+        updateProfile(
+          {
+            username,
+            bio,
+            website,
+            address,
+            github,
+            youtube,
+            twitter,
+            facebook,
+            linkedin,
+            instagram,
+          },
+          profile._id
+        )
+      );
     }
   };
 
@@ -62,7 +86,7 @@ const EditProfile = ({ history }) => {
           <h2>Update Profile</h2>
           {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
           {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-          {success && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
+          {successUpdate && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
           {loading && <Spinner />}
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='username'>
@@ -185,7 +209,7 @@ const EditProfile = ({ history }) => {
               Update
             </Button>
           </Form>
-          <Button onClick={(e) => history.push('/dashboard')}>Go Back</Button>
+          <Button onClick={(e) => history.push('/dashboard')}>Back to dashboard</Button>
         </Col>
       </Row>
     </>

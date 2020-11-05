@@ -24,12 +24,6 @@ const ProfileShow = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const profileExperience = useSelector((state) => state.profileExperience);
-  const { success: successExperience } = profileExperience;
-
-  const profileProject = useSelector((state) => state.profileProject);
-  const { success: successProject } = profileProject;
-
   const profileFollows = useSelector((state) => state.profileFollows);
   const {
     success: successFollows,
@@ -44,13 +38,18 @@ const ProfileShow = ({ match, history }) => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    if (successFollows) setMessage(null);
+    if (!profile.user || profile.user._id !== match.params.id) {
+      dispatch(getProfileDetails(match.params.id));
+    }
+    if (successFollows) {
+      setMessage(null);
+      dispatch(getProfileDetails(match.params.id));
+    }
     if (successDelete) {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
     }
-    dispatch(getProfileDetails(match.params.id));
-  }, [dispatch, match, successProject, successExperience, successFollows, successDelete]);
+  }, [dispatch, match, successFollows, successDelete]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);
