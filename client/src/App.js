@@ -28,20 +28,23 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <>
-          <Header />
+          <Route path='/' component={Header} />
           <Route exact path='/' component={Landing} />
           <main>
             <Switch>
+              <Route exact path='/dashboard' component={Dashboard} />
+
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <Route exact path='/profiles' component={ProfileList} />
-              <Route exact path='/profile/:id' component={ProfileShow} />
-              <Route exact path='/dashboard' component={Dashboard} />
               <Route exact path='/userinfo' component={UserProfile} />
+
               <Route exact path='/createprofile' component={CreateProfile} />
               <Route exact path='/editprofile' component={EditProfile} />
+              <Route exact path='/profiles' component={ProfileList} />
+              <Route exact path='/profile/:id' component={ProfileShow} />
               <Route exact path='/addexperience' component={AddExperience} />
               <Route exact path='/addproject' component={AddProject} />
+
               <Route exact path='/createpost' component={CreatePost} />
               <Route exact path='/editpost/:id' component={EditPost} />
               <Route exact path='/posts' component={PostList} />

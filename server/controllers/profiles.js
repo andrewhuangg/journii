@@ -249,7 +249,10 @@ exports.followProfile = asyncHandler(async (req, res) => {
   const profile = await Profile.findById(req.params.id);
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.params.id}`, 404);
 
-  if (profile.follows.filter((follow) => follow.user.toString() === req.user._id).length > 0)
+  if (
+    profile.follows.filter((follow) => follow.user.toString() === req.user._id.toString()).length >
+    0
+  )
     throw new ErrorResponse(`profile ${req.params.id} has already been followed`, 400);
 
   if (profile.user.toString() === req.user._id.toString())

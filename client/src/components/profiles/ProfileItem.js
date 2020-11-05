@@ -24,6 +24,7 @@ const ProfileItem = ({
           <Link to={`/profile/${_id}`}>view profile</Link>
         </div>
       </div>
+      <div> -------------- </div>
     </>
   );
 };

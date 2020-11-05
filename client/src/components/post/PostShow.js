@@ -40,7 +40,7 @@ const PostShow = ({ match }) => {
   const postDelete = useSelector((state) => state.postDelete);
   const { success: successDelete, error: errorDelete } = postDelete;
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     dispatch(listPostDetails(match.params.id));
@@ -78,6 +78,7 @@ const PostShow = ({ match }) => {
       <Link to='/posts'>Back to Posts</Link>
       {loadingDetails && <Spinner />}
       {loadingLikes && <Spinner />}
+      {loadingFollows && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <div>
@@ -94,8 +95,12 @@ const PostShow = ({ match }) => {
         <div>Followers {post.follows.length > 0 && <span>{post.follows.length}</span>}</div>
         <div onClick={() => postLikeHandler(post, post._id)}>like post</div>
         <div onClick={() => postUnlikeHandler(post, post._id)}>unlike post</div>
-        <div onClick={() => postFollowHandler(post, post._id)}>follow post</div>
-        <div onClick={() => postUnfollowHandler(post, post._id)}>unfollow post</div>
+        {post.user && userInfo.id !== post.user._id && (
+          <>
+            <div onClick={() => postFollowHandler(post, post._id)}>follow post</div>
+            <div onClick={() => postUnfollowHandler(post, post._id)}>unfollow post</div>
+          </>
+        )}
         {post.user && userInfo.id === post.user._id && (
           <Button onClick={() => deleteHandler(post._id)}>
             <i className='fas fa-trash'></i>
