@@ -18,6 +18,7 @@ import {
 } from './authReducers';
 import {
   profileCreateReducer,
+  profileDeleteReducer,
   profileDetailsReducer,
   profileExperienceReducer,
   profileFollowReducer,
@@ -34,8 +35,9 @@ export default combineReducers({
   userUpdateInfo: userUpdateInfoReducer,
 
   profileCreate: profileCreateReducer,
-  profileDetails: profileDetailsReducer,
   profileUpdate: profileUpdateReducer,
+  profileDelete: profileDeleteReducer,
+  profileDetails: profileDetailsReducer,
   profileList: profileListReducer,
   profileFollows: profileFollowReducer,
   profileExperience: profileExperienceReducer,

@@ -17,7 +17,7 @@ import {
 } from '../../actions/postAction';
 import { POST_DETAILS_RESET } from '../../actions/types';
 
-const PostShow = ({ match }) => {
+const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -45,7 +45,10 @@ const PostShow = ({ match }) => {
   useEffect(() => {
     dispatch(listPostDetails(match.params.id));
     if (successLikes || successFollows) setMessage(null);
-    if (successDelete) dispatch({ type: POST_DETAILS_RESET });
+    if (successDelete) {
+      dispatch({ type: POST_DETAILS_RESET });
+      history.push('/posts');
+    }
   }, [dispatch, match, likes, follows, successFollows, successLikes]);
 
   const postLikeHandler = (post, id) => {
@@ -77,8 +80,6 @@ const PostShow = ({ match }) => {
     <>
       <Link to='/posts'>Back to Posts</Link>
       {loadingDetails && <Spinner />}
-      {loadingLikes && <Spinner />}
-      {loadingFollows && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <div>

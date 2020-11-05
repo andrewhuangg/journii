@@ -25,6 +25,9 @@ import {
   PROFILE_LIST_GITHUB_REQUEST,
   PROFILE_LIST_GITHUB_SUCCESS,
   PROFILE_LIST_GITHUB_FAIL,
+  PROFILE_DELETE_REQUEST,
+  PROFILE_DELETE_SUCCESS,
+  PROFILE_DELETE_FAIL,
 } from './types';
 
 // export const getFollowedProfiles = () => async (dispatch) => {
@@ -179,6 +182,37 @@ export const updateProfile = (profile, id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PROFILE_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const deleteProfile = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PROFILE_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.delete(`/api/v1/profiles/${id}`, config);
+    dispatch({
+      type: PROFILE_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message.split(',').join(' ')

@@ -27,6 +27,9 @@ import {
   PROFILE_LIST_GITHUB_FAIL,
   PROFILE_UPDATE_EXPERIENCES_RESET,
   PROFILE_UPDATE_PROJECTS_RESET,
+  PROFILE_DELETE_REQUEST,
+  PROFILE_DELETE_SUCCESS,
+  PROFILE_DELETE_FAIL,
 } from '../actions/types';
 
 export const profileCreateReducer = (state = {}, action) => {
@@ -47,6 +50,20 @@ export const profileCreateReducer = (state = {}, action) => {
         loading: false,
         error: payload,
       };
+    default:
+      return state;
+  }
+};
+
+export const profileDeleteReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PROFILE_DELETE_REQUEST:
+      return { loading: true };
+    case PROFILE_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case PROFILE_DELETE_FAIL:
+      return { loading: false, error: payload };
     default:
       return state;
   }

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileDetails } from '../../actions/profileAction';
-import { followProfile, unfollowProfile, getFollowedProfiles } from '../../actions/profileAction';
+import { PROFILE_DETAILS_RESET } from '../../actions/types';
+import {
+  followProfile,
+  unfollowProfile,
+  getFollowedProfiles,
+  getProfileDetails,
+  deleteProfile,
+} from '../../actions/profileAction';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 
-const ProfileShow = ({ match }) => {
+const ProfileShow = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const profileDetails = useSelector((state) => state.profileDetails);
@@ -31,28 +38,39 @@ const ProfileShow = ({ match }) => {
     follows,
   } = profileFollows;
 
+  const profileDelete = useSelector((state) => state.profileDelete);
+  const { error: errorDelete, loading: loadingDelete, success: successDelete } = profileDelete;
+
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (successFollows) setMessage(null);
+    if (successDelete) {
+      dispatch({ type: PROFILE_DETAILS_RESET });
+      history.push('/profiles');
+    }
     dispatch(getProfileDetails(match.params.id));
-  }, [dispatch, match, successProject, successExperience, follows, successFollows]);
+  }, [dispatch, match, successProject, successExperience, successFollows, successDelete]);
 
   const profileFollowHandler = (profile, id) => {
-    dispatch(followProfile(profile, id));
     if (errorFollows) setMessage(errorFollows);
+    dispatch(followProfile(profile, id));
   };
 
   const profileUnfollowHandler = (profile, id) => {
-    dispatch(unfollowProfile(profile, id));
     if (errorFollows) setMessage(errorFollows);
+    dispatch(unfollowProfile(profile, id));
+  };
+
+  const deleteHandler = (id) => {
+    if (errorDelete) setMessage(errorDelete);
+    dispatch(deleteProfile(id));
   };
 
   return (
     <>
       <Link to='/profiles'>Back to Profiles</Link>
       {loadingDetails && <Spinner />}
-      {loadingFollows && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <ProfileExperience
@@ -67,8 +85,8 @@ const ProfileShow = ({ match }) => {
       />
       <div>
         <div>
-          Followers
-          {profile.follows && profile.follows > 0 && <span>{profile.follows.length}</span>}
+          Followers{' '}
+          {profile.follows && profile.follows.length > 0 && <span>{profile.follows.length}</span>}
         </div>
         {profile.user && userInfo.id !== profile.user._id && (
           <>
@@ -77,6 +95,11 @@ const ProfileShow = ({ match }) => {
           </>
         )}
       </div>
+      {profile.user && userInfo.id === profile.user._id && (
+        <Button onClick={() => deleteHandler(profile._id)}>
+          <i className='fas fa-trash'></i>
+        </Button>
+      )}
     </>
   );
 };
