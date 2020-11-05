@@ -14,6 +14,7 @@ import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
+import ProfileTop from './ProfileTop';
 
 const ProfileShow = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -25,12 +26,7 @@ const ProfileShow = ({ match, history }) => {
   const { userInfo } = userLogin;
 
   const profileFollows = useSelector((state) => state.profileFollows);
-  const {
-    success: successFollows,
-    loading: loadingFollows,
-    error: errorFollows,
-    follows,
-  } = profileFollows;
+  const { success: successFollows, loading: loadingFollows, error: errorFollows } = profileFollows;
 
   const profileDelete = useSelector((state) => state.profileDelete);
   const { error: errorDelete, loading: loadingDelete, success: successDelete } = profileDelete;
@@ -72,6 +68,7 @@ const ProfileShow = ({ match, history }) => {
       {loadingDetails && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
+      <ProfileTop profile={profile} />
       <ProfileExperience
         experiences={profile.experiences}
         currentUserId={userInfo.id}

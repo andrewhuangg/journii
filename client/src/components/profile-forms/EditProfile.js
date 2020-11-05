@@ -43,13 +43,17 @@ const EditProfile = ({ history }) => {
       setUserName(profile.username);
       setBio(profile.bio);
       setWebsite(profile.website);
-      setAddress(!profile.location.formattedAddress ? '' : profile.location.formattedAddress);
       setGithub(profile.github);
-      setYoutube(!profile.social.youtube ? '' : profile.social.youtube);
-      setTwitter(!profile.social.twitter ? '' : profile.social.twitter);
-      setFacebook(!profile.social.facebook ? '' : profile.social.facebook);
-      setLinkedin(!profile.social.linkedin ? '' : profile.social.linkedin);
-      setInstagram(!profile.social.instagram ? '' : profile.social.instagram);
+      setAddress(
+        !profile.location || !profile.location.formattedAddress
+          ? ''
+          : profile.location.formattedAddress
+      );
+      setYoutube(!profile.social || !profile.social.youtube ? '' : profile.social.youtube);
+      setTwitter(!profile.social || !profile.social.twitter ? '' : profile.social.twitter);
+      setFacebook(!profile.social || !profile.social.facebook ? '' : profile.social.facebook);
+      setLinkedin(!profile.social || !profile.social.linkedin ? '' : profile.social.linkedin);
+      setInstagram(!profile.social || !profile.social.instagram ? '' : profile.social.instagram);
     }
   }, [dispatch, history, successUpdate, profile]);
 

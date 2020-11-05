@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileTop = () => {
+const ProfileTop = ({ profile: { username, _id, bio, website, location, social } }) => {
   return (
     <div>
       {/* img

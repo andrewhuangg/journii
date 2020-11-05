@@ -4,6 +4,7 @@ import { logout } from '../../actions/authAction';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { getUserDetails } from '../../actions/authAction';
+import { getOwnProfileDetails } from '../../actions/profileAction';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -14,11 +15,17 @@ const Header = () => {
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
 
+  const profileCreate = useSelector((state) => state.profileCreate);
+  const { success: successCreate, profileInfo } = profileCreate;
+
   useEffect(() => {
-    if (userInfo && (!user || !user.name)) {
+    if (userInfo && (!user || !user._id)) {
       dispatch(getUserDetails('me'));
     }
-  }, [dispatch, user, userInfo]);
+    if (successCreate) {
+      dispatch(getOwnProfileDetails());
+    }
+  }, [dispatch, user, userInfo, successCreate]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -57,7 +64,7 @@ const Header = () => {
                       <NavDropdown.Item>Update User</NavDropdown.Item>
                     </LinkContainer>
 
-                    {user.ownProfile === null ? (
+                    {!profileInfo && !user.ownProfile ? (
                       <LinkContainer to='/createprofile'>
                         <NavDropdown.Item>Create Profile</NavDropdown.Item>
                       </LinkContainer>
