@@ -15,6 +15,7 @@ import AlertMessage from '../layout/AlertMessage';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
 
 const ProfileShow = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const ProfileShow = ({ match, history }) => {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, match, successFollows, successDelete]);
+  }, [dispatch, match, successFollows, successDelete, profile]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);
@@ -69,6 +70,7 @@ const ProfileShow = ({ match, history }) => {
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <ProfileTop profile={profile} />
+      <ProfileAbout profile={profile} />
       <ProfileExperience
         experiences={profile.experiences}
         currentUserId={userInfo.id}
