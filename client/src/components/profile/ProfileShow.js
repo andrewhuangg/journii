@@ -14,6 +14,7 @@ import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
+import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
 
@@ -71,6 +72,7 @@ const ProfileShow = ({ match, history }) => {
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <ProfileTop profile={profile} />
       <ProfileAbout profile={profile} />
+      {profile.github && <ProfileGithub username={profile.github} />}
       <ProfileExperience
         experiences={profile.experiences}
         currentUserId={userInfo.id}

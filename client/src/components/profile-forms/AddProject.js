@@ -113,7 +113,7 @@ const AddProject = ({ history }) => {
           </Form.Group>
 
           <Form.Group controlId='from'>
-            <Form.Label>{current ? 'Start' : 'From'}</Form.Label>
+            <Form.Label>{current ? 'Start' : '* From'}</Form.Label>
             <Form.Control
               type='date'
               value={from}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileTop = ({ profile: { username, _id, website, location, social, github } }) => {
+const ProfileTop = ({ profile: { username, _id, website, location, social } }) => {
   return (
     <div>
       <p>{username}</p>
