@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { followProfile, unFollowProfile, getFollowedProfiles } from '../../actions/profileAction';
+// import { followProfile, unFollowProfile, getFollowedProfiles } from '../../actions/profileAction';
 
 const ProfileItem = ({
   profile: {

@@ -27,7 +27,7 @@ const AddExperience = ({ history }) => {
       dispatch({ type: PROFILE_UPDATE_EXPERIENCES_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, success]);
+  }, [dispatch, success, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();

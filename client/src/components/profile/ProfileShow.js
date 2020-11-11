@@ -4,7 +4,7 @@ import { PROFILE_DETAILS_RESET } from '../../actions/types';
 import {
   followProfile,
   unfollowProfile,
-  getFollowedProfiles,
+  // getFollowedProfiles,
   getProfileDetails,
   deleteProfile,
 } from '../../actions/profileAction';
@@ -47,7 +47,7 @@ const ProfileShow = ({ match, history }) => {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, match, successFollows, successDelete, profile]);
+  }, [dispatch, match, successFollows, successDelete, history, profile.user]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);
@@ -67,7 +67,7 @@ const ProfileShow = ({ match, history }) => {
   return (
     <>
       <Link to='/profiles'>Back to Profiles</Link>
-      {loadingDetails && <Spinner />}
+      {loadingDetails || loadingFollows || (loadingDelete && <Spinner />)}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <ProfileTop profile={profile} />

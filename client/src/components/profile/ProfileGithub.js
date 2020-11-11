@@ -8,10 +8,9 @@ const ProfileGithub = ({ username }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listGithubRepos(username));
-  }, [dispatch]);
+  }, [dispatch, username]);
   const profileGithub = useSelector((state) => state.profileGithub);
   const { loading: loadingGithubRepos, error: errorGithubRepos, github } = profileGithub;
-  console.log(github);
 
   return (
     <>

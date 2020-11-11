@@ -28,7 +28,7 @@ const AddProject = ({ history }) => {
       dispatch({ type: PROFILE_UPDATE_PROJECTS_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, success]);
+  }, [dispatch, success, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -44,7 +44,6 @@ const AddProject = ({ history }) => {
           to,
           current,
           website,
-          description,
           features,
           technologies,
         })

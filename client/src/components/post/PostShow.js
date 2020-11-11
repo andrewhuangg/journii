@@ -27,15 +27,10 @@ const PostShow = ({ match, history }) => {
   const { loading: loadingDetails, error: errorDetails, post } = postDetails;
 
   const postLikes = useSelector((state) => state.postLikes);
-  const { success: successLikes, loading: loadingLikes, error: errorLikes, likes } = postLikes;
+  const { success: successLikes, loading: loadingLikes, error: errorLikes } = postLikes;
 
   const postFollows = useSelector((state) => state.postFollows);
-  const {
-    success: successFollows,
-    loading: loadingFollows,
-    error: errorFollows,
-    follows,
-  } = postFollows;
+  const { success: successFollows, loading: loadingFollows, error: errorFollows } = postFollows;
 
   const postDelete = useSelector((state) => state.postDelete);
   const { success: successDelete, error: errorDelete } = postDelete;
@@ -54,7 +49,7 @@ const PostShow = ({ match, history }) => {
       dispatch({ type: POST_DETAILS_RESET });
       history.push('/posts');
     }
-  }, [dispatch, match, successFollows, successLikes, successDelete]);
+  }, [dispatch, match, successFollows, successLikes, successDelete, history, post._id]);
 
   const postLikeHandler = (post, id) => {
     if (errorLikes) setMessage(errorLikes);
@@ -84,7 +79,7 @@ const PostShow = ({ match, history }) => {
   return (
     <>
       <Link to='/posts'>Back to Posts</Link>
-      {loadingDetails && <Spinner />}
+      {loadingDetails || loadingFollows || (loadingLikes && <Spinner />)}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <div>

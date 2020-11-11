@@ -204,7 +204,7 @@ export const deleteProfile = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/v1/profiles/${id}`, config);
+    await axios.delete(`/api/v1/profiles/${id}`, config);
     dispatch({
       type: PROFILE_DELETE_SUCCESS,
     });

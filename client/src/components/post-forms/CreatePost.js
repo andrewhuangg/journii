@@ -27,7 +27,7 @@ const CreatePost = ({ history }) => {
       dispatch({ type: POST_CREATE_RESET });
       history.push(`/posts/${post._id}`);
     }
-  }, [dispatch, successCreate]);
+  }, [dispatch, successCreate, history]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];

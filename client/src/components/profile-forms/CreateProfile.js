@@ -23,7 +23,7 @@ const CreateProfile = ({ history }) => {
   const [displaySocial, toggleSocial] = useState(false);
 
   const profileCreate = useSelector((state) => state.profileCreate);
-  const { loading, success, profileInfo, error } = profileCreate;
+  const { loading, success, error } = profileCreate;
 
   useEffect(() => {
     if (success) {

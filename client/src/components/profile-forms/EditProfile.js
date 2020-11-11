@@ -55,7 +55,7 @@ const EditProfile = ({ history }) => {
       setLinkedin(!profile.social || !profile.social.linkedin ? '' : profile.social.linkedin);
       setInstagram(!profile.social || !profile.social.instagram ? '' : profile.social.instagram);
     }
-  }, [dispatch, history, successUpdate, profile]);
+  }, [dispatch, history, successUpdate, profile, userInfo.id]);
 
   const submitHandler = (e) => {
     e.preventDefault();

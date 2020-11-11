@@ -1,6 +1,5 @@
 import React from 'react';
 import Moment from 'react-moment';
-import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
