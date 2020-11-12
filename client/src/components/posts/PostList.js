@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPosts, deletePost } from '../../actions/postAction';
 import Spinner from '../layout/Spinner';
@@ -9,14 +9,16 @@ const PostList = () => {
   const dispatch = useDispatch();
 
   const { loading: loadingList, error: errorList, posts } = useSelector((state) => state.postList);
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
   const postDelete = useSelector((state) => state.postDelete);
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = postDelete;
 
   useEffect(() => {
     dispatch(listPosts());
-  }, [dispatch, successDelete]);
+  }, [dispatch]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id));
@@ -37,6 +39,7 @@ const PostList = () => {
               key={post._id}
               post={post}
               currentUserId={userInfo.id}
+              userInfo={userInfo}
               deleteHandler={deleteHandler}
             />
           ))}

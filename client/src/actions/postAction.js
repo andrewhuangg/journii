@@ -27,6 +27,9 @@ import {
   POST_UPDATE_REQUEST,
   POST_UPDATE_SUCCESS,
   POST_UPDATE_FAIL,
+  POST_DELETE_COMMENT_REQUEST,
+  POST_DELETE_COMMENT_SUCCESS,
+  POST_DELETE_COMMENT_FAIL,
 } from './types';
 
 export const listPosts = (userId) => async (dispatch, getState) => {
@@ -341,6 +344,38 @@ export const createPostComment = (postId, comment) => async (dispatch, getState)
   } catch (error) {
     dispatch({
       type: POST_CREATE_COMMENT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const deletePostComment = (postId, commentId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: POST_DELETE_COMMENT_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/v1/posts/comment/${postId}/${commentId}`, config);
+
+    dispatch({
+      type: POST_DELETE_COMMENT_SUCCESS,
+      payload: commentId,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_DELETE_COMMENT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message.split(',').join(' ')

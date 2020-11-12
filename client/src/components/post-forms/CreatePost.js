@@ -70,6 +70,7 @@ const CreatePost = ({ history }) => {
           {loadingSuccess && <Spinner />}
           <Link to='/posts'>Back to posts</Link>
           <Form onSubmit={submitHandler}>
+            <small>* = required field</small>
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
               <Form.Control
@@ -92,9 +93,10 @@ const CreatePost = ({ history }) => {
               <Form.Control
                 type='text'
                 rows={4}
-                placeholder='Title'
+                placeholder='* Title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                required
               ></Form.Control>
             </Form.Group>
 
@@ -102,9 +104,10 @@ const CreatePost = ({ history }) => {
               <Form.Control
                 as='textarea'
                 rows={4}
-                placeholder='Create a post...'
+                placeholder='* Create a post...'
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                required
               ></Form.Control>
               <Form.Text id='textHelpBlock' muted>
                 The world is your playground...

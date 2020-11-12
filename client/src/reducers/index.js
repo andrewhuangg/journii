@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import {
-  postCommentCreateReducer,
-  postCreateReducer,
-  postDeleteReducer,
-  postDetailsReducer,
-  postFollowReducer,
-  postLikeReducer,
   postListReducer,
-  postReviewCreateReducer,
+  postDetailsReducer,
+  postCreateReducer,
   postUpdateReducer,
+  postDeleteReducer,
+  postLikeReducer,
+  postFollowReducer,
+  postReviewCreateReducer,
+  postCommentReducer,
 } from './postReducers';
 import {
   userLoginReducer,
@@ -49,7 +49,7 @@ export default combineReducers({
   postDelete: postDeleteReducer,
   postList: postListReducer,
   postDetails: postDetailsReducer,
-  postCommentCreate: postCommentCreateReducer,
+  postComment: postCommentReducer,
   postReviewCreate: postReviewCreateReducer,
   postLikes: postLikeReducer,
   postFollows: postFollowReducer,

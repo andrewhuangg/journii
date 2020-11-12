@@ -32,6 +32,10 @@ import {
   POST_UPDATE_RESET,
   POST_DETAILS_RESET,
   POST_LIST_RESET,
+  POST_DELETE_COMMENT_REQUEST,
+  POST_DELETE_COMMENT_SUCCESS,
+  POST_DELETE_COMMENT_FAIL,
+  POST_DELETE_COMMENT_RESET,
 } from '../actions/types';
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -129,7 +133,7 @@ export const postDeleteReducer = (state = {}, action) => {
   }
 };
 
-export const postCommentCreateReducer = (state = { comments: [] }, action) => {
+export const postCommentReducer = (state = { comments: [] }, action) => {
   const { type, payload } = action;
   switch (type) {
     case POST_CREATE_COMMENT_REQUEST:
@@ -140,6 +144,20 @@ export const postCommentCreateReducer = (state = { comments: [] }, action) => {
       return { loading: false, error: payload };
     case POST_CREATE_COMMENT_RESET:
       return {};
+
+    case POST_DELETE_COMMENT_REQUEST:
+      return { loading: true };
+    case POST_DELETE_COMMENT_SUCCESS:
+      return {
+        loading: false,
+        comments: state.comments.filter((comment) => comment._id !== payload),
+        success: true,
+      };
+    case POST_DELETE_COMMENT_FAIL:
+      return { loading: false, error: payload };
+    case POST_DELETE_COMMENT_RESET:
+      return {};
+
     default:
       return state;
   }

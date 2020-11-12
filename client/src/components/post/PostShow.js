@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
-import CommentForm from './CommentForm';
+import CreateComment from './CreateComment';
 import CommentItem from './CommentItem';
 import { Image, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
@@ -107,6 +107,7 @@ const PostShow = ({ match, history }) => {
             <i className='fas fa-trash'></i>
           </Button>
         )}
+        <CreateComment postId={post._id} />
       </div>
     </>
   );

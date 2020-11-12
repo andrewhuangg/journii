@@ -47,7 +47,7 @@ const ProfileShow = ({ match, history }) => {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, match, successFollows, successDelete, history, profile.user]);
+  }, [dispatch, match, successFollows, successDelete, history]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);

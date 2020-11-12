@@ -18,6 +18,7 @@ const PostItem = ({
     comments,
     createdAt,
   },
+  userInfo,
   currentUserId,
   deleteHandler,
 }) => {

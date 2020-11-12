@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { getUserDetails } from '../../actions/authAction';
 import { getOwnProfileDetails } from '../../actions/profileAction';
 
-const Header = () => {
+const Header = ({ history }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -25,7 +25,7 @@ const Header = () => {
     if (successCreate) {
       dispatch(getOwnProfileDetails());
     }
-  }, [dispatch, user, userInfo, successCreate]);
+  }, [dispatch, user, userInfo, successCreate, history]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -64,7 +64,7 @@ const Header = () => {
                       <NavDropdown.Item>Update User</NavDropdown.Item>
                     </LinkContainer>
 
-                    {!profileInfo && !user.ownProfile ? (
+                    {!profileInfo && user && !user.ownProfile ? (
                       <LinkContainer to='/createprofile'>
                         <NavDropdown.Item>Create Profile</NavDropdown.Item>
                       </LinkContainer>

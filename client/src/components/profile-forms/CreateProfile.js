@@ -27,7 +27,7 @@ const CreateProfile = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push('/dashboard');
+      history.push('/profiles');
     }
   }, [dispatch, history, success]);
 
@@ -116,6 +116,7 @@ const CreateProfile = ({ history }) => {
               placeholder='* A short bio of yourself'
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+              required
             ></Form.Control>
             <Form.Text id='bioHelpBlock' muted>
               Tell us a bit about yourself
