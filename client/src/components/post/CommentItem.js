@@ -1,35 +1,36 @@
-// import React from 'react';
-// import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
-// import { deleteComment } from '../../actions/postAction';
-// import Moment from 'react-moment';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { deletePostComment } from '../../actions/postAction';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 
-// const CommentItem = ({ postId, comment: { _id, text, name, user, date }, auth, deleteComment }) => {
-//   return (
-//     <div>
-//       <div>
-//         <Link to={`/profile/${user}`}>
-//           img
-//           <h4>{name}</h4>
-//         </Link>
-//       </div>
-//       <div>
-//         <p>{text}</p>
-//         <p>
-//           Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
-//         </p>
-//         {!auth.loading && user === auth.user._id && (
-//           <button onClick={(e) => deleteComment(postId, _id)} type='button'>
-//             Delete
-//           </button>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
+const CommentItem = ({
+  postId,
+  deleteCommentHandler,
+  userInfo,
+  comment: { _id, text, user, name, date },
+}) => {
+  return (
+    <div>
+      <div>
+        <h6>
+          <Link to={`/profile/${user}`}>{name}</Link>
+        </h6>
+      </div>
+      <div>
+        <p>{text}</p>
+      </div>
+      <p>
+        Posted on <Moment format='MM/DD/YYYY'>{date}</Moment>{' '}
+      </p>
+      {userInfo.id === user && (
+        <Button onClick={() => deleteCommentHandler(postId, _id)}>
+          <i className='fas fa-trash'></i>
+        </Button>
+      )}
+    </div>
+  );
+};
 
-// const mapStateToProps = (state) => ({
-//   auth: state.auth,
-// });
-
-// export default connect(mapStateToProps, { deleteComment })(CommentItem);
+export default CommentItem;

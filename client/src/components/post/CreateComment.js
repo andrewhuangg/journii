@@ -15,7 +15,6 @@ const CreateComment = ({ postId }) => {
     loading: loadingCommentCreate,
     error: errorCommentCreate,
     success: successCommentCreate,
-    comments,
   } = postComment;
 
   const submitHandler = (e) => {
@@ -25,6 +24,7 @@ const CreateComment = ({ postId }) => {
     } else {
       setMessage(null);
       dispatch(createPostComment(postId, { text }));
+      setText('');
     }
   };
 
@@ -33,6 +33,7 @@ const CreateComment = ({ postId }) => {
       <Col mid={4}>
         <h3>Leave a Comment...</h3>
         {errorCommentCreate && <AlertMessage variant='danger'>{errorCommentCreate}</AlertMessage>}
+        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
         {successCommentCreate && <AlertMessage variant='success'>Post Created</AlertMessage>}
         {loadingCommentCreate && <Spinner />}
         <Form onSubmit={submitHandler}>

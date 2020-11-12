@@ -371,7 +371,7 @@ export const deletePostComment = (postId, commentId) => async (dispatch, getStat
 
     dispatch({
       type: POST_DELETE_COMMENT_SUCCESS,
-      payload: commentId,
+      payload: data,
     });
   } catch (error) {
     dispatch({

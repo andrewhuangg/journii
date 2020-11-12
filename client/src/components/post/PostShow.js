@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
-import CreateComment from './CreateComment';
-import CommentItem from './CommentItem';
 import { Image, Button } from 'react-bootstrap';
-import Moment from 'react-moment';
 import {
   listPostDetails,
   likePost,
@@ -14,8 +9,14 @@ import {
   followPost,
   unfollowPost,
   deletePost,
+  deletePostComment,
 } from '../../actions/postAction';
 import { POST_DETAILS_RESET } from '../../actions/types';
+import Spinner from '../layout/Spinner';
+import AlertMessage from '../layout/AlertMessage';
+import CreateComment from './CreateComment';
+import CommentItem from './CommentItem';
+import Moment from 'react-moment';
 
 const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -35,13 +36,24 @@ const PostShow = ({ match, history }) => {
   const postDelete = useSelector((state) => state.postDelete);
   const { success: successDelete, error: errorDelete } = postDelete;
 
+  const postComment = useSelector((state) => state.postComment);
+  const {
+    loading: loadingCommentCreate,
+    loading: loadingCommentDelete,
+    error: errorCommentCreate,
+    error: errorCommentDelete,
+    success: successCommentCreate,
+    success: successCommentDelete,
+    comments,
+  } = postComment;
+
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (!post._id || post._id !== match.params.id) {
       dispatch(listPostDetails(match.params.id));
     }
-    if (successLikes || successFollows) {
+    if (successLikes || successFollows || successCommentCreate || successCommentDelete) {
       setMessage(null);
       dispatch(listPostDetails(match.params.id));
     }
@@ -49,7 +61,17 @@ const PostShow = ({ match, history }) => {
       dispatch({ type: POST_DETAILS_RESET });
       history.push('/posts');
     }
-  }, [dispatch, match, successFollows, successLikes, successDelete, history, post._id]);
+  }, [
+    dispatch,
+    match,
+    successFollows,
+    successLikes,
+    successDelete,
+    history,
+    post._id,
+    successCommentCreate,
+    successCommentDelete,
+  ]);
 
   const postLikeHandler = (post, id) => {
     if (errorLikes) setMessage(errorLikes);
@@ -74,6 +96,11 @@ const PostShow = ({ match, history }) => {
   const deleteHandler = (id) => {
     if (errorDelete) setMessage(errorDelete);
     dispatch(deletePost(id));
+  };
+
+  const deleteCommentHandler = (postId, commentId) => {
+    if (errorCommentDelete) setMessage(errorCommentDelete);
+    dispatch(deletePostComment(postId, commentId));
   };
 
   return (
@@ -108,6 +135,17 @@ const PostShow = ({ match, history }) => {
           </Button>
         )}
         <CreateComment postId={post._id} />
+        <div className='comments'>
+          {post.comments.map((comment) => (
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              postId={post._id}
+              deleteCommentHandler={deleteCommentHandler}
+              userInfo={userInfo}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

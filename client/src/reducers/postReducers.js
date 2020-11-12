@@ -142,21 +142,13 @@ export const postCommentReducer = (state = { comments: [] }, action) => {
       return { loading: false, comments: payload, success: true };
     case POST_CREATE_COMMENT_FAIL:
       return { loading: false, error: payload };
-    case POST_CREATE_COMMENT_RESET:
-      return {};
 
     case POST_DELETE_COMMENT_REQUEST:
       return { loading: true };
     case POST_DELETE_COMMENT_SUCCESS:
-      return {
-        loading: false,
-        comments: state.comments.filter((comment) => comment._id !== payload),
-        success: true,
-      };
+      return { loading: false, comments: payload, success: true };
     case POST_DELETE_COMMENT_FAIL:
       return { loading: false, error: payload };
-    case POST_DELETE_COMMENT_RESET:
-      return {};
 
     default:
       return state;

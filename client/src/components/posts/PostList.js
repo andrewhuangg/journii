@@ -39,7 +39,6 @@ const PostList = () => {
               key={post._id}
               post={post}
               currentUserId={userInfo.id}
-              userInfo={userInfo}
               deleteHandler={deleteHandler}
             />
           ))}
