@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { logout } from '../../actions/authAction';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { getUserDetails } from '../../actions/authAction';
 import { getOwnProfileDetails } from '../../actions/profileAction';
 
@@ -32,68 +31,51 @@ const Header = ({ history }) => {
   };
 
   return (
-    <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
-        <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>journii</Navbar.Brand>
-          </LinkContainer>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ml-auto'>
-              {userInfo ? (
-                <>
-                  <LinkContainer to='/createpost'>
-                    <Nav.Link>Create Post</Nav.Link>
-                  </LinkContainer>
+    <header className='header'>
+      <nav className='flex flex-jc-sb flex-ai-c'>
+        <a href='/' className='header__logo'>
+          {/* <img alt='journii'>journii</img> */}
+          <div>journii logo goes here</div>
+        </a>
 
-                  <LinkContainer to='/posts'>
-                    <Nav.Link>Posts</Nav.Link>
-                  </LinkContainer>
+        <a href='#' className='header__menu hide-for-desktop'>
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
 
-                  <LinkContainer to='/profiles'>
-                    <Nav.Link>Profiles</Nav.Link>
-                  </LinkContainer>
+        <div className='header__links hide-for-mobile'>
+          <Link to='/Home'>Home</Link>
+          <Link to='/posts'>Posts</Link>
+          <Link to='/profiles'>Profiles</Link>
+        </div>
 
-                  <NavDropdown title='Menu' id='menu'>
-                    <LinkContainer to='/dashboard'>
-                      <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                    </LinkContainer>
-
-                    <LinkContainer to='/userinfo'>
-                      <NavDropdown.Item>Update User</NavDropdown.Item>
-                    </LinkContainer>
-
-                    {!profileInfo && user && !user.ownProfile ? (
-                      <LinkContainer to='/createprofile'>
-                        <NavDropdown.Item>Create Profile</NavDropdown.Item>
-                      </LinkContainer>
-                    ) : (
-                      <LinkContainer to='/editprofile'>
-                        <NavDropdown.Item>Update Profile</NavDropdown.Item>
-                      </LinkContainer>
-                    )}
-
-                    <LinkContainer to='/createpost'>
-                      <NavDropdown.Item>Create Post</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              ) : (
-                <>
-                  <LinkContainer to='/register'>
-                    <Nav.Link>Register</Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to='/login'>
-                    <Nav.Link>Login</Nav.Link>
-                  </LinkContainer>
-                </>
+        <div className='header__links hide-for-mobile'>
+          {userInfo ? (
+            <>
+              <Link to='/userinfo'>Update User</Link>
+              {!profileInfo && !user.ownProfile && (
+                <Link className='linkTag' to='/createprofile'>
+                  Create Profile
+                </Link>
               )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+              {profileInfo && user.ownProfile && <Link to='/editprofile'>Update Profile</Link>}
+            </>
+          ) : (
+            <>
+              <Link to='/register'>Register</Link>
+              <Link to='/login'>Login</Link>
+            </>
+          )}
+          {userInfo && <a onClick={logoutHandler}>Log out</a>}
+        </div>
+
+        {userInfo && (
+          <Link to='/createpost' className='button header__cta hide-for-mobile'>
+            Create Post
+          </Link>
+        )}
+      </nav>
     </header>
   );
 };

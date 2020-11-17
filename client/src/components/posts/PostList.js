@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPosts, deletePost } from '../../actions/postAction';
 import Spinner from '../layout/Spinner';
@@ -18,7 +18,7 @@ const PostList = () => {
 
   useEffect(() => {
     dispatch(listPosts());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id));

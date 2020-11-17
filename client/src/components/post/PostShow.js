@@ -40,11 +40,9 @@ const PostShow = ({ match, history }) => {
   const {
     loading: loadingCommentCreate,
     loading: loadingCommentDelete,
-    error: errorCommentCreate,
     error: errorCommentDelete,
     success: successCommentCreate,
     success: successCommentDelete,
-    comments,
   } = postComment;
 
   const [message, setMessage] = useState(null);
@@ -106,7 +104,11 @@ const PostShow = ({ match, history }) => {
   return (
     <>
       <Link to='/posts'>Back to Posts</Link>
-      {loadingDetails || loadingFollows || (loadingLikes && <Spinner />)}
+      {loadingDetails ||
+        loadingFollows ||
+        loadingLikes ||
+        loadingCommentCreate ||
+        (loadingCommentDelete && <Spinner />)}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <div>

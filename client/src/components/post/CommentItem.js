@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { deletePostComment } from '../../actions/postAction';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';

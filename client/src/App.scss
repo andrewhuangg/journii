@@ -1,2 +1,12 @@
-@import './custom.scss';
-@import './Reset.scss';
+// Abstracts
+@import 'scss/_variables.scss';
+@import 'scss/mixins';
+
+// Base
+@import 'scss/_globals.scss';
+
+// Components
+@import 'scss/_buttons';
+@import 'scss/_header.scss';
+
+// Layouts
