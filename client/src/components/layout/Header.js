@@ -31,43 +31,53 @@ const Header = ({ history }) => {
   };
 
   const btnHamburger = () => {
-    const btnHamburger = document.querySelector('#btnHamburger');
     const header = document.querySelector('.header');
-    const overlay = document.querySelector('.overlay');
+    const body = document.querySelector('body');
+    const fadeElems = document.querySelectorAll('.has-fade');
 
     if (header.classList.contains('open')) {
       //Close Hamburger Menu
+      body.classList.remove('noscroll');
       header.classList.remove('open');
-      overlay.classList.remove('fade-in');
-      overlay.classList.add('fade-out');
+      fadeElems.forEach((el) => {
+        el.classList.remove('fade-in');
+        el.classList.add('fade-out');
+      });
     } else {
       //Open Hamburger Menu
+      body.classList.add('noscroll');
       header.classList.add('open');
-      overlay.classList.remove('fade-out');
-      overlay.classList.add('fade-in');
+      fadeElems.forEach((el) => {
+        el.classList.remove('fade-out');
+        el.classList.add('fade-in');
+      });
     }
   };
 
+  const headerLinks = (
+    <>
+      <Link to='/Home'>Home</Link>
+      <Link to='/posts'>Posts</Link>
+      <Link to='/profiles'>Profiles</Link>
+    </>
+  );
+
   return (
     <header className='header'>
-      <div className='overlay'></div>
-      <nav className='flex flex-jc-sb flex-ai-c'>
+      <div className='overlay has-fade'></div>
+      <nav className='container flex flex-jc-sb flex-ai-c'>
         <a href='/' className='header__logo'>
           {/* <img alt='journii'>journii</img> */}
           <div>journii logo goes here</div>
         </a>
 
-        <a id='btnHamburger' className='header__menu hide-for-desktop' onClick={btnHamburger}>
+        <a id='btnHamburger' className='header__toggle hide-for-desktop' onClick={btnHamburger}>
           <span></span>
           <span></span>
           <span></span>
         </a>
 
-        <div className='header__links hide-for-mobile'>
-          <Link to='/Home'>Home</Link>
-          <Link to='/posts'>Posts</Link>
-          <Link to='/profiles'>Profiles</Link>
-        </div>
+        <div className='header__links hide-for-mobile'>{headerLinks}</div>
 
         <div className='header__links hide-for-mobile'>
           {userInfo ? (
@@ -97,6 +107,8 @@ const Header = ({ history }) => {
           </Link>
         )}
       </nav>
+
+      <div className='header__menu has-fade'>{headerLinks}</div>
     </header>
   );
 };
