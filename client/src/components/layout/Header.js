@@ -33,9 +33,19 @@ const Header = ({ history }) => {
   const btnHamburger = () => {
     const btnHamburger = document.querySelector('#btnHamburger');
     const header = document.querySelector('.header');
-    header.classList.contains('open')
-      ? header.classList.remove('open')
-      : header.classList.add('open');
+    const overlay = document.querySelector('.overlay');
+
+    if (header.classList.contains('open')) {
+      //Close Hamburger Menu
+      header.classList.remove('open');
+      overlay.classList.remove('fade-in');
+      overlay.classList.add('fade-out');
+    } else {
+      //Open Hamburger Menu
+      header.classList.add('open');
+      overlay.classList.remove('fade-out');
+      overlay.classList.add('fade-in');
+    }
   };
 
   return (

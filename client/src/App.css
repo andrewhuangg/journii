@@ -1,9 +1,14 @@
 /*
   can transition smoothly from opacity 0 to 1 but you cant transition from display none to block;
-  ** one of the properties that cannot be animated is the "display" property....
+  ** one of the properties that cannot be animated is the "display" property.... but instead we can use visibility hidden.
 */
 @-webkit-keyframes fade-in {
   from {
+    visibility: hidden;
+    opacity: 0;
+  }
+  1% {
+    visibility: visible;
     opacity: 0;
   }
   to {
@@ -12,11 +17,56 @@
 }
 @keyframes fade-in {
   from {
+    visibility: hidden;
+    opacity: 0;
+  }
+  1% {
+    visibility: visible;
     opacity: 0;
   }
   to {
     opacity: 1;
   }
+}
+
+.fade-in {
+  -webkit-animation: fade-in 300ms ease-in-out forwards;
+          animation: fade-in 300ms ease-in-out forwards;
+}
+
+@-webkit-keyframes fade-out {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  99% {
+    visibility: visible;
+    opacity: 0;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  99% {
+    visibility: visible;
+    opacity: 0;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  -webkit-animation: fade-out 300ms ease-in-out forwards;
+          animation: fade-out 300ms ease-in-out forwards;
 }
 
 html {
@@ -97,12 +147,6 @@ button,
   }
 }
 
-.header.open .overlay {
-  display: block;
-  -webkit-animation: fade-in 300ms ease-in-out forwards;
-          animation: fade-in 300ms ease-in-out forwards;
-}
-
 .header.open .header__menu > span:first-child {
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
@@ -118,7 +162,7 @@ button,
 }
 
 .header .overlay {
-  display: none;
+  opacity: 0;
   position: fixed;
   top: 4.6875rem;
   right: 0px;

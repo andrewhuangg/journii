@@ -1,13 +1,44 @@
 /*
   can transition smoothly from opacity 0 to 1 but you cant transition from display none to block;
-  ** one of the properties that cannot be animated is the "display" property....
+  ** one of the properties that cannot be animated is the "display" property.... but instead we can use visibility hidden.
 */
 @keyframes fade-in {
   from {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  1% {
+    visibility: visible;
     opacity: 0;
   }
 
   to {
     opacity: 1;
   }
+}
+
+.fade-in {
+  animation: fade-in 300ms ease-in-out forwards;
+}
+
+@keyframes fade-out {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  99% {
+    visibility: visible;
+    opacity: 0;
+  }
+
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fade-out 300ms ease-in-out forwards;
 }
