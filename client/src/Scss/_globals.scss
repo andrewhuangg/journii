@@ -41,6 +41,18 @@ a:hover {
   }
 }
 
+button,
+.button {
+  padding: 0.75rem 1.125rem;
+  background: linear-gradient(to right, $lightForrestGray, $pastelGreen);
+  border: 0;
+  font-family: 'Public Sans', sans-serif;
+  font-size: $font-sm;
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
 // Visibility
 // hide for tablet and mobile
 .hide-for-mobile {

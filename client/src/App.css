@@ -1,3 +1,36 @@
+/*
+  can transition smoothly from opacity 0 to 1 but you cant transition from display none to block;
+  ** one of the properties that cannot be animated is the "display" property....
+*/
+@-webkit-keyframes fade-in {
+  from {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  to {
+    display: block;
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  from {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  to {
+    display: block;
+    opacity: 1;
+  }
+}
+
 html {
   font-size: 100%;
   -webkit-box-sizing: border-box;
@@ -51,6 +84,19 @@ a:hover {
           align-items: center;
 }
 
+button,
+.button {
+  padding: 0.75rem 1.125rem;
+  background: -webkit-gradient(linear, left top, right top, from(#829b97), to(#a3d2ca));
+  background: linear-gradient(to right, #829b97, #a3d2ca);
+  border: 0;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 0.875rem;
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
 @media (max-width: 63.9375em) {
   .hide-for-mobile {
     display: none;
@@ -63,17 +109,35 @@ a:hover {
   }
 }
 
-button,
-.button {
-  padding: 0.75rem 1.125rem;
-  background: -webkit-gradient(linear, left top, right top, from(#829b97), to(#a3d2ca));
-  background: linear-gradient(to right, #829b97, #a3d2ca);
-  border: 0;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 0.875rem;
-  color: white;
-  border-radius: 50px;
-  cursor: pointer;
+.header.open .overlay {
+  display: block;
+  -webkit-animation: fade-in 300ms ease-in-out forwards;
+          animation: fade-in 300ms ease-in-out forwards;
+}
+
+.header.open .header__menu > span:first-child {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.header.open .header__menu > span:nth-child(2) {
+  opacity: 0;
+}
+
+.header.open .header__menu > span:last-child {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.header .overlay {
+  display: none;
+  position: fixed;
+  top: 4.6875rem;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeae2), to(transparent));
+  background-image: linear-gradient(#eeeae2, transparent);
 }
 
 .header nav {
@@ -90,10 +154,14 @@ button,
   width: 26px;
   height: 2px;
   background-color: #5faba8;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+  -webkit-transform-origin: 3px 1px;
+          transform-origin: 3px 1px;
 }
 
 .header__menu > span:not(:last-child) {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 .header__links a {

@@ -30,15 +30,24 @@ const Header = ({ history }) => {
     dispatch(logout());
   };
 
+  const btnHamburger = () => {
+    const btnHamburger = document.querySelector('#btnHamburger');
+    const header = document.querySelector('.header');
+    header.classList.contains('open')
+      ? header.classList.remove('open')
+      : header.classList.add('open');
+  };
+
   return (
     <header className='header'>
+      <div className='overlay'></div>
       <nav className='flex flex-jc-sb flex-ai-c'>
         <a href='/' className='header__logo'>
           {/* <img alt='journii'>journii</img> */}
           <div>journii logo goes here</div>
         </a>
 
-        <a href='#' className='header__menu hide-for-desktop'>
+        <a id='btnHamburger' className='header__menu hide-for-desktop' onClick={btnHamburger}>
           <span></span>
           <span></span>
           <span></span>
@@ -54,12 +63,14 @@ const Header = ({ history }) => {
           {userInfo ? (
             <>
               <Link to='/userinfo'>Update User</Link>
-              {!profileInfo && !user.ownProfile && (
+              {!profileInfo && user && !user.ownProfile && (
                 <Link className='linkTag' to='/createprofile'>
                   Create Profile
                 </Link>
               )}
-              {profileInfo && user.ownProfile && <Link to='/editprofile'>Update Profile</Link>}
+              {profileInfo && user && user.ownProfile && (
+                <Link to='/editprofile'>Update Profile</Link>
+              )}
             </>
           ) : (
             <>

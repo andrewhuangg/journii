@@ -1,0 +1,20 @@
+/*
+  can transition smoothly from opacity 0 to 1 but you cant transition from display none to block;
+  ** one of the properties that cannot be animated is the "display" property....
+*/
+@keyframes fade-in {
+  from {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+  }
+
+  to {
+    display: block;
+    opacity: 1;
+  }
+}
