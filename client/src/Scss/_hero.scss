@@ -38,7 +38,7 @@
 
   &__content {
     z-index: 1;
-    color: #edcfa9;
+    color: $pastelGold;
 
     h1 {
       font-size: 3.125rem;
@@ -47,32 +47,73 @@
   }
 }
 
-// .hero {
-//   &__image {
-//     position: relative;
-//     min-height: 17.5rem;
+.hero {
+  background-color: $lightSand;
 
-//     &::before {
-//       content: '';
-//       position: absolute;
-//       width: 100%;
-//       height: 100%;
-//       background-image: url('https://journii-dev.s3-us-west-1.amazonaws.com/journii_logo.png');
-//       background-repeat: no-repeat;
-//       background-position: bottom center;
-//       z-index: 1;
-//     }
-//   }
+  .container {
+    @include breakpoint-up(large) {
+      display: flex;
+      align-items: center;
+    }
+  }
 
-//   &__text {
-//     h1 {
-//       font-weight: 300;
-//     }
-//   }
-// }
+  &__image {
+    @include breakpoint-up(large) {
+      flex: 3;
+      order: 2;
+      height: 100%;
+    }
 
-// .hero-video {
-//   position: relative;
-//   width: 100vw;
-//   transform: translateY(-17.5rem);
-// }
+    @include breakpoint-up(xlarge) {
+      flex: 8;
+      order: 2;
+      height: 100%;
+    }
+
+    position: relative;
+    background-image: url('https://journii-dev.s3-us-west-1.amazonaws.com/house_on_plain.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    min-height: 56.5rem;
+  }
+
+  &__text {
+    text-align: center;
+
+    @include breakpoint-up(large) {
+      flex: 2;
+      order: 1;
+      text-align: left;
+    }
+
+    @include breakpoint-up(xlarge) {
+      flex: 5;
+      order: 1;
+      height: 100%;
+      text-align: left;
+    }
+
+    h1 {
+      font-weight: 300;
+      font-size: 2.31rem;
+      line-height: 1.15;
+      color: $forestGreen;
+      margin-bottom: 1.5rem;
+
+      @include breakpoint-up(large) {
+        font-size: $font-xlg;
+      }
+    }
+
+    p {
+      line-height: 1.5;
+      margin-bottom: 2.25rem;
+    }
+
+    a {
+      font-size: 1.5625rem;
+      background: linear-gradient(to right, $pastelGold, $sand);
+    }
+  }
+}

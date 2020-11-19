@@ -10,7 +10,8 @@ html {
 }
 
 h1,
-p {
+h2,
+h3 p {
   margin: 0;
   padding: 0;
 }
@@ -26,6 +27,10 @@ body {
 
   &.noscroll {
     overflow: hidden;
+  }
+
+  @include breakpoint-up(large) {
+    font-size: $font-lg;
   }
 }
 
@@ -53,20 +58,61 @@ a:hover {
 
 // Spacing
 .container {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  max-width: 69.375rem;
+  margin: 0 auto;
+
+  &--pall {
+    padding-top: 2.25rem;
+    padding-right: 1.5rem;
+    padding-bottom: 2.25rem;
+    padding-left: 1.5rem;
+  }
+
+  &--py {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  &--px {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  &--pt {
+    padding-top: 2.25rem;
+  }
+
+  &--pr {
+    padding-right: 1.5rem;
+  }
+
+  &--pb {
+    padding-bottom: 2.25rem;
+  }
+
+  &--pl {
+    padding-left: 1.5rem;
+  }
 }
 
 button,
 .button {
+  display: inline-block;
   padding: 0.75rem 1.125rem;
   background: linear-gradient(to right, $lightForrestGray, $pastelGreen);
   border: 0;
   font-family: 'Public Sans', sans-serif;
   font-size: $font-sm;
+  font-weight: 400;
   color: white;
   border-radius: 50px;
   cursor: pointer;
+
+  transition: opacity 300ms ease-in-out;
+
+  &:hover {
+    opacity: 0.75;
+  }
 }
 
 // Visibility

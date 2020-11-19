@@ -89,7 +89,7 @@ const Header = ({ history }) => {
     <header className='header'>
       <div className='overlay has-fade mobile-has-fade'></div>
 
-      <nav className='container flex flex-jc-sb flex-ai-c'>
+      <nav className='container container--pall flex flex-jc-sb flex-ai-c'>
         <a href='/' className='header__logo'>
           {/* <img alt='journii'>journii</img> */}
           <div>journii logo goes here</div>
