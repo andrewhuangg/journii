@@ -13,9 +13,9 @@ import { ReactComponent as ReflectionSvg } from '../../svgs/reflection.svg';
 // import AlertMessage from '../layout/AlertMessage';
 
 const Dashboard = () => {
+  const imageUrl = 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg';
   const defaultPostImage = {
-    backgroundImage:
-      'url(' + 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg' + ')',
+    backgroundImage: `url(${imageUrl})`,
   };
 
   return (
@@ -123,18 +123,61 @@ const Dashboard = () => {
         <div className='post__content container container--pall'>
           <h2>Latest Posts</h2>
           <div className='post__grid'>
-            <div className='post__item'>
-              <div className='post__image' style={defaultPostImage}></div>
-
-              <div className='post__text'>
-                <div className='post__author'>andrew</div>
-                <div className='post__title'>test</div>
-                <div className='post__description'>
-                  "But I must explain to you how all this mistaken idea of denouncing pleasure and
-                  praising pain was born and I will give you a complete account of the system"
+            <Link to='#'>
+              <div className='post__item'>
+                <div className='post__image' style={defaultPostImage}></div>
+                <div className='post__text'>
+                  <div className='post__author'>By Andrew</div>
+                  <div className='post__title'>test</div>
+                  <div className='post__description'>
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and
+                    praising pain was born and I will give you a complete account of the system...
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
+
+            <Link to='#'>
+              <div className='post__item'>
+                <div className='post__image' style={defaultPostImage}></div>
+                <div className='post__text'>
+                  <div className='post__author'>By Andrew</div>
+                  <div className='post__title'>test</div>
+                  <div className='post__description'>
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and
+                    praising pain was born and I will give you a complete account of the system...
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link to='#'>
+              <div className='post__item'>
+                <div className='post__image' style={defaultPostImage}></div>
+                <div className='post__text'>
+                  <div className='post__author'>By Andrew</div>
+                  <div className='post__title'>test</div>
+                  <div className='post__description'>
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and
+                    praising pain was born and I will give you a complete account of the system...
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            <Link to='#'>
+              <div className='post__item'>
+                <div className='post__image' style={defaultPostImage}></div>
+                <div className='post__text'>
+                  <div className='post__author'>By Andrew</div>
+                  <div className='post__title'>test</div>
+                  <div className='post__description'>
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and
+                    praising pain was born and I will give you a complete account of the system...
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
