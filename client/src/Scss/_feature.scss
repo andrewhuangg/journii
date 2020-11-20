@@ -1,0 +1,67 @@
+.feature {
+  background-color: $veryLightGreen;
+  text-align: center;
+  @include breakpoint-up(medium) {
+    text-align: left;
+  }
+
+  &__intro {
+    margin-bottom: 3.75rem;
+    @include breakpoint-up(large) {
+      width: 60%;
+    }
+  }
+
+  &__grid {
+    @include breakpoint-up(medium) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__item {
+    padding: 0.9375rem;
+    @include breakpoint-up(medium) {
+      flex: 0 0 50%; /*  - flex grow (allow to grow and fill space), 
+                        0 - flex shrink (item is allowed to shrink less than the flex basis) 
+                        50% - flex basis (aka default width for object) 
+                     */
+    }
+    @include breakpoint-up(large) {
+      flex: 1; //default flex: 1 0 auto?? all items same width, same row
+    }
+  }
+
+  &__icon {
+    height: 4.625rem;
+    margin-bottom: 1.875rem;
+
+    @include breakpoint-up(medium) {
+      width: 4.625rem;
+      margin-bottom: 2.75rem;
+    }
+
+    svg {
+      opacity: 0.75;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.15;
+    color: $forestGreen;
+
+    @include breakpoint-up(large) {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}

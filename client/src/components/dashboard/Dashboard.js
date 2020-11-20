@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ReactComponent as CommunitySvg } from '../../svgs/community.svg';
+import { ReactComponent as GrowthSvg } from '../../svgs/growth.svg';
+import { ReactComponent as ContributionSvg } from '../../svgs/contribution.svg';
+import { ReactComponent as ReflectionSvg } from '../../svgs/reflection.svg';
 // import React, { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +13,15 @@ import { Link } from 'react-router-dom';
 // import AlertMessage from '../layout/AlertMessage';
 
 const Dashboard = () => {
+  const defaultPostImage = {
+    backgroundImage:
+      'url(' + 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg' + ')',
+  };
+
   return (
     <>
       <section className='showcase'>
-        <div className='showcase__video-container'>
+        <div className='showcase__video-container container'>
           <video
             autoPlay
             loop
@@ -44,6 +53,88 @@ const Dashboard = () => {
             <Link to='#' className='button hero__cta'>
               Lets get started
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className='feature'>
+        <div className='feature__content container container--pall'>
+          <div className='feature__intro'>
+            <h2>What is journii?</h2>
+            <p>
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua."
+            </p>
+          </div>
+
+          <div className='feature__grid'>
+            <div className='feature__item'>
+              <div className='feature__icon'>
+                <GrowthSvg />
+              </div>
+              <div className='feature__title'>Growth and Progress</div>
+              <div className='feature__description'>
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+                veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+              </div>
+            </div>
+
+            <div className='feature__item'>
+              <div className='feature__icon'>
+                <ContributionSvg />
+              </div>
+              <div className='feature__title'>Contribution</div>
+              <div className='feature__description'>
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+                veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+              </div>
+            </div>
+
+            <div className='feature__item'>
+              <div className='feature__icon'>
+                <ReflectionSvg />
+              </div>
+              <div className='feature__title'>Reflection</div>
+              <div className='feature__description'>
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+                veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+              </div>
+            </div>
+
+            <div className='feature__item'>
+              <div className='feature__icon'>
+                <CommunitySvg />
+              </div>
+              <div className='feature__title'>Community</div>
+              <div className='feature__description'>
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+                veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='posts'>
+        <div className='post__content container container--pall'>
+          <h2>Latest Posts</h2>
+          <div className='post__grid'>
+            <div className='post__item'>
+              <div className='post__image' style={defaultPostImage}></div>
+
+              <div className='post__text'>
+                <div className='post__author'>andrew</div>
+                <div className='post__title'>test</div>
+                <div className='post__description'>
+                  "But I must explain to you how all this mistaken idea of denouncing pleasure and
+                  praising pain was born and I will give you a complete account of the system"
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
