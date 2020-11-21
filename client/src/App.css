@@ -587,6 +587,21 @@ button:hover::before,
   color: #edd0ab;
 }
 
+.showcase__cta {
+  width: 17.1875rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.showcase__cta a {
+  width: 6.875rem;
+  background-image: -webkit-gradient(linear, left top, right top, from(#829b97), to(#829b97));
+  background-image: linear-gradient(to right, #829b97, #829b97);
+}
+
 .hero {
   background-color: #fcfaf8;
 }

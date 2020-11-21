@@ -91,7 +91,7 @@ const Header = ({ history }) => {
       <div className='overlay has-fade mobile-has-fade'></div>
 
       <nav className='container container--pall flex flex-jc-sb flex-ai-c'>
-        <Link to='#' className='header__logo'>
+        <Link to='/' className='header__logo'>
           <LogoSvg />
         </Link>
 

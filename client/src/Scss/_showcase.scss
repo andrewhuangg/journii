@@ -46,4 +46,15 @@
       color: $pastelGold;
     }
   }
+
+  &__cta {
+    width: 17.1875rem;
+    display: flex;
+    justify-content: space-around;
+
+    a {
+      width: 6.875rem;
+      background-image: linear-gradient(to right, $forestGreen, $lightForrestGray);
+    }
+  }
 }
