@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../actions/authAction';
 import { getUserDetails } from '../../actions/authAction';
 import { getOwnProfileDetails } from '../../actions/profileAction';
+import { ReactComponent as LogoSvg } from '../../svgs/logo.svg';
 
 const Header = ({ history }) => {
   const dispatch = useDispatch();
@@ -90,10 +91,9 @@ const Header = ({ history }) => {
       <div className='overlay has-fade mobile-has-fade'></div>
 
       <nav className='container container--pall flex flex-jc-sb flex-ai-c'>
-        <a href='/' className='header__logo'>
-          {/* <img alt='journii'>journii</img> */}
-          <div>journii logo goes here</div>
-        </a>
+        <Link to='#' className='header__logo'>
+          <LogoSvg />
+        </Link>
 
         <a
           id='mobileHamburger'

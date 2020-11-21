@@ -4,6 +4,7 @@ import { ReactComponent as CommunitySvg } from '../../svgs/community.svg';
 import { ReactComponent as GrowthSvg } from '../../svgs/growth.svg';
 import { ReactComponent as ContributionSvg } from '../../svgs/contribution.svg';
 import { ReactComponent as ReflectionSvg } from '../../svgs/reflection.svg';
+import { ReactComponent as LogoSvg } from '../../svgs/logo.svg';
 // import React, { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +32,7 @@ const Dashboard = () => {
         </div>
         <div className='showcase__content'>
           <h1>journii</h1>
-          <p>It never stops.</p> {/*  quote generator here.*/}
+          <p>It never stops.</p> {/* quote generator here. */}
         </div>
       </section>
 
@@ -182,30 +183,38 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <p>
-        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising
-        pain was born and I will give you a complete account of the system, and expound the actual
-        teachings of the great explorer of the truth, the master-builder of human happiness. No one
-        rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who
-        do not know how to pursue pleasure rationally encounter consequences that are extremely
-        painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself,
-        because it is pain, but because occasionally circumstances occur in which toil and pain can
-        procure him some great pleasure. To take a trivial example, which of us ever undertakes
-        laborious physical exercise, except to obtain some advantage from it? But who has any right
-        to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences,
-        or one who avoids a pain that produces no resultant pleasure?" "But I must explain to you
-        how all this mistaken idea of denouncing pleasure and praising pain was born and I will give
-        you a complete account of the system, and expound the actual teachings of the great explorer
-        of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids
-        pleasure itself, because it is pleasure, but because those who do not know how to pursue
-        pleasure rationally encounter consequences that are extremely painful. Nor again is there
-        anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but
-        because occasionally circumstances occur in which toil and pain can procure him some great
-        pleasure. To take a trivial example, which of us ever undertakes laborious physical
-        exercise, except to obtain some advantage from it? But who has any right to find fault with
-        a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a
-        pain that produces no resultant pleasure?"
-      </p>
+      <footer className='footer'>
+        <div className='container'>
+          <Link to='#' className='footer__logo'>
+            <LogoSvg />
+          </Link>
+
+          <div className='footer__social'>
+            <Link to='#' alt='Linkedin' target='_blank' rel='noopener noreferrer'>
+              <i className='fab fa-linkedin fa-1x' />
+            </Link>
+            <Link to='#' alt='Github' target='_blank' rel='noopener noreferrer'>
+              <i className='fab fa-github fa-1x' />
+            </Link>
+            <Link to='#' alt='AngelList' target='_blank' rel='noopener noreferrer'>
+              <i className='fab fa-angellist fa-1x' />
+            </Link>
+          </div>
+
+          <div className='footer__links col1'>
+            <Link to='#'>About</Link>
+            <Link to='#'>Contact</Link>
+          </div>
+
+          <div className='footer__cta'>
+            <Link to='#' className='button'>
+              Sign Up
+            </Link>
+          </div>
+
+          <div className='footer__copyright'>&copy; journii. All Rights Reserved.</div>
+        </div>
+      </footer>
     </>
   );
 };

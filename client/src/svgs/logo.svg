@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 60 60">
+  <g fill="none" fill-rule="evenodd" stroke-linejoin="round" stroke-width="2" transform="translate(1 1)">
+    <path fill="#7BE5E4" stroke="#7BE5E4" stroke-linecap="round" d="M19.2986662,24.2296226 C21.066714,20.789097 23.93627,20.7949037 25.7013338,24.2296226 L41,54 L4,54 L19.2986662,24.2296226 Z"/>
+    <path stroke="#89714D" stroke-linecap="square" d="M34,20 L34,6"/>
+    <path fill="#3BABB7" stroke="#3BABB7" stroke-linecap="round" d="M31.6702271,22.4143066 C32.9569251,19.9763524 35.0485864,19.9867954 36.3297729,22.4143066 L53,54 L15,54 L31.6702271,22.4143066 Z"/>
+    <polygon fill="#FF427A" stroke="#FF427A" stroke-linecap="round" points="34 7 44 7 42 10.5 44 14 34 14"/>
+    <polyline stroke="#3BABB7" stroke-linecap="round" points="16.662 29.788 22.032 27.661 23.763 30.342 27.969 28.896"/>
+    <polyline stroke="#7BE5E4" stroke-linecap="round" points="26.226 33.567 29.906 35.968 34.66 32.886 37.8 36.531 41.982 33.567"/>
+    <circle cx="12" cy="12" r="7" fill="#FCC24C" stroke="#FCC24C" stroke-linecap="round"/>
+    <path stroke="#F8A131" stroke-linecap="square" d="M22 12L24 12M0 12L2 12M12 22L12 24M12 2L12 0"/>
+  </g>
+</svg>
