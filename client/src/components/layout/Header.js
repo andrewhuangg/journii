@@ -80,7 +80,7 @@ const Header = ({ history }) => {
 
   const headerLinks = (
     <>
-      <Link to='/Dashboard'>Home</Link>
+      <Link to='/dashboard'>Home</Link>
       <Link to='/posts'>Posts</Link>
       <Link to='/profiles'>Profiles</Link>
     </>

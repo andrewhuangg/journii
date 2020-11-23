@@ -250,6 +250,13 @@ a:hover {
           align-items: center;
 }
 
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 .container {
   max-width: 69.375rem;
   margin: 0 auto;
@@ -467,6 +474,11 @@ button:hover::before,
   padding: 0.625rem;
   color: #babeca;
   text-align: center;
+  position: relative;
+}
+
+.header__mobile-menu a:hover {
+  color: #5faba8;
 }
 
 .header__menu {
@@ -486,6 +498,10 @@ button:hover::before,
   color: #babeca;
   font-size: 0.875rem;
   text-align: center;
+}
+
+.header__menu a:hover {
+  color: #5faba8;
 }
 
 .header__links a {
@@ -889,6 +905,7 @@ button:hover::before,
 .footer__logo {
   display: inline-block;
   height: 2rem;
+  width: 10%;
 }
 
 .footer__logo svg {

@@ -85,6 +85,13 @@ a:hover {
   }
 }
 
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 // Spacing
 .container {
   max-width: 69.375rem;

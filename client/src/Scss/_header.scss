@@ -101,6 +101,11 @@
       padding: 0.625rem;
       color: $blueGray;
       text-align: center;
+      position: relative;
+
+      &:hover {
+        color: $darkTurquoise;
+      }
     }
   }
 
@@ -119,6 +124,10 @@
       color: $blueGray;
       font-size: $font-sm;
       text-align: center;
+
+      &:hover {
+        color: $darkTurquoise;
+      }
     }
   }
 

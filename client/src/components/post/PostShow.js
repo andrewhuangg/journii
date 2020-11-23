@@ -17,6 +17,7 @@ import AlertMessage from '../layout/AlertMessage';
 import CreateComment from './CreateComment';
 import CommentItem from './CommentItem';
 import Moment from 'react-moment';
+import Rating from '../layout/Rating';
 
 const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();

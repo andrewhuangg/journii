@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Image, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
+import Rating from '../layout/Rating';
 
 const PostItem = ({
   post: {
@@ -60,6 +61,9 @@ const PostItem = ({
             <i className='fas fa-trash'></i>
           </Button>
         )}
+        <div>
+          <Rating value={rating} text={` ${numReviews} reviews`} />
+        </div>
       </div>
     </>
   );
