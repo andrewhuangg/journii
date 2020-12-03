@@ -33,15 +33,7 @@ router
     getPosts
   );
 
-router.route('/followedposts').get(
-  protect,
-  advancedQuery(Post, {
-    path: 'user',
-    select: 'name email',
-  }),
-  getFollowedPosts
-);
-
+router.route('/followedposts').get(protect, getFollowedPosts);
 router.route('/like/:id').put(protect, likePost);
 router.route('/unlike/:id').put(protect, unlikePost);
 router.route('/comment/:id').post(protect, addComment);

@@ -10,7 +10,8 @@ const User = require('../models/User');
 // @access    Public
 
 exports.getProfiles = asyncHandler(async (req, res) => {
-  res.status(200).json(res.advancedQuery);
+  const profiles = await Profile.find();
+  res.status(200).json(profiles);
 });
 
 // @desc      Get profile by user id
@@ -236,8 +237,6 @@ exports.getFollowedProfiles = asyncHandler(async (req, res) => {
       });
     });
     return res.status(200).json(followedProfile);
-  } else {
-    res.status(200).json(res.advancedQuery);
   }
 });
 

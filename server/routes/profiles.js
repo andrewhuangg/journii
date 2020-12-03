@@ -32,15 +32,7 @@ router.route('/github/:username').get(getGithubRepo);
 router.route('/follow/:id').put(protect, followProfile);
 router.route('/unfollow/:id').put(protect, unfollowProfile);
 router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
-
-router.route('/followedprofiles').get(
-  protect,
-  advancedQuery(Profile, {
-    path: 'user',
-    select: 'name email',
-  }),
-  getFollowedProfiles
-);
+router.route('/followedprofiles').get(protect, getFollowedProfiles);
 
 router
   .route('/')

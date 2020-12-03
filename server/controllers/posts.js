@@ -310,9 +310,6 @@ exports.getFollowedPosts = asyncHandler(async (req, res) => {
         }
       });
     });
-
     return res.status(200).json(followedPosts);
-  } else {
-    res.status(200).json(res.advancedQuery);
   }
 });
