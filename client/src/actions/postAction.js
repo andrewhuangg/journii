@@ -32,7 +32,7 @@ import {
   POST_DELETE_COMMENT_FAIL,
 } from './types';
 
-export const listPosts = (userId) => async (dispatch, getState) => {
+export const listPosts = (keyword = '', userId) => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_LIST_REQUEST });
 
@@ -48,8 +48,10 @@ export const listPosts = (userId) => async (dispatch, getState) => {
     };
 
     const { data } = !userId
-      ? await axios.get('/api/v1/posts', config)
+      ? await axios.get(`/api/v1/posts?keyword=${keyword}`, config)
       : await axios.get(`/api/v1/users/${userId}/posts`, config);
+
+    // const { data } = await axios.get(`/api/v1/posts?keyword=${keyword}`, config);
 
     dispatch({
       type: POST_LIST_SUCCESS,

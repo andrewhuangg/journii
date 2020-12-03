@@ -49,6 +49,9 @@ const App = () => {
               <Route exact path='/editpost/:id' component={EditPost} />
               <Route exact path='/posts' component={PostList} />
               <Route exact path='/posts/:id' component={PostShow} />
+
+              <Route path='/search/:keyword' component={PostList} />
+              {/* remember to switch postlist back to dashboard */}
             </Switch>
           </main>
         </>

@@ -46,15 +46,23 @@ exports.updatePost = asyncHandler(async (req, res) => {
 // @desc      Get all posts
 // @route     GET /api/v1/posts
 // @route     GET /api/v1/users/:userId/posts
-// @access    Private
+// @access    -Private- ~ changed to Public
 
 exports.getPosts = asyncHandler(async (req, res) => {
   let posts;
+  const keyword = req.query.keyword
+    ? {
+        title: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
   if (req.params.userId) {
     posts = await Post.find({ user: req.params.userId }).sort('-createdAt');
     return res.status(200).json(posts);
   } else {
-    posts = await Post.find({}).sort('-createdAt');
+    posts = await Post.find({ ...keyword }).sort('-createdAt');
     res.status(200).json(posts);
   }
 });

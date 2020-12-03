@@ -25,7 +25,7 @@ router
   .route('/')
   .post(protect, createPost)
   .get(
-    protect,
+    // protect,
     advancedQuery(Post, {
       path: 'user',
       select: 'name email',

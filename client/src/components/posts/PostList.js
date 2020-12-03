@@ -5,8 +5,9 @@ import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import PostItem from './PostItem';
 
-const PostList = () => {
+const PostList = ({ match }) => {
   const dispatch = useDispatch();
+  const keyword = match.params.keyword;
 
   const { loading: loadingList, error: errorList, posts } = useSelector((state) => state.postList);
 
@@ -17,8 +18,8 @@ const PostList = () => {
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = postDelete;
 
   useEffect(() => {
-    dispatch(listPosts());
-  }, [dispatch, successDelete]);
+    dispatch(listPosts(keyword));
+  }, [dispatch, successDelete, keyword]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id));

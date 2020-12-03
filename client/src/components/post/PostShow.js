@@ -18,9 +18,12 @@ import CreateComment from './CreateComment';
 import CommentItem from './CommentItem';
 import Moment from 'react-moment';
 import Rating from '../layout/Rating';
+import CreateReview from './CreateReview';
 
 const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
+
+  const [message, setMessage] = useState(null);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -46,13 +49,20 @@ const PostShow = ({ match, history }) => {
     success: successCommentDelete,
   } = postComment;
 
-  const [message, setMessage] = useState(null);
+  const postReviewCreate = useSelector((state) => state.postReviewCreate);
+  const { success: successReview } = postReviewCreate;
 
   useEffect(() => {
     if (!post._id || post._id !== match.params.id) {
       dispatch(listPostDetails(match.params.id));
     }
-    if (successLikes || successFollows || successCommentCreate || successCommentDelete) {
+    if (
+      successLikes ||
+      successFollows ||
+      successCommentCreate ||
+      successCommentDelete ||
+      successReview
+    ) {
       setMessage(null);
       dispatch(listPostDetails(match.params.id));
     }
@@ -70,6 +80,7 @@ const PostShow = ({ match, history }) => {
     post._id,
     successCommentCreate,
     successCommentDelete,
+    successReview,
   ]);
 
   const postLikeHandler = (post, id) => {
@@ -147,6 +158,14 @@ const PostShow = ({ match, history }) => {
               deleteCommentHandler={deleteCommentHandler}
               userInfo={userInfo}
             />
+          ))}
+        </div>
+        <CreateReview postId={post._id} />
+        <div className='reviews'>
+          {post.reviews.map((review) => (
+            <div key={review._id}>
+              <p>review: {review.comment}</p>
+            </div>
           ))}
         </div>
       </div>

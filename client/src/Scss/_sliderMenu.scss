@@ -1,0 +1,54 @@
+.slider {
+  width: 15.625rem;
+  height: 100vh;
+  z-index: 2;
+  position: absolute;
+  top: 5rem; //height of header
+  right: 0rem;
+  transition: ease-in-out 300ms;
+  background-color: white;
+
+  &.has-slide {
+    right: -100rem;
+  }
+
+  &__wrap {
+    width: 100%;
+
+    svg {
+      color: $lightForrestGray;
+      opacity: 0.75;
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    a {
+      list-style: none;
+      text-decoration: none;
+      font-size: 1.125rem;
+      color: $blueGray;
+
+      &:hover {
+        background: hsl(0, 0%, 94%);
+        border-right: 2px solid $forestGreen;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.dd-menu {
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &__container {
+  }
+
+  &__label {
+  }
+
+  p {
+    margin: 0;
+  }
+}
