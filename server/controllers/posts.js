@@ -45,11 +45,9 @@ exports.updatePost = asyncHandler(async (req, res) => {
 
 // @desc      Get all posts
 // @route     GET /api/v1/posts
-// @route     GET /api/v1/users/:userId/posts
-// @access    -Private- ~ changed to Public
+// @access    Public
 
 exports.getPosts = asyncHandler(async (req, res) => {
-  let posts;
   const keyword = req.query.keyword
     ? {
         title: {
@@ -58,13 +56,19 @@ exports.getPosts = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  if (req.params.userId) {
-    posts = await Post.find({ user: req.params.userId }).sort('-createdAt');
-    return res.status(200).json(posts);
-  } else {
-    posts = await Post.find({ ...keyword }).sort('-createdAt');
-    res.status(200).json(posts);
-  }
+  const posts = await Post.find({ ...keyword }).sort('-createdAt');
+  res.status(200).json(posts);
+});
+
+// @desc      Get all posts by id
+// @route     GET /api/v1/posts/users/:userId
+// @access    Public
+
+exports.getPostsById = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
+  const posts = await Post.find({ user: userId }).sort('-createdAt');
+  res.status(200).json(posts);
 });
 
 // @desc      Get post by id
@@ -299,17 +303,17 @@ exports.unfollowPost = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.getFollowedPosts = asyncHandler(async (req, res) => {
-  if (req.params.userId) {
-    const user = await User.findById(req.params.userId);
-    const posts = await Post.find();
-    const followedPosts = [];
-    posts.map((p) => {
-      p.follows.map((follow) => {
-        if (follow.user.toString() === user._id.toString()) {
-          followedPosts.push(p);
-        }
-      });
+  const userId = req.params.userId;
+  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
+  const user = await User.findById(userId);
+  const posts = await Post.find();
+  const followedPosts = [];
+  posts.map((p) => {
+    p.follows.map((follow) => {
+      if (follow.user.toString() === user._id.toString()) {
+        followedPosts.push(p);
+      }
     });
-    return res.status(200).json(followedPosts);
-  }
+  });
+  return res.status(200).json(followedPosts);
 });

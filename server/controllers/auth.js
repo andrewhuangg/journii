@@ -226,3 +226,12 @@ exports.getUserById = asyncHandler(async (req, res) => {
     throw new ErrorResponse(`User ${req.params.id} was not found`, 404);
   }
 });
+
+// @desc      Get all users
+// @route     GET /api/v1/auth/users
+// @access    Public
+
+exports.getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.status(200).json(users);
+});

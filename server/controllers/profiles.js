@@ -10,7 +10,7 @@ const User = require('../models/User');
 // @access    Public
 
 exports.getProfiles = asyncHandler(async (req, res) => {
-  const profiles = await Profile.find();
+  const profiles = await Profile.find({});
   res.status(200).json(profiles);
 });
 
@@ -223,21 +223,21 @@ exports.getGithubRepo = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.getFollowedProfiles = asyncHandler(async (req, res) => {
-  if (req.params.userId) {
-    const user = await User.findById(req.params.userId);
-    if (!user) throw new ErrorResponse(`user not found with the id of ${req.params.userId}`, 404);
+  const userId = req.params.userId;
+  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
 
-    const profiles = await Profile.find();
-    const followedProfile = [];
-    profiles.map((p) => {
-      p.follows.map((follow) => {
-        if (follow.user.toString() === user._id.toString()) {
-          followedProfile.push(p);
-        }
-      });
+  const user = await User.findById(userId);
+  const profiles = await Profile.find();
+  const followedProfile = [];
+
+  profiles.map((p) => {
+    p.follows.map((follow) => {
+      if (follow.user.toString() === user._id.toString()) {
+        followedProfile.push(p);
+      }
     });
-    return res.status(200).json(followedProfile);
-  }
+  });
+  return res.status(200).json(followedProfile);
 });
 
 // @desc      Follow a profile

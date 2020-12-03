@@ -31,18 +31,8 @@ router.route('/users/:userId').get(getProfile);
 router.route('/github/:username').get(getGithubRepo);
 router.route('/follow/:id').put(protect, followProfile);
 router.route('/unfollow/:id').put(protect, unfollowProfile);
-router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
 router.route('/followedprofiles').get(protect, getFollowedProfiles);
-
-router
-  .route('/')
-  .get(
-    advancedQuery(Profile, {
-      path: 'user',
-      select: 'name email',
-    }),
-    getProfiles
-  )
-  .post(protect, createProfile);
+router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
+router.route('/').get(getProfiles).post(protect, createProfile);
 
 module.exports = router;

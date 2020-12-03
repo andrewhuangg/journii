@@ -10,6 +10,7 @@ const {
   logout,
   deleteUser,
   getUserById,
+  getUsers,
 } = require('../controllers/auth');
 const router = express.Router();
 
@@ -23,6 +24,7 @@ router.route('/resetpassword/:resettoken').put(resetPassword);
 router.route('/me').get(protect, getMe);
 router.route('/updatedetails').put(protect, updateDetails);
 router.route('/updatepassword').put(protect, updatePassword);
+router.route('/users').get(getUsers);
 router.route('/:id').get(protect, getUserById).delete(protect, deleteUser);
 
 module.exports = router;
