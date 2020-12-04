@@ -77,22 +77,11 @@ export const listPosts = (keyword = '', pageNumber = '') => async (dispatch) => 
   }
 };
 
-export const listPostDetails = (id) => async (dispatch, getState) => {
+export const listPostDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: POST_DETAILS_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`/api/v1/posts/${id}`, config);
+    const { data } = await axios.get(`/api/v1/posts/${id}`);
     dispatch({
       type: POST_DETAILS_SUCCESS,
       payload: data,

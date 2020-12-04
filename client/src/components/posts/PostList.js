@@ -5,7 +5,7 @@ import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import PostItem from './PostItem';
 import Paginate from '../layout/Paginate';
-import PostCarousel from '../layout/PostCarousel';
+import Meta from '../layout/Meta';
 
 const PostList = ({ match }) => {
   const dispatch = useDispatch();
@@ -32,6 +32,7 @@ const PostList = ({ match }) => {
 
   return (
     <>
+      <Meta title='journii | Posts' />
       <h1>Posts</h1>
       <p>Welcome to the community</p>
       {loadingDelete && <Spinner />}

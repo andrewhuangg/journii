@@ -5,13 +5,7 @@ import { ReactComponent as GrowthSvg } from '../../svgs/growth.svg';
 import { ReactComponent as ContributionSvg } from '../../svgs/contribution.svg';
 import { ReactComponent as ReflectionSvg } from '../../svgs/reflection.svg';
 import { ReactComponent as LogoSvg } from '../../svgs/logo.svg';
-// import React, { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getCurrentProfile } from '../../actions/profileAction';
-// import { deleteAccount } from '../../actions/authAction';
-// import Spinner from '../layout/Spinner';
-// import AlertMessage from '../layout/AlertMessage';
+import Meta from './Meta';
 
 const Landing = () => {
   const imageUrl = 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg';
@@ -21,6 +15,7 @@ const Landing = () => {
 
   return (
     <>
+      <Meta />
       <section className='showcase'>
         <div className='showcase__video-container container'>
           <video

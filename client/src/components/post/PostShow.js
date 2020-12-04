@@ -19,6 +19,7 @@ import CommentItem from './CommentItem';
 import Moment from 'react-moment';
 import Rating from '../layout/Rating';
 import CreateReview from './CreateReview';
+import Meta from '../layout/Meta';
 
 const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -124,6 +125,7 @@ const PostShow = ({ match, history }) => {
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <div>
+        <Meta title={`journii | ${post.title}`} />
         {post.image && <Image src={post.image} alt={post.title} fluid />}
         <h6>{post.title}</h6>
         <p>{post.text}</p>
