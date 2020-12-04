@@ -9,6 +9,7 @@ import {
   postFollowReducer,
   postReviewCreateReducer,
   postCommentReducer,
+  postTopRatedReducer,
 } from './postReducers';
 import {
   userLoginReducer,
@@ -53,4 +54,5 @@ export default combineReducers({
   postReviewCreate: postReviewCreateReducer,
   postLikes: postLikeReducer,
   postFollows: postFollowReducer,
+  postTopRated: postTopRatedReducer,
 });

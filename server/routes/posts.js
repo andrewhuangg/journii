@@ -1,5 +1,4 @@
 const express = require('express');
-const advancedQuery = require('../middleware/advancedQuery');
 const { protect, authorize } = require('../middleware/auth');
 const {
   createPost,
@@ -17,11 +16,12 @@ const {
   createPostReview,
   deletePostReview,
   updatePost,
+  getTopPosts,
 } = require('../controllers/posts');
-const Post = require('../models/Post');
 
 const router = express.Router({ mergeParams: true });
 
+router.route('/top').get(getTopPosts);
 router.route('/followedposts').get(protect, getFollowedPosts);
 router.route('/like/:id').put(protect, likePost);
 router.route('/unlike/:id').put(protect, unlikePost);

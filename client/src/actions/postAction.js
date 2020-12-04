@@ -30,28 +30,37 @@ import {
   POST_DELETE_COMMENT_REQUEST,
   POST_DELETE_COMMENT_SUCCESS,
   POST_DELETE_COMMENT_FAIL,
+  POST_TOP_REQUEST,
+  POST_TOP_SUCCESS,
+  POST_TOP_FAIL,
 } from './types';
 
-export const listPosts = (keyword = '', userId) => async (dispatch, getState) => {
+export const listTopPosts = () => async (dispatch) => {
+  try {
+    dispatch({ type: POST_TOP_REQUEST });
+
+    const { data } = await axios.get('/api/v1/posts/top');
+
+    dispatch({
+      type: POST_TOP_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_TOP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const listPosts = (keyword = '', pageNumber = '') => async (dispatch) => {
   try {
     dispatch({ type: POST_LIST_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = !userId
-      ? await axios.get(`/api/v1/posts?keyword=${keyword}`, config)
-      : await axios.get(`/api/v1/users/${userId}/posts`, config);
-
-    // const { data } = await axios.get(`/api/v1/posts?keyword=${keyword}`, config);
+    const { data } = await axios.get(`/api/v1/posts?keyword=${keyword}&pageNumber=${pageNumber}`);
 
     dispatch({
       type: POST_LIST_SUCCESS,

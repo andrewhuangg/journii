@@ -4,6 +4,15 @@ const asyncHandler = require('express-async-handler');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
+// @desc      Get top rated posts
+// @route     GET /api/v1/posts/top
+// @access    Public
+
+exports.getTopPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({}).sort({ rating: -1 }).limit(4);
+  res.status(200).json(posts);
+});
+
 // @desc      Create post
 // @route     POST /api/v1/posts
 // @access    Private
@@ -48,6 +57,9 @@ exports.updatePost = asyncHandler(async (req, res) => {
 // @access    Public
 
 exports.getPosts = asyncHandler(async (req, res) => {
+  const pageSize = 2;
+  const page = Number(req.query.pageNumber) || 1;
+
   const keyword = req.query.keyword
     ? {
         title: {
@@ -56,8 +68,15 @@ exports.getPosts = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  const posts = await Post.find({ ...keyword }).sort('-createdAt');
-  res.status(200).json(posts);
+
+  const count = await Post.countDocuments({ ...keyword });
+  const posts = await Post.find({ ...keyword })
+    .sort('-createdAt')
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  const pages = Math.ceil(count / pageSize);
+  res.status(200).json({ posts, page, pages });
 });
 
 // @desc      Get all posts by id

@@ -16,8 +16,6 @@ const {
   followProfile,
   unfollowProfile,
 } = require('../controllers/profiles');
-const advancedQuery = require('../middleware/advancedQuery');
-const Profile = require('../models/Profile');
 
 // mergeParams helps us merge url params
 const router = express.Router({ mergeParams: true });

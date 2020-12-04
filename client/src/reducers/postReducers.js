@@ -34,6 +34,9 @@ import {
   POST_DELETE_COMMENT_REQUEST,
   POST_DELETE_COMMENT_SUCCESS,
   POST_DELETE_COMMENT_FAIL,
+  POST_TOP_REQUEST,
+  POST_TOP_SUCCESS,
+  POST_TOP_FAIL,
 } from '../actions/types';
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -42,7 +45,7 @@ export const postListReducer = (state = { posts: [] }, action) => {
     case POST_LIST_REQUEST:
       return { loading: true, posts: [] };
     case POST_LIST_SUCCESS:
-      return { loading: false, posts: payload };
+      return { loading: false, posts: payload.posts, pages: payload.pages, page: payload.page };
     case POST_LIST_FAIL:
       return { loading: false, error: payload };
     case POST_LIST_RESET:
@@ -191,6 +194,20 @@ export const postFollowReducer = (state = { follows: [] }, action) => {
     case POST_UPDATE_FOLLOWS_SUCCESS:
       return { loading: false, follows: payload, success: true };
     case POST_UPDATE_FOLLOWS_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const postTopRatedReducer = (state = { posts: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case POST_TOP_REQUEST:
+      return { loading: true, posts: [] };
+    case POST_TOP_SUCCESS:
+      return { loading: false, posts: payload };
+    case POST_TOP_FAIL:
       return { loading: false, error: payload };
     default:
       return state;

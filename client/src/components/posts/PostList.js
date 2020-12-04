@@ -4,12 +4,17 @@ import { listPosts, deletePost } from '../../actions/postAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import PostItem from './PostItem';
+import Paginate from '../layout/Paginate';
+import PostCarousel from '../layout/PostCarousel';
 
 const PostList = ({ match }) => {
   const dispatch = useDispatch();
   const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
 
-  const { loading: loadingList, error: errorList, posts } = useSelector((state) => state.postList);
+  const { loading: loadingList, error: errorList, posts, pages, page } = useSelector(
+    (state) => state.postList
+  );
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -18,8 +23,8 @@ const PostList = ({ match }) => {
   const { loading: loadingDelete, error: errorDelete, success: successDelete } = postDelete;
 
   useEffect(() => {
-    dispatch(listPosts(keyword));
-  }, [dispatch, successDelete, keyword]);
+    dispatch(listPosts(keyword, pageNumber));
+  }, [dispatch, successDelete, keyword, pageNumber, userInfo]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id));
@@ -44,8 +49,10 @@ const PostList = ({ match }) => {
             />
           ))}
         </div>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+          <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
+        </div>
       </>
-      )
     </>
   );
 };
