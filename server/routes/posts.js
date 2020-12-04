@@ -22,7 +22,7 @@ const {
 const router = express.Router({ mergeParams: true });
 
 router.route('/top').get(getTopPosts);
-router.route('/followedposts').get(protect, getFollowedPosts);
+router.route('/followedposts').get(getFollowedPosts);
 router.route('/like/:id').put(protect, likePost);
 router.route('/unlike/:id').put(protect, unlikePost);
 router.route('/comment/:id').post(protect, addComment);
@@ -32,7 +32,7 @@ router.route('/review/:id/:reviewId').delete(protect, deletePostReview);
 router.route('/follow/:id').put(protect, followPost);
 router.route('/unfollow/:id').put(protect, unfollowPost);
 router.route('/users/:userId').get(getPostsById);
-router.route('/:id').get(protect, getPost).delete(protect, deletePost).put(protect, updatePost);
+router.route('/:id').get(getPost).delete(protect, deletePost).put(protect, updatePost);
 router.route('/').post(protect, createPost).get(getPosts);
 
 module.exports = router;

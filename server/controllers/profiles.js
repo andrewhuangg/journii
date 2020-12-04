@@ -220,7 +220,7 @@ exports.getGithubRepo = asyncHandler(async (req, res) => {
 
 // @desc      Get all followed profiles
 // @route     GET /api/v1/users/:userId/profiles/followedprofiles
-// @access    Private
+// @access    Public
 
 exports.getFollowedProfiles = asyncHandler(async (req, res) => {
   const userId = req.params.userId;

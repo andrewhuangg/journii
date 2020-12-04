@@ -92,7 +92,7 @@ exports.getPostsById = asyncHandler(async (req, res) => {
 
 // @desc      Get post by id
 // @route     GET /api/v1/posts/:id
-// @access    Private
+// @access    Public
 
 exports.getPost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id).populate({
@@ -319,7 +319,7 @@ exports.unfollowPost = asyncHandler(async (req, res) => {
 
 // @desc      Get all followed posts
 // @route     GET /api/v1/users/:userId/posts/followedposts
-// @access    Private
+// @access    Public
 
 exports.getFollowedPosts = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
