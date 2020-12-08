@@ -30,33 +30,31 @@ const App = () => {
         <>
           <Route path='/' component={Header} />
           <Route exact path='/' component={Landing} />
-          <main>
-            <Switch>
-              <Route exact path='/dashboard' component={Dashboard} />
+          <Switch>
+            <Route exact path='/dashboard' component={Dashboard} />
 
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/register' component={Register} />
-              <Route exact path='/userinfo' component={UserProfile} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/userinfo' component={UserProfile} />
 
-              <Route exact path='/createprofile' component={CreateProfile} />
-              <Route exact path='/editprofile' component={EditProfile} />
-              <Route exact path='/profiles' component={ProfileList} />
-              <Route exact path='/profile/:id' component={ProfileShow} />
-              <Route exact path='/addexperience' component={AddExperience} />
-              <Route exact path='/addproject' component={AddProject} />
+            <Route exact path='/createprofile' component={CreateProfile} />
+            <Route exact path='/editprofile' component={EditProfile} />
+            <Route exact path='/profiles' component={ProfileList} />
+            <Route exact path='/profile/:id' component={ProfileShow} />
+            <Route exact path='/addexperience' component={AddExperience} />
+            <Route exact path='/addproject' component={AddProject} />
 
-              <Route exact path='/createpost' component={CreatePost} />
-              <Route exact path='/editpost/:id' component={EditPost} />
-              <Route exact path='/posts' component={PostList} />
-              <Route exact path='/posts/:id' component={PostShow} />
+            <Route exact path='/createpost' component={CreatePost} />
+            <Route exact path='/editpost/:id' component={EditPost} />
+            <Route exact path='/posts' component={PostList} />
+            <Route exact path='/posts/:id' component={PostShow} />
 
-              <Route exact path='/search/:keyword' component={PostList} />
-              {/* remember to switch postlist back to dashboard */}
-              <Route exact path='/page/:pageNumber' component={PostList} />
-              {/* remember to switch postlist back to dashboard */}
-              <Route exact path='/search/:keyword/page/:pageNumber' component={PostList} />
-            </Switch>
-          </main>
+            <Route exact path='/search/:keyword' component={PostList} />
+            {/* remember to switch postlist back to dashboard */}
+            <Route exact path='/page/:pageNumber' component={PostList} />
+            {/* remember to switch postlist back to dashboard */}
+            <Route exact path='/search/:keyword/page/:pageNumber' component={PostList} />
+          </Switch>
         </>
       </Router>
     </Provider>

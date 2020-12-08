@@ -1,0 +1,89 @@
+.auth {
+  @include breakpoint-up(medium) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+  &__wrapper {
+    background-color: hsl(30, 5%, 91%);
+    padding: 1.25rem 2.5rem;
+    border: 0;
+    border-radius: 5px;
+
+    a {
+      color: $darkTurquoise;
+      text-decoration: none;
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
+  &__form-control {
+    position: relative;
+    margin: 1.25rem 0 2.5rem;
+    width: 18.75rem;
+
+    input {
+      display: block;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 2px solid $darkTurquoise;
+      width: 100%;
+      padding: 0.9375rem 0;
+      font-size: 1.125rem;
+      cursor: pointer;
+    }
+
+    input:focus,
+    input:valid {
+      outline: 0;
+      border-bottom-color: $darkTurquoise;
+    }
+
+    label {
+      position: absolute;
+      top: 0.9375rem;
+      left: 0;
+    }
+
+    span {
+      display: inline-block;
+      font-size: 1.125rem;
+      min-width: 0.3125rem;
+      transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    input:focus + label span,
+    input:valid + label span {
+      color: $darkTurquoise;
+      transform: translateY(-1.875rem);
+    }
+  }
+
+  &__btn {
+    cursor: pointer;
+    background: $tangerine;
+    display: inline-block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 5px;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import { login } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
-import FormContainer from './FormContainer';
 
 const Login = ({ location, history }) => {
   const [email, setEmail] = useState('');
@@ -18,6 +16,7 @@ const Login = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) history.push(redirect);
+    wrapLabelsWithSpan();
   }, [history, userInfo, redirect]);
 
   const submitHandler = (e) => {
@@ -25,44 +24,54 @@ const Login = ({ location, history }) => {
     dispatch(login(email, password));
   };
 
+  const wrapLabelsWithSpan = () => {
+    const labels = document.querySelectorAll('.auth__form-control label');
+    labels.forEach((label) => {
+      label.innerHTML = label.innerText
+        .split('')
+        .map((char, idx) => `<span style="transition-delay:${idx * 50}ms">${char}</span>`)
+        .join('');
+    });
+  };
+
   return (
     <>
-      <FormContainer>
-        <h1 className='large text-primary'>Sign In</h1>
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-        {loading && <Spinner />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='email'>
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type='email'
-              placeholder='Enter email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+      {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
+      {loading && <Spinner />}
+      <div className='auth'>
+        <div className='auth__wrapper'>
+          <h1 className='auth__header'>Sign In</h1>
+          <form onSubmit={submitHandler} className='auth__form'>
+            <div className='auth__form-control'>
+              <input
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label>Email</label>
+            </div>
 
-          <Form.Group controlId='password'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Enter password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <div className='auth__form-control'>
+              <input
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label>Password</label>
+            </div>
 
-          <Button type='submit' variant='primary'>
-            Sign In
-          </Button>
-        </Form>
-        <Row className='py-3'>
-          <Col>
-            New User?{' '}
-            <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
-          </Col>
-        </Row>
-      </FormContainer>
+            <button className='auth__btn' type='submit'>
+              Sign In
+            </button>
+            <p className='auth__redirect'>
+              New User?{' '}
+              <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
+            </p>
+          </form>
+        </div>
+      </div>
     </>
   );
 };

@@ -150,7 +150,7 @@
         left: 0;
         right: 0;
         bottom: -30px;
-        background: linear-gradient(to right, $lightForrestGray, $pastelGreen);
+        background: linear-gradient(to right, $lightForrestGray, $lightForrestGray);
         opacity: 0;
         transition: opacity 300ms ease-in-out;
       }
