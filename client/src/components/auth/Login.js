@@ -44,9 +44,11 @@ const Login = ({ location, history }) => {
           <form onSubmit={submitHandler} className='auth__form'>
             <div className='auth__form-control'>
               <input
+                className='auth__input'
                 type='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder='Email'
                 required
               />
               <label>Email</label>
@@ -54,9 +56,11 @@ const Login = ({ location, history }) => {
 
             <div className='auth__form-control'>
               <input
+                className='auth__input'
                 type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder='Password'
                 required
               />
               <label>Password</label>

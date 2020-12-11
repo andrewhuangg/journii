@@ -53,15 +53,24 @@ const Register = ({ location, history }) => {
           <h1 className='auth__header'>Sign up</h1>
           <form onSubmit={submitHandler} className='auth__form'>
             <div className='auth__form-control'>
-              <input type='text' value={name} onChange={(e) => setName(e.target.value)} required />
+              <input
+                className='auth__input'
+                type='text'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder='Name'
+                required
+              />
               <label>Name</label>
             </div>
 
             <div className='auth__form-control'>
               <input
+                className='auth__input'
                 type='text'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder='Email'
                 required
               />
               <label>Email</label>
@@ -69,9 +78,11 @@ const Register = ({ location, history }) => {
 
             <div className='auth__form-control'>
               <input
+                className='auth__input'
                 type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder='Password'
                 required
               />
               <label>Password</label>
@@ -79,9 +90,11 @@ const Register = ({ location, history }) => {
 
             <div className='auth__form-control'>
               <input
+                className='auth__input'
                 type='password'
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder='Confirm Password'
                 required
               />
               <label>Confirm Password</label>

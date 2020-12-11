@@ -54,18 +54,33 @@
       left: 0;
     }
 
+    input:not(:focus) + label span {
+      visibility: hidden;
+    }
+
+    input:focus + label span,
+    input:valid + label span {
+      visibility: visible;
+      color: $darkTurquoise;
+      transform: translateY(-1.875rem);
+    }
+
     span {
       display: inline-block;
       font-size: 1.125rem;
       min-width: 0.3125rem;
       transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
+  }
 
-    input:focus + label span,
-    input:valid + label span {
-      color: $darkTurquoise;
-      transform: translateY(-1.875rem);
-    }
+  &__input:not(:focus)::placeholder {
+    color: $darkTurquoise;
+    transition: all 700ms ease-in-out;
+  }
+
+  &__input:focus::placeholder {
+    color: transparent;
+    transition: all 700ms ease-in-out;
   }
 
   &__btn {
