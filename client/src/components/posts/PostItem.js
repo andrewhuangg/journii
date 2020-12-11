@@ -22,9 +22,43 @@ const PostItem = ({
   currentUserId,
   deleteHandler,
 }) => {
+  const imageUrl = 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg';
+  // placeholder until we find an api for random pages
   return (
     <>
-      <div>
+      <Link to={`posts/${_id}`} className='postItem'>
+        <div
+          className='postItem__image'
+          style={{ backgroundImage: `url(${image ? image : imageUrl})` }}
+        ></div>
+        <div className='postItem__content'>
+          <div className='postItem__title'>{title}</div>
+          <div className='postItem__text'>{text}</div>
+        </div>
+        <div className='postItem__likes'>
+          {likes.length > 0 && likes.length} <i class='fas fa-heart' />
+        </div>
+        <div className='postItem__comments'>
+          {comments.length > 0 && comments.length} <i class='fas fa-comments' />
+        </div>
+        <div className='postItem__follows'>
+          {follows.length > 0 && follows.length} <i class='fas fa-users' />
+        </div>
+        <div className='postItem__rating'>
+          <Rating value={rating} text={`${numReviews}`} />
+        </div>
+        <div className='postItem__date'>
+          <Moment format='MM/DD/YYYY'>{createdAt}</Moment>
+        </div>
+      </Link>
+    </>
+  );
+};
+
+export default PostItem;
+
+/*
+<div>
         {image && <Image src={image} alt={title} fluid />}
         <h6>
           <Link to={`posts/${_id}`}>{title}</Link>
@@ -65,8 +99,4 @@ const PostItem = ({
           <Rating value={rating} text={` ${numReviews} reviews`} />
         </div>
       </div>
-    </>
-  );
-};
-
-export default PostItem;
+*/
