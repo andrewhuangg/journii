@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,6 +11,8 @@ const Register = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [image, setImage] = useState('');
+  const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
@@ -23,16 +26,36 @@ const Register = ({ location, history }) => {
     wrapLabelsWithSpan();
   }, [history, userInfo, redirect]);
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const { data } = await axios.post('/api/v1/upload', formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
       setMessage(null);
-      dispatch(register(name, email, password));
+      dispatch(register({ name, email, password, image }));
     }
   };
-
   const wrapLabelsWithSpan = () => {
     const labels = document.querySelectorAll('.auth__form-control label');
     labels.forEach((label) => {
@@ -52,6 +75,13 @@ const Register = ({ location, history }) => {
         <div className='auth__wrapper'>
           <h1 className='auth__header'>Sign up</h1>
           <form onSubmit={submitHandler} className='auth__form'>
+            <div className='auth__image'>
+              <label>Image</label>
+              <input type='text' value={image} onChange={(e) => setImage(e.target.value)} />
+              <input type='file' onChange={uploadFileHandler} />
+              {uploading && <Spinner />}
+            </div>
+
             <div className='auth__form-control'>
               <input
                 className='auth__input'

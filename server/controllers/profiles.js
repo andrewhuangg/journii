@@ -10,7 +10,10 @@ const User = require('../models/User');
 // @access    Public
 
 exports.getProfiles = asyncHandler(async (req, res) => {
-  const profiles = await Profile.find({});
+  const profiles = await Profile.find({}).populate({
+    path: 'user',
+    select: 'name email',
+  });
   res.status(200).json(profiles);
 });
 

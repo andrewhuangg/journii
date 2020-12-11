@@ -12,7 +12,7 @@ const Profile = require('../models/Profile');
 // @access    Public
 
 exports.register = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, image } = req.body;
 
   const userExists = await User.findOne({ email });
   if (userExists) throw new ErrorResponse('User already exists', 400);
@@ -22,6 +22,7 @@ exports.register = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    image,
   });
 
   if (user) {

@@ -21,9 +21,8 @@ const ProfileList = () => {
         <AlertMessage variant='danger'>{error}</AlertMessage>
       ) : (
         <>
-          {profiles.map((profile) => (
-            <ProfileItem key={profile._id} profile={profile} />
-          ))}
+          {profiles &&
+            profiles.map((profile) => <ProfileItem key={profile._id} profile={profile} />)}
         </>
       )}
     </>

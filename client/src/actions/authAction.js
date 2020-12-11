@@ -21,7 +21,7 @@ import {
   POST_DETAILS_RESET,
 } from './types';
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (user) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -32,7 +32,7 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('/api/v1/auth/register', { name, email, password }, config);
+    const { data } = await axios.post('/api/v1/auth/register', user, config);
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,

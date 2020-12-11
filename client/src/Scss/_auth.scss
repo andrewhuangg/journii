@@ -10,10 +10,10 @@
   overflow: hidden;
 
   &__wrapper {
-    background-color: hsl(30, 5%, 91%);
+    background-color: hsl(30, 14%, 97%);
     padding: 1.25rem 2.5rem;
     border: 0;
-    border-radius: 5px;
+    border-radius: 0.625rem;
 
     a {
       color: $darkTurquoise;
@@ -99,6 +99,12 @@
 
     &:active {
       transform: scale(0.98);
+    }
+  }
+
+  &__redirect {
+    a:hover {
+      border-bottom: 2px solid $darkTurquoise;
     }
   }
 }
