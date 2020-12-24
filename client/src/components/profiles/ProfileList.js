@@ -15,16 +15,14 @@ const ProfileList = () => {
   return (
     <>
       <h1>Profiles</h1>
-      {loading ? (
-        <Spinner />
-      ) : error ? (
-        <AlertMessage variant='danger'>{error}</AlertMessage>
-      ) : (
-        <>
+      {loading && <Spinner />}
+      {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
+      <>
+        <section className='profilesList'>
           {profiles &&
             profiles.map((profile) => <ProfileItem key={profile._id} profile={profile} />)}
-        </>
-      )}
+        </section>
+      </>
     </>
   );
 };

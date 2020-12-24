@@ -4,7 +4,6 @@ const Rating = ({ value, text }) => {
   return (
     <>
       <div className='rating'>
-        <span>{text && text > 0 && text}</span>{' '}
         <span>
           <i
             className={
@@ -39,7 +38,8 @@ const Rating = ({ value, text }) => {
               value >= 5 ? 'fas fa-star' : value >= 4.5 ? 'fas fa-star-half-alt' : 'far fa-star'
             }
           ></i>
-        </span>
+        </span>{' '}
+        <span>{text && text > 0 && `(${text})`}</span>
       </div>
     </>
   );

@@ -27,6 +27,9 @@ const PostItem = ({
   return (
     <>
       <Link to={`posts/${_id}`} className='postItem'>
+        <div className='postItem__overlay'>
+          <span>read more</span>
+        </div>
         <div
           className='postItem__image'
           style={{ backgroundImage: `url(${image ? image : imageUrl})` }}
@@ -36,13 +39,13 @@ const PostItem = ({
           <div className='postItem__text'>{text}</div>
         </div>
         <div className='postItem__likes'>
-          {likes.length > 0 && likes.length} <i class='fas fa-heart' />
+          <i className='fas fa-heart' /> {likes.length > 0 && likes.length}
         </div>
         <div className='postItem__comments'>
-          {comments.length > 0 && comments.length} <i class='fas fa-comments' />
+          <i className='fas fa-comments' /> {comments.length > 0 && comments.length}
         </div>
         <div className='postItem__follows'>
-          {follows.length > 0 && follows.length} <i class='fas fa-users' />
+          <i className='fas fa-users' /> {follows.length > 0 && follows.length}
         </div>
         <div className='postItem__rating'>
           <Rating value={rating} text={`${numReviews}`} />

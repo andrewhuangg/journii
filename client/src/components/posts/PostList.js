@@ -40,7 +40,7 @@ const PostList = ({ match }) => {
       {loadingList && <Spinner />}
       {errorList && <AlertMessage variant='danger'>{errorList}</AlertMessage>}
       <>
-        <div>
+        <section className='postsList'>
           {posts.map((post) => (
             <PostItem
               key={post._id}
@@ -49,7 +49,7 @@ const PostList = ({ match }) => {
               deleteHandler={deleteHandler}
             />
           ))}
-        </div>
+        </section>
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
           <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
         </div>

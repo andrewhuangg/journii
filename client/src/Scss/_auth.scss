@@ -48,6 +48,10 @@
       border-bottom-color: $darkTurquoise;
     }
 
+    input:invalid {
+      box-shadow: none;
+    }
+
     label {
       position: absolute;
       top: 0.9375rem;

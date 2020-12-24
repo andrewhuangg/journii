@@ -13,18 +13,16 @@ const ProfileItem = ({
 }) => {
   return (
     <>
-      <div>
-        <p>bio: {bio}</p>
-        <p>github: {github}</p>
-        <p>name: {name}</p>
-        <p>email: {email}</p>
-        <p>username: {username}</p>
-        <p>website: {website}</p>
-        <div>
-          <Link to={`/profile/${_id}`}>view profile</Link>
+      <Link to={`profile/${_id}`} className='profileItem'>
+        <div className='profileItem__overlay'></div>
+        <div className='profileItem__image'></div>
+        <div className='profileItem__content'>
+          <div className='profileItem__username'>{username}</div>
+          <div className='profileItem__bio'>{bio}</div>
         </div>
-      </div>
-      <div> -------------- </div>
+        <div className='profileItem__website'>{website}</div>
+        <div className='profileItem__github'>{github}</div>
+      </Link>
     </>
   );
 };
