@@ -12,7 +12,7 @@ const User = require('../models/User');
 exports.getProfiles = asyncHandler(async (req, res) => {
   const profiles = await Profile.find({}).populate({
     path: 'user',
-    select: 'name email',
+    select: 'name email image',
   });
   res.status(200).json(profiles);
 });
