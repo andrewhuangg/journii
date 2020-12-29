@@ -1,18 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 // import { followProfile, unFollowProfile, getFollowedProfiles } from '../../actions/profileAction';
 
 const ProfileItem = ({
   profile: {
     bio,
-    github,
-    user: { _id, name, email, image },
+    user: { _id, image },
     username,
-    website,
+    createdAt,
+    follows,
   },
 }) => {
-  const imageUrl = 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg';
-  // placeholder until we find an api for random pages
+  const unsplashURL = 'https://source.unsplash.com/collection/614531/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 600;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+  const randomDefaultImage = {
+    backgroundImage: `url(${image !== null && image !== undefined ? image : unsplashImage})`,
+  };
 
   return (
     <>
@@ -20,14 +33,15 @@ const ProfileItem = ({
         <div className='profileItem__overlay'>
           <span>see profile</span>
         </div>
-        <div
-          className='profileItem__image'
-          style={{ backgroundImage: `url(${image ? image : imageUrl})` }}
-        ></div>
+        <div className='profileItem__image' style={randomDefaultImage}></div>
         <div className='profileItem__content'>
           <div className='profileItem__username'>{username}</div>
           <div className='profileItem__bio'>{bio}</div>
         </div>
+        <div className='profileItem__created'>
+          joined <Moment format='MM/YYYY'>{createdAt}</Moment>
+        </div>
+        <div className='profileItem__followers'>{follows.length} Followers</div>
       </Link>
     </>
   );

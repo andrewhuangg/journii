@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as CommunitySvg } from '../../svgs/community.svg';
 import { ReactComponent as GrowthSvg } from '../../svgs/growth.svg';
 import { ReactComponent as ContributionSvg } from '../../svgs/contribution.svg';
 import { ReactComponent as ReflectionSvg } from '../../svgs/reflection.svg';
 import { ReactComponent as LogoSvg } from '../../svgs/logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { listTopPosts } from '../../actions/postAction';
+import Spinner from './Spinner';
+import AlertMessage from './AlertMessage';
 import Meta from './Meta';
+import TopPostItem from './TopPostItem';
 
 const Landing = () => {
-  const imageUrl = 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg';
-  const defaultPostImage = {
-    backgroundImage: `url(${imageUrl})`,
-  };
+  const dispatch = useDispatch();
+  const postTopRated = useSelector((state) => state.postTopRated);
+  const { loading, error, posts } = postTopRated;
+
+  useEffect(() => {
+    dispatch(listTopPosts());
+  }, [dispatch]);
 
   return (
     <>
       <Meta />
+      {loading && <Spinner />}
+      {error && <AlertMessage>{error}</AlertMessage>}
       <section className='showcase'>
         <div className='showcase__video-container container'>
           <video
@@ -127,61 +137,9 @@ const Landing = () => {
         <div className='post__content container container--pall'>
           <h2>Latest Posts</h2>
           <div className='post__grid'>
-            <Link to='#'>
-              <div className='post__item'>
-                <div className='post__image' style={defaultPostImage}></div>
-                <div className='post__text'>
-                  <div className='post__author'>By Andrew</div>
-                  <div className='post__title'>test</div>
-                  <div className='post__description'>
-                    But I must explain to you how all this mistaken idea of denouncing pleasure and
-                    praising pain was born and I will give you a complete account of the system...
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to='#'>
-              <div className='post__item'>
-                <div className='post__image' style={defaultPostImage}></div>
-                <div className='post__text'>
-                  <div className='post__author'>By Andrew</div>
-                  <div className='post__title'>test</div>
-                  <div className='post__description'>
-                    But I must explain to you how all this mistaken idea of denouncing pleasure and
-                    praising pain was born and I will give you a complete account of the system...
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to='#'>
-              <div className='post__item'>
-                <div className='post__image' style={defaultPostImage}></div>
-                <div className='post__text'>
-                  <div className='post__author'>By Andrew</div>
-                  <div className='post__title'>test</div>
-                  <div className='post__description'>
-                    But I must explain to you how all this mistaken idea of denouncing pleasure and
-                    praising pain was born and I will give you a complete account of the system...
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to='#'>
-              <div className='post__item'>
-                <div className='post__image' style={defaultPostImage}></div>
-                <div className='post__text'>
-                  <div className='post__author'>By Andrew</div>
-                  <div className='post__title'>test</div>
-                  <div className='post__description'>
-                    But I must explain to you how all this mistaken idea of denouncing pleasure and
-                    praising pain was born and I will give you a complete account of the system...
-                  </div>
-                </div>
-              </div>
-            </Link>
+            {posts.map((post) => (
+              <TopPostItem key={post._id} post={post} />
+            ))}
           </div>
         </div>
       </section>

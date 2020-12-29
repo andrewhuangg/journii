@@ -42,12 +42,7 @@ const PostList = ({ match }) => {
       <>
         <section className='postsList'>
           {posts.map((post) => (
-            <PostItem
-              key={post._id}
-              post={post}
-              currentUserId={userInfo.id}
-              deleteHandler={deleteHandler}
-            />
+            <PostItem key={post._id} post={post} />
           ))}
         </section>
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>

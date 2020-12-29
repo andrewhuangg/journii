@@ -1,39 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Image, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
 import Rating from '../layout/Rating';
 
 const PostItem = ({
-  post: {
-    _id,
-    text,
-    user,
-    name,
-    title,
-    image,
-    rating,
-    numReviews,
-    likes,
-    follows,
-    comments,
-    createdAt,
-  },
-  currentUserId,
-  deleteHandler,
+  post: { _id, text, title, image, rating, numReviews, likes, follows, comments, createdAt },
 }) => {
-  const imageUrl = 'https://journii-dev.s3-us-west-1.amazonaws.com/default_post_image.jpg';
-  // placeholder until we find an api for random pages
+  const unsplashURL = 'https://source.unsplash.com/collection/289662/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 900;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+  const randomDefaultImage = {
+    backgroundImage: `url(${image.length > 0 ? image : unsplashImage})`,
+  };
+
   return (
     <>
       <Link to={`posts/${_id}`} className='postItem'>
         <div className='postItem__overlay'>
           <span>read more</span>
         </div>
-        <div
-          className='postItem__image'
-          style={{ backgroundImage: `url(${image ? image : imageUrl})` }}
-        ></div>
+        <div className='postItem__image' style={randomDefaultImage}></div>
         <div className='postItem__content'>
           <div className='postItem__title'>{title}</div>
           <div className='postItem__text'>{text}</div>
