@@ -114,61 +114,109 @@ const PostShow = ({ match, history }) => {
     dispatch(deletePostComment(postId, commentId));
   };
 
+  const unsplashURL = 'https://source.unsplash.com/collection/289662/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 900;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+
   return (
     <>
+      <Meta title={`journii | ${post.title}`} />
       <Link to='/posts'>Back to Posts</Link>
-      {loadingDetails ||
-        loadingFollows ||
-        loadingLikes ||
-        loadingCommentCreate ||
-        (loadingCommentDelete && <Spinner />)}
+      {loadingDetails && <Spinner />}
+      {loadingFollows && <Spinner />}
+      {loadingLikes && <Spinner />}
+      {loadingCommentCreate && <Spinner />}
+      {loadingCommentDelete && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
-      <div>
-        <Meta title={`journii | ${post.title}`} />
-        {post.image && <Image src={post.image} alt={post.title} fluid />}
-        <h6>{post.title}</h6>
-        <p>{post.text}</p>
-        <p>
-          Publisher <Link to={`profiles/${post.user}`}>{post.name}</Link>
-        </p>
-        <p>
-          Posted on <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
-        </p>
-        <div>likes {post.likes.length > 0 && <span>{post.likes.length}</span>}</div>
-        <div>Followers {post.follows.length > 0 && <span>{post.follows.length}</span>}</div>
-        <div onClick={() => postLikeHandler(post, post._id)}>like post</div>
-        <div onClick={() => postUnlikeHandler(post, post._id)}>unlike post</div>
-        {post.user && userInfo.id !== post.user._id && (
-          <>
-            <div onClick={() => postFollowHandler(post, post._id)}>follow post</div>
-            <div onClick={() => postUnfollowHandler(post, post._id)}>unfollow post</div>
-          </>
-        )}
-        {post.user && userInfo.id === post.user._id && (
-          <Button onClick={() => deleteHandler(post._id)}>
-            <i className='fas fa-trash'></i>
-          </Button>
-        )}
-        <CreateComment postId={post._id} />
-        <div className='comments'>
-          {post.comments.map((comment) => (
-            <CommentItem
-              key={comment._id}
-              comment={comment}
-              postId={post._id}
-              deleteCommentHandler={deleteCommentHandler}
-              userInfo={userInfo}
-            />
-          ))}
+
+      <div className='postShow'>
+        <div className='postShow__left-slide'>
+          <CreateReview postId={post._id} />
+          <div className='postShow__reviews'>
+            {post.reviews.map((review) => (
+              <div key={review._id}>
+                <p>review: {review.comment}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <CreateReview postId={post._id} />
-        <div className='reviews'>
-          {post.reviews.map((review) => (
-            <div key={review._id}>
-              <p>review: {review.comment}</p>
+
+        <div className='postShow__right-slide'>
+          <img
+            src={post.image ? post.image : unsplashImage}
+            alt={post.title}
+            className='postShow__image'
+          />
+          <div className='postShow__header'>
+            <h6>{post.title}</h6>
+            <p>{post.text}</p>
+            <p>
+              Publisher <Link to={`profiles/${post.user}`}>{post.name}</Link>
+            </p>
+            <p>
+              Posted on <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
+            </p>
+          </div>
+          <div className='postShow__stats'>
+            <div>likes {post.likes.length > 0 && <span>{post.likes.length}</span>}</div>
+            <div>Followers {post.follows.length > 0 && <span>{post.follows.length}</span>}</div>
+          </div>
+          <div className='postShow__cta'>
+            <div onClick={() => postLikeHandler(post, post._id)} className='postShow__like'>
+              like post
             </div>
-          ))}
+            <div onClick={() => postUnlikeHandler(post, post._id)} className='postShow__unlike'>
+              unlike post
+            </div>
+            {post.user && userInfo.id !== post.user._id && (
+              <>
+                <div onClick={() => postFollowHandler(post, post._id)} className='postShow__follow'>
+                  follow post
+                </div>
+                <div
+                  onClick={() => postUnfollowHandler(post, post._id)}
+                  className='postShow__unfollow'
+                >
+                  unfollow post
+                </div>
+              </>
+            )}
+            {post.user && userInfo.id === post.user._id && (
+              <button onClick={() => deleteHandler(post._id)} className='postShow__delete'>
+                <i className='fas fa-trash'></i>
+              </button>
+            )}
+          </div>
+          <CreateComment postId={post._id} />
+          <div className='comments'>
+            {post.comments.map((comment) => (
+              <CommentItem
+                key={comment._id}
+                comment={comment}
+                postId={post._id}
+                deleteCommentHandler={deleteCommentHandler}
+                userInfo={userInfo}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className='postShow__buttons'>
+          <button className='postShow__down-button'>
+            <i className='fas fa-arrow-down' />
+          </button>
+          <button className='postShow__up-button'>
+            <i className='fas fa-arrow-up' />
+          </button>
         </div>
       </div>
     </>
