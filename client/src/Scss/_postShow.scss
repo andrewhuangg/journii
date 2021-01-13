@@ -1,49 +1,83 @@
-.postShow {
-  &__left-slide {
-  }
+.post-hero {
+  background-color: hsl(0, 0%, 98%);
 
-  &__reviews {
-  }
-
-  &__right-slide {
+  .container {
+    @include breakpoint-up(large) {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &__image {
+    min-height: 17.5rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 41rem;
+
+    @include breakpoint-up(large) {
+      flex: 3;
+      order: 2;
+      height: 100%;
+    }
   }
 
   &__header {
-  }
+    text-align: center;
 
-  &__stats {
-  }
+    @include breakpoint-up(large) {
+      flex: 2;
+      order: 1;
+      text-align: left;
+    }
 
-  &__cta {
-  }
+    h1 {
+      font-weight: 300;
+      font-size: 2.31rem;
+      line-height: 1.15;
+      color: $darkBlue;
+      margin-bottom: 1.5rem;
 
-  &__like {
-  }
+      @include breakpoint-up(large) {
+        font-size: $font-xlg;
+      }
+    }
 
-  &__unlike {
-  }
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 2.25rem;
+    }
 
-  &__follow {
-  }
+    a {
+      color: $darkTurquoise;
+      transition: color 300ms ease-in-out;
+      position: relative;
 
-  &__unfollow {
-  }
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        height: 3px;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        background: linear-gradient(to right, $tangerine, $salmon);
+        opacity: 0;
+        transition: opacity 300ms ease-in-out;
+      }
 
-  &__delete {
-  }
+      &:hover {
+        color: $salmon;
 
-  &_comments {
-  }
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
 
-  &__buttons {
-  }
-
-  &__down-button {
-  }
-
-  &__up-button {
+    time {
+      font-size: 0.75rem;
+    }
   }
 }
