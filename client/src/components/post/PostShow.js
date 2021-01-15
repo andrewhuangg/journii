@@ -81,6 +81,7 @@ const PostShow = ({ match, history }) => {
     successCommentCreate,
     successCommentDelete,
     successReview,
+    userInfo,
   ]);
 
   const postLikeHandler = (post, id) => {
@@ -93,6 +94,60 @@ const PostShow = ({ match, history }) => {
     dispatch(unlikePost(post, id));
   };
 
+  const renderCallAction = () => {
+    if (!loadingLikes && post.user) {
+      return post.likes.map((like) => like.user).includes(userInfo.id) ? (
+        <aside className='post-feature__cta'>
+          <div className='post-feature__cta-grid-parent'>
+            <div className='post-feature__cta-grid-child'>
+              <div className='post-feature__cta-like'>
+                <i
+                  className='fas fa-heart'
+                  onClick={() => {
+                    postUnlikeHandler(post, post._id);
+                  }}
+                />
+                {post.likes.length > 0 && (
+                  <div className='post-feature__like-count'>{post.likes.length}</div>
+                )}
+              </div>
+              <div className='post-feature__cta-follow'>
+                <i className='fas fa-users' />{' '}
+                {post.follows.length > 0 && (
+                  <div className='post-feature__follow-count'>{post.follows.length}</div>
+                )}
+              </div>
+            </div>
+          </div>
+        </aside>
+      ) : (
+        <aside className='post-feature__cta'>
+          <div className='post-feature__cta-grid-parent'>
+            <div className='post-feature__cta-grid-child'>
+              <div className='post-feature__cta-like'>
+                <i
+                  className='fas fa-heart'
+                  onClick={() => {
+                    postLikeHandler(post, post._id);
+                  }}
+                />
+                {post.likes.length > 0 && (
+                  <div className='post-feature__cta-like-count'>{post.likes.length}</div>
+                )}
+              </div>
+              <div className='post-feature__cta-follow'>
+                <i className='fas fa-users' />{' '}
+                {post.follows.length > 0 && (
+                  <div className='post-feature__cta-follow-count'>{post.follows.length}</div>
+                )}
+              </div>
+            </div>
+          </div>
+        </aside>
+      );
+    }
+  };
+
   const postFollowHandler = (post, id) => {
     if (errorFollows) setMessage(errorFollows);
     dispatch(followPost(post, id));
@@ -101,6 +156,23 @@ const PostShow = ({ match, history }) => {
   const postUnfollowHandler = (post, id) => {
     if (errorFollows) setMessage(errorFollows);
     dispatch(unfollowPost(post, id));
+  };
+
+  const renderFollowButton = () => {
+    if (!loadingFollows && post.user && post.user._id !== userInfo.id) {
+      return post.follows.map((follow) => follow.user).includes(userInfo.id) ? (
+        <button
+          className='post-hero__follow-btn'
+          onClick={() => postUnfollowHandler(post, post._id)}
+        >
+          Unfollow Post
+        </button>
+      ) : (
+        <button className='post-hero__follow-btn' onClick={() => postFollowHandler(post, post._id)}>
+          Follow Post
+        </button>
+      );
+    }
   };
 
   const deleteHandler = (id) => {
@@ -140,8 +212,6 @@ const PostShow = ({ match, history }) => {
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
 
-      <Link to='/posts'>Back to Posts</Link>
-
       <section className='post-hero container'>
         <div className='container'>
           <div className='post-hero__image' style={randomDefaultImage}></div>
@@ -149,54 +219,18 @@ const PostShow = ({ match, history }) => {
             <h1>{post.title}</h1>
             <p>
               Publisher <Link to={`profiles/${post.user && post.user._id}`}>{post.name}</Link>
-              <br />
-              <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
             </p>
+            <>{renderFollowButton()}</>
+            <br />
+            <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
           </div>
         </div>
       </section>
 
-      <section className='post'>
-        <div className='post__text'>
-          <p>{post.text}</p>
-        </div>
+      <section className='post-feature container'>
+        {renderCallAction()}
+        <div className='post-feature__text'>{post.text}</div>
       </section>
-
-      <div className='postShow__stats'>
-        <div>
-          <i className='fas fa-heart' /> {post.likes.length > 0 && <span>{post.likes.length}</span>}
-        </div>
-        <div>
-          <i className='fas fa-users' />{' '}
-          {post.follows.length > 0 && <span>{post.follows.length}</span>}
-        </div>
-      </div>
-
-      <div className='postShow__cta'>
-        <div onClick={() => postLikeHandler(post, post._id)} className='postShow__like'>
-          like post
-        </div>
-        <div onClick={() => postUnlikeHandler(post, post._id)} className='postShow__unlike'>
-          unlike post
-        </div>
-
-        {post.user && userInfo.id !== post.user._id && (
-          <>
-            <div onClick={() => postFollowHandler(post, post._id)} className='postShow__follow'>
-              follow post
-            </div>
-            <div onClick={() => postUnfollowHandler(post, post._id)} className='postShow__unfollow'>
-              unfollow post
-            </div>
-          </>
-        )}
-
-        {post.user && userInfo.id === post.user._id && (
-          <button onClick={() => deleteHandler(post._id)} className='postShow__delete'>
-            <i className='fas fa-trash'></i>
-          </button>
-        )}
-      </div>
 
       <CreateComment postId={post._id} />
       <div className='comments'>
