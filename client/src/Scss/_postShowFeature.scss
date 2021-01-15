@@ -47,6 +47,12 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.25);
+      color: $salmon;
+    }
 
     @include breakpoint-up(large) {
       flex-flow: column nowrap;

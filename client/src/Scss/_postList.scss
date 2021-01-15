@@ -18,15 +18,17 @@
   border-radius: 0.625rem;
   color: $darkBlue;
   box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.15);
+  max-height: 30rem;
 
   @include breakpoint-up(medium) {
-    grid-template-columns: 160px repeat(4, 1fr);
+    grid-template-columns: 160px repeat(5, 1fr);
     grid-template-rows: 1fr auto auto;
+    max-height: 18.75rem;
   }
 
   @include breakpoint-up(large) {
-    grid-template-columns: 160px repeat(4, 1fr);
-    max-height: 31.25;
+    grid-template-columns: 160px repeat(5, 1fr);
+    max-height: 31.25rem;
   }
 
   &__overlay {
@@ -107,17 +109,18 @@
     font-size: $font-sm;
     line-height: 1;
     padding-bottom: 1.5rem;
+    padding-top: 1rem;
   }
 
   &__likes {
     grid-column: 1 / 2;
     grid-row: 3 / 4;
     padding-left: 1.5rem;
+    justify-self: center;
 
     @include breakpoint-up(medium) {
       grid-column: 3 / 4;
       grid-row: 3 / 4;
-      justify-self: flex-start;
     }
   }
 
@@ -127,46 +130,35 @@
     justify-self: center;
 
     @include breakpoint-up(medium) {
-      grid-column: 3 / 4;
+      grid-column: 4 / 5;
       grid-row: 3 / 4;
-      justify-self: center;
-    }
-  }
-
-  &__follows {
-    grid-column: 3 / 4;
-    grid-row: 3 / 4;
-    justify-self: center;
-
-    @include breakpoint-up(medium) {
-      grid-column: 3 / 4;
-      grid-row: 3 / 4;
-      justify-self: flex-end;
     }
   }
 
   &__rating {
-    grid-column: 4 / 5;
+    grid-column: 3 / 5;
     grid-row: 3 / 4;
     justify-self: center;
 
-    @include breakpoint-up(medium) {
-      grid-column: 4 / 5;
-      grid-row: 3 / 4;
-      justify-self: center;
+    .fa-star {
+      font-size: 0.7rem;
     }
-  }
-
-  &__date {
-    grid-column: 5 / 6;
-    grid-row: 3 / 4;
-    padding-right: 1.5rem;
-    justify-self: end;
 
     @include breakpoint-up(medium) {
       grid-column: 5 / 6;
       grid-row: 3 / 4;
-      justify-self: flex-end;
+    }
+  }
+
+  &__date {
+    grid-column: 5 / 7;
+    grid-row: 3 / 4;
+    padding-right: 1.5rem;
+    justify-self: center;
+
+    @include breakpoint-up(medium) {
+      grid-column: 6 / 7;
+      grid-row: 3 / 4;
     }
   }
 }
