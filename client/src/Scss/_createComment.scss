@@ -1,0 +1,55 @@
+.comment {
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+  text-align: center;
+
+  @include breakpoint-up(large) {
+    text-align: left;
+  }
+
+  .container {
+    @include breakpoint-up(large) {
+      width: 100%;
+    }
+  }
+
+  h6 {
+    color: $darkBlue;
+    font-size: $font-lg;
+    margin: 1rem 0 3rem 0;
+  }
+
+  &__form {
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    @include breakpoint-up(large) {
+      align-items: start;
+    }
+  }
+
+  &__form-textarea {
+    width: 37.5rem;
+    height: 15rem;
+    resize: none;
+
+    @include breakpoint-up(large) {
+      width: 70rem;
+      height: 15rem;
+    }
+  }
+
+  &__form-btn {
+    margin: 1rem auto;
+    text-transform: uppercase;
+
+    @include breakpoint-up(large) {
+      margin: 1rem 0 1rem 0;
+      width: 100%;
+      border-radius: 0.5rem;
+    }
+  }
+}

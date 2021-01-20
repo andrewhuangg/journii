@@ -135,9 +135,9 @@ const Landing = () => {
 
       <section className='posts'>
         <div className='post__content container container--pall'>
-          <h2>Latest Posts</h2>
+          <h2>Top Posts</h2>
           <div className='post__grid'>
-            {posts.map((post) => (
+            {posts && posts.map((post) => (
               <TopPostItem key={post._id} post={post} />
             ))}
           </div>

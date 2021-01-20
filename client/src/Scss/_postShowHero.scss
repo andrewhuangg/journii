@@ -85,5 +85,10 @@
   &__follow-btn {
     border-radius: 5px;
     background-image: linear-gradient(to right, $darkTurquoise, $darkTurquoise);
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.9);
+    }
   }
 }

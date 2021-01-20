@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPostComment } from '../../actions/postAction';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import AlertMessage from '../layout/AlertMessage';
 import Spinner from '../layout/Spinner';
 
@@ -29,35 +28,27 @@ const CreateComment = ({ postId }) => {
   };
 
   return (
-    <Row>
-      <Col mid={4}>
-        <h3>Leave a Comment...</h3>
-        {errorCommentCreate && <AlertMessage variant='danger'>{errorCommentCreate}</AlertMessage>}
-        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-        {successCommentCreate && <AlertMessage variant='success'>Post Created</AlertMessage>}
-        {loadingCommentCreate && <Spinner />}
-        <Form onSubmit={submitHandler}>
-          <small>* = required field</small>
-          <Form.Group controlId='text'>
-            <Form.Control
-              as='textarea'
-              rows={4}
-              placeholder='* Say Something...'
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              required
-            ></Form.Control>
-            <Form.Text id='textHelpBlock' muted>
-              The world is your playground...
-            </Form.Text>
-          </Form.Group>
+    <>
+      {errorCommentCreate && <AlertMessage variant='danger'>{errorCommentCreate}</AlertMessage>}
+      {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
+      {successCommentCreate && <AlertMessage variant='success'>Post Created</AlertMessage>}
+      {loadingCommentCreate && <Spinner />}
+      <div className='comment container'>
+        <div className='container'>
+          <h6>Discussion</h6>
+          <form className='comment__form' onSubmit={submitHandler}>
+            <textarea
+              className='comment__form-textarea'
+              placeholder='The world is your playground...'
+            ></textarea>
 
-          <Button type='submit' variant='primary'>
-            Submit
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+            <button className='comment__form-btn' type='submit'>
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 

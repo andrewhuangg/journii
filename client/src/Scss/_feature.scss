@@ -26,6 +26,11 @@
                         0 - flex shrink (item is allowed to shrink less than the flex basis) 
                         50% - flex basis (aka default width for object) 
                      */
+      transition: all 150ms ease-in-out;
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.15);
+      }
     }
     @include breakpoint-up(large) {
       flex: 1; //default flex: 1 0 auto?? all items same width, same row
