@@ -45,6 +45,12 @@
   &__form-btn {
     margin: 1rem auto;
     text-transform: uppercase;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, $darkTurquoise, $darkTurquoise);
+
+    &:hover {
+      transform: scale(0.98);
+    }
 
     @include breakpoint-up(large) {
       margin: 1rem 0 1rem 0;

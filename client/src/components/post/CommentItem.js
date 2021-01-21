@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
@@ -10,16 +9,21 @@ const CommentItem = ({
   comment: { _id, text, user, name, date },
 }) => {
   return (
-    <div className='comment'>
-      <Link to={`/profile/${user}`}>{name}</Link>
-      <div className='comment__text'>
-        <p>{text}</p>
-        Posted on <Moment format='MM/DD/YYYY'>{date}</Moment>{' '}
+    <div className='comments__grid-item'>
+      <div className='comments__header'>
+        <Link to={`/profile/${user}`} className='comments__author'>
+          {name}
+        </Link>
+        <span></span>
+        <Moment format='MM/DD/YYYY' className='comments__date'>
+          {date}
+        </Moment>{' '}
       </div>
+      <div className='comments__text'>{text}</div>
       {userInfo.id === user && (
-        <Button onClick={() => deleteCommentHandler(postId, _id)}>
+        <button className='comments__delete-btn' onClick={() => deleteCommentHandler(postId, _id)}>
           <i className='fas fa-trash'></i>
-        </Button>
+        </button>
       )}
     </div>
   );

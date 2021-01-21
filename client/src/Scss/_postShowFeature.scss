@@ -10,7 +10,6 @@
   @include breakpoint-up(large) {
     display: grid;
     grid-template-columns: 0.25fr repeat(4, 1fr);
-    // grid-template-areas: 'cta text';
   }
 
   &__cta {

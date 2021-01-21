@@ -815,6 +815,7 @@ button:hover::before,
   border-radius: 0.3125rem;
   overflow: hidden;
   background-color: white;
+  max-height: 22rem;
   -webkit-box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.15);
           box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.15);
   /*
@@ -2051,6 +2052,14 @@ button:hover::before,
 .comment__form-btn {
   margin: 1rem auto;
   text-transform: uppercase;
+  border-radius: 10px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#5faba8), to(#5faba8));
+  background-image: linear-gradient(to right, #5faba8, #5faba8);
+}
+
+.comment__form-btn:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
 }
 
 @media (min-width: 64em) {
@@ -2059,5 +2068,78 @@ button:hover::before,
     width: 100%;
     border-radius: 0.5rem;
   }
+}
+
+.comments {
+  margin-top: 2rem;
+  background-color: #fafafa;
+}
+
+.comments__grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  gap: 0.25rem;
+}
+
+.comments__grid-item {
+  padding: 1rem;
+  background-color: white;
+}
+
+.comments__header {
+  margin: 1rem auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+}
+
+.comments__header span {
+  display: block;
+  height: 0.25rem;
+  width: 0.25rem;
+  margin: 0 0.5rem;
+  background: #edd0ab;
+  border-radius: 50%;
+}
+
+.comments__author {
+  font-size: 0.85rem;
+  color: #5faba8;
+}
+
+.comments__date {
+  font-size: 0.65rem;
+  color: #e97272;
+}
+
+.comments__text {
+  color: #495465;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.comments__delete-btn {
+  padding: 0.3rem 0.75rem;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#e97272), to(#e97272));
+  background-image: linear-gradient(to right, #e97272, #e97272);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.comments__delete-btn:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 /*# sourceMappingURL=App.css.map */

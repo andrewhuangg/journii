@@ -1,0 +1,63 @@
+.comments {
+  margin-top: 2rem;
+  background-color: hsl(0, 0%, 98%);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  &__grid-item {
+    padding: 1rem;
+    background-color: white;
+  }
+
+  &__header {
+    margin: 1rem auto;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+
+    span {
+      display: block;
+      height: 0.25rem;
+      width: 0.25rem;
+      margin: 0 0.5rem;
+      background: $pastelGold;
+      border-radius: 50%;
+    }
+  }
+
+  &__author {
+    font-size: 0.85rem;
+    color: $darkTurquoise;
+  }
+
+  &__date {
+    font-size: 0.65rem;
+    color: $salmon;
+  }
+
+  &__text {
+    color: $darkBlue;
+    font-size: $font-sm;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  &__delete-btn {
+    padding: 0.3rem 0.75rem;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, $salmon, $salmon);
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+
+  .fa-trash {
+  }
+}

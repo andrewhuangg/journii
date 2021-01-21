@@ -234,17 +234,19 @@ const PostShow = ({ match, history }) => {
       </section>
 
       <CreateComment postId={post._id} />
-      <div className='comments'>
-        {post.comments.map((comment) => (
-          <CommentItem
-            key={comment._id}
-            comment={comment}
-            postId={post._id}
-            deleteCommentHandler={deleteCommentHandler}
-            userInfo={userInfo}
-          />
-        ))}
-      </div>
+      <section className='comments container'>
+        <div className='comments__grid'>
+          {post.comments.map((comment) => (
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              postId={post._id}
+              deleteCommentHandler={deleteCommentHandler}
+              userInfo={userInfo}
+            />
+          ))}
+        </div>
+      </section>
 
       <div>
         <CreateReview postId={post._id} />
