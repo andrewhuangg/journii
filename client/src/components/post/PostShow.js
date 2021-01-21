@@ -196,11 +196,24 @@ const PostShow = ({ match, history }) => {
     return `${getRandomNumber()}x${getRandomNumber()}`;
   };
 
+  // Random Photo Generator
   const unsplashImage = `${unsplashURL}${getRandomSize()}`;
   const randomDefaultImage = {
     backgroundImage: `url(${post.image ? post.image : unsplashImage})`,
   };
-  // Random Photo Generator
+
+  const handleReviewSlider = () => {
+    const nav = document.querySelector('#review__slider');
+    const hamburger = document.querySelector('#hamburger');
+
+    if (nav.classList.contains('review__slider--active')) {
+      nav.classList.remove('review__slider--active');
+      hamburger.classList.remove('hamburger--active');
+    } else {
+      nav.classList.add('review__slider--active');
+      hamburger.classList.add('hamburger--active');
+    }
+  };
 
   return (
     <>
@@ -213,6 +226,27 @@ const PostShow = ({ match, history }) => {
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
 
+      <nav className='review__slider' id='review__slider'>
+        <div className='review__slider-header'>
+          <div
+            className='hamburger hamburger--active'
+            id='hamburger'
+            onClick={handleReviewSlider}
+          ></div>
+          <h6>Reviews</h6> ({post.reviews && post.reviews.length})
+        </div>
+
+        <CreateReview postId={post._id} />
+
+        <section className='reviews'>
+          <div className='postShow__reviews'>
+            {post.reviews.map((review) => (
+              <ReviewItem review={review} key={review._id} />
+            ))}
+          </div>
+        </section>
+      </nav>
+
       <section className='post-hero container'>
         <div className='container'>
           <div className='post-hero__image' style={randomDefaultImage}></div>
@@ -221,9 +255,13 @@ const PostShow = ({ match, history }) => {
             <p>
               Publisher <Link to={`profiles/${post.user && post.user._id}`}>{post.name}</Link>
             </p>
-            <>{renderFollowButton()}</>
-            <br />
-            <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
+            <div className='post-hero__cta'>
+              {renderFollowButton()}
+              <button className='review-btn' onClick={handleReviewSlider}>
+                Reviews
+              </button>
+              <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
+            </div>
           </div>
         </div>
       </section>
@@ -247,15 +285,6 @@ const PostShow = ({ match, history }) => {
           ))}
         </div>
       </section>
-
-      <div>
-        <CreateReview postId={post._id} />
-        <div className='postShow__reviews'>
-          {post.reviews.map((review) => (
-            <ReviewItem review={review} />
-          ))}
-        </div>
-      </div>
     </>
   );
 };

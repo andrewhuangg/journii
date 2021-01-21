@@ -14,7 +14,7 @@
         'logo links1 cta'
         'social links1 copyright';
       gap: 1rem;
-      justify-items: start;
+      justify-items: flex-start;
     }
   }
 
@@ -80,7 +80,7 @@
 
     @include breakpoint-up(large) {
       justify-content: space-between;
-      align-items: start;
+      align-items: flex-start;
     }
 
     &.col1 {

@@ -27,7 +27,7 @@
     align-items: center;
 
     @include breakpoint-up(large) {
-      align-items: start;
+      align-items: flex-start;
     }
   }
 
@@ -47,6 +47,7 @@
     text-transform: uppercase;
     border-radius: 10px;
     background-image: linear-gradient(to right, $darkTurquoise, $darkTurquoise);
+    cursor: pointer;
 
     &:hover {
       transform: scale(0.98);

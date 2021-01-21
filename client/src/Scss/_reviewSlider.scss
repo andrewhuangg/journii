@@ -1,0 +1,53 @@
+.hamburger {
+  height: 3.125rem;
+  width: 3.125rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: $pastelOlive;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+
+  &:focus,
+  &:active {
+    outline: 2px solid $salmon;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    height: 1.25rem;
+    margin: -3px;
+    border-left: 1px solid $salmon;
+    transform: rotate(90deg);
+    transition: transform 0.3s ease-in-out;
+  }
+}
+
+.hamburger--active::after {
+  transform: rotate(135deg);
+}
+.hamburger--active::before {
+  transform: rotate(45deg);
+}
+
+.reviewSlider-active::after {
+}
+
+.review__slider {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: hsl(202, 40%, 96%);
+  transform: translateX(-100%);
+  transition: 300ms ease-in-out;
+  z-index: 5;
+}
+
+.review__slider--active {
+  transform: translateX(0);
+}

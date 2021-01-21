@@ -32,43 +32,43 @@ const CreateReview = ({ postId }) => {
   };
 
   return (
-    <Row>
-      <Col md={6}>
-        <h2>Write a review</h2>
-        {errorReview && <AlertMessage variant='danger'>{errorReview}</AlertMessage>}
-        {userInfo ? (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='rating'>
-              <Form.Label>Rating</Form.Label>
-              <Form.Control as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
+    <>
+      {errorReview && <AlertMessage variant='danger'>{errorReview}</AlertMessage>}
+      {userInfo ? (
+        <div className='review'>
+          <form className='review__form' onSubmit={submitHandler}>
+            <div className='review__rating-info'>
+              <label className='review__rating'>Rating</label>
+              <select
+                className='review__select'
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              >
                 <option value=''>Select...</option>
                 <option value='1'>1 - Poor</option>
                 <option value='2'>2 - Fair</option>
                 <option value='3'>3 - Good</option>
                 <option value='4'>4 - Great</option>
-                <option value='5'>5 - Execelent</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId='review'>
-              <Form.Label>Review</Form.Label>
-              <Form.Control
-                as='textarea'
-                row='3'
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Button type='submit' variant='primary'>
+                <option value='5'>5 - Execellent</option>
+              </select>
+            </div>
+            <textarea
+              className='review__textarea'
+              placeholder='What are your thoughts...?'
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button className='review__form-btn' type='submit'>
               Submit
-            </Button>
-          </Form>
-        ) : (
-          <AlertMessage>
-            Please <Link to='login'> Sign in </Link> to leave a review
-          </AlertMessage>
-        )}
-      </Col>
-    </Row>
+            </button>
+          </form>
+        </div>
+      ) : (
+        <AlertMessage>
+          Please <Link to='login'> Sign in </Link> to leave a review
+        </AlertMessage>
+      )}
+    </>
   );
 };
 
