@@ -10,18 +10,12 @@ const CommentItem = ({
   comment: { _id, text, user, name, date },
 }) => {
   return (
-    <div>
-      <div>
-        <h6>
-          <Link to={`/profile/${user}`}>{name}</Link>
-        </h6>
-      </div>
-      <div>
+    <div className='comment'>
+      <Link to={`/profile/${user}`}>{name}</Link>
+      <div className='comment__text'>
         <p>{text}</p>
-      </div>
-      <p>
         Posted on <Moment format='MM/DD/YYYY'>{date}</Moment>{' '}
-      </p>
+      </div>
       {userInfo.id === user && (
         <Button onClick={() => deleteCommentHandler(postId, _id)}>
           <i className='fas fa-trash'></i>

@@ -65,7 +65,7 @@ const PostSchema = new mongoose.Schema(
         text: {
           type: String,
           required: [true, 'Please provide some text for the comment'],
-          maxlength: [500, 'Text cannot be more than 500 characters'],
+          maxlength: [2000, 'Text cannot be more than 2000 characters'],
         },
         name: String,
         date: {

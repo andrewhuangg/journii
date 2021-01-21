@@ -40,8 +40,9 @@ const CreateComment = ({ postId }) => {
             <textarea
               className='comment__form-textarea'
               placeholder='The world is your playground...'
-            ></textarea>
-
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
             <button className='comment__form-btn' type='submit'>
               Submit
             </button>

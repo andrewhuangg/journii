@@ -182,6 +182,7 @@ const PostShow = ({ match, history }) => {
 
   const deleteCommentHandler = (postId, commentId) => {
     if (errorCommentDelete) setMessage(errorCommentDelete);
+    console.log('deletehandler', 'post', postId, 'comment', commentId);
     dispatch(deletePostComment(postId, commentId));
   };
 

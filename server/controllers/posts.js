@@ -200,9 +200,7 @@ exports.deleteComment = asyncHandler(async (req, res) => {
     throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this comment`, 401);
 
   // Get remove index
-  const removeIdx = post.comments
-    .map((comment) => comment.user.toString())
-    .indexOf(req.user._id.toString());
+  const removeIdx = post.comments.map((com) => com.id.toString()).indexOf(comment.id.toString());
   post.comments.splice(removeIdx, 1);
 
   await post.save();
@@ -265,7 +263,7 @@ exports.deletePostReview = asyncHandler(async (req, res) => {
     throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this review`, 401);
 
   // Get remove index
-  const removeIdx = post.reviews.map((rev) => rev.user.toString()).indexOf(req.user._id.toString());
+  const removeIdx = post.reviews.map((rev) => rev.id.toString()).indexOf(review.id.toString());
   post.reviews.splice(removeIdx, 1);
 
   await post.save();
