@@ -9,15 +9,16 @@ import {
   unfollowPost,
   deletePost,
   deletePostComment,
+  deletePostReview,
 } from '../../actions/postAction';
 import { POST_DETAILS_RESET } from '../../actions/types';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import CreateComment from './CreateComment';
 import CommentItem from './CommentItem';
+import CreateReview from './CreateReview';
 import ReviewItem from './ReviewItem';
 import Moment from 'react-moment';
-import CreateReview from './CreateReview';
 import Meta from '../layout/Meta';
 
 const PostShow = ({ match, history }) => {
@@ -49,8 +50,14 @@ const PostShow = ({ match, history }) => {
     success: successCommentDelete,
   } = postComment;
 
-  const postReviewCreate = useSelector((state) => state.postReviewCreate);
-  const { success: successReview } = postReviewCreate;
+  const postReview = useSelector((state) => state.postReview);
+  const {
+    success: successReview,
+    loading: loadingReviewCreate,
+    loading: loadingReviewDelete,
+    error: errorReviewDelete,
+    success: successReviewDelete,
+  } = postReview;
 
   useEffect(() => {
     if (!post._id || post._id !== match.params.id) {
@@ -61,7 +68,8 @@ const PostShow = ({ match, history }) => {
       successFollows ||
       successCommentCreate ||
       successCommentDelete ||
-      successReview
+      successReview ||
+      successReviewDelete
     ) {
       setMessage(null);
       dispatch(listPostDetails(match.params.id));
@@ -73,13 +81,14 @@ const PostShow = ({ match, history }) => {
   }, [
     dispatch,
     match,
+    history,
     successFollows,
     successLikes,
     successDelete,
-    history,
     post._id,
     successCommentCreate,
     successCommentDelete,
+    successReview,
     successReview,
     userInfo,
   ]);
@@ -165,11 +174,11 @@ const PostShow = ({ match, history }) => {
           className='post-hero__follow-btn'
           onClick={() => postUnfollowHandler(post, post._id)}
         >
-          Unfollow Post
+          Unfollow
         </button>
       ) : (
         <button className='post-hero__follow-btn' onClick={() => postFollowHandler(post, post._id)}>
-          Follow Post
+          Follow
         </button>
       );
     }
@@ -182,8 +191,12 @@ const PostShow = ({ match, history }) => {
 
   const deleteCommentHandler = (postId, commentId) => {
     if (errorCommentDelete) setMessage(errorCommentDelete);
-    console.log('deletehandler', 'post', postId, 'comment', commentId);
     dispatch(deletePostComment(postId, commentId));
+  };
+
+  const deleteReviewHandler = (postId, reviewId) => {
+    if (errorReviewDelete) setMessage(errorReviewDelete);
+    dispatch(deletePostReview(postId, reviewId));
   };
 
   // Random Photo Generator
@@ -223,25 +236,33 @@ const PostShow = ({ match, history }) => {
       {loadingLikes && <Spinner />}
       {loadingCommentCreate && <Spinner />}
       {loadingCommentDelete && <Spinner />}
+      {loadingReviewCreate && <Spinner />}
+      {loadingReviewDelete && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
 
       <nav className='review__slider' id='review__slider'>
+        <div
+          className='hamburger hamburger--active'
+          id='hamburger'
+          onClick={handleReviewSlider}
+        ></div>
         <div className='review__slider-header'>
-          <div
-            className='hamburger hamburger--active'
-            id='hamburger'
-            onClick={handleReviewSlider}
-          ></div>
-          <h6>Reviews</h6> ({post.reviews && post.reviews.length})
+          <h6>Reviews ({post.reviews && post.reviews.length})</h6>
         </div>
 
         <CreateReview postId={post._id} />
 
         <section className='reviews'>
-          <div className='postShow__reviews'>
+          <div className='reviews__grid'>
             {post.reviews.map((review) => (
-              <ReviewItem review={review} key={review._id} />
+              <ReviewItem
+                key={review._id}
+                review={review}
+                postId={post._id}
+                deleteReviewHandler={deleteReviewHandler}
+                userInfo={userInfo}
+              />
             ))}
           </div>
         </section>
@@ -255,12 +276,12 @@ const PostShow = ({ match, history }) => {
             <p>
               Publisher <Link to={`profiles/${post.user && post.user._id}`}>{post.name}</Link>
             </p>
+            <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
             <div className='post-hero__cta'>
               {renderFollowButton()}
-              <button className='review-btn' onClick={handleReviewSlider}>
+              <button className='review-btn hide-for-mobile' onClick={handleReviewSlider}>
                 Reviews
               </button>
-              <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
             </div>
           </div>
         </div>

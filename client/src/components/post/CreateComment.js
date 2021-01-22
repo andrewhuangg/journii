@@ -31,7 +31,7 @@ const CreateComment = ({ postId }) => {
     <>
       {errorCommentCreate && <AlertMessage variant='danger'>{errorCommentCreate}</AlertMessage>}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-      {successCommentCreate && <AlertMessage variant='success'>Post Created</AlertMessage>}
+      {successCommentCreate && <AlertMessage variant='success'>Comment Created</AlertMessage>}
       {loadingCommentCreate && <Spinner />}
       <div className='comment container'>
         <div className='container'>

@@ -1,0 +1,44 @@
+.review {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  margin: 1.5rem;
+
+  &__form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+  }
+
+  &__rating-info {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin: 1rem 0;
+  }
+
+  &__rating {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-right: 0.5rem;
+  }
+  &__select {
+  }
+
+  &__textarea {
+    resize: none;
+    width: 18.75rem;
+    height: 7.5rem;
+  }
+  &__form-btn {
+    margin: 1rem 0;
+    text-transform: uppercase;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, $darkTurquoise, $darkTurquoise);
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+}

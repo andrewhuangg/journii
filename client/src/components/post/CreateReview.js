@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { POST_CREATE_REVIEW_RESET } from '../../actions/types';
-import { Row, Col, Form, Button } from 'react-bootstrap';
 import AlertMessage from '../layout/AlertMessage';
+import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import { createPostReview } from '../../actions/postAction';
 
@@ -15,8 +15,8 @@ const CreateReview = ({ postId }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const postReviewCreate = useSelector((state) => state.postReviewCreate);
-  const { loading: loadingReview, error: errorReview, success: successReview } = postReviewCreate;
+  const postReview = useSelector((state) => state.postReview);
+  const { loading: loadingReviewCreate, error: errorReviewCreate } = postReview;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -33,12 +33,13 @@ const CreateReview = ({ postId }) => {
 
   return (
     <>
-      {errorReview && <AlertMessage variant='danger'>{errorReview}</AlertMessage>}
       {userInfo ? (
         <div className='review'>
+          {errorReviewCreate && <AlertMessage variant='danger'>{errorReviewCreate}</AlertMessage>}
+          {loadingReviewCreate && <Spinner />}
           <form className='review__form' onSubmit={submitHandler}>
             <div className='review__rating-info'>
-              <label className='review__rating'>Rating</label>
+              <label className='review__rating'>Rating </label>
               <select
                 className='review__select'
                 value={rating}

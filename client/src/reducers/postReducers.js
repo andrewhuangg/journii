@@ -37,6 +37,9 @@ import {
   POST_TOP_REQUEST,
   POST_TOP_SUCCESS,
   POST_TOP_FAIL,
+  POST_DELETE_REVIEW_REQUEST,
+  POST_DELETE_REVIEW_SUCCESS,
+  POST_DELETE_REVIEW_FAIL,
 } from '../actions/types';
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -156,7 +159,7 @@ export const postCommentReducer = (state = { comments: [] }, action) => {
   }
 };
 
-export const postReviewCreateReducer = (state = { reviews: [] }, action) => {
+export const postReviewReducer = (state = { reviews: [] }, action) => {
   const { type, payload } = action;
   switch (type) {
     case POST_CREATE_REVIEW_REQUEST:
@@ -167,6 +170,14 @@ export const postReviewCreateReducer = (state = { reviews: [] }, action) => {
       return { loading: false, error: payload };
     case POST_CREATE_REVIEW_RESET:
       return {};
+
+    case POST_DELETE_REVIEW_REQUEST:
+      return { loading: true };
+    case POST_DELETE_REVIEW_SUCCESS:
+      return { loading: false, reviews: payload, success: true };
+    case POST_DELETE_REVIEW_FAIL:
+      return { loading: false, error: payload };
+
     default:
       return state;
   }

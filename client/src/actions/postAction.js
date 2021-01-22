@@ -33,6 +33,9 @@ import {
   POST_TOP_REQUEST,
   POST_TOP_SUCCESS,
   POST_TOP_FAIL,
+  POST_DELETE_REVIEW_REQUEST,
+  POST_DELETE_REVIEW_SUCCESS,
+  POST_DELETE_REVIEW_FAIL,
 } from './types';
 
 export const listTopPosts = () => async (dispatch) => {
@@ -408,6 +411,38 @@ export const createPostReview = (postId, review) => async (dispatch, getState) =
   } catch (error) {
     dispatch({
       type: POST_CREATE_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const deletePostReview = (postId, reviewId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: POST_DELETE_REVIEW_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/v1/posts/review/${postId}/${reviewId}`, config);
+
+    dispatch({
+      type: POST_DELETE_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_DELETE_REVIEW_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message.split(',').join(' ')

@@ -1,14 +1,29 @@
+.review-btn {
+  border-radius: 5px;
+  background-image: linear-gradient(to right, $pastelGold, $pastelGold);
+  margin-right: 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+
+  &:hover {
+    transform: scale(0.9);
+  }
+}
+
 .hamburger {
-  height: 3.125rem;
+  height: 100%;
   width: 3.125rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  background-color: $pastelOlive;
+  background-color: hsl(198, 56%, 88%);
   border: none;
   cursor: pointer;
   z-index: 10;
+  grid-column: 2 / 3;
+  grid-row: 1 / 4;
 
   &:focus,
   &:active {
@@ -20,7 +35,7 @@
     content: '';
     height: 1.25rem;
     margin: -3px;
-    border-left: 1px solid $salmon;
+    border-left: 1px solid hsl(0, 82%, 60%);
     transform: rotate(90deg);
     transition: transform 0.3s ease-in-out;
   }
@@ -33,19 +48,34 @@
   transform: rotate(45deg);
 }
 
-.reviewSlider-active::after {
-}
-
 .review__slider {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 3.125rem;
+  grid-template-rows: 0.1fr 0.5fr 1fr auto;
   position: absolute;
   height: 100%;
   width: 40%;
-  display: flex;
-  flex-flow: column nowrap;
-  background-color: hsl(202, 40%, 96%);
-  transform: translateX(-100%);
+  box-shadow: 3px -1px 2px rgba(121, 163, 177, 0.5);
+  background-color: white;
+  transform: translateX(-105%);
   transition: 300ms ease-in-out;
   z-index: 5;
+
+  &-header {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    margin: 1.5rem;
+
+    h6 {
+      font-size: 1.7rem;
+      color: $darkBlue;
+      margin: 0;
+    }
+  }
 }
 
 .review__slider--active {
