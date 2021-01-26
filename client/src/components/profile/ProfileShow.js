@@ -47,7 +47,7 @@ const ProfileShow = ({ match, history }) => {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, match, successFollows, successDelete, history]);
+  }, [dispatch, match, history, profile.user, userInfo, successFollows, successDelete]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);
@@ -66,8 +66,9 @@ const ProfileShow = ({ match, history }) => {
 
   return (
     <>
-      <Link to='/profiles'>Back to Profiles</Link>
-      {loadingDetails || loadingFollows || (loadingDelete && <Spinner />)}
+      {loadingDetails && <Spinner />}
+      {loadingFollows && <Spinner />}
+      {loadingDelete && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <ProfileTop profile={profile} />

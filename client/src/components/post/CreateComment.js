@@ -10,11 +10,7 @@ const CreateComment = ({ postId }) => {
   const [message, setMessage] = useState(null);
 
   const postComment = useSelector((state) => state.postComment);
-  const {
-    loading: loadingCommentCreate,
-    error: errorCommentCreate,
-    success: successCommentCreate,
-  } = postComment;
+  const { loading: loadingCommentCreate, error: errorCommentCreate } = postComment;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -31,7 +27,6 @@ const CreateComment = ({ postId }) => {
     <>
       {errorCommentCreate && <AlertMessage variant='danger'>{errorCommentCreate}</AlertMessage>}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-      {successCommentCreate && <AlertMessage variant='success'>Comment Created</AlertMessage>}
       {loadingCommentCreate && <Spinner />}
       <div className='comment container'>
         <div className='container'>

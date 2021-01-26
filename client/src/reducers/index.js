@@ -5,8 +5,6 @@ import {
   postCreateReducer,
   postUpdateReducer,
   postDeleteReducer,
-  postLikeReducer,
-  postFollowReducer,
   postReviewReducer,
   postCommentReducer,
   postTopRatedReducer,
@@ -52,7 +50,5 @@ export default combineReducers({
   postDetails: postDetailsReducer,
   postComment: postCommentReducer,
   postReview: postReviewReducer,
-  postLikes: postLikeReducer,
-  postFollows: postFollowReducer,
   postTopRated: postTopRatedReducer,
 });

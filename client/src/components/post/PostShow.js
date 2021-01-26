@@ -12,7 +12,6 @@ import {
   deletePostReview,
 } from '../../actions/postAction';
 import { POST_DETAILS_RESET } from '../../actions/types';
-import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import CreateComment from './CreateComment';
 import CommentItem from './CommentItem';
@@ -30,13 +29,13 @@ const PostShow = ({ match, history }) => {
   const { userInfo } = userLogin;
 
   const postDetails = useSelector((state) => state.postDetails);
-  const { loading: loadingDetails, error: errorDetails, post } = postDetails;
-
-  const postLikes = useSelector((state) => state.postLikes);
-  const { success: successLikes, loading: loadingLikes, error: errorLikes } = postLikes;
-
-  const postFollows = useSelector((state) => state.postFollows);
-  const { success: successFollows, loading: loadingFollows, error: errorFollows } = postFollows;
+  const {
+    loading: loadingDetails,
+    error: errorDetails,
+    error: errorLikes,
+    error: errorFollows,
+    post,
+  } = postDetails;
 
   const postDelete = useSelector((state) => state.postDelete);
   const { success: successDelete, error: errorDelete } = postDelete;
@@ -52,46 +51,34 @@ const PostShow = ({ match, history }) => {
 
   const postReview = useSelector((state) => state.postReview);
   const {
-    success: successReview,
     loading: loadingReviewCreate,
     loading: loadingReviewDelete,
     error: errorReviewDelete,
+    success: successReviewCreate,
     success: successReviewDelete,
   } = postReview;
 
   useEffect(() => {
-    if (!post._id || post._id !== match.params.id) {
-      dispatch(listPostDetails(match.params.id));
-    }
-    if (
-      successLikes ||
-      successFollows ||
-      successCommentCreate ||
-      successCommentDelete ||
-      successReview ||
-      successReviewDelete
-    ) {
-      setMessage(null);
+    if (!post || post._id !== match.params.id) {
       dispatch(listPostDetails(match.params.id));
     }
     if (successDelete) {
       dispatch({ type: POST_DETAILS_RESET });
       history.push('/posts');
     }
-  }, [
-    dispatch,
-    match,
-    history,
-    successFollows,
-    successLikes,
-    successDelete,
-    post._id,
-    successCommentCreate,
-    successCommentDelete,
-    successReview,
-    successReview,
-    userInfo,
-  ]);
+  }, [dispatch, match, history, post, successDelete]);
+
+  useEffect(() => {
+    if (
+      successCommentCreate ||
+      successCommentDelete ||
+      successReviewCreate ||
+      successReviewDelete
+    ) {
+      setMessage(null);
+      dispatch(listPostDetails(match.params.id));
+    }
+  }, [successCommentCreate, successCommentDelete, successReviewCreate, successReviewDelete]);
 
   const postLikeHandler = (post, id) => {
     if (errorLikes) setMessage(errorLikes);
@@ -104,7 +91,7 @@ const PostShow = ({ match, history }) => {
   };
 
   const renderCallAction = () => {
-    if (!loadingLikes && post.user) {
+    if (post.likes && userInfo) {
       return post.likes.map((like) => like.user).includes(userInfo.id) ? (
         <aside className='post-feature__cta'>
           <div className='post-feature__cta-grid-parent'>
@@ -168,7 +155,7 @@ const PostShow = ({ match, history }) => {
   };
 
   const renderFollowButton = () => {
-    if (!loadingFollows && post.user && post.user._id !== userInfo.id) {
+    if (post.user && post.user._id !== userInfo.id) {
       return post.follows.map((follow) => follow.user).includes(userInfo.id) ? (
         <button
           className='post-hero__follow-btn'
@@ -231,13 +218,6 @@ const PostShow = ({ match, history }) => {
   return (
     <>
       <Meta title={`journii | ${post.title}`} />
-      {loadingDetails && <Spinner />}
-      {loadingFollows && <Spinner />}
-      {loadingLikes && <Spinner />}
-      {loadingCommentCreate && <Spinner />}
-      {loadingCommentDelete && <Spinner />}
-      {loadingReviewCreate && <Spinner />}
-      {loadingReviewDelete && <Spinner />}
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
 
@@ -255,15 +235,16 @@ const PostShow = ({ match, history }) => {
 
         <section className='reviews'>
           <div className='reviews__grid'>
-            {post.reviews.map((review) => (
-              <ReviewItem
-                key={review._id}
-                review={review}
-                postId={post._id}
-                deleteReviewHandler={deleteReviewHandler}
-                userInfo={userInfo}
-              />
-            ))}
+            {post.reviews &&
+              post.reviews.map((review) => (
+                <ReviewItem
+                  key={review._id}
+                  review={review}
+                  postId={post._id}
+                  deleteReviewHandler={deleteReviewHandler}
+                  userInfo={userInfo}
+                />
+              ))}
           </div>
         </section>
       </nav>
@@ -292,18 +273,19 @@ const PostShow = ({ match, history }) => {
         <div className='post-feature__text'>{post.text}</div>
       </section>
 
-      <CreateComment postId={post._id} />
+      <CreateComment postId={post && post._id} />
       <section className='comments container'>
         <div className='comments__grid'>
-          {post.comments.map((comment) => (
-            <CommentItem
-              key={comment._id}
-              comment={comment}
-              postId={post._id}
-              deleteCommentHandler={deleteCommentHandler}
-              userInfo={userInfo}
-            />
-          ))}
+          {post.comments &&
+            post.comments.map((comment) => (
+              <CommentItem
+                key={comment._id}
+                comment={comment}
+                postId={post._id}
+                deleteCommentHandler={deleteCommentHandler}
+                userInfo={userInfo}
+              />
+            ))}
         </div>
       </section>
     </>

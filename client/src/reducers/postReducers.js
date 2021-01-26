@@ -74,18 +74,26 @@ export const postDetailsReducer = (
     case POST_DETAILS_REQUEST:
       return { loading: true, ...state };
     case POST_DETAILS_SUCCESS:
-      return { loading: false, post: payload };
+      return { loading: false, post: payload, success: true };
     case POST_DETAILS_FAIL:
       return { loading: false, error: payload };
     case POST_DETAILS_RESET:
-      return {
-        post: {
-          likes: [],
-          follows: [],
-          comments: [],
-          reviews: [],
-        },
-      };
+      return { post: null };
+
+    case POST_UPDATE_LIKES_REQUEST:
+      return { loading: true, ...state };
+    case POST_UPDATE_LIKES_SUCCESS:
+      return { loading: false, post: payload, success: true };
+    case POST_UPDATE_LIKES_FAIL:
+      return { loading: false, error: payload };
+
+    case POST_UPDATE_FOLLOWS_REQUEST:
+      return { loading: true, ...state };
+    case POST_UPDATE_FOLLOWS_SUCCESS:
+      return { loading: false, post: payload, success: true };
+    case POST_UPDATE_FOLLOWS_FAIL:
+      return { loading: false, error: payload };
+
     default:
       return state;
   }
@@ -178,34 +186,6 @@ export const postReviewReducer = (state = { reviews: [] }, action) => {
     case POST_DELETE_REVIEW_FAIL:
       return { loading: false, error: payload };
 
-    default:
-      return state;
-  }
-};
-
-export const postLikeReducer = (state = { likes: [] }, action) => {
-  const { type, payload } = action;
-  switch (type) {
-    case POST_UPDATE_LIKES_REQUEST:
-      return { loading: true };
-    case POST_UPDATE_LIKES_SUCCESS:
-      return { loading: false, likes: payload, success: true };
-    case POST_UPDATE_LIKES_FAIL:
-      return { loading: false, error: payload };
-    default:
-      return state;
-  }
-};
-
-export const postFollowReducer = (state = { follows: [] }, action) => {
-  const { type, payload } = action;
-  switch (type) {
-    case POST_UPDATE_FOLLOWS_REQUEST:
-      return { loading: true };
-    case POST_UPDATE_FOLLOWS_SUCCESS:
-      return { loading: false, follows: payload, success: true };
-    case POST_UPDATE_FOLLOWS_FAIL:
-      return { loading: false, error: payload };
     default:
       return state;
   }
