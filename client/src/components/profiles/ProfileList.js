@@ -19,8 +19,9 @@ const ProfileList = () => {
       {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
       <>
         <section className='profilesList'>
-          {profiles &&
-            profiles.map((profile) => <ProfileItem key={profile._id} profile={profile} />)}
+          {profiles.map((profile) => (
+            <ProfileItem key={profile._id} profile={profile} />
+          ))}
         </section>
       </>
     </>

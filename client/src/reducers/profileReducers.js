@@ -70,19 +70,36 @@ export const profileDeleteReducer = (state = {}, action) => {
   }
 };
 
-export const profileDetailsReducer = (state = { profile: {} }, action) => {
+export const profileDetailsReducer = (
+  state = {
+    profile: {
+      follows: [],
+      projects: [],
+      experiences: [],
+    },
+  },
+  action
+) => {
   const { type, payload } = action;
   switch (type) {
     case PROFILE_DETAILS_REQUEST:
-      return { ...state, loading: true };
+      return { loading: true, ...state };
     case PROFILE_DETAILS_SUCCESS:
       return { loading: false, profile: payload };
     case PROFILE_DETAILS_FAIL:
       return { loading: false, error: payload };
     case PROFILE_DETAILS_RESET:
       return {
-        profile: {},
+        profile: null,
       };
+
+    case PROFILE_UPDATE_FOLLOWS_REQUEST:
+      return { loading: true, ...state };
+    case PROFILE_UPDATE_FOLLOWS_SUCCESS:
+      return { loading: false, profile: payload, success: true };
+    case PROFILE_UPDATE_FOLLOWS_FAIL:
+      return { loading: false, error: payload };
+
     default:
       return state;
   }
@@ -116,20 +133,6 @@ export const profileListReducer = (state = { profiles: [] }, action) => {
       return { loading: false, error: payload };
     case PROFILE_LIST_RESET:
       return { profiles: [] };
-    default:
-      return state;
-  }
-};
-
-export const profileFollowReducer = (state = { follows: [] }, action) => {
-  const { type, payload } = action;
-  switch (type) {
-    case PROFILE_UPDATE_FOLLOWS_REQUEST:
-      return { loading: true };
-    case PROFILE_UPDATE_FOLLOWS_SUCCESS:
-      return { loading: false, follows: payload, success: true };
-    case PROFILE_UPDATE_FOLLOWS_FAIL:
-      return { loading: false, error: payload };
     default:
       return state;
   }

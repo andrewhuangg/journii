@@ -8,9 +8,8 @@ import {
   getProfileDetails,
   deleteProfile,
 } from '../../actions/profileAction';
-import { Link } from 'react-router-dom';
+import { getUserDetails } from '../../actions/authAction';
 import { Button } from 'react-bootstrap';
-import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
@@ -22,13 +21,18 @@ const ProfileShow = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const profileDetails = useSelector((state) => state.profileDetails);
-  const { loading: loadingDetails, profile, error: errorDetails } = profileDetails;
+  const {
+    loading: loadingDetails,
+    error: errorDetails,
+    error: errorFollows,
+    profile,
+  } = profileDetails;
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading: loadingUserDetails, error: errorUserDetails, user } = userDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const profileFollows = useSelector((state) => state.profileFollows);
-  const { success: successFollows, loading: loadingFollows, error: errorFollows } = profileFollows;
 
   const profileDelete = useSelector((state) => state.profileDelete);
   const { error: errorDelete, loading: loadingDelete, success: successDelete } = profileDelete;
@@ -39,15 +43,17 @@ const ProfileShow = ({ match, history }) => {
     if (!profile.user || profile.user._id !== match.params.id) {
       dispatch(getProfileDetails(match.params.id));
     }
-    if (successFollows) {
-      setMessage(null);
-      dispatch(getProfileDetails(match.params.id));
-    }
     if (successDelete) {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
     }
-  }, [dispatch, match, history, profile.user, userInfo, successFollows, successDelete]);
+  }, [dispatch, match, history, profile, successDelete]);
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(getUserDetails(match.params.id));
+    }
+  }, [dispatch, match, user]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);
@@ -66,41 +72,42 @@ const ProfileShow = ({ match, history }) => {
 
   return (
     <>
-      {loadingDetails && <Spinner />}
-      {loadingFollows && <Spinner />}
-      {loadingDelete && <Spinner />}
-      {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-      {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
-      <ProfileTop profile={profile} />
-      <ProfileAbout profile={profile} />
-      {profile.github && <ProfileGithub username={profile.github} />}
-      <ProfileExperience
-        experiences={profile.experiences}
-        currentUserId={userInfo.id}
-        profileOwner={profile.user}
-      />
-      <ProfileProject
-        projects={profile.projects}
-        currentUserId={userInfo.id}
-        profileOwner={profile.user}
-      />
-      <div>
+      <div className='profileShow container'>
+        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
+        {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
+        <ProfileTop profile={profile} user={user} />
+        <ProfileAbout profile={profile} />
+        {profile.github && <ProfileGithub username={profile.github} />}
+        <ProfileExperience
+          experiences={profile.experiences}
+          currentUserId={userInfo.id}
+          profileOwner={profile.user}
+        />
+        <ProfileProject
+          projects={profile.projects}
+          currentUserId={userInfo.id}
+          profileOwner={profile.user}
+        />
         <div>
-          Followers{' '}
-          {profile.follows && profile.follows.length > 0 && <span>{profile.follows.length}</span>}
+          <div>
+            Followers{' '}
+            {profile.follows && profile.follows.length > 0 && <span>{profile.follows.length}</span>}
+          </div>
+          {profile.user && userInfo.id !== profile.user._id && (
+            <>
+              <div onClick={() => profileFollowHandler(profile, profile._id)}>follow profile</div>
+              <div onClick={() => profileUnfollowHandler(profile, profile._id)}>
+                unfollow profile
+              </div>
+            </>
+          )}
         </div>
-        {profile.user && userInfo.id !== profile.user._id && (
-          <>
-            <div onClick={() => profileFollowHandler(profile, profile._id)}>follow profile</div>
-            <div onClick={() => profileUnfollowHandler(profile, profile._id)}>unfollow profile</div>
-          </>
+        {profile.user && userInfo.id === profile.user._id && (
+          <Button onClick={() => deleteHandler(profile._id)}>
+            <i className='fas fa-trash'></i>
+          </Button>
         )}
       </div>
-      {profile.user && userInfo.id === profile.user._id && (
-        <Button onClick={() => deleteHandler(profile._id)}>
-          <i className='fas fa-trash'></i>
-        </Button>
-      )}
     </>
   );
 };

@@ -1,8 +1,55 @@
 .profile-top {
-  &__username {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  &__image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 17.5rem;
+    min-width: 22rem;
+    margin: 1rem;
   }
+
+  &__username {
+    font-size: $font-lg;
+    font-weight: 500;
+    color: $darkBlue;
+    line-height: 1.25;
+  }
+
   &__social {
+    margin: 0.75rem auto;
+    line-height: 1.5;
+
     a {
+      padding: 0.1rem 0.35rem;
+      font-size: 1.5rem;
+      color: $darkBlue;
+    }
+
+    a:not(:last-child) {
+      margin-right: 0.75rem;
+    }
+
+    .fa-globe,
+    .fa-twitter,
+    .fa-facebook,
+    .fa-linkedin,
+    .fa-instagram,
+    .fa-youtube {
+      font-size: 1.5rem;
+      transition: all 300ms ease-in-out;
+
+      &:hover {
+        color: $darkTurquoise;
+        transform: translateY(-10px);
+        scale: 1.2;
+      }
     }
   }
 }

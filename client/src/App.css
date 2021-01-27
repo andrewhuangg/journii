@@ -2459,4 +2459,104 @@ button:hover::before,
   -webkit-transform: translateX(0);
           transform: translateX(0);
 }
+
+@media (min-width: 40em) {
+  .profileShow {
+    display: -ms-grid;
+    display: grid;
+    gap: 1rem;
+    -ms-grid-columns: 25rem 1fr;
+        grid-template-columns: 25rem 1fr;
+    -ms-grid-rows: (1fr)[2] auto;
+        grid-template-rows: repeat(2, 1fr) auto;
+  }
+}
+
+@media (min-width: 64em) {
+  .profileShow {
+    display: -ms-grid;
+    display: grid;
+    gap: 1rem;
+    -ms-grid-columns: 25rem (1fr)[2];
+        grid-template-columns: 25rem repeat(2, 1fr);
+    -ms-grid-rows: 25rem (1fr)[3] auto;
+        grid-template-rows: 25rem repeat(3, 1fr) auto;
+  }
+}
+
+.profile-top {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1 / 2;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  grid-row: 1 / 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.profile-top__image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 17.5rem;
+  min-width: 22rem;
+  margin: 1rem;
+}
+
+.profile-top__username {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #495465;
+  line-height: 1.25;
+}
+
+.profile-top__social {
+  margin: 0.75rem auto;
+  line-height: 1.5;
+}
+
+.profile-top__social a {
+  padding: 0.1rem 0.35rem;
+  font-size: 1.5rem;
+  color: #495465;
+}
+
+.profile-top__social a:not(:last-child) {
+  margin-right: 0.75rem;
+}
+
+.profile-top__social .fa-globe,
+.profile-top__social .fa-twitter,
+.profile-top__social .fa-facebook,
+.profile-top__social .fa-linkedin,
+.profile-top__social .fa-instagram,
+.profile-top__social .fa-youtube {
+  font-size: 1.5rem;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.profile-top__social .fa-globe:hover,
+.profile-top__social .fa-twitter:hover,
+.profile-top__social .fa-facebook:hover,
+.profile-top__social .fa-linkedin:hover,
+.profile-top__social .fa-instagram:hover,
+.profile-top__social .fa-youtube:hover {
+  color: #5faba8;
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+  scale: 1.2;
+}
 /*# sourceMappingURL=App.css.map */

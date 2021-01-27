@@ -1,8 +1,24 @@
 import React from 'react';
 
-const ProfileTop = ({ profile: { username, _id, website, location, social } }) => {
+const ProfileTop = ({ profile: { username, website, social }, user: { image } }) => {
+  const unsplashURL = 'https://source.unsplash.com/collection/614531/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 600;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+  const randomDefaultImage = {
+    backgroundImage: `url(${image !== null && image !== undefined ? image : unsplashImage})`,
+  };
+
   return (
     <section className='profile-top'>
+      <div className='profile-top__image' style={randomDefaultImage}></div>
       <div className='profile-top__username'>{username}</div>
       <div className='profile-top__social'>
         {website && (
