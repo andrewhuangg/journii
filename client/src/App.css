@@ -2638,4 +2638,10 @@ button:hover::before,
   line-height: 1.15;
   color: #495465;
 }
+
+.profile-github {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 /*# sourceMappingURL=App.css.map */

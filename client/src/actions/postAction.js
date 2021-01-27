@@ -401,7 +401,6 @@ export const createPostReview = (postId, review) => async (dispatch, getState) =
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    console.log('postaction', postId);
 
     const { data } = await axios.post(`/api/v1/posts/review/${postId}`, review, config);
 
