@@ -3,8 +3,23 @@
   grid-row: 1 / 2;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
   align-items: center;
+
+  @include breakpoint-up(medium) {
+    align-items: flex-start;
+  }
+
+  &__text {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    @include breakpoint-up(medium) {
+      align-items: flex-start;
+      margin-left: 1.5rem;
+    }
+  }
 
   &__image {
     background-size: cover;
@@ -12,14 +27,22 @@
     background-position: center center;
     min-height: 17.5rem;
     min-width: 22rem;
-    margin: 1rem;
+    margin: 1rem auto;
+  }
+
+  &__name {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: $darkBlue;
   }
 
   &__username {
     font-size: $font-lg;
     font-weight: 500;
-    color: $darkBlue;
     line-height: 1.25;
+    color: $darkBlue;
   }
 
   &__social {
