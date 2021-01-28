@@ -12,19 +12,21 @@ const ProfileExperience = ({ experiences, currentUserId, profileOwner }) => {
 
   return (
     <>
-      <h2>Experiences</h2>
-      <div>
-        {experiences &&
-          experiences.map((exp) => (
-            <ExperienceItem
-              key={exp._id}
-              exp={exp}
-              deleteHandler={deleteHandler}
-              currentUserId={currentUserId}
-              profileOwner={profileOwner}
-            />
-          ))}
-      </div>
+      <section className='profile-experience'>
+        <h6 className='profile-experience__title'>Experience</h6>
+        <div className='profile-experience__list'>
+          {experiences &&
+            experiences.map((exp) => (
+              <ExperienceItem
+                key={exp._id}
+                exp={exp}
+                deleteHandler={deleteHandler}
+                currentUserId={currentUserId}
+                profileOwner={profileOwner}
+              />
+            ))}
+        </div>
+      </section>
     </>
   );
 };

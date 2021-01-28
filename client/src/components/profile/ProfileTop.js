@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileTop = ({ profile: { username, website, social, user }, user: { image } }) => {
+const ProfileTop = ({ profile: { username, website, social, user, bio }, user: { image } }) => {
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';
 
   const getRandomNumber = () => {
@@ -21,6 +21,7 @@ const ProfileTop = ({ profile: { username, website, social, user }, user: { imag
       <div className='profile-top__image' style={randomDefaultImage}></div>
       <div className='profile-top__text'>
         <h2 className='profile-top__name'>{user && user.name.trim()}</h2>
+        <div className='profile-top__bio'>{bio}</div>
         <div className='profile-top__username'>{username}</div>
         <div className='profile-top__social'>
           {website && (

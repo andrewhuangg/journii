@@ -15,7 +15,6 @@ import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
-import ProfileAbout from './ProfileAbout';
 
 const ProfileShow = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -76,19 +75,19 @@ const ProfileShow = ({ match, history }) => {
         {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
         {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
         <ProfileTop profile={profile} user={user} />
-        <ProfileAbout profile={profile} />
+        {/* <ProfileAbout profile={profile} /> */}
         {profile.github && <ProfileGithub username={profile.github} />}
         <ProfileExperience
           experiences={profile.experiences}
           currentUserId={userInfo.id}
           profileOwner={profile.user}
         />
-        <ProfileProject
+        {/* <ProfileProject
           projects={profile.projects}
           currentUserId={userInfo.id}
           profileOwner={profile.user}
-        />
-        <div>
+        /> */}
+        {/* <div>
           <div>
             Followers{' '}
             {profile.follows && profile.follows.length > 0 && <span>{profile.follows.length}</span>}
@@ -106,7 +105,7 @@ const ProfileShow = ({ match, history }) => {
           <Button onClick={() => deleteHandler(profile._id)}>
             <i className='fas fa-trash'></i>
           </Button>
-        )}
+        )} */}
       </div>
     </>
   );

@@ -1,22 +1,132 @@
 .profile-github {
   display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  text-align: center;
+  color: $darkBlue;
+
+  @include breakpoint-up(medium) {
+    grid-column: 1 / 3;
+    grid-row: 2/ 3;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    text-align: start;
+    border-bottom: 1px solid rgba(130, 75, 104, 0.15);
+  }
 
   &__title {
+    margin: 1rem auto;
+    margin-top: 0;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.15;
+
+    @include breakpoint-up(medium) {
+      margin: 1rem;
+    }
   }
+
   &__list {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    @include breakpoint-up(medium) {
+      margin: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: normal;
+      gap: 1rem;
+    }
   }
+
   &__item {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 1rem auto;
+    width: 30rem;
+    padding: 1rem 0.5rem;
+    box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
+    transition: scale 200ms ease-in-out;
+
+    @include breakpoint-up(medium) {
+      align-items: flex-start;
+      margin: 0;
+      padding: 1rem;
+      width: auto;
+    }
+
+    &:hover {
+      scale: 1.05;
+    }
   }
+
   &__header {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    @include breakpoint-up(medium) {
+      align-items: flex-start;
+    }
   }
-  &__link {
-  }
-  &__description {
-  }
+
+  &__link,
+  &__description,
   &__stats {
+    color: $darkBlue;
   }
+
+  &__link {
+    font-size: $font-med;
+    color: $darkTurquoise;
+    transition: color 300ms ease-in-out;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      height: 3px;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      background: linear-gradient(to right, $tangerine, $salmon);
+      opacity: 0;
+      transition: opacity 300ms ease-in-out;
+    }
+
+    &:hover {
+      color: $salmon;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__description {
+    font-size: $font-sm;
+    margin-top: 1rem;
+  }
+
+  &__stats {
+    font-size: 0.75rem;
+  }
+
   &__ul {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
     li {
+    }
+
+    li:not(:last-child) {
+      margin-right: 0.75rem;
     }
   }
 }

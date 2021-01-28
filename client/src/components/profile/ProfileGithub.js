@@ -18,7 +18,7 @@ const ProfileGithub = ({ username }) => {
     <>
       <section className='profile-github'>
         {errorGithubRepos && <AlertMessage variant='danger'>{errorGithubRepos}</AlertMessage>}
-        <h6 className='profile-github__title'>github repos</h6>
+        <h6 className='profile-github__title'>Github Repos</h6>
         <div className='profile-github__list'>
           {github &&
             github.data &&

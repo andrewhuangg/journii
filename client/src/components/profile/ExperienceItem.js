@@ -1,7 +1,5 @@
 import React from 'react';
 import Moment from 'react-moment';
-// import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 const ExperienceItem = ({
   deleteHandler,
@@ -11,19 +9,31 @@ const ExperienceItem = ({
 }) => {
   return (
     <>
-      <div>
-        <h6>{title}</h6>
-        <p>{company}</p>
-        <div>
-          <Moment format='MM/DD/YYYY'>{from}</Moment> -{' '}
-          {to === null ? ' Now' : <Moment format='MM/DD/YYYY'>{to}</Moment>}
+      <div className='profile-experience__item'>
+        <div className='profile-experience__header'>
+          <h6 className='profile-experience__item-title'>{title}</h6>
+          <div className='profile-experience__company-info'>
+            <div className='profile-experience__company'>{company}</div>
+            <span></span>
+            <Moment format='MM/DD/YYYY' className='profile-experience__date'>
+              {from}
+            </Moment>
+            <span></span>
+            {to === null ? (
+              <p>Now</p>
+            ) : (
+              <Moment format='MM/DD/YYYY' className='profile-experience__date'>
+                {to}
+              </Moment>
+            )}
+          </div>
         </div>
-        <p>{address}</p>
-        <p>{description}</p>
+        <div className='profile-experience__description'>{description}</div>
+        <div className='profile-experience__address'>{address}</div>
         {currentUserId === profileOwner._id && (
-          <Button onClick={() => deleteHandler(_id)}>
+          <button className='profile-experience__btn' onClick={() => deleteHandler(_id)}>
             <i className='fas fa-trash'></i>
-          </Button>
+          </button>
         )}
       </div>
     </>

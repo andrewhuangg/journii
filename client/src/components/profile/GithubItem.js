@@ -18,9 +18,9 @@ const GithubItem = ({
       </div>
       <div className='profile-github__stats'>
         <ul className='profile-github__ul'>
-          <li className='badge badge-primary'>Stars: {stargazers_count}</li>
-          <li className='badge badge-dark'>Watchers: {watchers_count}</li>
-          <li className='badge badge-light'>Forks: {forks_count}</li>
+          <li className='profile-github__li'>Stars: {stargazers_count}</li>
+          <li className='profile-github__li'>Watchers: {watchers_count}</li>
+          <li className='profile-github__li'>Forks: {forks_count}</li>
         </ul>
       </div>
     </div>
