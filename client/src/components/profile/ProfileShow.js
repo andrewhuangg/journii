@@ -82,11 +82,11 @@ const ProfileShow = ({ match, history }) => {
           currentUserId={userInfo.id}
           profileOwner={profile.user}
         />
-        {/* <ProfileProject
+        <ProfileProject
           projects={profile.projects}
           currentUserId={userInfo.id}
           profileOwner={profile.user}
-        /> */}
+        />
         {/* <div>
           <div>
             Followers{' '}

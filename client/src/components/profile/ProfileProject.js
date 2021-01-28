@@ -12,19 +12,21 @@ const ProfileProject = ({ projects, currentUserId, profileOwner }) => {
 
   return (
     <>
-      <h2>Projects</h2>
-      <div>
-        {projects &&
-          projects.map((proj) => (
-            <ProjectItem
-              key={proj._id}
-              proj={proj}
-              deleteHandler={deleteHandler}
-              currentUserId={currentUserId}
-              profileOwner={profileOwner}
-            />
-          ))}
-      </div>
+      <section className='profile-project'>
+        <h6 className='profile-project__title'>Projects</h6>
+        <div className='profile-project__list'>
+          {projects &&
+            projects.map((proj) => (
+              <ProjectItem
+                key={proj._id}
+                proj={proj}
+                deleteHandler={deleteHandler}
+                currentUserId={currentUserId}
+                profileOwner={profileOwner}
+              />
+            ))}
+        </div>
+      </section>
     </>
   );
 };
