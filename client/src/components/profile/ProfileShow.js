@@ -69,13 +69,37 @@ const ProfileShow = ({ match, history }) => {
     dispatch(deleteProfile(id));
   };
 
+  const renderFollowButton = () => {
+    if (profile.user && profile.user._id !== userInfo.id) {
+      return profile.follows.map((follow) => follow.user).includes(userInfo.id) ? (
+        <button
+          className='profile-top__follow-btn'
+          onClick={() => profileUnfollowHandler(profile, profile._id)}
+        >
+          Unfollow
+        </button>
+      ) : (
+        <button
+          className='profile-top__follow-btn'
+          onClick={() => profileFollowHandler(profile, profile._id)}
+        >
+          Follow
+        </button>
+      );
+    }
+  };
+
   return (
     <>
       <div className='profileShow container'>
         {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
         {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
-        <ProfileTop profile={profile} user={user} />
-        {/* <ProfileAbout profile={profile} /> */}
+        <ProfileTop
+          profile={profile}
+          user={user}
+          followBtn={renderFollowButton}
+          deleteBtn={deleteHandler}
+        />
         {profile.github && <ProfileGithub username={profile.github} />}
         <ProfileExperience
           experiences={profile.experiences}
@@ -87,25 +111,6 @@ const ProfileShow = ({ match, history }) => {
           currentUserId={userInfo.id}
           profileOwner={profile.user}
         />
-        {/* <div>
-          <div>
-            Followers{' '}
-            {profile.follows && profile.follows.length > 0 && <span>{profile.follows.length}</span>}
-          </div>
-          {profile.user && userInfo.id !== profile.user._id && (
-            <>
-              <div onClick={() => profileFollowHandler(profile, profile._id)}>follow profile</div>
-              <div onClick={() => profileUnfollowHandler(profile, profile._id)}>
-                unfollow profile
-              </div>
-            </>
-          )}
-        </div>
-        {profile.user && userInfo.id === profile.user._id && (
-          <Button onClick={() => deleteHandler(profile._id)}>
-            <i className='fas fa-trash'></i>
-          </Button>
-        )} */}
       </div>
     </>
   );

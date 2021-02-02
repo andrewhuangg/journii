@@ -26,21 +26,19 @@ const PostList = ({ match }) => {
     dispatch(listPosts(keyword, pageNumber));
   }, [dispatch, successDelete, keyword, pageNumber, userInfo]);
 
-  const deleteHandler = (id) => {
-    dispatch(deletePost(id));
-  };
-
   return (
     <>
-      <Meta title='journii | Posts' />
-      <h1>Posts</h1>
-      <p>Welcome to the community</p>
-      {loadingDelete && <Spinner />}
-      {errorDelete && <AlertMessage>{errorDelete} </AlertMessage>}
-      {loadingList && <Spinner />}
-      {errorList && <AlertMessage variant='danger'>{errorList}</AlertMessage>}
-      <>
-        <section className='postsList'>
+      <section className='post-list container'>
+        <Meta title='journii | Posts' />
+        {loadingDelete && <Spinner />}
+        {errorDelete && <AlertMessage>{errorDelete} </AlertMessage>}
+        {loadingList && <Spinner />}
+        {errorList && <AlertMessage variant='danger'>{errorList}</AlertMessage>}
+        <div className='post-list__header'>
+          <h1 className='post-list__title'>Posts</h1>
+          <div className='post-list__text'>Welcome to the community</div>
+        </div>
+        <section className='post-list__grid'>
           {posts.map((post) => (
             <PostItem key={post._id} post={post} />
           ))}
@@ -48,7 +46,7 @@ const PostList = ({ match }) => {
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
           <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
         </div>
-      </>
+      </section>
     </>
   );
 };

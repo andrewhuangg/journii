@@ -14,11 +14,11 @@ import {
 import { POST_DETAILS_RESET } from '../../actions/types';
 import AlertMessage from '../layout/AlertMessage';
 import CreateComment from './CreateComment';
-import CommentItem from './CommentItem';
-import CreateReview from './CreateReview';
-import ReviewItem from './ReviewItem';
-import Moment from 'react-moment';
+import ReviewSlider from './ReviewSlider';
+import PostHero from './PostHero';
+import CommentList from './CommentList';
 import Meta from '../layout/Meta';
+import PostFeature from './PostFeature';
 
 const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -90,60 +90,6 @@ const PostShow = ({ match, history }) => {
     dispatch(unlikePost(post, id));
   };
 
-  const renderCallAction = () => {
-    if (post.likes && userInfo) {
-      return post.likes.map((like) => like.user).includes(userInfo.id) ? (
-        <aside className='post-feature__cta'>
-          <div className='post-feature__cta-grid-parent'>
-            <div className='post-feature__cta-grid-child'>
-              <div className='post-feature__cta-like'>
-                <i
-                  className='fas fa-heart'
-                  onClick={() => {
-                    postUnlikeHandler(post, post._id);
-                  }}
-                />
-                {post.likes.length > 0 && (
-                  <div className='post-feature__like-count'>{post.likes.length}</div>
-                )}
-              </div>
-              <div className='post-feature__cta-follow'>
-                <i className='fas fa-users' />{' '}
-                {post.follows.length > 0 && (
-                  <div className='post-feature__follow-count'>{post.follows.length}</div>
-                )}
-              </div>
-            </div>
-          </div>
-        </aside>
-      ) : (
-        <aside className='post-feature__cta'>
-          <div className='post-feature__cta-grid-parent'>
-            <div className='post-feature__cta-grid-child'>
-              <div className='post-feature__cta-like'>
-                <i
-                  className='fas fa-heart'
-                  onClick={() => {
-                    postLikeHandler(post, post._id);
-                  }}
-                />
-                {post.likes.length > 0 && (
-                  <div className='post-feature__cta-like-count'>{post.likes.length}</div>
-                )}
-              </div>
-              <div className='post-feature__cta-follow'>
-                <i className='fas fa-users' />{' '}
-                {post.follows.length > 0 && (
-                  <div className='post-feature__cta-follow-count'>{post.follows.length}</div>
-                )}
-              </div>
-            </div>
-          </div>
-        </aside>
-      );
-    }
-  };
-
   const postFollowHandler = (post, id) => {
     if (errorFollows) setMessage(errorFollows);
     dispatch(followPost(post, id));
@@ -152,23 +98,6 @@ const PostShow = ({ match, history }) => {
   const postUnfollowHandler = (post, id) => {
     if (errorFollows) setMessage(errorFollows);
     dispatch(unfollowPost(post, id));
-  };
-
-  const renderFollowButton = () => {
-    if (post.user && post.user._id !== userInfo.id) {
-      return post.follows.map((follow) => follow.user).includes(userInfo.id) ? (
-        <button
-          className='post-hero__follow-btn'
-          onClick={() => postUnfollowHandler(post, post._id)}
-        >
-          Unfollow
-        </button>
-      ) : (
-        <button className='post-hero__follow-btn' onClick={() => postFollowHandler(post, post._id)}>
-          Follow
-        </button>
-      );
-    }
   };
 
   const deleteHandler = (id) => {
@@ -184,22 +113,6 @@ const PostShow = ({ match, history }) => {
   const deleteReviewHandler = (postId, reviewId) => {
     if (errorReviewDelete) setMessage(errorReviewDelete);
     dispatch(deletePostReview(postId, reviewId));
-  };
-
-  // Random Photo Generator
-  const unsplashURL = 'https://source.unsplash.com/collection/289662/';
-  const getRandomNumber = () => {
-    const num = Math.floor(Math.random() * 10) + 900;
-    return num;
-  };
-  const getRandomSize = () => {
-    return `${getRandomNumber()}x${getRandomNumber()}`;
-  };
-
-  // Random Photo Generator
-  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
-  const randomDefaultImage = {
-    backgroundImage: `url(${post.image ? post.image : unsplashImage})`,
   };
 
   const handleReviewSlider = () => {
@@ -220,74 +133,28 @@ const PostShow = ({ match, history }) => {
       <Meta title={`journii | ${post.title}`} />
       {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
       {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
-
-      <nav className='review__slider' id='review__slider'>
-        <div
-          className='hamburger hamburger--active'
-          id='hamburger'
-          onClick={handleReviewSlider}
-        ></div>
-        <div className='review__slider-header'>
-          <h6>Reviews ({post.reviews && post.reviews.length})</h6>
-        </div>
-
-        <CreateReview postId={post._id} />
-
-        <section className='reviews'>
-          <div className='reviews__grid'>
-            {post.reviews &&
-              post.reviews.map((review) => (
-                <ReviewItem
-                  key={review._id}
-                  review={review}
-                  postId={post._id}
-                  deleteReviewHandler={deleteReviewHandler}
-                  userInfo={userInfo}
-                />
-              ))}
-          </div>
-        </section>
-      </nav>
-
-      <section className='post-hero container'>
-        <div className='container'>
-          <div className='post-hero__image' style={randomDefaultImage}></div>
-          <div className='post-hero__header container--pall'>
-            <h1>{post.title}</h1>
-            <p>
-              Publisher <Link to={`profiles/${post.user && post.user._id}`}>{post.name}</Link>
-            </p>
-            <Moment format='MM/DD/YYYY'>{post.createdAt}</Moment>
-            <div className='post-hero__cta'>
-              {renderFollowButton()}
-              <button className='review-btn hide-for-mobile' onClick={handleReviewSlider}>
-                Reviews
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className='post-feature container'>
-        {renderCallAction()}
-        <div className='post-feature__text'>{post.text}</div>
-      </section>
-
+      <ReviewSlider
+        post={post}
+        handleReviewSlider={handleReviewSlider}
+        deleteReviewHandler={deleteReviewHandler}
+        userInfo={userInfo}
+      />
+      <PostHero
+        post={post}
+        handleReviewSlider={handleReviewSlider}
+        deleteHandler={deleteHandler}
+        userInfo={userInfo}
+        postFollowHandler={postFollowHandler}
+        postUnfollowHandler={postUnfollowHandler}
+      />
+      <PostFeature
+        post={post}
+        postLikeHandler={postLikeHandler}
+        postUnlikeHandler={postUnlikeHandler}
+        userInfo={userInfo}
+      />
       <CreateComment postId={post && post._id} />
-      <section className='comments container'>
-        <div className='comments__grid'>
-          {post.comments &&
-            post.comments.map((comment) => (
-              <CommentItem
-                key={comment._id}
-                comment={comment}
-                postId={post._id}
-                deleteCommentHandler={deleteCommentHandler}
-                userInfo={userInfo}
-              />
-            ))}
-        </div>
-      </section>
+      <CommentList post={post} userInfo={userInfo} deleteCommentHandler={deleteCommentHandler} />
     </>
   );
 };

@@ -1,6 +1,11 @@
 import React from 'react';
 
-const ProfileTop = ({ profile: { username, website, social, user, bio }, user: { image } }) => {
+const ProfileTop = ({
+  profile: { _id, username, website, social, user, bio, follows },
+  user: { image, id },
+  followBtn,
+  deleteBtn,
+}) => {
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';
 
   const getRandomNumber = () => {
@@ -24,40 +29,50 @@ const ProfileTop = ({ profile: { username, website, social, user, bio }, user: {
         <div className='profile-top__bio'>{bio}</div>
         <div className='profile-top__username'>{username}</div>
         <div className='profile-top__social'>
+          <div className='profile-top__follow'>
+            <i className='fas fa-users' />
+            {follows.length > 0 && (
+              <div className='profile-top__follow-count'>{follows.length}</div>
+            )}
+          </div>
           {website && (
             <a href={website} target='_blank' rel='noopener noreferrer'>
               <i className='fas fa-globe fa-2x' />
             </a>
           )}
-
           {social && social.twitter && (
             <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
               <i className='fab fa-twitter fa-2x' />
             </a>
           )}
-
           {social && social.facebook && (
             <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
               <i className='fab fa-facebook fa-2x' />
             </a>
           )}
-
           {social && social.linkedin && (
             <a href={social.linkedin} target='_blank' rel='noopener noreferrer'>
               <i className='fab fa-linkedin fa-2x' />
             </a>
           )}
-
           {social && social.instagram && (
             <a href={social.instagram} target='_blank' rel='noopener noreferrer'>
               <i className='fab fa-instagram fa-2x' />
             </a>
           )}
-
           {social && social.youtube && (
             <a href={social.youtube} target='_blank' rel='noopener noreferrer'>
               <i className='fab fa-youtube fa-2x' />
             </a>
+          )}
+        </div>
+        <div className='profile-top__cta'>
+          {followBtn()}
+          {/* profile id && user id */}
+          {_id === id && (
+            <button className='profile-top__delete-btn' onClick={() => deleteBtn(_id)}>
+              <i className='fas fa-trash'></i>
+            </button>
           )}
         </div>
       </div>

@@ -29,19 +29,21 @@ const ProfileItem = ({
 
   return (
     <>
-      <Link to={`profile/${_id}`} className='profileItem'>
-        <div className='profileItem__overlay'>
+      <Link to={`profile/${_id}`} className='profile-item'>
+        <div className='profile-item__overlay'>
           <span>see profile</span>
         </div>
-        <div className='profileItem__image' style={randomDefaultImage}></div>
-        <div className='profileItem__content'>
-          <div className='profileItem__username'>{username}</div>
-          <div className='profileItem__bio'>{bio}</div>
+        <div className='profile-item__image-wrapper'>
+          <div className='profile-item__image' style={randomDefaultImage}></div>
         </div>
-        <div className='profileItem__created'>
+        <div className='profile-item__content'>
+          <div className='profile-item__username'>{username}</div>
+          <div className='profile-item__bio'>{bio}</div>
+        </div>
+        <div className='profile-item__created'>
           joined <Moment format='MM/YYYY'>{createdAt}</Moment>
         </div>
-        <div className='profileItem__followers'>{follows.length} Followers</div>
+        <div className='profile-item__followers'>{follows.length} Followers</div>
       </Link>
     </>
   );
