@@ -1406,7 +1406,7 @@ button:hover::before,
 }
 
 .post-item__text {
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
 }

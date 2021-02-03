@@ -36,13 +36,37 @@ import {
   POST_DELETE_REVIEW_REQUEST,
   POST_DELETE_REVIEW_SUCCESS,
   POST_DELETE_REVIEW_FAIL,
+  POST_LATEST_REQUEST,
+  POST_LATEST_SUCCESS,
+  POST_LATEST_FAIL,
 } from './types';
 
-export const listTopPosts = () => async (dispatch) => {
+export const listLatestPosts = (limit) => async (dispatch) => {
+  try {
+    dispatch({ type: POST_LATEST_REQUEST });
+
+    const { data } = await axios.get(`/api/v1/posts/latest/${limit}`);
+
+    dispatch({
+      type: POST_LATEST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_LATEST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const listTopPosts = (limit) => async (dispatch) => {
   try {
     dispatch({ type: POST_TOP_REQUEST });
 
-    const { data } = await axios.get('/api/v1/posts/top');
+    const { data } = await axios.get(`/api/v1/posts/top/${limit}`);
 
     dispatch({
       type: POST_TOP_SUCCESS,
@@ -119,7 +143,7 @@ export const likePost = (post, id) => async (dispatch, getState) => {
 
     dispatch({
       type: POST_UPDATE_LIKES_SUCCESS,
-      payload: data,
+      payload: { id, likes: data },
     });
   } catch (error) {
     dispatch({
@@ -151,7 +175,7 @@ export const unlikePost = (post, id) => async (dispatch, getState) => {
 
     dispatch({
       type: POST_UPDATE_LIKES_SUCCESS,
-      payload: data,
+      payload: { id, likes: data },
     });
   } catch (error) {
     dispatch({
@@ -183,7 +207,7 @@ export const followPost = (post, id) => async (dispatch, getState) => {
 
     dispatch({
       type: POST_UPDATE_FOLLOWS_SUCCESS,
-      payload: data,
+      payload: { id, follows: data },
     });
   } catch (error) {
     dispatch({
@@ -215,7 +239,7 @@ export const unfollowPost = (post, id) => async (dispatch, getState) => {
 
     dispatch({
       type: POST_UPDATE_FOLLOWS_SUCCESS,
-      payload: data,
+      payload: { id, follows: data },
     });
   } catch (error) {
     dispatch({

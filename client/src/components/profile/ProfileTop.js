@@ -31,7 +31,7 @@ const ProfileTop = ({
         <div className='profile-top__social'>
           <div className='profile-top__follow'>
             <i className='fas fa-users' />
-            {follows.length > 0 && (
+            {follows && follows.length > 0 && (
               <div className='profile-top__follow-count'>{follows.length}</div>
             )}
           </div>

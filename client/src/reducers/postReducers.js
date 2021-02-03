@@ -40,6 +40,9 @@ import {
   POST_DELETE_REVIEW_REQUEST,
   POST_DELETE_REVIEW_SUCCESS,
   POST_DELETE_REVIEW_FAIL,
+  POST_LATEST_REQUEST,
+  POST_LATEST_SUCCESS,
+  POST_LATEST_FAIL,
 } from '../actions/types';
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -83,14 +86,25 @@ export const postDetailsReducer = (
     case POST_UPDATE_LIKES_REQUEST:
       return { loading: true, ...state };
     case POST_UPDATE_LIKES_SUCCESS:
-      return { loading: false, post: payload, success: true };
+      return {
+        loading: false,
+        ...state,
+        post: state.post._id === payload.id ? { ...state.post, likes: payload.likes } : state.post,
+        success: true,
+      };
     case POST_UPDATE_LIKES_FAIL:
       return { loading: false, error: payload };
 
     case POST_UPDATE_FOLLOWS_REQUEST:
       return { loading: true, ...state };
     case POST_UPDATE_FOLLOWS_SUCCESS:
-      return { loading: false, post: payload, success: true };
+      return {
+        loading: false,
+        ...state,
+        post:
+          state.post._id === payload.id ? { ...state.post, follows: payload.follows } : state.post,
+        success: true,
+      };
     case POST_UPDATE_FOLLOWS_FAIL:
       return { loading: false, error: payload };
 
@@ -199,6 +213,20 @@ export const postTopRatedReducer = (state = { posts: [] }, action) => {
     case POST_TOP_SUCCESS:
       return { loading: false, posts: payload };
     case POST_TOP_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const postLatestReducer = (state = { posts: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case POST_LATEST_REQUEST:
+      return { loading: true, posts: [] };
+    case POST_LATEST_SUCCESS:
+      return { loading: false, posts: payload };
+    case POST_LATEST_FAIL:
       return { loading: false, error: payload };
     default:
       return state;

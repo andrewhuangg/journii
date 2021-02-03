@@ -5,11 +5,22 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 
 // @desc      Get top rated posts
-// @route     GET /api/v1/posts/top
+// @route     GET /api/v1/posts/top/:limit
 // @access    Public
 
 exports.getTopPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).sort({ rating: -1 }).limit(4);
+  const limit = parseInt(req.params.limit);
+  const posts = await Post.find({}).sort({ rating: -1 }).limit(limit);
+  res.status(200).json(posts);
+});
+
+// @desc      Get latest posts
+// @route     GET /api/v1/posts/latest/:limit
+// @access    Public
+
+exports.getLatestPosts = asyncHandler(async (req, res) => {
+  const limit = parseInt(req.params.limit);
+  const posts = await Post.find({}).sort({ createdAt: -1 }).limit(limit);
   res.status(200).json(posts);
 });
 

@@ -366,7 +366,7 @@ export const followProfile = (profile, id) => async (dispatch, getState) => {
 
     dispatch({
       type: PROFILE_UPDATE_FOLLOWS_SUCCESS,
-      payload: data,
+      payload: { id, follows: data },
     });
   } catch (error) {
     dispatch({
@@ -398,7 +398,7 @@ export const unfollowProfile = (profile, id) => async (dispatch, getState) => {
 
     dispatch({
       type: PROFILE_UPDATE_FOLLOWS_SUCCESS,
-      payload: data,
+      payload: { id, follows: data },
     });
   } catch (error) {
     dispatch({

@@ -8,6 +8,7 @@ import {
   postReviewReducer,
   postCommentReducer,
   postTopRatedReducer,
+  postLatestReducer,
 } from './postReducers';
 import {
   userLoginReducer,
@@ -49,4 +50,5 @@ export default combineReducers({
   postComment: postCommentReducer,
   postReview: postReviewReducer,
   postTopRated: postTopRatedReducer,
+  postLatest: postLatestReducer,
 });

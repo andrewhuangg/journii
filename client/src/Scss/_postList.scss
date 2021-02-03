@@ -132,7 +132,7 @@
   }
 
   &__text {
-    font-size: 1rem;
+    font-size: $font-sm;
     line-height: 1.5;
     margin-bottom: 0.75rem;
   }
@@ -180,10 +180,11 @@
   &__date {
     grid-column: 3 / 4;
     grid-row: 3 / 4;
-    padding-right: 1.5rem;
     justify-self: flex-end;
-    color: $darkTurquoise;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
     font-size: $font-sm;
+    color: $darkTurquoise;
 
     @include breakpoint-up(medium) {
       grid-column: 4 / 5;

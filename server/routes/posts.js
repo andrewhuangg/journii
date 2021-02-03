@@ -17,12 +17,14 @@ const {
   deletePostReview,
   updatePost,
   getTopPosts,
+  getLatestPosts,
 } = require('../controllers/posts');
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/top').get(getTopPosts);
 router.route('/followedposts').get(getFollowedPosts);
+router.route('/top/:limit').get(getTopPosts);
+router.route('/latest/:limit').get(getLatestPosts);
 router.route('/like/:id').put(protect, likePost);
 router.route('/unlike/:id').put(protect, unlikePost);
 router.route('/comment/:id').post(protect, addComment);

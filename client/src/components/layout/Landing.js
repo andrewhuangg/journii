@@ -16,9 +16,11 @@ const Landing = () => {
   const dispatch = useDispatch();
   const postTopRated = useSelector((state) => state.postTopRated);
   const { loading, error, posts } = postTopRated;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
-    dispatch(listTopPosts());
+    dispatch(listTopPosts(4));
   }, [dispatch]);
 
   return (
@@ -38,14 +40,16 @@ const Landing = () => {
         <div className='showcase__content'>
           <h1>journii</h1>
           <p>It never stops.</p> {/* quote generator here. */}
-          <div className='showcase__cta'>
-            <Link to='/register' className='button'>
-              register
-            </Link>
-            <Link to='/login' className='button'>
-              login
-            </Link>
-          </div>
+          {!userInfo && (
+            <div className='showcase__cta'>
+              <Link to='/register' className='button'>
+                register
+              </Link>
+              <Link to='/login' className='button'>
+                login
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -137,9 +141,7 @@ const Landing = () => {
         <div className='post__content container container--pall'>
           <h2>Top Posts</h2>
           <div className='post__grid'>
-            {posts && posts.map((post) => (
-              <TopPostItem key={post._id} post={post} />
-            ))}
+            {posts && posts.map((post) => <TopPostItem key={post._id} post={post} />)}
           </div>
         </div>
       </section>
