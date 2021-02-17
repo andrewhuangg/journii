@@ -1,0 +1,72 @@
+.createPost {
+  @include breakpoint-up(medium) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 5rem;
+  }
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+  &__wrapper {
+    background-color: hsl(30, 14%, 97%);
+    padding: 1.25rem 2.5rem;
+    border: 0;
+    border-radius: 0.625rem;
+
+    a {
+      color: $darkTurquoise;
+      text-decoration: none;
+    }
+  }
+
+  &__form-control {
+    position: relative;
+    margin: 1.25rem 0 2.5rem;
+    width: 50rem;
+  }
+
+  &__form-input {
+    display: block;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid $darkTurquoise;
+    width: 100%;
+    padding: 0.9375rem 0;
+    font-size: $font-med;
+    cursor: pointer;
+
+    &:focus,
+    :valid {
+      outline: 0;
+      border-bottom-color: $darkTurquoise;
+    }
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+
+  &__form-image-file {
+    width: 100%;
+    font-size: 0.75rem;
+  }
+
+  &__form-textarea {
+    resize: none;
+    width: 100%;
+    height: 10rem;
+  }
+  &__btn {
+    margin: 1rem 0;
+    text-transform: uppercase;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, $darkTurquoise, $darkTurquoise);
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+}

@@ -51,12 +51,14 @@
 }
 
 .review__slider {
-  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 3.125rem;
   grid-template-rows: 0.05fr 0.2fr 1fr auto;
-  position: absolute;
-  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
   width: 26.156rem;
   box-shadow: 5px 0px 0.1px 0.1px rgba(0, 175, 145, 0.5);
   background-color: white;

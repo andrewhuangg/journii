@@ -88,7 +88,6 @@ export const postDetailsReducer = (
     case POST_UPDATE_LIKES_SUCCESS:
       return {
         loading: false,
-        ...state,
         post: state.post._id === payload.id ? { ...state.post, likes: payload.likes } : state.post,
         success: true,
       };
@@ -100,7 +99,6 @@ export const postDetailsReducer = (
     case POST_UPDATE_FOLLOWS_SUCCESS:
       return {
         loading: false,
-        ...state,
         post:
           state.post._id === payload.id ? { ...state.post, follows: payload.follows } : state.post,
         success: true,

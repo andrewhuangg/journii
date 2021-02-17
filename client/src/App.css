@@ -1477,10 +1477,11 @@ button:hover::before,
   -ms-grid-row: 3;
   -ms-grid-row-span: 1;
   grid-row: 3 / 4;
-  padding-right: 1.5rem;
   justify-self: flex-end;
-  color: #5faba8;
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
   font-size: 0.875rem;
+  color: #5faba8;
 }
 
 @media (min-width: 40em) {
@@ -2578,15 +2579,17 @@ button:hover::before,
 }
 
 .review__slider {
-  overflow: hidden;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 3.125rem;
       grid-template-columns: 1fr 3.125rem;
   -ms-grid-rows: 0.05fr 0.2fr 1fr auto;
       grid-template-rows: 0.05fr 0.2fr 1fr auto;
-  position: absolute;
-  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
   width: 26.156rem;
   -webkit-box-shadow: 5px 0px 0.1px 0.1px rgba(0, 175, 145, 0.5);
           box-shadow: 5px 0px 0.1px 0.1px rgba(0, 175, 145, 0.5);
@@ -2837,8 +2840,8 @@ button:hover::before,
 }
 
 .profile-top__follow .fa-users {
-  margin-top: 1.1rem;
-  font-size: 1.3rem;
+  padding-bottom: 0.1rem;
+  font-size: 1.4rem;
 }
 
 .profile-top__follow-count {

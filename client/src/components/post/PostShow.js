@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -24,6 +24,7 @@ const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -115,14 +116,34 @@ const PostShow = ({ match, history }) => {
     dispatch(deletePostReview(postId, reviewId));
   };
 
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    const nav = document.querySelector('#review__slider');
+    const hamburger = document.querySelector('#hamburger');
+    const handler = (event) => {
+      if (
+        !sliderRef.current.contains(event.target) &&
+        nav.classList.contains('review__slider--active')
+      ) {
+        setIsOpen(false);
+        nav.classList.remove('review__slider--active');
+        hamburger.classList.remove('hamburger--active');
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   const handleReviewSlider = () => {
     const nav = document.querySelector('#review__slider');
     const hamburger = document.querySelector('#hamburger');
-
-    if (nav.classList.contains('review__slider--active')) {
-      nav.classList.remove('review__slider--active');
-      hamburger.classList.remove('hamburger--active');
-    } else {
+    if (!nav.classList.contains('review__slider--active')) {
+      setIsOpen((isOpen) => !isOpen);
       nav.classList.add('review__slider--active');
       hamburger.classList.add('hamburger--active');
     }
@@ -138,6 +159,8 @@ const PostShow = ({ match, history }) => {
         handleReviewSlider={handleReviewSlider}
         deleteReviewHandler={deleteReviewHandler}
         userInfo={userInfo}
+        sliderRef={sliderRef}
+        isOpen={isOpen}
       />
       <PostHero
         post={post}
@@ -146,6 +169,7 @@ const PostShow = ({ match, history }) => {
         userInfo={userInfo}
         postFollowHandler={postFollowHandler}
         postUnfollowHandler={postUnfollowHandler}
+        isOpen={isOpen}
       />
       <PostFeature
         post={post}

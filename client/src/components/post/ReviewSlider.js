@@ -7,9 +7,10 @@ const ReviewSlider = ({
   handleReviewSlider,
   deleteReviewHandler,
   userInfo,
+  sliderRef,
 }) => {
   return (
-    <nav className='review__slider' id='review__slider'>
+    <nav className='review__slider' id='review__slider' ref={sliderRef}>
       <div
         className='hamburger hamburger--active'
         id='hamburger'

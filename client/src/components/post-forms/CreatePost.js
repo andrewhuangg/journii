@@ -20,6 +20,9 @@ const CreatePost = ({ history }) => {
   const postCreate = useSelector((state) => state.postCreate);
   const { loading: loadingSuccess, success: successCreate, error: errorCreate, post } = postCreate;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
     if (successCreate) {
       setText('');
@@ -61,65 +64,57 @@ const CreatePost = ({ history }) => {
   };
   return (
     <>
-      <Row>
-        <Col mid={4}>
-          <h3>Say Something...</h3>
-          {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-          {errorCreate && <AlertMessage variant='danger'>{errorCreate}</AlertMessage>}
-          {successCreate && <AlertMessage variant='success'>Post Created</AlertMessage>}
-          {loadingSuccess && <Spinner />}
-          <Link to='/posts'>Back to posts</Link>
-          <Form onSubmit={submitHandler}>
-            <small>* = required field</small>
-            <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                rows={4}
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Spinner />}
-            </Form.Group>
-
-            <Form.Group controlId='title'>
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type='text'
-                rows={4}
-                placeholder='* Title'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='text'>
-              <Form.Control
-                as='textarea'
-                rows={4}
-                placeholder='* Create a post...'
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                required
-              ></Form.Control>
-              <Form.Text id='textHelpBlock' muted>
-                The world is your playground...
-              </Form.Text>
-            </Form.Group>
-
-            <Button type='submit' variant='primary'>
-              Submit
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+      {userInfo ? (
+        <div className='createPost'>
+          <div className='createPost__wrapper'>
+            <h3>Share your thoughts...</h3>
+            <form className='createPost__form' onSubmit={submitHandler}>
+              <small>* = required field</small>
+              <div className='createPost__form-control'>
+                <input
+                  className='createPost__form-input'
+                  type='text'
+                  value={image}
+                  placeholder='Image File'
+                  onChange={(e) => setImage(e.target.value)}
+                />
+                <input
+                  className='createPost__form-image-file'
+                  id='image-file'
+                  type='file'
+                  onChange={uploadFileHandler}
+                  accept='image/*,.pdf'
+                />
+                {uploading && <Spinner />}
+              </div>
+              <div className='createPost__form-control'>
+                <input
+                  className='createPost__form-input'
+                  type='text'
+                  value={title}
+                  placeholder='* Title'
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className='createPost__form-control'>
+                <textarea
+                  className='createPost__form-textarea'
+                  value={text}
+                  placeholder='* Write your post...'
+                  onChange={(e) => setText(e.target.value)}
+                  required
+                />
+              </div>
+              <button className='createPost__btn'>Submit</button>
+            </form>
+          </div>
+        </div>
+      ) : (
+        <AlertMessage>
+          Please <Link to='login'>Sign in</Link> to leave a post
+        </AlertMessage>
+      )}
     </>
   );
 };

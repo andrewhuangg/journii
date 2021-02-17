@@ -98,7 +98,6 @@ export const profileDetailsReducer = (
     case PROFILE_UPDATE_FOLLOWS_SUCCESS:
       return {
         loading: false,
-        ...state,
         profile:
           state.profile._id === payload.id
             ? { ...state.profile, follows: payload.follows }
