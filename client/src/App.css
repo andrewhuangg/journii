@@ -1322,7 +1322,7 @@ button:hover::before,
   }
 }
 
-.postItem:hover .post-item__overlay {
+.post-item:hover .post-item__overlay {
   opacity: 1;
 }
 
@@ -3682,13 +3682,11 @@ button:hover::before,
   padding: 1.25rem 2.5rem;
   border: 0;
   border-radius: 0.625rem;
-  width: 39rem;
   height: 100%;
 }
 
 @media (min-width: 40em) {
   .createPost__wrapper {
-    width: 50rem;
     height: 50rem;
   }
 }
@@ -3731,13 +3729,13 @@ button:hover::before,
 
 .createPost__form-control {
   margin: 0 0 2rem;
-  width: 36rem;
+  width: 30rem;
   padding: 0 0.5rem 0 0.5rem;
 }
 
 @media (min-width: 40em) {
   .createPost__form-control {
-    width: 45rem;
+    width: 40rem;
   }
 }
 
@@ -3841,13 +3839,11 @@ button:hover::before,
   background-color: whitesmoke;
   border: 0;
   border-radius: 0.625rem;
-  width: 39rem;
   height: 100%;
 }
 
 @media (min-width: 40em) {
   .userProfile__wrapper {
-    width: 50rem;
     height: 45rem;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -3895,13 +3891,12 @@ button:hover::before,
 
 .userProfile__form-control {
   margin: 0 0 2rem;
-  width: 36rem;
-  padding: 0 0.5rem 0 0.5rem;
+  width: 30rem;
 }
 
 @media (min-width: 40em) {
   .userProfile__form-control {
-    width: 45rem;
+    width: 40rem;
   }
 }
 
@@ -3923,6 +3918,8 @@ button:hover::before,
   width: 100%;
   padding: 0.9375rem 0;
   font-size: 1.125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
 }
 
@@ -3951,6 +3948,178 @@ button:hover::before,
 }
 
 .userProfile__form-btn:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+.editProfile {
+  height: 100vh;
+  width: 100vw;
+}
+
+@media (min-width: 40em) {
+  .editProfile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 0;
+    margin-top: 5rem;
+    overflow: hidden;
+  }
+}
+
+.editProfile__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  padding: 1.25rem 2.5rem;
+  background-color: whitesmoke;
+  border: 0;
+  border-radius: 0.625rem;
+  height: 100%;
+}
+
+.editProfile__wrapper label {
+  font-size: 0.875rem;
+  color: #d18fbb;
+}
+
+.editProfile__form {
+  width: 36rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+}
+
+.editProfile__form h3 {
+  margin-bottom: 2rem;
+  color: #5faba8;
+}
+
+@media (min-width: 40em) {
+  .editProfile__form {
+    width: 100%;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    margin-top: 0%;
+  }
+}
+
+.editProfile__form-control {
+  width: 30rem;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.editProfile__form-control small {
+  font-size: 0.65rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #d18fbb;
+}
+
+@media (min-width: 40em) {
+  .editProfile__form-control {
+    width: 40rem;
+  }
+}
+
+.editProfile__form-input {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1.125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.editProfile__form-input:focus,
+.editProfile__form-input :valid {
+  outline: 0;
+}
+
+.editProfile__form-input:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.editProfile__form-textarea {
+  resize: none;
+  width: 100%;
+  height: 10rem;
+}
+
+.editProfile__form-btn {
+  margin: 1rem 0;
+  text-transform: uppercase;
+  border-radius: 10px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  cursor: pointer;
+}
+
+.editProfile__form-btn:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+.editProfile__social-btn {
+  margin: 1rem 0;
+  text-transform: uppercase;
+  border-radius: 10px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d18fbb), to(#d18fbb));
+  background-image: linear-gradient(to right, #d18fbb, #d18fbb);
+  cursor: pointer;
+}
+
+.editProfile__social-btn:hover {
   -webkit-transform: scale(0.98);
           transform: scale(0.98);
 }

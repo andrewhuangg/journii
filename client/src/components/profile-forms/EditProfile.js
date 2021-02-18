@@ -37,6 +37,9 @@ const EditProfile = ({ history }) => {
       dispatch({ type: PROFILE_UPDATE_RESET });
       history.push(`/profiles`);
     }
+  }, [successUpdate]);
+
+  useEffect(() => {
     if (!profile.user || profile.user._id !== userInfo.id) {
       dispatch(getOwnProfileDetails());
     } else {
@@ -55,7 +58,7 @@ const EditProfile = ({ history }) => {
       setLinkedin(!profile.social || !profile.social.linkedin ? '' : profile.social.linkedin);
       setInstagram(!profile.social || !profile.social.instagram ? '' : profile.social.instagram);
     }
-  }, [dispatch, history, successUpdate, profile, userInfo.id]);
+  }, [dispatch, history, profile, userInfo.id]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -85,137 +88,122 @@ const EditProfile = ({ history }) => {
 
   return (
     <>
-      <Row>
-        <Col md={6}>
-          <h2>Update Profile</h2>
-          {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-          {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-          {successUpdate && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
-          {loading && <Spinner />}
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='username'>
-              <Form.Label>Username</Form.Label>
-              <Form.Control
+      <div className='editProfile'>
+        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
+        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
+        {successUpdate && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
+        {loading && <Spinner />}
+        <div className='editProfile__wrapper'>
+          <form className='editProfile__form' onSubmit={submitHandler}>
+            <h3>Update Profile</h3>
+            <div className='editProfile__form-control'>
+              <input
+                className='editProfile__form-input'
                 type='text'
-                placeholder='Username'
                 value={username}
+                placeholder='Username'
                 onChange={(e) => setUserName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='website'>
-              <Form.Label>Website</Form.Label>
-              <Form.Control
+              />
+            </div>
+            <div className='editProfile__form-control'>
+              <input
+                className='editProfile__form-input'
                 type='text'
-                placeholder='Website'
                 value={website}
+                placeholder='Website'
                 onChange={(e) => setWebsite(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='address'>
-              <Form.Label>Address</Form.Label>
-              <Form.Control
+              />
+            </div>
+            <div className='editProfile__form-control'>
+              <input
+                className='editProfile__form-input'
                 type='text'
-                placeholder='Address'
                 value={address}
+                placeholder='Address'
                 onChange={(e) => setAddress(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='github'>
-              <Form.Label>Github</Form.Label>
-              <Form.Control
+              />
+            </div>
+            <div className='editProfile__form-control'>
+              <input
+                className='editProfile__form-input'
                 type='text'
-                placeholder='Github Username'
                 value={github}
+                placeholder='Github Username'
                 onChange={(e) => setGithub(e.target.value)}
-              ></Form.Control>
-              <Form.Text id='githubHelpBlock' muted>
+              />
+              <small>
                 If you want your latest repos and a Github link, include your username. Your
                 username can be found here "github.com/YOUR_USERNAME"
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group controlId='bio'>
-              <Form.Label>Bio</Form.Label>
-              <Form.Control
-                placeholder='* A short bio of yourself'
+              </small>
+            </div>
+            <div className='editProfile__form-control'>
+              <textarea
+                className='editProfile__form-textarea'
+                type='text'
                 value={bio}
+                placeholder='Bio'
                 onChange={(e) => setBio(e.target.value)}
-              ></Form.Control>
-              <Form.Text id='bioHelpBlock' muted>
-                Tell us a bit about yourself
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group controlId='displaySocial'>
-              <Button onClick={() => toggleSocial(!displaySocial)}>
-                Update Social Network Links
-              </Button>
-              <Form.Label>Optional</Form.Label>
-            </Form.Group>
+              />
+              <small>Tell us a bit about yourself</small>
+            </div>
 
             {displaySocial && (
               <>
-                <Form.Group controlId='twitter'>
-                  <Form.Label>Twitter</Form.Label>
-                  <Form.Control
+                <div className='editProfile__form-control'>
+                  <input
+                    className='editProfile__form-input'
                     type='text'
-                    placeholder='Twitter URL'
                     value={twitter}
+                    placeholder='Twitter Url'
                     onChange={(e) => setTwitter(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId='facebook'>
-                  <Form.Label>Facebook</Form.Label>
-                  <Form.Control
+                  />
+                </div>
+                <div className='editProfile__form-control'>
+                  <input
+                    className='editProfile__form-input'
                     type='text'
-                    placeholder='Facebook URL'
                     value={facebook}
+                    placeholder='Facebook Url'
                     onChange={(e) => setFacebook(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId='youtube'>
-                  <Form.Label>Youtube</Form.Label>
-                  <Form.Control
+                  />
+                </div>
+                <div className='editProfile__form-control'>
+                  <input
+                    className='editProfile__form-input'
                     type='text'
-                    placeholder='YouTube URL'
                     value={youtube}
+                    placeholder='Youtube Url'
                     onChange={(e) => setYoutube(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId='linkedin'>
-                  <Form.Label>LinkedIn</Form.Label>
-                  <Form.Control
+                  />
+                </div>
+                <div className='editProfile__form-control'>
+                  <input
+                    className='editProfile__form-input'
                     type='text'
-                    placeholder='Linkedin URL'
                     value={linkedin}
+                    placeholder='LinkedIn Url'
                     onChange={(e) => setLinkedin(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId='instagram'>
-                  <Form.Label>Instagram</Form.Label>
-                  <Form.Control
+                  />
+                </div>
+                <div className='editProfile__form-control'>
+                  <input
+                    className='editProfile__form-input'
                     type='text'
-                    placeholder='Instagram URL'
                     value={instagram}
+                    placeholder='Instagram Url'
                     onChange={(e) => setInstagram(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
+                  />
+                </div>
               </>
             )}
-            <Button type='submit' variant='primary'>
-              Update
-            </Button>
-          </Form>
-          <Button onClick={(e) => history.push('/dashboard')}>Back to dashboard</Button>
-        </Col>
-      </Row>
+            <button className='editProfile__form-btn'>Update</button>
+          </form>
+          <button className='editProfile__social-btn' onClick={() => toggleSocial(!displaySocial)}>
+            Update Social
+          </button>
+          <label>Optional</label>
+        </div>
+      </div>
     </>
   );
 };

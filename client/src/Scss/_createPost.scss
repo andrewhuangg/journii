@@ -16,11 +16,9 @@
     padding: 1.25rem 2.5rem;
     border: 0;
     border-radius: 0.625rem;
-    width: 39rem;
     height: 100%;
 
     @include breakpoint-up(medium) {
-      width: 50rem;
       height: 50rem;
     }
   }
@@ -50,11 +48,11 @@
 
   &__form-control {
     margin: 0 0 2rem;
-    width: 36rem;
+    width: 30rem;
     padding: 0 0.5rem 0 0.5rem;
 
     @include breakpoint-up(medium) {
-      width: 45rem;
+      width: 40rem;
     }
   }
 

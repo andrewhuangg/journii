@@ -1,4 +1,4 @@
-.userProfile {
+.editProfile {
   @include breakpoint-up(medium) {
     display: flex;
     flex-direction: column;
@@ -22,28 +22,22 @@
     border-radius: 0.625rem;
     height: 100%;
 
-    @include breakpoint-up(medium) {
-      height: 45rem;
-      justify-content: center;
+    label {
+      font-size: $font-sm;
+      color: $pinkLemonade;
     }
   }
 
   &__form {
     width: 36rem;
-    height: 40rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column nowrap;
 
     h3 {
-      margin-top: 1rem;
-    }
-
-    h3,
-    small {
       margin-bottom: 2rem;
-      color: $dadJeansBlue;
+      color: $darkTurquoise;
     }
 
     @include breakpoint-up(medium) {
@@ -52,23 +46,25 @@
       margin-top: 0%;
     }
   }
+
   &__form-control {
-    margin: 0 0 2rem;
     width: 30rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    small {
+      font-size: 0.65rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: $pinkLemonade;
+    }
 
     @include breakpoint-up(medium) {
       width: 40rem;
     }
-  }
-
-  &__image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    border-radius: 50%;
-    height: 8rem;
-    width: 8rem;
-    margin-bottom: 2rem;
   }
 
   &__form-input {
@@ -77,7 +73,7 @@
     border: 0;
     border-bottom: 2px solid $dadJeansBlue;
     width: 100%;
-    padding: 0.9375rem 0;
+    padding: 0.5rem 0;
     font-size: $font-med;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -92,15 +88,30 @@
       box-shadow: none;
     }
   }
-  &__form-image-file {
+
+  &__form-textarea {
+    resize: none;
     width: 100%;
-    font-size: 0.75rem;
+    height: 10rem;
   }
+
   &__form-btn {
     margin: 1rem 0;
     text-transform: uppercase;
     border-radius: 10px;
-    background-image: linear-gradient(to right, $tangerine, $tangerine);
+    background-image: linear-gradient(to right, $dadJeansBlue, $dadJeansBlue);
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+
+  &__social-btn {
+    margin: 1rem 0;
+    text-transform: uppercase;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, $pinkLemonade, $pinkLemonade);
     cursor: pointer;
 
     &:hover {
