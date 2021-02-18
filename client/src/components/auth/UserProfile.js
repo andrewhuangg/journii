@@ -71,61 +71,64 @@ const UserProfile = ({ history }) => {
     }
   };
 
+  const unsplashURL = 'https://source.unsplash.com/collection/289662/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 900;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+  const randomDefaultImage = {
+    backgroundImage: `url(${user && user.image ? user.image : unsplashImage})`,
+  };
+
   return (
-    <Row>
-      <Col md={3}>
-        <h2 className='large text-primary'>User Info</h2>
-        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-        {success && <AlertMessage variant='success'>User Updated</AlertMessage>}
-        {loading && <Spinner />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='image'>
-            {image && <Image src={image} alt='image' fluid />}
-            <Form.Label>Image</Form.Label>
-            <Form.Control
-              type='text'
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            ></Form.Control>
-            <Form.File
-              id='image-file'
-              label='Choose File'
-              custom
-              onChange={uploadFileHandler}
-            ></Form.File>
-            {uploading && <Spinner />}
-          </Form.Group>
-
-          <Form.Group controlId='name'>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type='name'
-              placeholder='Enter Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId='email'>
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type='email'
-              placeholder='Enter email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Button type='submit' variant='primary'>
-            Update
-          </Button>
-        </Form>
-      </Col>
-      <Col md={9}>
-        <h2>Some info</h2>
-      </Col>
-    </Row>
+    <>
+      <div className='userProfile'>
+        <div className='userProfile__wrapper'>
+          <form className='userProfile__form' onSubmit={submitHandler}>
+            <h3>Personal</h3>
+            <small>* = required field</small>
+            {user.image && <div className='userProfile__image' style={randomDefaultImage}></div>}
+            <div className='userProfile__form-control'>
+              <input
+                className='userProfile__form-input'
+                type='text'
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              />
+              <input
+                className='userProfile__form-image-file'
+                id='image-file'
+                type='file'
+                onChange={uploadFileHandler}
+              />
+            </div>
+            <div className='userProfile__form-control'>
+              <input
+                className='userProfile__form-input'
+                placeholder='* Enter Name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className='userProfile__form-control'>
+              <input
+                className='userProfile__form-input'
+                placeholder='* Enter Email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <button className='userProfile__form-btn'>Update</button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 

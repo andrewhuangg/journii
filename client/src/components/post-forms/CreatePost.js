@@ -62,14 +62,31 @@ const CreatePost = ({ history }) => {
       dispatch(createPost({ text, title, image }));
     }
   };
+
+  const unsplashURL = 'https://source.unsplash.com/collection/289662/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 900;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+  const randomDefaultImage = {
+    backgroundImage: `url(${image ? image : unsplashImage})`,
+  };
+
   return (
     <>
       {userInfo ? (
         <div className='createPost'>
           <div className='createPost__wrapper'>
-            <h3>Share your thoughts...</h3>
             <form className='createPost__form' onSubmit={submitHandler}>
+              <h3>Share your thoughts...</h3>
               <small>* = required field</small>
+              {image && <div className='createPost__image' style={randomDefaultImage}></div>}
               <div className='createPost__form-control'>
                 <input
                   className='createPost__form-input'
