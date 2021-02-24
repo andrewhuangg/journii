@@ -24,6 +24,29 @@ exports.getLatestPosts = asyncHandler(async (req, res) => {
   res.status(200).json(posts);
 });
 
+// @desc      Get liked posts
+// @route     GET /api/v1/users/:userId/posts/likedposts
+// @access    Public
+exports.getLikedPosts = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  if (!userId) throw new Error(`user not found with the id of ${userId}`, 404);
+
+  const posts = await Post.find({ 'likes.user': userId });
+  return res.status(200).json(posts);
+});
+
+// @desc      Get all followed posts
+// @route     GET /api/v1/users/:userId/posts/followedposts
+// @access    Public
+
+exports.getFollowedPosts = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
+
+  const posts = await Post.find({ 'follows.user': userId });
+  return res.status(200).json(posts);
+});
+
 // @desc      Create post
 // @route     POST /api/v1/posts
 // @access    Private
@@ -324,24 +347,4 @@ exports.unfollowPost = asyncHandler(async (req, res) => {
   await post.save();
 
   res.status(200).json(post.follows);
-});
-
-// @desc      Get all followed posts
-// @route     GET /api/v1/users/:userId/posts/followedposts
-// @access    Public
-
-exports.getFollowedPosts = asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
-  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
-  const user = await User.findById(userId);
-  const posts = await Post.find();
-  const followedPosts = [];
-  posts.map((p) => {
-    p.follows.map((follow) => {
-      if (follow.user.toString() === user._id.toString()) {
-        followedPosts.push(p);
-      }
-    });
-  });
-  return res.status(200).json(followedPosts);
 });

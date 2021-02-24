@@ -1,0 +1,91 @@
+.dashboard {
+  &__main-content {
+    flex: 3;
+  }
+
+  a {
+    color: $darkBlue;
+  }
+
+  &__main-container {
+    margin: 0.75rem;
+    overflow-y: scroll;
+
+    h6 {
+      color: $pinkLemonade;
+      font-size: $font-lg;
+      padding: 0.25rem 0;
+    }
+  }
+
+  &__item {
+    margin-bottom: 2rem;
+    border-radius: 0.35rem;
+    overflow: hidden;
+    background-color: white;
+  }
+
+  &__image {
+    height: 15rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__text {
+    padding: 1rem;
+  }
+
+  &__author {
+    font-size: 0.625rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-size: $font-med;
+  }
+
+  &__stats {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 0.5rem 1rem;
+
+    .fa-heart {
+      font-size: 0.75rem;
+      color: $salmon;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    .fa-star {
+      font-size: 0.65rem;
+      color: $tangerine;
+    }
+
+    .rating {
+      padding-bottom: 0.4rem;
+    }
+
+    p {
+      font-size: 0.75rem;
+      color: $tangerine;
+    }
+  }
+
+  &__spacer {
+    display: block;
+    height: 0.25rem;
+    width: 0.25rem;
+    margin: 0 0.5rem;
+    background: $pastelGold;
+    border-radius: 50%;
+  }
+
+  &__date {
+    font-size: 0.65rem;
+    color: $darkTurquoise;
+  }
+}

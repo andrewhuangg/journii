@@ -1,0 +1,18 @@
+.dashboard {
+  display: flex;
+  background-color: hsl(0, 0%, 98%);
+
+  h6 {
+    margin: 0px;
+    width: 100%;
+    font-size: 1.125rem;
+    font-weight: 400;
+    padding: 0.5rem;
+    border-bottom: 1px solid $lightGray;
+    color: $dadJeansBlue;
+  }
+
+  p {
+    margin: 0px;
+  }
+}

@@ -28,23 +28,33 @@ import {
   PROFILE_DELETE_REQUEST,
   PROFILE_DELETE_SUCCESS,
   PROFILE_DELETE_FAIL,
+  PROFILE_LIST_FOLLOWED_REQUEST,
+  PROFILE_LIST_FOLLOWED_SUCCESS,
+  PROFILE_LIST_FOLLOWED_FAIL,
 } from './types';
 
-// export const getFollowedProfiles = () => async (dispatch) => {
-//   try {
-//     const res = await axios.get('/api/v1/profiles/followedprofiles');
+export const listFollowedProfiles = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_LIST_FOLLOWED_REQUEST,
+    });
 
-//     dispatch({
-//       type: GET_FOLLOWED_PROFILES,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     dispatch({
-//       type: PROFILE_ERROR,
-//       payload: err,
-//     });
-//   }
-// };
+    const { data } = await axios.get(`/api/v1/users/${userId}/profiles/followedprofiles`);
+
+    dispatch({
+      type: PROFILE_LIST_FOLLOWED_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_LIST_FOLLOWED_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
 
 export const getOwnProfileDetails = () => async (dispatch, getState) => {
   try {

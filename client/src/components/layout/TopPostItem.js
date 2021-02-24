@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const TopPostItem = ({ post: { _id, title, name, text, image } }) => {

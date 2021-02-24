@@ -227,20 +227,10 @@ exports.getGithubRepo = asyncHandler(async (req, res) => {
 
 exports.getFollowedProfiles = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
-  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
+  if (!userId) throw new Error(`user not found with the id of ${userId}`, 404);
 
-  const user = await User.findById(userId);
-  const profiles = await Profile.find();
-  const followedProfile = [];
-
-  profiles.map((p) => {
-    p.follows.map((follow) => {
-      if (follow.user.toString() === user._id.toString()) {
-        followedProfile.push(p);
-      }
-    });
-  });
-  return res.status(200).json(followedProfile);
+  const profiles = await Profile.find({ 'follows.user': userId });
+  return res.status(200).json(profiles);
 });
 
 // @desc      Follow a profile

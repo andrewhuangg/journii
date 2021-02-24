@@ -1,0 +1,70 @@
+.dashboard {
+  &__left {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: 50rem;
+
+    a {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: $darkBlue;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        height: 3px;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        background: linear-gradient(to right, $tangerine, $salmon);
+        opacity: 0;
+        transition: opacity 300ms ease-in-out;
+      }
+
+      &:hover {
+        color: $salmon;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__user-stats {
+    margin: 0.75rem;
+    background-color: white;
+    overflow-y: scroll;
+  }
+
+  &__post-following-container {
+    font-size: $font-sm;
+    padding: 0.5rem;
+  }
+
+  &__liked-container {
+    font-size: $font-sm;
+    padding: 0.5rem;
+
+    .fa-heart {
+      font-size: 0.75rem;
+      color: $salmon;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__follower-container {
+    font-size: $font-sm;
+    padding: 0.5rem;
+  }
+}

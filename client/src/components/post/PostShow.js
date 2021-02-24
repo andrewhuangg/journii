@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {
   listPostDetails,
   likePost,
@@ -8,7 +7,6 @@ import {
   followPost,
   unfollowPost,
   deletePost,
-  deletePostComment,
   deletePostReview,
 } from '../../actions/postAction';
 import { POST_DETAILS_RESET } from '../../actions/types';
@@ -106,11 +104,6 @@ const PostShow = ({ match, history }) => {
     dispatch(deletePost(id));
   };
 
-  const deleteCommentHandler = (postId, commentId) => {
-    if (errorCommentDelete) setMessage(errorCommentDelete);
-    dispatch(deletePostComment(postId, commentId));
-  };
-
   const deleteReviewHandler = (postId, reviewId) => {
     if (errorReviewDelete) setMessage(errorReviewDelete);
     dispatch(deletePostReview(postId, reviewId));
@@ -121,9 +114,9 @@ const PostShow = ({ match, history }) => {
   useEffect(() => {
     const nav = document.querySelector('#review__slider');
     const hamburger = document.querySelector('#hamburger');
-    const handler = (event) => {
+    const handler = (e) => {
       if (
-        !sliderRef.current.contains(event.target) &&
+        !sliderRef.current.contains(e.target) &&
         nav.classList.contains('review__slider--active')
       ) {
         setIsOpen(false);
@@ -178,7 +171,7 @@ const PostShow = ({ match, history }) => {
         userInfo={userInfo}
       />
       <CreateComment postId={post && post._id} />
-      <CommentList post={post} userInfo={userInfo} deleteCommentHandler={deleteCommentHandler} />
+      <CommentList post={post} userInfo={userInfo} />
     </>
   );
 };

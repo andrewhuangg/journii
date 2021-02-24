@@ -18,11 +18,14 @@ const {
   updatePost,
   getTopPosts,
   getLatestPosts,
+  getLikedPosts,
 } = require('../controllers/posts');
 
 const router = express.Router({ mergeParams: true });
-
+// merged routes
+router.route('/likedposts').get(getLikedPosts);
 router.route('/followedposts').get(getFollowedPosts);
+
 router.route('/top/:limit').get(getTopPosts);
 router.route('/latest/:limit').get(getLatestPosts);
 router.route('/like/:id').put(protect, likePost);

@@ -31,6 +31,9 @@ import {
   PROFILE_DELETE_REQUEST,
   PROFILE_DELETE_SUCCESS,
   PROFILE_DELETE_FAIL,
+  PROFILE_LIST_FOLLOWED_REQUEST,
+  PROFILE_LIST_FOLLOWED_SUCCESS,
+  PROFILE_LIST_FOLLOWED_FAIL,
 } from '../actions/types';
 
 export const profileCreateReducer = (state = {}, action) => {
@@ -185,6 +188,20 @@ export const profileGithubReducer = (state = { github: {} }, action) => {
     case PROFILE_LIST_GITHUB_SUCCESS:
       return { loading: false, github: payload, success: true };
     case PROFILE_LIST_GITHUB_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const profileListFollowingReducer = (state = { profiles: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PROFILE_LIST_FOLLOWED_REQUEST:
+      return { loading: true };
+    case PROFILE_LIST_FOLLOWED_SUCCESS:
+      return { loading: false, profiles: payload };
+    case PROFILE_LIST_FOLLOWED_FAIL:
       return { loading: false, error: payload };
     default:
       return state;

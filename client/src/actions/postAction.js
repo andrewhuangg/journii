@@ -39,7 +39,59 @@ import {
   POST_LATEST_REQUEST,
   POST_LATEST_SUCCESS,
   POST_LATEST_FAIL,
+  POST_LIST_LIKED_REQUEST,
+  POST_LIST_LIKED_SUCCESS,
+  POST_LIST_LIKED_FAIL,
+  POST_LIST_FOLLOWED_REQUEST,
+  POST_LIST_FOLLOWED_SUCCESS,
+  POST_LIST_FOLLOWED_FAIL,
 } from './types';
+
+export const listFollowedPosts = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_LIST_FOLLOWED_REQUEST,
+    });
+
+    const { data } = await axios.get(`/api/v1/users/${userId}/posts/followedposts`);
+
+    dispatch({
+      type: POST_LIST_FOLLOWED_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_LIST_FOLLOWED_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const listLikedPosts = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_LIST_LIKED_REQUEST,
+    });
+
+    const { data } = await axios.get(`/api/v1/users/${userId}/posts/likedposts`);
+
+    dispatch({
+      type: POST_LIST_LIKED_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_LIST_LIKED_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
 
 export const listLatestPosts = (limit) => async (dispatch) => {
   try {

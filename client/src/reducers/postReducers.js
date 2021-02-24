@@ -43,6 +43,12 @@ import {
   POST_LATEST_REQUEST,
   POST_LATEST_SUCCESS,
   POST_LATEST_FAIL,
+  POST_LIST_LIKED_REQUEST,
+  POST_LIST_LIKED_SUCCESS,
+  POST_LIST_LIKED_FAIL,
+  POST_LIST_FOLLOWED_REQUEST,
+  POST_LIST_FOLLOWED_SUCCESS,
+  POST_LIST_FOLLOWED_FAIL,
 } from '../actions/types';
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -225,6 +231,34 @@ export const postLatestReducer = (state = { posts: [] }, action) => {
     case POST_LATEST_SUCCESS:
       return { loading: false, posts: payload };
     case POST_LATEST_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const postListLikedReducer = (state = { posts: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case POST_LIST_LIKED_REQUEST:
+      return { loading: true, posts: [] };
+    case POST_LIST_LIKED_SUCCESS:
+      return { loading: false, posts: payload };
+    case POST_LIST_LIKED_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const postListFollowingReducer = (state = { posts: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case POST_LIST_FOLLOWED_REQUEST:
+      return { loading: true, posts: [] };
+    case POST_LIST_FOLLOWED_SUCCESS:
+      return { loading: false, posts: payload };
+    case POST_LIST_FOLLOWED_FAIL:
       return { loading: false, error: payload };
     default:
       return state;

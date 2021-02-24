@@ -9,6 +9,8 @@ import {
   postCommentReducer,
   postTopRatedReducer,
   postLatestReducer,
+  postListFollowingReducer,
+  postListLikedReducer,
 } from './postReducers';
 import {
   userLoginReducer,
@@ -25,6 +27,7 @@ import {
   profileListReducer,
   profileProjectReducer,
   profileUpdateReducer,
+  profileListFollowingReducer,
 } from './profileReducers';
 
 export default combineReducers({
@@ -41,6 +44,7 @@ export default combineReducers({
   profileExperience: profileExperienceReducer,
   profileProject: profileProjectReducer,
   profileGithub: profileGithubReducer,
+  profileListFollowing: profileListFollowingReducer,
 
   postCreate: postCreateReducer,
   postUpdate: postUpdateReducer,
@@ -51,4 +55,6 @@ export default combineReducers({
   postReview: postReviewReducer,
   postTopRated: postTopRatedReducer,
   postLatest: postLatestReducer,
+  postListFollowing: postListFollowingReducer,
+  postListLiked: postListLikedReducer,
 });

@@ -20,10 +20,12 @@ const {
 // mergeParams helps us merge url params
 const router = express.Router({ mergeParams: true });
 
+// route merged with /users/:userId/profiles/
+router.route('/followedprofiles').get(getFollowedProfiles);
+
 router.route('/experience').put(protect, createProfileExperience);
 router.route('/project').put(protect, createProfileProject);
 router.route('/me').get(protect, getOwnProfile);
-router.route('/followedprofiles').get(getFollowedProfiles);
 router.route('/experience/:experienceId').delete(protect, deleteProfileExperience);
 router.route('/project/:projectId').delete(protect, deleteProfileProject);
 router.route('/users/:userId').get(getProfile);

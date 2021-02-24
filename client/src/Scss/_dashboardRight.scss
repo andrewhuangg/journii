@@ -1,0 +1,53 @@
+.dashboard {
+  &__right {
+    flex: 1;
+    height: 30rem;
+  }
+
+  &__top-posts {
+    margin: 0.75rem;
+    background-color: white;
+    overflow-y: scroll;
+  }
+
+  &__post-container {
+    font-size: $font-sm;
+    padding: 0.5rem;
+
+    a {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: flex-start;
+      font-size: 0.875rem;
+      color: $darkBlue;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        height: 3px;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        background: linear-gradient(to right, $dadJeansBlue, $darkTurquoise);
+        opacity: 0;
+        transition: opacity 300ms ease-in-out;
+      }
+
+      &:hover {
+        color: $dadJeansBlue;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+
+    .fa-star {
+      font-size: 0.65rem;
+      color: $tangerine;
+    }
+  }
+}
