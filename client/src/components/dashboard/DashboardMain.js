@@ -7,7 +7,9 @@ const DashboardMain = ({ latestPosts }) => {
       <div className='dashboard__main-container'>
         <h6>Latest Posts</h6>
         {latestPosts.map((latestPost) => (
-          <LatestPostItem post={latestPost} />
+          <div key={latestPost._id}>
+            <LatestPostItem post={latestPost} />
+          </div>
         ))}
       </div>
     </section>

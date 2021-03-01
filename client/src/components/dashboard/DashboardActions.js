@@ -11,3 +11,5 @@ const DashboardActions = () => {
 };
 
 export default DashboardActions;
+
+// add navbar options here

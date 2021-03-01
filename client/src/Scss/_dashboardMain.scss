@@ -3,10 +3,6 @@
     flex: 3;
   }
 
-  a {
-    color: $darkBlue;
-  }
-
   &__main-container {
     margin: 0.75rem;
     overflow-y: scroll;
@@ -16,6 +12,10 @@
       font-size: $font-lg;
       padding: 0.25rem 0;
     }
+
+    a {
+      color: $darkBlue;
+    }
   }
 
   &__item {
@@ -23,6 +23,9 @@
     border-radius: 0.35rem;
     overflow: hidden;
     background-color: white;
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 
   &__image {

@@ -22,7 +22,7 @@ const LatestPostItem = ({
   };
 
   return (
-    <Link>
+    <Link to={`posts/${_id}`}>
       <div className='dashboard__item'>
         <div className='dashboard__image' style={randomDefaultImage} />
         <div className='dashboard__text'>
@@ -35,13 +35,13 @@ const LatestPostItem = ({
             {likes.length}
           </i>
           <span className='dashboard__spacer' />
-          <Moment format='MM/DD/YYYY' className='dashboard__date'>
-            {createdAt}
-          </Moment>
-          <span className='dashboard__spacer' />
           <Rating value={rating} />
           &nbsp;
           <p>({reviews.length})</p>
+          <span className='dashboard__spacer' />
+          <Moment format='MM/DD/YYYY' className='dashboard__date'>
+            {createdAt}
+          </Moment>
         </div>
       </div>
     </Link>

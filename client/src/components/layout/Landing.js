@@ -11,6 +11,7 @@ import Spinner from './Spinner';
 import AlertMessage from './AlertMessage';
 import Meta from './Meta';
 import TopPostItem from './TopPostItem';
+import QuoteGenerator from './QuoteGenerator';
 
 const Landing = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,9 @@ const Landing = () => {
         </div>
         <div className='showcase__content'>
           <h1>journii</h1>
-          <p>It never stops.</p> {/* quote generator here. */}
+          <QuoteGenerator />
+          {/* <p>It never stops.</p>  */}
+          {/* quote generator here. */}
           {!userInfo && (
             <div className='showcase__cta'>
               <Link to='/register' className='button'>

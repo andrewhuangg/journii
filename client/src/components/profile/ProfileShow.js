@@ -39,9 +39,7 @@ const ProfileShow = ({ match, history }) => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    if (!profile.user || profile.user._id !== match.params.id) {
-      dispatch(getProfileDetails(match.params.id));
-    }
+    dispatch(getProfileDetails(match.params.id));
     if (successDelete) {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');

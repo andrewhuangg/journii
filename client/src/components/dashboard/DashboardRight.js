@@ -8,8 +8,8 @@ const DashboardRight = ({ topPosts }) => {
       <div className='dashboard__top-posts'>
         <h6>Top Posts</h6>
         {topPosts.map((post) => (
-          <div className='dashboard__post-container'>
-            <Link>
+          <div className='dashboard__post-container' key={post._id}>
+            <Link to={`posts/${post._id}`}>
               <p>{post.title}</p>
               <Rating value={post.rating} />
             </Link>
