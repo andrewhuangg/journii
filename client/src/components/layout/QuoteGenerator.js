@@ -1,21 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { listQuotes } from '../../actions/quoteAction';
+import useInterval from '../customHooks/useInterval';
 
 const QuoteGenerator = () => {
+  const dispatch = useDispatch();
+  const quoteList = useSelector((state) => state.quoteList);
+  const { loading, error, quotes } = quoteList;
+  const [delay, setDelay] = useState(10000); //matches quote__bar animation grow time 10s
+
+  useEffect(() => {
+    dispatch(listQuotes());
+  }, [dispatch]);
+
+  useInterval(() => {
+    generateRandomQuote(quotes.length);
+  }, [delay]);
+
+  const generateRandomQuote = (idx) => {
+    const quoteText = document.querySelector('.quote__text');
+    const quoteAuthor = document.querySelector('.quote__author');
+    const randomNumber = Math.floor(Math.random() * Math.floor(idx));
+
+    const { quote, author } = quotes[randomNumber];
+    quoteText.innerHTML = quote;
+    quoteAuthor.innerHTML = '-' + author;
+  };
+
   return (
     <>
       <div className='quote container'>
         <div className='fas fa-quote-right fa-quote'></div>
         <div className='fas fa-quote-left fa-quote'></div>
-        <p className='quote__text'>
-          It is a long established fact that a reader will be distracted by the readable content of
-          a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-          more-or-less normal distribution of letters, as opposed to using 'Content here, content
-          here', making it look like readable English. Many desktop publishing packages and web page
-          editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
-          will uncover many web sites still in their infancy. Various versions have evolved over the
-          years, sometimes by accident, sometimes on purpose (injected humour and the like).
-        </p>
-        <div className='quote__bar'></div>
+        <div className='quote__body'>
+          <div className='quote__text'>{quotes.length && quotes[0].quote}</div>
+          <div className='quote__author'>-{quotes.length && quotes[0].author}</div>
+          <div className='quote__bar'></div>
+        </div>
       </div>
     </>
   );

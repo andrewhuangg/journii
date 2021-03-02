@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { QUOTE_LIST_REQUEST, QUOTE_LIST_SUCCESS, QUOTE_LIST_FAIL } from '.types';
+import { QUOTE_LIST_REQUEST, QUOTE_LIST_SUCCESS, QUOTE_LIST_FAIL } from './types';
 
 export const listQuotes = () => async (dispatch) => {
   try {

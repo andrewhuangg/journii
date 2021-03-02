@@ -579,6 +579,16 @@ button:hover::before,
 .showcase__content {
   z-index: 1;
   color: #edd0ab;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .showcase__content h1 {
@@ -4443,7 +4453,7 @@ button:hover::before,
 
 @media (min-width: 64em) {
   .quote {
-    width: 50rem;
+    width: 40rem;
   }
 }
 
@@ -4459,7 +4469,7 @@ button:hover::before,
 
 @media (min-width: 64em) {
   .quote .fa-quote-right {
-    left: 51rem;
+    left: 41rem;
   }
 }
 
@@ -4469,18 +4479,22 @@ button:hover::before,
 
 @media (min-width: 64em) {
   .quote .fa-quote-left {
-    right: 51rem;
+    right: 41rem;
   }
 }
 
-.quote p {
+.quote__body {
   line-height: 1.25;
   font-size: 0.875rem;
 }
 
+.quote__author, .quote__text, .quote__bar {
+  margin-bottom: 1rem;
+}
+
 .quote__bar {
-  width: 100%;
   height: 2px;
+  width: 100%;
   -webkit-animation: grow 10s linear infinite;
           animation: grow 10s linear infinite;
   -webkit-transform-origin: left;

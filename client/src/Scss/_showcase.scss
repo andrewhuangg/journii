@@ -37,6 +37,9 @@
   &__content {
     z-index: 1;
     color: $pastelGold;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 
     h1 {
       font-size: 3.125rem;
