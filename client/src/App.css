@@ -607,7 +607,8 @@ button:hover::before,
 }
 
 .showcase__cta a {
-  width: 6.875rem;
+  width: 6rem;
+  padding: 0.6rem;
   background-image: -webkit-gradient(linear, left top, right top, from(#829b97), to(#829b97));
   background-image: linear-gradient(to right, #829b97, #829b97);
 }
