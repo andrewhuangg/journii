@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const Quote = require('../models/Quote');
 
+/* PERSONAL USE ONLY - NO ACCESS FOR FRONTEND */
+
 // @desc      Get all quotes
 // @route     GET /api/v1/quotes
 // @access    Public

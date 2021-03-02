@@ -29,8 +29,11 @@ import {
   profileUpdateReducer,
   profileListFollowingReducer,
 } from './profileReducers';
+import { quoteListReducer } from './quoteReducer';
 
 export default combineReducers({
+  quoteList: quoteListReducer,
+
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
