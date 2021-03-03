@@ -1,6 +1,7 @@
 .quote {
   width: 35rem;
   position: relative;
+  margin-bottom: 0.5rem;
 
   @include breakpoint-up(large) {
     width: 40rem;

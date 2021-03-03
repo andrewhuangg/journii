@@ -26,11 +26,16 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom center;
-    min-height: 56.5rem;
+    min-height: 40rem;
   }
 
   &__text {
     text-align: center;
+
+    h1 {
+      color: $darkTurquoise;
+      font-size: 2.5rem;
+    }
 
     @include breakpoint-up(large) {
       flex: 2;
@@ -46,8 +51,21 @@
     }
 
     a {
-      font-size: 1.5625rem;
+      margin-top: 1rem;
+      padding: 0.5rem, 0.65rem;
+      font-size: $font-med;
       background: linear-gradient(to right, $pastelGold, $sand);
+    }
+  }
+
+  &__message {
+    display: flex;
+    flex-flow: column nowrap;
+    font-size: $font-med;
+
+    p {
+      margin: 0;
+      margin-bottom: 1rem;
     }
   }
 }

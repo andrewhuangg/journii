@@ -7,6 +7,11 @@
 
   &__intro {
     margin-bottom: 3.75rem;
+
+    h2 {
+      color: $darkTurquoise;
+    }
+
     @include breakpoint-up(large) {
       width: 60%;
     }
@@ -57,7 +62,8 @@
     font-size: 1.25rem;
     font-weight: 300;
     line-height: 1.15;
-    color: $darkBlue;
+    color: $pinkLemonade;
+    margin-bottom: 1rem;
 
     @include breakpoint-up(large) {
       font-size: 1.5rem;
@@ -68,5 +74,6 @@
   &__description {
     font-size: 0.875rem;
     line-height: 1.5;
+    color: $darkBlue;
   }
 }

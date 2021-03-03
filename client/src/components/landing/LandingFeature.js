@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReactComponent as CommunitySvg } from '../../svgs/community.svg';
-import { ReactComponent as GrowthSvg } from '../../svgs/growth.svg';
-import { ReactComponent as ContributionSvg } from '../../svgs/contribution.svg';
-import { ReactComponent as ReflectionSvg } from '../../svgs/reflection.svg';
+import { ReactComponent as CommunitySvg } from '../../images/community.svg';
+import { ReactComponent as GrowthSvg } from '../../images/growth.svg';
+import { ReactComponent as ContributionSvg } from '../../images/contribution.svg';
+import { ReactComponent as ReflectionSvg } from '../../images/reflection.svg';
 
 const LandingFeature = () => {
   return (
@@ -11,8 +11,8 @@ const LandingFeature = () => {
         <div className='feature__intro'>
           <h2>What is journii?</h2>
           <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua."
+            journii is an online community for networking, sharing and exploring ideas, and making
+            life-long friends.
           </p>
         </div>
 
@@ -23,9 +23,8 @@ const LandingFeature = () => {
             </div>
             <div className='feature__title'>Growth and Progress</div>
             <div className='feature__description'>
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-              architecto beatae vitae dicta sunt explicabo."
+              Track your ideas by writing and sharing your posts. Update them often so your peers
+              can follow along your journii.
             </div>
           </div>
 
@@ -35,9 +34,8 @@ const LandingFeature = () => {
             </div>
             <div className='feature__title'>Contribution</div>
             <div className='feature__description'>
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-              architecto beatae vitae dicta sunt explicabo."
+              Like and comment on posts that you've enjoyed reading. Give the post a review and help
+              the author grow.
             </div>
           </div>
 
@@ -47,9 +45,8 @@ const LandingFeature = () => {
             </div>
             <div className='feature__title'>Reflection</div>
             <div className='feature__description'>
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-              architecto beatae vitae dicta sunt explicabo."
+              Comb through the reviews on your post. Follow the conversations and reply to your
+              peers.
             </div>
           </div>
 
@@ -59,9 +56,8 @@ const LandingFeature = () => {
             </div>
             <div className='feature__title'>Community</div>
             <div className='feature__description'>
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-              architecto beatae vitae dicta sunt explicabo."
+              Follow your peers and their posts. Check their profiles out, and network. Their
+              journii and yours, is just beginning.
             </div>
           </div>
         </div>

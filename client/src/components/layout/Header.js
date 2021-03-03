@@ -5,9 +5,8 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../actions/authAction';
 import { getUserDetails } from '../../actions/authAction';
 import { getOwnProfileDetails } from '../../actions/profileAction';
-import { ReactComponent as LogoSvg } from '../../svgs/logo.svg';
+import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import SearchBox from './SearchBox';
-import SliderMenu from './SliderMenu';
 
 const Header = ({ history }) => {
   const dispatch = useDispatch();
@@ -121,43 +120,48 @@ const Header = ({ history }) => {
   return (
     <>
       <header className='header'>
-        <div className='overlay has-fade mobile-has-fade'></div>
-
-        <nav className='container container--pall flex flex-jc-sb flex-ai-c'>
-          <Link to='/' className='header__logo'>
-            <LogoSvg />
-          </Link>
-
-          {/* Hamburger button */}
-          <a className='header__toggle hide-for-desktop' onClick={mobileHamburger}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-
-          <Route render={({ history }) => <SearchBox history={history} />} />
-
-          <div className='header__links hide-for-mobile'>{headerLinks}</div>
-          {userInfo && (
-            <Link to='/createpost' className='button header__cta hide-for-mobile'>
-              Create Post
+        <nav className='header__nav container'>
+          <div className='header__logo-container'>
+            <Link to='/' className='header__logo'>
+              <LogoSvg />
             </Link>
-          )}
-
-          {/* Hamburger button */}
-          <a className='header__toggle hide-for-mobile' onClick={openSliderMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
+          </div>
+          <Route render={({ history }) => <SearchBox history={history} />} />
         </nav>
-
-        <SliderMenu menuLinks={menuLinks} logoutHandler={logoutHandler} userInfo={userInfo} />
-
-        <div className='header__mobile-menu mobile-has-fade'>{headerLinks}</div>
       </header>
     </>
   );
 };
 
 export default Header;
+
+// {/* <div className='overlay has-fade mobile-has-fade'></div>
+
+//         <nav className='container container--pall flex flex-jc-sb flex-ai-c'>
+//           {/* Hamburger button */}
+//           <a className='header__toggle hide-for-desktop' onClick={mobileHamburger}>
+//             <span></span>
+//             <span></span>
+//             <span></span>
+//           </a>
+
+//           <Route render={({ history }) => <SearchBox history={history} />} />
+
+//           <div className='header__links hide-for-mobile'>{headerLinks}</div>
+//           {userInfo && (
+//             <Link to='/createpost' className='button header__cta hide-for-mobile'>
+//               Create Post
+//             </Link>
+//           )}
+
+//           {/* Hamburger button */}
+//           <a className='header__toggle hide-for-mobile' onClick={openSliderMenu}>
+//             <span></span>
+//             <span></span>
+//             <span></span>
+//           </a>
+//         </nav>
+
+//         <SliderMenu menuLinks={menuLinks} logoutHandler={logoutHandler} userInfo={userInfo} />
+
+//         <div className='header__mobile-menu mobile-has-fade'>{headerLinks}</div> */}

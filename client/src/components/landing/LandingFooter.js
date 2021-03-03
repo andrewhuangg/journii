@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as LogoSvg } from '../../svgs/logo.svg';
+import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 
 const LandingFooter = () => {

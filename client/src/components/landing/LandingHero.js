@@ -7,18 +7,16 @@ const LandingHero = () => {
       <div className='container'>
         <div className='hero__image flex flex-jc-c flex-ai-c'></div>
         <div className='hero__text container--pall'>
-          <h1>Some title</h1>
-          <p>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum."
-            {/*  quote generator here.*/}
-          </p>
-
-          <Link to='#' className='button hero__cta'>
+          <h1>Welcome</h1>
+          <div className='hero__message'>
+            <p>You've taken the first step by visiting this page.</p>
+            <p>
+              You're about to be immersed into a whole other world of knowledge, surrounded by
+              like-minded individuals in search of community, growth, and friendship.
+            </p>
+            <p>We thank you for allowing us to join your journii.</p>
+          </div>
+          <Link to='/register' className='button hero__cta'>
             Lets get started
           </Link>
         </div>
