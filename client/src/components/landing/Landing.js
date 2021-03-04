@@ -33,7 +33,7 @@ const Landing = () => {
 
       <LandingFeature />
 
-      <LandingPosts posts={posts} />
+      <LandingPosts posts={posts} userInfo={userInfo} />
 
       <LandingFooter />
     </>

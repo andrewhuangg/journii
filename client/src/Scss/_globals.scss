@@ -68,26 +68,6 @@ a:hover {
   text-decoration: none;
 }
 
-.flex {
-  display: flex;
-
-  &-jc-fs {
-    justify-content: flex-start;
-  }
-
-  &-jc-sb {
-    justify-content: space-between;
-  }
-
-  &-jc-c {
-    justify-content: center;
-  }
-
-  &-ai-c {
-    align-items: center;
-  }
-}
-
 ul,
 li {
   padding: 0;

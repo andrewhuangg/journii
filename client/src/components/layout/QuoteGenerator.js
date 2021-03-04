@@ -7,7 +7,7 @@ const QuoteGenerator = () => {
   const dispatch = useDispatch();
   const quoteList = useSelector((state) => state.quoteList);
   const { loading, error, quotes } = quoteList;
-  const [delay, setDelay] = useState(10000); //matches quote__bar animation grow time 10s
+  const [delay, setDelay] = useState(8000); //matches quote__bar animation grow time 10s
 
   useEffect(() => {
     dispatch(listQuotes());

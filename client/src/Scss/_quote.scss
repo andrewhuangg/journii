@@ -43,7 +43,8 @@
   &__bar {
     height: 2px;
     width: 100%;
-    animation: grow 10s linear infinite;
+    opacity: 0.75;
+    animation: grow 8s linear infinite;
     transform-origin: left;
     background-color: $pastelGold;
 

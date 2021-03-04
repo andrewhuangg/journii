@@ -19,7 +19,7 @@ const LandingShowcase = ({ userInfo }) => {
         {!userInfo && (
           <div className='showcase__cta'>
             <Link to='/register' className='button'>
-              register
+              signup
             </Link>
             <Link to='/login' className='button'>
               login

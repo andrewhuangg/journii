@@ -1,13 +1,11 @@
 // Abstracts
 @import 'scss/variables';
 @import 'scss/mixins';
-@import 'scss/animations';
 
 // Base
 @import 'scss/globals';
 
 // Components
-@import 'scss/sliderMenu';
 @import 'scss/header';
 @import 'scss/showcase';
 @import 'scss/hero';
@@ -32,7 +30,6 @@
 @import 'scss/createPost';
 @import 'scss/userProfile';
 @import 'scss/editProfile';
-@import 'scss/modal';
 @import 'scss/dashboard';
 @import 'scss/dashboardLeft';
 @import 'scss/dashboardRight';

@@ -1,6 +1,36 @@
 .search {
+  position: relative;
+
   &__input {
+    padding: 0.5rem;
+    border: 0;
+    width: 2rem;
+    transition: width 0.3s ease;
   }
+
   &__btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.475rem 0.7rem;
+    border-radius: 0.9rem;
+    background-image: linear-gradient(to right, $tangerine, $sunsetOrange);
+    transition: transform 0.3s ease;
+  }
+
+  &__input:focus,
+  &__btn:focus {
+    outline: none;
+  }
+
+  &.active {
+    input {
+      width: 15rem;
+      border: 1px solid $lightGray;
+      border-radius: 1rem;
+    }
+    button {
+      transform: translateX(15rem);
+    }
   }
 }

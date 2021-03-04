@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const TopPostItem = ({ post: { _id, title, name, text, image } }) => {
+const TopPostItem = ({ post: { _id, title, name, text, image }, userInfo }) => {
   const unsplashURL = 'https://source.unsplash.com/collection/1911873/';
 
   const getRandomNumber = () => {
@@ -18,7 +18,7 @@ const TopPostItem = ({ post: { _id, title, name, text, image } }) => {
   };
 
   return (
-    <Link to={`posts/${_id}`}>
+    <Link to={userInfo ? `posts/${_id}` : '/'}>
       <div className='post__item'>
         <div className='post__image' style={randomDefaultImage}></div>
         <div className='post__text'>
