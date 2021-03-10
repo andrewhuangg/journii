@@ -139,6 +139,9 @@ const PostShow = ({ match, history }) => {
       setIsOpen((isOpen) => !isOpen);
       nav.classList.add('review__slider--active');
       hamburger.classList.add('hamburger--active');
+    } else {
+      nav.classList.remove('review__slider--active');
+      hamburger.classList.remove('hamburger--active');
     }
   };
 
@@ -153,7 +156,6 @@ const PostShow = ({ match, history }) => {
         deleteReviewHandler={deleteReviewHandler}
         userInfo={userInfo}
         sliderRef={sliderRef}
-        isOpen={isOpen}
       />
       <PostHero
         post={post}
@@ -162,7 +164,6 @@ const PostShow = ({ match, history }) => {
         userInfo={userInfo}
         postFollowHandler={postFollowHandler}
         postUnfollowHandler={postUnfollowHandler}
-        isOpen={isOpen}
       />
       <PostFeature
         post={post}

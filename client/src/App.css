@@ -2345,7 +2345,7 @@ button:hover::before,
 }
 
 .review-btn {
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   background-image: -webkit-gradient(linear, left top, right top, from(#edd0ab), to(#edd0ab));
   background-image: linear-gradient(to right, #edd0ab, #edd0ab);
   margin-right: 1rem;
@@ -2394,13 +2394,26 @@ button:hover::before,
   outline: 0.01px solid #e97272;
 }
 
-.hamburger::before, .hamburger::after {
+.hamburger::before {
   content: '';
   height: 1.25rem;
   margin: -3px;
   border-left: 1px solid #ed4545;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.hamburger::after {
+  content: '';
+  height: 1.25rem;
+  margin: -3px;
+  border-left: 1px solid #ed4545;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
   transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
@@ -2408,11 +2421,13 @@ button:hover::before,
 }
 
 .hamburger--active::after {
+  content: '';
   -webkit-transform: rotate(135deg);
           transform: rotate(135deg);
 }
 
 .hamburger--active::before {
+  content: '';
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
@@ -2435,8 +2450,8 @@ button:hover::before,
   background-color: white;
   -webkit-transform: translateX(-105%);
           transform: translateX(-105%);
-  -webkit-transition: 300ms ease-in-out;
-  transition: 300ms ease-in-out;
+  -webkit-transition: 600ms ease-in-out;
+  transition: 600ms ease-in-out;
   z-index: 5;
 }
 
@@ -4354,5 +4369,43 @@ button:hover::before,
 .search.active button {
   -webkit-transform: translateX(15rem);
           transform: translateX(15rem);
+}
+
+.menu__btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+  background-image: -webkit-gradient(linear, left top, right top, from(#e97272), to(#d18fbb));
+  background-image: linear-gradient(to right, #e97272, #d18fbb);
+  -webkit-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
+}
+
+.menu__btn:hover {
+  opacity: 0.75;
+  scale: 0.9;
+}
+
+.menu__slider {
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 20rem;
+  position: fixed;
+  overflow-y: auto;
+  background-color: white;
+  -webkit-box-shadow: -5px 0px 0.1px 0.1px rgba(10, 243, 204, 0.926);
+          box-shadow: -5px 0px 0.1px 0.1px rgba(10, 243, 204, 0.926);
+  -webkit-transform: translateX(105%);
+          transform: translateX(105%);
+  -webkit-transition: 300ms ease-in-out;
+  transition: 300ms ease-in-out;
+  z-index: 5;
+}
+
+.menu__slider--active {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
 }
 /*# sourceMappingURL=App.css.map */

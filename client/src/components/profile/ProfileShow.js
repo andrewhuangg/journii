@@ -4,7 +4,6 @@ import { PROFILE_DETAILS_RESET } from '../../actions/types';
 import {
   followProfile,
   unfollowProfile,
-  // getFollowedProfiles,
   getProfileDetails,
   deleteProfile,
 } from '../../actions/profileAction';
@@ -36,10 +35,18 @@ const ProfileShow = ({ match, history }) => {
   const profileDelete = useSelector((state) => state.profileDelete);
   const { error: errorDelete, loading: loadingDelete, success: successDelete } = profileDelete;
 
+  const profileExperience = useSelector((state) => state.profileExperience);
+  const { success: successExperience } = profileExperience;
+
+  const profileProject = useSelector((state) => state.profileProject);
+  const { success: successProject } = profileProject;
+
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    dispatch(getProfileDetails(match.params.id));
+    if (!profile || !profile.user || profile.user._id !== match.params.id) {
+      dispatch(getProfileDetails(match.params.id));
+    }
     if (successDelete) {
       dispatch({ type: PROFILE_DETAILS_RESET });
       history.push('/profiles');
@@ -47,10 +54,10 @@ const ProfileShow = ({ match, history }) => {
   }, [dispatch, match, history, profile, successDelete]);
 
   useEffect(() => {
-    if (!user) {
-      dispatch(getUserDetails(match.params.id));
+    if (successExperience || successProject) {
+      dispatch(getProfileDetails(match.params.id));
     }
-  }, [dispatch, match, user]);
+  }, [dispatch, match, successExperience, successProject]);
 
   const profileFollowHandler = (profile, id) => {
     if (errorFollows) setMessage(errorFollows);

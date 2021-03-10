@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
   postListReducer,
+  postListOwnReducer,
   postDetailsReducer,
   postCreateReducer,
   postUpdateReducer,
@@ -53,6 +54,7 @@ export default combineReducers({
   postUpdate: postUpdateReducer,
   postDelete: postDeleteReducer,
   postList: postListReducer,
+  postOwnList: postListOwnReducer,
   postDetails: postDetailsReducer,
   postComment: postCommentReducer,
   postReview: postReviewReducer,

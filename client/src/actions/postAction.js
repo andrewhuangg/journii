@@ -45,6 +45,9 @@ import {
   POST_LIST_FOLLOWED_REQUEST,
   POST_LIST_FOLLOWED_SUCCESS,
   POST_LIST_FOLLOWED_FAIL,
+  POST_LIST_OWN_REQUEST,
+  POST_LIST_OWN_SUCCESS,
+  POST_LIST_OWN_FAIL,
 } from './types';
 
 export const listFollowedPosts = (userId) => async (dispatch) => {
@@ -148,6 +151,27 @@ export const listPosts = (keyword = '', pageNumber = '') => async (dispatch) => 
   } catch (error) {
     dispatch({
       type: POST_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.split(',').join(' ')
+          : error.message,
+    });
+  }
+};
+
+export const listOwnPosts = (userId) => async (dispatch) => {
+  try {
+    dispatch({ type: POST_LIST_OWN_REQUEST });
+
+    const { data } = await axios.get(`/api/v1/posts/users/${userId}`);
+
+    dispatch({
+      type: POST_LIST_OWN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_LIST_OWN_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message.split(',').join(' ')

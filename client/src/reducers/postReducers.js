@@ -49,6 +49,10 @@ import {
   POST_LIST_FOLLOWED_REQUEST,
   POST_LIST_FOLLOWED_SUCCESS,
   POST_LIST_FOLLOWED_FAIL,
+  POST_LIST_OWN_REQUEST,
+  POST_LIST_OWN_SUCCESS,
+  POST_LIST_OWN_FAIL,
+  POST_LIST_OWN_RESET,
 } from '../actions/types';
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -61,6 +65,22 @@ export const postListReducer = (state = { posts: [] }, action) => {
     case POST_LIST_FAIL:
       return { loading: false, error: payload };
     case POST_LIST_RESET:
+      return { post: [] };
+    default:
+      return state;
+  }
+};
+
+export const postListOwnReducer = (state = { posts: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case POST_LIST_OWN_REQUEST:
+      return { loading: true, posts: [] };
+    case POST_LIST_OWN_SUCCESS:
+      return { loading: false, posts: payload.posts, pages: payload.pages, page: payload.page };
+    case POST_LIST_OWN_FAIL:
+      return { loading: false, error: payload };
+    case POST_LIST_OWN_RESET:
       return { post: [] };
     default:
       return state;

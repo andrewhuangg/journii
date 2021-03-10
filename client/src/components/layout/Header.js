@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -7,28 +7,45 @@ import { getUserDetails } from '../../actions/authAction';
 import { getOwnProfileDetails } from '../../actions/profileAction';
 import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import SearchBox from './SearchBox';
+import MenuSlider from './MenuSlider';
 
 const Header = ({ history }) => {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userDetails = useSelector((state) => state.userDetails);
-  const { user } = userDetails;
-
   const profileCreate = useSelector((state) => state.profileCreate);
   const { success: successCreate, profileInfo } = profileCreate;
 
+  const menuRef = useRef(null);
+
   useEffect(() => {
-    // if (userInfo && (!user || !user._id)) {
-    //   dispatch(getUserDetails('me'));
-    // }
-    if (successCreate) {
-      dispatch(getOwnProfileDetails());
+    const nav = document.querySelector('#menu__slider');
+    const handler = (e) => {
+      if (!menuRef.current.contains(e.target) && nav.classList.contains('menu__slider--active')) {
+        setIsOpen(false);
+        nav.classList.remove('menu__slider--active');
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
+  const handleMenuSlider = () => {
+    const nav = document.querySelector('#menu__slider');
+    if (!nav.classList.contains('menu__slider--active')) {
+      setIsOpen((isOpen) => !isOpen);
+      nav.classList.add('menu__slider--active');
+    } else {
+      nav.classList.remove('menu__slider--active');
     }
-    // }, [dispatch, user, userInfo, successCreate, profileInfo, history]);
-  }, [dispatch, successCreate, history]);
+  };
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -45,13 +62,6 @@ const Header = ({ history }) => {
       <li>
         <Link to={'/profiles'}>Profiles</Link>
       </li>
-      {userInfo && (
-        <li>
-          <Link to='#' onClick={logoutHandler}>
-            logout
-          </Link>
-        </li>
-      )}
     </ul>
   );
 
@@ -70,7 +80,8 @@ const Header = ({ history }) => {
   );
 
   return (
-    <ul>
+    <>
+      <MenuSlider menuRef={menuRef} logoutHandler={logoutHandler} userInfo={userInfo} />
       <header className='header'>
         <nav className='header__nav container'>
           <div className='header__logo-container'>
@@ -86,6 +97,9 @@ const Header = ({ history }) => {
                 <Link to='/createpost' className='header__post-btn hide-for-mobile'>
                   Create Post
                 </Link>
+                <button onClick={handleMenuSlider} className='menu__btn'>
+                  menu
+                </button>
               </>
             ) : (
               <>{authLinks}</>
@@ -98,7 +112,7 @@ const Header = ({ history }) => {
           </div>
         </nav>
       </header>
-    </ul>
+    </>
   );
 };
 

@@ -340,7 +340,7 @@ export const deleteProject = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`/api/v1/profiles/projects/${id}`, config);
+    const { data } = await axios.delete(`/api/v1/profiles/project/${id}`, config);
 
     dispatch({
       type: PROFILE_UPDATE_PROJECTS_SUCCESS,

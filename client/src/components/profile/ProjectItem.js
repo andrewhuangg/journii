@@ -7,6 +7,7 @@ const ProjectItem = ({
   proj: { name, description, technologies, features, from, to, website, _id },
   currentUserId,
   profileOwner,
+  proj,
 }) => {
   return (
     <>

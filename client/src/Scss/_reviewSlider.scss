@@ -1,5 +1,5 @@
 .review-btn {
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   background-image: linear-gradient(to right, $pastelGold, $pastelGold);
   margin-right: 1rem;
   padding: 0.5rem 0.75rem;
@@ -32,21 +32,30 @@
     outline: 0.01px solid $salmon;
   }
 
-  &::before,
+  &::before {
+    content: '';
+    height: 1.25rem;
+    margin: -3px;
+    border-left: 1px solid hsl(0, 82%, 60%);
+    transform: rotate(135deg);
+    transition: transform 0.3s ease-in-out;
+  }
   &::after {
     content: '';
     height: 1.25rem;
     margin: -3px;
     border-left: 1px solid hsl(0, 82%, 60%);
-    transform: rotate(90deg);
+    transform: rotate(45deg);
     transition: transform 0.3s ease-in-out;
   }
 }
 
 .hamburger--active::after {
+  content: '';
   transform: rotate(135deg);
 }
 .hamburger--active::before {
+  content: '';
   transform: rotate(45deg);
 }
 
@@ -63,7 +72,7 @@
   box-shadow: 5px 0px 0.1px 0.1px rgba(0, 175, 145, 0.5);
   background-color: white;
   transform: translateX(-105%);
-  transition: 300ms ease-in-out;
+  transition: 600ms ease-in-out;
   z-index: 5;
 
   &-header {
