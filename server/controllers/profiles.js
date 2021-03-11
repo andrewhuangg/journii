@@ -147,6 +147,35 @@ exports.createProfileProject = asyncHandler(async (req, res) => {
   res.status(200).json(profile.projects);
 });
 
+// @desc      Update profile project
+// @route     PUT /api/v1/profiles/:id/project/:projectId
+// @access    Private
+
+exports.updateProfileProject = asyncHandler(async (req, res) => {
+  let profile = await Profile.findOne({ user: req.user._id });
+
+  if (!profile)
+    throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
+
+  if (profile.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
+
+  const { technologies, features } = req.body;
+
+  if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
+  if (features) req.body.features = features.split(',').map((feat) => feat.trim());
+
+  profile = await Profile.findOneAndUpdate(
+    { _id: req.params.id, 'projects._id': req.params.projectId },
+    {
+      $set: { 'projects.$': { _id: req.params.projectId, ...req.body } },
+    },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json(profile.projects);
+});
+
 // @desc      Delete profile project
 // @route     Delete /api/v1/profiles/project/:projectId
 // @access    Private
@@ -171,7 +200,8 @@ exports.deleteProfileProject = asyncHandler(async (req, res) => {
 exports.createProfileExperience = asyncHandler(async (req, res) => {
   // find profile for the current user by the user id
   const profile = await Profile.findOne({ user: req.user._id });
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
+  if (!profile)
+    throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
 
   profile.experiences.unshift(req.body);
   await profile.save();
@@ -185,7 +215,8 @@ exports.createProfileExperience = asyncHandler(async (req, res) => {
 exports.deleteProfileExperience = asyncHandler(async (req, res) => {
   // find profile for the current user by the user id
   const profile = await Profile.findOne({ user: req.user._id });
-  if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
+  if (!profile)
+    throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
 
   // find the index of the experience to remove by id
   const removeIdx = profile.experiences.map((exp) => exp.id).indexOf(req.params.experienceId);
@@ -193,6 +224,31 @@ exports.deleteProfileExperience = asyncHandler(async (req, res) => {
   profile.experiences.splice(removeIdx, 1);
 
   await profile.save();
+  res.status(200).json(profile.experiences);
+});
+
+// @desc      Update profile experience
+// @route     PUT /api/v1/profiles/:id/experience/:experienceId
+// @access    Private
+
+exports.updateProfileExperience = asyncHandler(async (req, res) => {
+  let profile = await Profile.findOne({ user: req.user._id });
+
+  if (!profile)
+    throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
+
+  if (profile.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
+
+  profile = await Profile.findOneAndUpdate(
+    { _id: req.params.id, 'experiences._id': req.params.experienceId },
+    {
+      //positional operator '$' && maintain originbal experience id
+      $set: { 'experiences.$': { _id: req.params.experienceId, ...req.body } },
+    },
+    { new: true, runValidators: true }
+  );
+
   res.status(200).json(profile.experiences);
 });
 

@@ -9,8 +9,10 @@ const {
   deleteProfile,
   createProfileExperience,
   deleteProfileExperience,
+  updateProfileExperience,
   createProfileProject,
   deleteProfileProject,
+  updateProfileProject,
   getGithubRepo,
   getFollowedProfiles,
   followProfile,
@@ -23,9 +25,11 @@ const router = express.Router({ mergeParams: true });
 // route merged with /users/:userId/profiles/
 router.route('/followedprofiles').get(getFollowedProfiles);
 
+router.route('/me').get(protect, getOwnProfile);
 router.route('/experience').put(protect, createProfileExperience);
 router.route('/project').put(protect, createProfileProject);
-router.route('/me').get(protect, getOwnProfile);
+router.route('/:id/experience/:experienceId').put(protect, updateProfileExperience);
+router.route('/:id/project/:projectId').put(protect, updateProfileProject);
 router.route('/experience/:experienceId').delete(protect, deleteProfileExperience);
 router.route('/project/:projectId').delete(protect, deleteProfileProject);
 router.route('/users/:userId').get(getProfile);
