@@ -40,7 +40,9 @@ const EditProfile = ({ history }) => {
   }, [successUpdate]);
 
   useEffect(() => {
-    if (!profile.user || profile.user._id !== userInfo.id) {
+    if (!profile) {
+      history.push('/createprofile');
+    } else if (!profile.user || profile.user._id !== userInfo.id) {
       dispatch(getOwnProfileDetails());
     } else {
       setUserName(profile.username);

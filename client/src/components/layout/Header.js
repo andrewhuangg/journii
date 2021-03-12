@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { logout } from '../../actions/authAction';
 import { getUserDetails } from '../../actions/authAction';
-import { getOwnProfileDetails } from '../../actions/profileAction';
 import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import SearchBox from './SearchBox';
 import MenuSlider from './MenuSlider';
@@ -16,35 +15,34 @@ const Header = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const profileCreate = useSelector((state) => state.profileCreate);
-  const { success: successCreate, profileInfo } = profileCreate;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading: loadingUserDetails, success: successUserDetails, user } = userDetails;
 
   const menuRef = useRef(null);
 
   useEffect(() => {
-    const nav = document.querySelector('#menu__slider');
-    const handler = (e) => {
-      if (!menuRef.current.contains(e.target) && nav.classList.contains('menu__slider--active')) {
-        setIsOpen(false);
-        nav.classList.remove('menu__slider--active');
-      }
-    };
+    if (userInfo) dispatch(getUserDetails('me'));
+  }, [userInfo]);
 
-    document.addEventListener('mousedown', handler);
+  const handleClickSliderOpen = (e) => {
+    e.target !== menuRef.current && setIsOpen(false);
+  };
 
-    return () => {
-      document.removeEventListener('mousedown', handler);
-    };
-  });
-
-  const handleMenuSlider = () => {
-    const nav = document.querySelector('#menu__slider');
-    if (!nav.classList.contains('menu__slider--active')) {
-      setIsOpen((isOpen) => !isOpen);
-      nav.classList.add('menu__slider--active');
-    } else {
-      nav.classList.remove('menu__slider--active');
+  useEffect(() => {
+    switch (isOpen) {
+      case true:
+        document.addEventListener('click', handleClickSliderOpen);
+        break;
+      default:
+        document.removeEventListener('click', handleClickSliderOpen);
+        break;
     }
+
+    return () => document.removeEventListener('click', handleClickSliderOpen);
+  }, [isOpen]);
+
+  const handleMenuSlider = (e) => {
+    setIsOpen(!isOpen);
   };
 
   const logoutHandler = () => {
@@ -81,7 +79,13 @@ const Header = ({ history }) => {
 
   return (
     <>
-      <MenuSlider menuRef={menuRef} logoutHandler={logoutHandler} userInfo={userInfo} />
+      <MenuSlider
+        menuRef={menuRef}
+        logoutHandler={logoutHandler}
+        userInfo={userInfo}
+        user={user}
+        isOpen={isOpen}
+      />
       <header className='header'>
         <nav className='header__nav container'>
           <div className='header__logo-container'>

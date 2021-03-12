@@ -111,38 +111,20 @@ const PostShow = ({ match, history }) => {
 
   const sliderRef = useRef(null);
 
+  const handleClickSliderOpen = (e) => {
+    e.target !== sliderRef.current && setIsOpen(false);
+  };
+
   useEffect(() => {
-    const nav = document.querySelector('#review__slider');
-    const hamburger = document.querySelector('#hamburger');
-    const handler = (e) => {
-      if (
-        !sliderRef.current.contains(e.target) &&
-        nav.classList.contains('review__slider--active')
-      ) {
-        setIsOpen(false);
-        nav.classList.remove('review__slider--active');
-        hamburger.classList.remove('hamburger--active');
-      }
-    };
+    isOpen
+      ? document.addEventListener('click', handleClickSliderOpen)
+      : document.removeEventListener('click', handleClickSliderOpen);
 
-    document.addEventListener('mousedown', handler);
-
-    return () => {
-      document.removeEventListener('mousedown', handler);
-    };
+    return () => document.removeEventListener('click', handleClickSliderOpen);
   });
 
   const handleReviewSlider = () => {
-    const nav = document.querySelector('#review__slider');
-    const hamburger = document.querySelector('#hamburger');
-    if (!nav.classList.contains('review__slider--active')) {
-      setIsOpen((isOpen) => !isOpen);
-      nav.classList.add('review__slider--active');
-      hamburger.classList.add('hamburger--active');
-    } else {
-      nav.classList.remove('review__slider--active');
-      hamburger.classList.remove('hamburger--active');
-    }
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -156,6 +138,7 @@ const PostShow = ({ match, history }) => {
         deleteReviewHandler={deleteReviewHandler}
         userInfo={userInfo}
         sliderRef={sliderRef}
+        isOpen={isOpen}
       />
       <PostHero
         post={post}

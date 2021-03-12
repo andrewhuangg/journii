@@ -8,11 +8,16 @@ const ReviewSlider = ({
   deleteReviewHandler,
   userInfo,
   sliderRef,
+  isOpen,
 }) => {
   return (
-    <nav className='review__slider' id='review__slider' ref={sliderRef}>
+    <nav
+      className={`review__slider ${isOpen ? 'review__slider--active' : ''}`}
+      id='review__slider'
+      ref={sliderRef}
+    >
       <div
-        className='hamburger hamburger--active'
+        className={`hamburger ${isOpen ? 'hamburger--active' : ''}`}
         id='hamburger'
         onClick={handleReviewSlider}
       ></div>
