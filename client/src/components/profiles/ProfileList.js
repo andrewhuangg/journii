@@ -5,20 +5,21 @@ import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import ProfileItem from './ProfileItem';
 import Meta from '../layout/Meta';
+import { withRouter } from 'react-router-dom';
 
 const ProfileList = () => {
   const dispatch = useDispatch();
-  const profileList = useSelector((state) => state.profileList);
-  const { loading, error, profiles } = profileList;
+  const profileList = useSelector((state) => state.profiles.profileList);
+  const { profiles } = profileList;
+
   useEffect(() => {
     dispatch(listProfiles());
-  }, [dispatch]);
+  }, []);
+
   return (
     <>
       <section className='profile-list container'>
         <Meta title='journii | Profiles' />
-        {loading && <Spinner />}
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
         <h1 className='profile-list__header'>Profiles</h1>
         <section className='profile-list__grid'>
           {profiles.map((profile) => (
@@ -30,4 +31,4 @@ const ProfileList = () => {
   );
 };
 
-export default ProfileList;
+export default withRouter(ProfileList);

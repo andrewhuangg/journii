@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, getMe } from '../../actions/authAction';
 import { Link } from 'react-router-dom';
 
-const MenuSlider = ({ menuRef, logoutHandler, userInfo, isOpen, user: { ownProfile } }) => {
+const MenuSlider = ({ menuRef, userInfo, isOpen }) => {
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    if (userInfo) dispatch(getMe());
+  }, [userInfo]);
+
+  const userDetails = useSelector((state) => state.auth.userShow);
+  const { currentUser } = userDetails;
+
+  // make a go to profile link
   return (
     <>
       <nav
@@ -14,7 +30,7 @@ const MenuSlider = ({ menuRef, logoutHandler, userInfo, isOpen, user: { ownProfi
             <li>
               <Link to='/userinfo'>Edit User</Link>
             </li>
-            {ownProfile ? (
+            {currentUser.ownProfile ? (
               <>
                 <li>
                   <Link to='/editprofile'>Edit Profile</Link>
@@ -31,6 +47,7 @@ const MenuSlider = ({ menuRef, logoutHandler, userInfo, isOpen, user: { ownProfi
                 <Link to='/createprofile'>Create Profile</Link>
               </li>
             )}
+            {/* need to add edit post somewhere... and list all posts by user id */}
             {/* <li> //update password ---> add in edit user?
               <Link to='/'></Link>
             </li> */}

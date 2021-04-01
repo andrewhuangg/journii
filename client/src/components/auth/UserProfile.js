@@ -17,14 +17,11 @@ const UserProfile = ({ history }) => {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const userDetails = useSelector((state) => state.auth.userShow);
+  const { user } = userDetails;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const userUpdateInfo = useSelector((state) => state.userUpdateInfo);
-  const { success } = userUpdateInfo;
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   useEffect(() => {
     if (!userInfo) {

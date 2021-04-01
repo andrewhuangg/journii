@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPost } from '../../actions/postAction';
 import { POST_CREATE_RESET } from '../../actions/types';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
@@ -17,20 +16,8 @@ const CreatePost = ({ history }) => {
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
 
-  const postCreate = useSelector((state) => state.postCreate);
-  const { loading: loadingSuccess, success: successCreate, error: errorCreate, post } = postCreate;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  useEffect(() => {
-    if (successCreate) {
-      setText('');
-      setTitle('');
-      dispatch({ type: POST_CREATE_RESET });
-      history.push(`/posts/${post._id}`);
-    }
-  }, [dispatch, successCreate, history]);
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -59,7 +46,11 @@ const CreatePost = ({ history }) => {
       setMessage('post cannot be empty');
     } else {
       setMessage(null);
-      dispatch(createPost({ text, title, image }));
+      dispatch(createPost({ text, title, image })).then((data) => {
+        setText('');
+        setTitle('');
+        history.push(`/posts/${data._id}`);
+      });
     }
   };
 

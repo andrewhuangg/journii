@@ -12,28 +12,18 @@ const PostList = ({ match }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
 
-  const { loading: loadingList, error: errorList, posts, pages, page } = useSelector(
-    (state) => state.postList
-  );
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const postDelete = useSelector((state) => state.postDelete);
-  const { loading: loadingDelete, error: errorDelete, success: successDelete } = postDelete;
+  const postList = useSelector((state) => state.posts.postList);
+  const { posts, pages, page } = postList;
 
   useEffect(() => {
     dispatch(listPosts(keyword, pageNumber));
-  }, [dispatch, successDelete, keyword, pageNumber, userInfo]);
+    // }, [dispatch, successDelete, keyword, pageNumber, userInfo]);
+  }, [keyword, pageNumber]);
 
   return (
     <>
       <section className='post-list container'>
         <Meta title='journii | Posts' />
-        {loadingDelete && <Spinner />}
-        {errorDelete && <AlertMessage>{errorDelete} </AlertMessage>}
-        {loadingList && <Spinner />}
-        {errorList && <AlertMessage variant='danger'>{errorList}</AlertMessage>}
         <div className='post-list__header'>
           <h1 className='post-list__title'>Posts</h1>
           <div className='post-list__text'>Welcome to the community</div>

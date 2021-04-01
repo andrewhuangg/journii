@@ -8,21 +8,20 @@ const ProfileGithub = ({ username }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listGithubRepos(username));
-  }, [dispatch, username]);
+    if (username) dispatch(listGithubRepos(username));
+  }, []);
 
-  const profileGithub = useSelector((state) => state.profileGithub);
-  const { error: errorGithubRepos, github } = profileGithub;
+  const github = useSelector((state) => state.profiles.profile);
+  const { githubList } = github;
 
   return (
     <>
       <section className='profile-github'>
-        {errorGithubRepos && <AlertMessage variant='danger'>{errorGithubRepos}</AlertMessage>}
         <h6 className='profile-github__title'>Github Repos</h6>
         <div className='profile-github__list'>
-          {github &&
-            github.data &&
-            github.data.map((repo) => <GithubItem repo={repo} key={repo.id} />)}
+          {githubList.map((repo) => (
+            <GithubItem repo={repo} key={repo.id} />
+          ))}
         </div>
       </section>
     </>

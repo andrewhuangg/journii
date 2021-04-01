@@ -18,25 +18,26 @@ const EditPost = ({ match, history }) => {
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
 
-  const postUpdate = useSelector((state) => state.postUpdate);
-  const { success: successUpdate, error: errorUpdate } = postUpdate;
+  // const postUpdate = useSelector((state) => state.postUpdate);
+  // const { success: successUpdate, error: errorUpdate } = postUpdate;
 
   const postDetails = useSelector((state) => state.postDetails);
-  const { loading: loadingDetails, post, error: errorDetails } = postDetails;
+  // const { loading: loadingDetails, post, error: errorDetails } = postDetails;
+  const { post } = postDetails;
 
-  useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: POST_UPDATE_RESET });
-      history.push(`/posts`);
-    }
-    if (!post || post._id !== postId) {
-      dispatch(listPostDetails(postId));
-    } else {
-      setTitle(post.title);
-      setText(post.text);
-      setImage(post.image);
-    }
-  }, [dispatch, post, postId, successUpdate, history]);
+  // useEffect(() => {
+  //   if (successUpdate) {
+  //     // dispatch({ type: POST_UPDATE_RESET });
+  //     history.push(`/posts`);
+  //   }
+  //   if (!post || post._id !== postId) {
+  //     dispatch(listPostDetails(postId));
+  //   } else {
+  //     setTitle(post.title);
+  //     setText(post.text);
+  //     setImage(post.image);
+  //   }
+  // }, [dispatch, post, postId, successUpdate, history]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -74,11 +75,6 @@ const EditPost = ({ match, history }) => {
       <Row>
         <Col mid={4}>
           <h3>Update Post</h3>
-          {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-          {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
-          {errorUpdate && <AlertMessage variant='danger'>{errorUpdate}</AlertMessage>}
-          {successUpdate && <AlertMessage variant='success'>Post Updated</AlertMessage>}
-          {loadingDetails && <Spinner />}
           <Link to='/posts'>Back to posts</Link>
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='image'>

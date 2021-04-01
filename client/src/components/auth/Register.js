@@ -16,8 +16,8 @@ const Register = ({ location, history }) => {
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const createUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = createUser;
 
   const redirect = location.search ? location.search.split('=')[1] : '/dashboard';
 
@@ -68,9 +68,6 @@ const Register = ({ location, history }) => {
 
   return (
     <>
-      {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-      {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-      {loading && <Spinner />}
       <div className='auth'>
         <div className='auth__wrapper'>
           <h1 className='auth__header'>Sign up</h1>

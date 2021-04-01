@@ -23,6 +23,8 @@ import store from './store';
 
 import './App.scss';
 
+// CREATE AN ERROR PAGE INCASE A PAGE DOESNT EXIST
+
 const App = () => {
   return (
     <Provider store={store}>

@@ -17,60 +17,42 @@ const Dashboard = ({ match }) => {
   const dispatch = useDispatch();
   const keyword = match.params.keyword;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
-  const postLatest = useSelector((state) => state.postLatest);
-  const { loading: loadingLatest, error: errorLatest, posts: latestPosts } = postLatest;
+  const posts = useSelector((state) => state.posts.postList);
+  const { latestPosts, followedPosts, likedPosts, topPosts } = posts;
 
-  const postTopRated = useSelector((state) => state.postTopRated);
-  const { loading: loadingTopPosts, error: errorTopPost, posts: topPosts } = postTopRated;
-
-  const postListFollowing = useSelector((state) => state.postListFollowing);
-  const {
-    loading: loadingListPostFollowers,
-    error: errorListPostFollowers,
-    posts: postsFollowing,
-  } = postListFollowing;
-
-  const postListLiked = useSelector((state) => state.postListLiked);
-  const { loading: loadingListLiked, error: errorListLiked, posts: likedPosts } = postListLiked;
-
-  const profileListFollowing = useSelector((state) => state.profileListFollowing);
-  const {
-    loading: loadingListFollowers,
-    error: errorListFollowers,
-    profiles: profilesFollowing,
-  } = profileListFollowing;
+  const followedProfiles = useSelector((state) => state.profiles.profileList);
+  const { profiles } = followedProfiles;
 
   useEffect(() => {
     dispatch(listLatestPosts());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(listFollowedProfiles(userInfo.id));
-  }, [dispatch, userInfo]);
+  }, [userInfo]);
 
   useEffect(() => {
     dispatch(listTopPosts(10));
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(listLikedPosts(userInfo.id));
-  }, [dispatch, userInfo]);
+  }, [userInfo]);
 
   useEffect(() => {
     dispatch(listFollowedPosts(userInfo.id));
-  }, [dispatch, userInfo]);
+  }, [userInfo]);
 
   return (
     <>
-      {loadingLatest && <Spinner />}
       <main className='dashboard container'>
         <DashboardLeft
           likedPosts={likedPosts}
-          profilesFollowing={profilesFollowing}
-          postsFollowing={postsFollowing}
+          profilesFollowing={profiles}
+          postsFollowing={followedPosts}
         />
         <DashboardMain latestPosts={latestPosts} />
         <DashboardRight topPosts={topPosts} />

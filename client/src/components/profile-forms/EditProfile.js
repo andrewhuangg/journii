@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import { updateProfile, getOwnProfileDetails } from '../../actions/profileAction';
-import { PROFILE_UPDATE_RESET } from '../../actions/types';
 
-const EditProfile = ({ history }) => {
+const EditProfile = () => {
   const dispatch = useDispatch();
 
   const [username, setUserName] = useState('');
@@ -23,44 +21,26 @@ const EditProfile = ({ history }) => {
   const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
-  const profileDetails = useSelector((state) => state.profileDetails);
-  const { loading, profile, error } = profileDetails;
-
-  const profileUpdate = useSelector((state) => state.profileUpdate);
-  const { success: successUpdate } = profileUpdate;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const profileDetails = useSelector((state) => state.profiles.profile);
+  const { profile } = profileDetails;
 
   useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: PROFILE_UPDATE_RESET });
-      history.push(`/profiles`);
-    }
-  }, [successUpdate]);
-
-  useEffect(() => {
-    if (!profile) {
-      history.push('/createprofile');
-    } else if (!profile.user || profile.user._id !== userInfo.id) {
-      dispatch(getOwnProfileDetails());
-    } else {
-      setUserName(profile.username);
-      setBio(profile.bio);
-      setWebsite(profile.website);
-      setGithub(profile.github);
+    dispatch(getOwnProfileDetails()).then((data) => {
+      console.log(data);
+      setUserName(data.username);
+      setBio(data.bio);
+      setWebsite(data.website);
+      setGithub(data.github);
       setAddress(
-        !profile.location || !profile.location.formattedAddress
-          ? ''
-          : profile.location.formattedAddress
+        !data.location || !data.location.formattedAddress ? '' : data.location.formattedAddress
       );
-      setYoutube(!profile.social || !profile.social.youtube ? '' : profile.social.youtube);
-      setTwitter(!profile.social || !profile.social.twitter ? '' : profile.social.twitter);
-      setFacebook(!profile.social || !profile.social.facebook ? '' : profile.social.facebook);
-      setLinkedin(!profile.social || !profile.social.linkedin ? '' : profile.social.linkedin);
-      setInstagram(!profile.social || !profile.social.instagram ? '' : profile.social.instagram);
-    }
-  }, [dispatch, history, profile, userInfo.id]);
+      setYoutube(!data.social || !data.social.youtube ? '' : data.social.youtube);
+      setTwitter(!data.social || !data.social.twitter ? '' : data.social.twitter);
+      setFacebook(!data.social || !data.social.facebook ? '' : data.social.facebook);
+      setLinkedin(!data.social || !data.social.linkedin ? '' : data.social.linkedin);
+      setInstagram(!data.social || !data.social.instagram ? '' : data.social.instagram);
+    });
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -91,10 +71,6 @@ const EditProfile = ({ history }) => {
   return (
     <>
       <div className='editProfile'>
-        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-        {successUpdate && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
-        {loading && <Spinner />}
         <div className='editProfile__wrapper'>
           <form className='editProfile__form' onSubmit={submitHandler}>
             <h3>Update Profile</h3>

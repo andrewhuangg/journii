@@ -1,42 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { logout } from '../../actions/authAction';
-import { getUserDetails } from '../../actions/authAction';
 import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import SearchBox from './SearchBox';
 import MenuSlider from './MenuSlider';
 
-const Header = ({ history }) => {
-  const dispatch = useDispatch();
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading: loadingUserDetails, success: successUserDetails, user } = userDetails;
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   const menuRef = useRef(null);
 
-  useEffect(() => {
-    if (userInfo) dispatch(getUserDetails('me'));
-  }, [userInfo]);
-
   const handleClickSliderOpen = (e) => {
-    e.target !== menuRef.current && setIsOpen(false);
+    e.preventDefault();
+    menuRef.current && !menuRef.current.contains(e.target) && setIsOpen(false);
   };
 
   useEffect(() => {
-    switch (isOpen) {
-      case true:
-        document.addEventListener('click', handleClickSliderOpen);
-        break;
-      default:
-        document.removeEventListener('click', handleClickSliderOpen);
-        break;
-    }
+    isOpen
+      ? document.addEventListener('click', handleClickSliderOpen)
+      : document.removeEventListener('click', handleClickSliderOpen);
 
     return () => document.removeEventListener('click', handleClickSliderOpen);
   }, [isOpen]);
@@ -45,20 +31,19 @@ const Header = ({ history }) => {
     setIsOpen(!isOpen);
   };
 
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
-
   const headerLinks = (
     <ul className='header__ul'>
       <li>
-        <Link to={'/dashboard'}>Home</Link>
+        <Link to='/dashboard'>Home</Link>
       </li>
       <li>
-        <Link to={'/posts'}>Posts</Link>
+        <Link to='/posts'>Posts</Link>
       </li>
       <li>
-        <Link to={'/profiles'}>Profiles</Link>
+        <Link to='/profiles'>Profiles</Link>
+      </li>
+      <li>
+        <Link to='/random'>Profiles</Link>
       </li>
     </ul>
   );
@@ -66,26 +51,20 @@ const Header = ({ history }) => {
   const authLinks = (
     <ul className='header__ul'>
       <li>
-        <Link to={'/'}>Home</Link>
+        <Link to='/'>Home</Link>
       </li>
       <li>
-        <Link to={'/register'}>Signup</Link>
+        <Link to='/register'>Signup</Link>
       </li>
       <li>
-        <Link to={'/login'}>Login</Link>
+        <Link to='/login'>Login</Link>
       </li>
     </ul>
   );
 
   return (
     <>
-      <MenuSlider
-        menuRef={menuRef}
-        logoutHandler={logoutHandler}
-        userInfo={userInfo}
-        user={user}
-        isOpen={isOpen}
-      />
+      <MenuSlider menuRef={menuRef} userInfo={userInfo} isOpen={isOpen} />
       <header className='header'>
         <nav className='header__nav container'>
           <div className='header__logo-container'>

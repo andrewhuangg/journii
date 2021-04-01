@@ -1,15 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  listPostDetails,
-  likePost,
-  unlikePost,
-  followPost,
-  unfollowPost,
-  deletePost,
-  deletePostReview,
-} from '../../actions/postAction';
-import { POST_DETAILS_RESET } from '../../actions/types';
+import { listPostDetails } from '../../actions/postAction';
+import { getUserDetails } from '../../actions/authAction';
 import AlertMessage from '../layout/AlertMessage';
 import CreateComment from './CreateComment';
 import ReviewSlider from './ReviewSlider';
@@ -18,101 +10,31 @@ import CommentList from './CommentList';
 import Meta from '../layout/Meta';
 import PostFeature from './PostFeature';
 
-const PostShow = ({ match, history }) => {
+const PostShow = ({ match }) => {
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
-  const postDetails = useSelector((state) => state.postDetails);
-  const {
-    loading: loadingDetails,
-    error: errorDetails,
-    error: errorLikes,
-    error: errorFollows,
-    post,
-  } = postDetails;
+  const userDetails = useSelector((state) => state.auth.userShow);
+  const { user } = userDetails;
 
-  const postDelete = useSelector((state) => state.postDelete);
-  const { success: successDelete, error: errorDelete } = postDelete;
-
-  const postComment = useSelector((state) => state.postComment);
-  const {
-    loading: loadingCommentCreate,
-    loading: loadingCommentDelete,
-    error: errorCommentDelete,
-    success: successCommentCreate,
-    success: successCommentDelete,
-  } = postComment;
-
-  const postReview = useSelector((state) => state.postReview);
-  const {
-    loading: loadingReviewCreate,
-    loading: loadingReviewDelete,
-    error: errorReviewDelete,
-    success: successReviewCreate,
-    success: successReviewDelete,
-  } = postReview;
+  const postShow = useSelector((state) => state.posts.post);
+  const { post } = postShow;
 
   useEffect(() => {
-    if (!post || post._id !== match.params.id) {
-      dispatch(listPostDetails(match.params.id));
-    }
-    if (successDelete) {
-      dispatch({ type: POST_DETAILS_RESET });
-      history.push('/posts');
-    }
-  }, [dispatch, match, history, post, successDelete]);
-
-  useEffect(() => {
-    if (
-      successCommentCreate ||
-      successCommentDelete ||
-      successReviewCreate ||
-      successReviewDelete
-    ) {
-      setMessage(null);
-      dispatch(listPostDetails(match.params.id));
-    }
-  }, [successCommentCreate, successCommentDelete, successReviewCreate, successReviewDelete]);
-
-  const postLikeHandler = (post, id) => {
-    if (errorLikes) setMessage(errorLikes);
-    dispatch(likePost(post, id));
-  };
-
-  const postUnlikeHandler = (post, id) => {
-    if (errorLikes) setMessage(errorLikes);
-    dispatch(unlikePost(post, id));
-  };
-
-  const postFollowHandler = (post, id) => {
-    if (errorFollows) setMessage(errorFollows);
-    dispatch(followPost(post, id));
-  };
-
-  const postUnfollowHandler = (post, id) => {
-    if (errorFollows) setMessage(errorFollows);
-    dispatch(unfollowPost(post, id));
-  };
-
-  const deleteHandler = (id) => {
-    if (errorDelete) setMessage(errorDelete);
-    dispatch(deletePost(id));
-  };
-
-  const deleteReviewHandler = (postId, reviewId) => {
-    if (errorReviewDelete) setMessage(errorReviewDelete);
-    dispatch(deletePostReview(postId, reviewId));
-  };
+    dispatch(listPostDetails(match.params.id)).then((post) => {
+      dispatch(getUserDetails(post.user.id));
+    });
+  }, []);
 
   const sliderRef = useRef(null);
 
   const handleClickSliderOpen = (e) => {
-    e.target !== sliderRef.current && setIsOpen(false);
+    sliderRef.current && !sliderRef.current.contains(e.target) && setIsOpen(false);
   };
 
   useEffect(() => {
@@ -121,7 +43,7 @@ const PostShow = ({ match, history }) => {
       : document.removeEventListener('click', handleClickSliderOpen);
 
     return () => document.removeEventListener('click', handleClickSliderOpen);
-  });
+  }, [isOpen]);
 
   const handleReviewSlider = () => {
     setIsOpen(!isOpen);
@@ -130,30 +52,21 @@ const PostShow = ({ match, history }) => {
   return (
     <>
       <Meta title={`journii | ${post.title}`} />
-      {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-      {errorDetails && <AlertMessage variant='danger'>{errorDetails}</AlertMessage>}
       <ReviewSlider
         post={post}
         handleReviewSlider={handleReviewSlider}
-        deleteReviewHandler={deleteReviewHandler}
         userInfo={userInfo}
         sliderRef={sliderRef}
         isOpen={isOpen}
+        reviews
       />
       <PostHero
         post={post}
         handleReviewSlider={handleReviewSlider}
-        deleteHandler={deleteHandler}
         userInfo={userInfo}
-        postFollowHandler={postFollowHandler}
-        postUnfollowHandler={postUnfollowHandler}
+        user={user}
       />
-      <PostFeature
-        post={post}
-        postLikeHandler={postLikeHandler}
-        postUnlikeHandler={postUnlikeHandler}
-        userInfo={userInfo}
-      />
+      <PostFeature post={post} userInfo={userInfo} />
       <CreateComment postId={post && post._id} />
       <CommentList post={post} userInfo={userInfo} />
     </>

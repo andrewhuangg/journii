@@ -12,20 +12,19 @@ import LandingFooter from './LandingFooter';
 
 const Landing = () => {
   const dispatch = useDispatch();
-  const postTopRated = useSelector((state) => state.postTopRated);
-  const { loading, error, posts } = postTopRated;
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+
+  const postTopRated = useSelector((state) => state.posts.postList);
+  const { topPosts } = postTopRated;
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   useEffect(() => {
     dispatch(listTopPosts(4));
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
       <Meta />
-      {loading && <Spinner />}
-      {error && <AlertMessage>{error}</AlertMessage>}
 
       <LandingShowcase userInfo={userInfo} />
 
@@ -33,7 +32,7 @@ const Landing = () => {
 
       <LandingFeature />
 
-      <LandingPosts posts={posts} userInfo={userInfo} />
+      <LandingPosts posts={topPosts} userInfo={userInfo} />
 
       <LandingFooter />
     </>

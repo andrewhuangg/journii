@@ -1,6 +1,6 @@
-import { QUOTE_LIST_REQUEST, QUOTE_LIST_SUCCESS, QUOTE_LIST_FAIL } from '../actions/types';
+import { QUOTE_LIST_REQUEST, QUOTE_LIST_SUCCESS, QUOTE_LIST_FAIL } from '../../actions/types';
 
-export const quoteListReducer = (state = { quotes: [] }, action) => {
+export default (state = { quotes: [] }, action) => {
   const { type, payload } = action;
 
   switch (type) {

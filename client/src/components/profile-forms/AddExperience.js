@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { addExperience } from '../../actions/profileAction';
-import { PROFILE_UPDATE_EXPERIENCES_RESET } from '../../actions/types';
+import { addExperience, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 
@@ -19,15 +18,12 @@ const AddExperience = ({ history }) => {
   const [toDateDisabled, toggleDisabled] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const profileExperience = useSelector((state) => state.profileExperience);
-  const { success, loading, error } = profileExperience;
+  const profileExperience = useSelector((state) => state.profiles.profile);
+  const { profile } = profileExperience;
 
   useEffect(() => {
-    if (success) {
-      dispatch({ type: PROFILE_UPDATE_EXPERIENCES_RESET });
-      history.push('/profiles');
-    }
-  }, [dispatch, success, history]);
+    dispatch(getOwnProfileDetails());
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -45,17 +41,15 @@ const AddExperience = ({ history }) => {
           address,
           description,
         })
-      );
+      ).then(() => {
+        history.push(`/profile/${profile.user.id}`);
+      });
     }
   };
 
   return (
     <Row>
       <Col md={4}>
-        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-        {success && <AlertMessage variant='success'>Experience Added</AlertMessage>}
-        {loading && <Spinner />}
         <h2>Add Experience</h2>
         <small>* = required field</small>
         <Form onSubmit={submitHandler}>

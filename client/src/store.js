@@ -7,14 +7,21 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
 
-const initialState = { userLogin: { userInfo: userInfoFromStorage } };
+// local storage auth state
+const preloadedState = { auth: { userAuth: { userInfo: userInfoFromStorage } } };
 
 const middleware = [thunk];
 
+// remove before production
+const composeEnhancers = composeWithDevTools({
+  trace: true,
+  traceLimit: 25,
+});
+
 const store = createStore(
   rootReducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  preloadedState,
+  composeEnhancers(applyMiddleware(...middleware))
 );
 
 export default store;

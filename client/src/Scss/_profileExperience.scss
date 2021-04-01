@@ -37,6 +37,9 @@
       align-items: normal;
       gap: 1rem;
     }
+    @include breakpoint-up(large) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   &__item {

@@ -1,12 +1,14 @@
+import { useHistory } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProfile } from '../../actions/profileAction';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 
-const CreateProfile = ({ history }) => {
+const CreateProfile = () => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const [username, setUserName] = useState('');
   const [bio, setBio] = useState('');
@@ -22,21 +24,11 @@ const CreateProfile = ({ history }) => {
   const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
-  const profileCreate = useSelector((state) => state.profileCreate);
-  const { loading, success, error } = profileCreate;
-
-  useEffect(() => {
-    if (success) {
-      history.push('/profiles');
-    }
-  }, [dispatch, history, success]);
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (!bio) {
-      setMessage('Bio cannot be empty');
+      setMessage('bio cannot be empty');
     } else {
-      setMessage(null);
       dispatch(
         createProfile({
           username,
@@ -50,144 +42,125 @@ const CreateProfile = ({ history }) => {
           facebook,
           instagram,
         })
-      );
+      ).then(() => {
+        history.push('/dashboard');
+      });
     }
   };
 
   return (
-    <Row>
-      <Col md={6}>
-        <h2>Create Your Profile</h2>
-        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-        {success && <AlertMessage variant='success'>Profile Created</AlertMessage>}
-        {loading && <Spinner />}
-        <small>* = required field</small>
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='username'>
-            <Form.Label>Username</Form.Label>
-            <Form.Control
+    <div className='cre-profile'>
+      <div className='cre-profile__wrapper'>
+        <form onSubmit={submitHandler} className='cre-profile__form'>
+          <h3>Create Your Profile</h3>
+          <div className='cre-profile__form-control'>
+            <input
+              className='cre-profile__form-input'
               type='text'
               placeholder='Username'
               value={username}
               onChange={(e) => setUserName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId='website'>
-            <Form.Label>Website</Form.Label>
-            <Form.Control
+            />
+          </div>
+          <div className='cre-profile__form-control'>
+            <input
+              className='cre-profile__form-input'
               type='text'
               placeholder='Website'
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId='address'>
-            <Form.Label>Address</Form.Label>
-            <Form.Control
+            />
+          </div>
+          <div className='cre-profile__form-control'>
+            <input
+              className='cre-profile__form-input'
               type='text'
               placeholder='Address'
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId='github'>
-            <Form.Label>Github</Form.Label>
-            <Form.Control
+            />
+          </div>
+          <div className='cre-profile__form-control'>
+            <input
+              className='cre-profile__form-input'
               type='text'
               placeholder='Github Username'
               value={github}
               onChange={(e) => setGithub(e.target.value)}
-            ></Form.Control>
-            <Form.Text id='githubHelpBlock' muted>
+            />
+            <small>
               If you want your latest repos and a Github link, include your username. Your username
               can be found here "github.com/YOUR_USERNAME"
-            </Form.Text>
-          </Form.Group>
-
-          <Form.Group controlId='bio'>
-            <Form.Label>Bio</Form.Label>
-            <Form.Control
-              as='textarea'
-              rows={4}
-              placeholder='* A short bio of yourself'
+            </small>
+          </div>
+          <div className='cre-profile__form-control'>
+            <textarea
+              className='cre-profile__form-textarea'
+              maxLength='500'
+              placeholder='Bio'
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               required
-            ></Form.Control>
-            <Form.Text id='bioHelpBlock' muted>
-              Tell us a bit about yourself
-            </Form.Text>
-          </Form.Group>
-
-          <Form.Group controlId='displaySocial'>
-            <Button onClick={() => toggleSocial(!displaySocial)}>Add Social Network Links</Button>
-            <Form.Label>Optional</Form.Label>
-          </Form.Group>
-
+            />
+            <small>Tell us a bit about yourself</small>
+          </div>
           {displaySocial && (
             <>
-              <Form.Group controlId='twitter'>
-                <Form.Label>Twitter</Form.Label>
-                <Form.Control
+              <div className='cre-profile__form-control'>
+                <input
+                  className='cre-profile__form-input'
                   type='text'
-                  placeholder='Twitter URL'
+                  placeholder='Twitter Url'
                   value={twitter}
                   onChange={(e) => setTwitter(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId='facebook'>
-                <Form.Label>Facebook</Form.Label>
-                <Form.Control
+                />
+              </div>
+              <div className='cre-profile__form-control'>
+                <input
+                  className='cre-profile__form-input'
                   type='text'
-                  placeholder='Facebook URL'
+                  placeholder='Facebook Url'
                   value={facebook}
                   onChange={(e) => setFacebook(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId='youtube'>
-                <Form.Label>Youtube</Form.Label>
-                <Form.Control
+                />
+              </div>
+              <div className='cre-profile__form-control'>
+                <input
+                  className='cre-profile__form-input'
                   type='text'
-                  placeholder='YouTube URL'
+                  placeholder='Youtube Url'
                   value={youtube}
                   onChange={(e) => setYoutube(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId='linkedin'>
-                <Form.Label>LinkedIn</Form.Label>
-                <Form.Control
+                />
+              </div>
+              <div className='cre-profile__form-control'>
+                <input
+                  className='cre-profile__form-input'
                   type='text'
-                  placeholder='Linkedin URL'
+                  placeholder='Linkedin Url'
                   value={linkedin}
                   onChange={(e) => setLinkedin(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId='instagram'>
-                <Form.Label>Instagram</Form.Label>
-                <Form.Control
+                />
+              </div>
+              <div className='cre-profile__form-control'>
+                <input
+                  className='cre-profile__form-input'
                   type='text'
-                  placeholder='Instagram URL'
+                  placeholder='Instagram Url'
                   value={instagram}
                   onChange={(e) => setInstagram(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
+                />
+              </div>
             </>
           )}
-          <Button type='submit' variant='primary'>
-            Create
-          </Button>
-        </Form>
-        <Button onClick={(e) => history.push('/dashboard')}>Go Back</Button>
-      </Col>
-    </Row>
+          <button className='cre-profile__form-btn'>Create</button>
+        </form>
+        <button className='cre-profile__social-btn' onClick={() => toggleSocial(!displaySocial)}>
+          Add Social
+        </button>
+        <label>Optional</label>
+      </div>
+    </div>
   );
 };
 

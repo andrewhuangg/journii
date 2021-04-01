@@ -64,7 +64,8 @@
     width: 22rem;
 
     @include breakpoint-up(large) {
-      width: auto;
+      width: 30rem;
+      word-wrap: break-word;
     }
   }
 

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Moment from 'react-moment';
-import { deletePostComment } from '../../actions/postAction';
+import { deletePostComment, listPostDetails } from '../../actions/postAction';
 
 const CommentItem = ({ postId, userInfo, comment: { _id, text, user, name, date } }) => {
   const dispatch = useDispatch();
 
   const deleteCommentHandler = (postId, commentId) => {
-    dispatch(deletePostComment(postId, _id));
+    dispatch(deletePostComment(postId, commentId));
   };
+
   return (
     <div className='comments__grid-item'>
       <div className='comments__header'>

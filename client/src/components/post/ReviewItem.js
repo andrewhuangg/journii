@@ -1,14 +1,20 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deletePostReview } from '../../actions/postAction';
 import Moment from 'react-moment';
 import Rating from '../layout/Rating';
 import { Link } from 'react-router-dom';
 
 const ReviewItem = ({
   postId,
-  deleteReviewHandler,
   userInfo,
   review: { _id, comment, name, user, rating, createdAt },
 }) => {
+  const dispatch = useDispatch();
+  const deleteReviewHandler = (postId, reviewId) => {
+    dispatch(deletePostReview(postId, reviewId));
+  };
+
   return (
     <>
       <div className='reviews__grid-item'>

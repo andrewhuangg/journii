@@ -9,8 +9,9 @@ const Login = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   const redirect = location.search ? location.search.split('=')[1] : '/dashboard';
 
@@ -36,8 +37,6 @@ const Login = ({ location, history }) => {
 
   return (
     <>
-      {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-      {loading && <Spinner />}
       <div className='auth'>
         <div className='auth__wrapper'>
           <h1 className='auth__header'>Sign In</h1>

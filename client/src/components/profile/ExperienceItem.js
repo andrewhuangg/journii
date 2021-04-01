@@ -1,12 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteExperience } from '../../actions/profileAction';
 import Moment from 'react-moment';
 
 const ExperienceItem = ({
-  deleteHandler,
   exp: { title, company, from, to, address, description, _id },
   currentUserId,
   profileOwner,
 }) => {
+  const dispatch = useDispatch();
+
+  const deleteHandler = (id) => {
+    dispatch(deleteExperience(id));
+  };
+
   return (
     <>
       <div className='profile-experience__item'>

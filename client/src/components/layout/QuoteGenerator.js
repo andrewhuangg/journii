@@ -5,13 +5,13 @@ import useInterval from '../customHooks/useInterval';
 
 const QuoteGenerator = () => {
   const dispatch = useDispatch();
-  const quoteList = useSelector((state) => state.quoteList);
-  const { loading, error, quotes } = quoteList;
+  const quoteList = useSelector((state) => state.common.quotes);
+  const { quotes } = quoteList;
   const [delay, setDelay] = useState(8000); //matches quote__bar animation grow time 10s
 
   useEffect(() => {
     dispatch(listQuotes());
-  }, [dispatch]);
+  }, []);
 
   useInterval(() => {
     generateRandomQuote(quotes.length);

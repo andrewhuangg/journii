@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { addProject } from '../../actions/profileAction';
-import { PROFILE_UPDATE_PROJECTS_RESET } from '../../actions/types';
+import { addProject, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 
@@ -20,15 +20,12 @@ const AddProject = ({ history }) => {
   const [toDateDisabled, toggleDisabled] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const profileProject = useSelector((state) => state.profileProject);
-  const { success, loading, error } = profileProject;
+  const profileExperience = useSelector((state) => state.profiles.profile);
+  const { profile } = profileExperience;
 
   useEffect(() => {
-    if (success) {
-      dispatch({ type: PROFILE_UPDATE_PROJECTS_RESET });
-      history.push('/profiles');
-    }
-  }, [dispatch, success, history]);
+    dispatch(getOwnProfileDetails());
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -47,17 +44,15 @@ const AddProject = ({ history }) => {
           features,
           technologies,
         })
-      );
+      ).then(() => {
+        history.push(`/profile/${profile.user.id}`);
+      });
     }
   };
 
   return (
     <Row>
       <Col md={4}>
-        {message && <AlertMessage variant='danger'>{message}</AlertMessage>}
-        {error && <AlertMessage variant='danger'>{error}</AlertMessage>}
-        {success && <AlertMessage variant='success'>Project Added</AlertMessage>}
-        {loading && <Spinner />}
         <h2>Add Project</h2>
         <small>* = required field</small>
         <Form onSubmit={submitHandler}>

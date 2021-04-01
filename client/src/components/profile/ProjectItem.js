@@ -1,14 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteProject } from '../../actions/profileAction';
 import Moment from 'react-moment';
 import { v4 as uuidv4 } from 'uuid';
 
 const ProjectItem = ({
-  deleteHandler,
   proj: { name, description, technologies, features, from, to, website, _id },
   currentUserId,
   profileOwner,
-  proj,
 }) => {
+  const dispatch = useDispatch();
+
+  const deleteHandler = (id) => {
+    dispatch(deleteProject(id));
+  };
   return (
     <>
       <div className='profile-project__item'>

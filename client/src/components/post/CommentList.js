@@ -1,20 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CommentItem from './CommentItem';
 
-const CommentList = ({ post: { comments, _id }, userInfo, deleteCommentHandler }) => {
+const CommentList = ({ post: { comments, _id }, userInfo }) => {
   return (
     <section className='comments container'>
       <div className='comments__grid'>
-        {comments &&
-          comments.map((comment) => (
-            <CommentItem
-              key={comment._id}
-              comment={comment}
-              postId={_id}
-              deleteCommentHandler={deleteCommentHandler}
-              userInfo={userInfo}
-            />
-          ))}
+        {comments.map((comment) => (
+          <CommentItem key={comment._id} comment={comment} postId={_id} userInfo={userInfo} />
+        ))}
       </div>
     </section>
   );
