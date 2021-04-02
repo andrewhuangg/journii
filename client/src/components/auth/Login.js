@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
@@ -13,12 +13,11 @@ const Login = ({ location, history }) => {
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo } = loginUser;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/dashboard';
-
   useEffect(() => {
-    if (userInfo) history.push(redirect);
     wrapLabelsWithSpan();
-  }, [history, userInfo, redirect]);
+  }, []);
+
+  if (userInfo) return <Redirect to='/dashboard' />;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -69,8 +68,7 @@ const Login = ({ location, history }) => {
               Sign In
             </button>
             <p className='auth__redirect'>
-              New User?{' '}
-              <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>
+              New User? <Link to='/register'>Register</Link>
             </p>
           </form>
         </div>

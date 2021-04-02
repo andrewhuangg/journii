@@ -61,7 +61,7 @@ export default (state = initialState, action) => {
       };
 
     case RESET_POST_LIST:
-      return state;
+      return {};
 
     default:
       return state;

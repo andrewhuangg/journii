@@ -29,7 +29,10 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide a title for your post'],
     },
-    name: String,
+    name: {
+      type: String,
+      default: 'New Post',
+    },
     image: String,
     rating: {
       type: Number,

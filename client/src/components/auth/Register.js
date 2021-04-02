@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { register } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
@@ -16,15 +16,15 @@ const Register = ({ location, history }) => {
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const createUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo } = createUser;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/dashboard';
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   useEffect(() => {
-    if (userInfo) history.push(redirect);
     wrapLabelsWithSpan();
-  }, [history, userInfo, redirect]);
+  }, []);
+
+  if (userInfo) return <Redirect to='/dashboard' />;
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -131,8 +131,7 @@ const Register = ({ location, history }) => {
               Register
             </button>
             <p className='auth__redirect'>
-              Have an account?{' '}
-              <Link to={redirect ? `/login` : `/register?redirect=${redirect}`}>Login</Link>
+              Have an account? <Link to='/login'>Login</Link>
             </p>
           </form>
         </div>

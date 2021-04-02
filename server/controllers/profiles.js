@@ -55,8 +55,21 @@ exports.createProfile = asyncHandler(async (req, res) => {
   // assign the profiles user to the logged in user.
   req.body.user = req.user._id;
 
-  // pull out the array fields to perform formatting
-  const { technologies, features, youtube, twitter, facebook, linkedin, instagram } = req.body;
+  // pull out the array fields to perform formatting, and other fields
+  const {
+    username,
+    technologies,
+    features,
+    youtube,
+    twitter,
+    facebook,
+    linkedin,
+    instagram,
+  } = req.body;
+
+  // check for duplicate username
+  const profileExists = await Profile.findOne({ username });
+  if (profileExists) throw new ErrorResponse('Username is taken', 400);
 
   // format fields array
   if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());

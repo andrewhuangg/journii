@@ -4,7 +4,10 @@ const ProfileSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      default: 'New Profile',
+      required: [true, 'Please provide a username'],
+      unique: true,
+      trim: true,
+      maxlength: [30, 'Username cannot be more than 30 characters'],
     },
     bio: {
       type: String,

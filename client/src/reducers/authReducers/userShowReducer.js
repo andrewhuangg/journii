@@ -24,9 +24,7 @@ export default (state = initialState, action) => {
       };
 
     case RESET_USER_DETAILS:
-      return {
-        user: {},
-      };
+      return {};
 
     default:
       return state;

@@ -15,7 +15,6 @@ const Header = () => {
   const menuRef = useRef(null);
 
   const handleClickSliderOpen = (e) => {
-    e.preventDefault();
     menuRef.current && !menuRef.current.contains(e.target) && setIsOpen(false);
   };
 

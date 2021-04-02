@@ -16,6 +16,7 @@ import PostList from './components/posts/PostList';
 import PostShow from './components/post/PostShow';
 import CreatePost from './components/post-forms/CreatePost';
 import EditPost from './components/post-forms/EditPost';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -33,21 +34,21 @@ const App = () => {
           <Route path='/' component={Header} />
           <Route exact path='/' component={Landing} />
           <Switch>
-            <Route exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
 
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
-            <Route exact path='/userinfo' component={UserProfile} />
+            <PrivateRoute exact path='/userinfo' component={UserProfile} />
 
-            <Route exact path='/createprofile' component={CreateProfile} />
-            <Route exact path='/editprofile' component={EditProfile} />
+            <PrivateRoute exact path='/createprofile' component={CreateProfile} />
+            <PrivateRoute exact path='/editprofile' component={EditProfile} />
             <Route exact path='/profiles' component={ProfileList} />
             <Route exact path='/profile/:id' component={ProfileShow} />
             <Route exact path='/addexperience' component={AddExperience} />
             <Route exact path='/addproject' component={AddProject} />
 
-            <Route exact path='/createpost' component={CreatePost} />
-            <Route exact path='/editpost/:id' component={EditPost} />
+            <PrivateRoute exact path='/createpost' component={CreatePost} />
+            <PrivateRoute exact path='/editpost/:id' component={EditPost} />
             <Route exact path='/posts' component={PostList} />
             <Route exact path='/posts/:id' component={PostShow} />
 
