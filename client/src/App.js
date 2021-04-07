@@ -44,8 +44,8 @@ const App = () => {
             <PrivateRoute exact path='/editprofile' component={EditProfile} />
             <Route exact path='/profiles' component={ProfileList} />
             <Route exact path='/profile/:id' component={ProfileShow} />
-            <Route exact path='/addexperience' component={AddExperience} />
-            <Route exact path='/addproject' component={AddProject} />
+            <PrivateRoute exact path='/addexperience' component={AddExperience} />
+            <PrivateRoute exact path='/addproject' component={AddProject} />
 
             <PrivateRoute exact path='/createpost' component={CreatePost} />
             <PrivateRoute exact path='/editpost/:id' component={EditPost} />

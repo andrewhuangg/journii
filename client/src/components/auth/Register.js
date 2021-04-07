@@ -24,7 +24,7 @@ const Register = ({ location, history }) => {
     wrapLabelsWithSpan();
   }, []);
 
-  if (userInfo) return <Redirect to='/dashboard' />;
+  if (userInfo) return <Redirect to='/createprofile' />;
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];

@@ -2,6 +2,7 @@ import { FETCH_PROFILE_LIST, FETCH_PROFILE_FOLLOWERS } from '../../actions/types
 
 const initialState = {
   profiles: [],
+  loading: true,
 };
 
 export default (state = initialState, action) => {
@@ -13,6 +14,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         profiles: payload,
+        loading: false,
       };
     default:
       return state;

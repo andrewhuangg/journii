@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
+import { useHistory } from 'react-router-dom';
 import { updateProfile, getOwnProfileDetails } from '../../actions/profileAction';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [username, setUserName] = useState('');
   const [bio, setBio] = useState('');
@@ -26,11 +26,10 @@ const EditProfile = () => {
 
   useEffect(() => {
     dispatch(getOwnProfileDetails()).then((data) => {
-      console.log(data);
-      setUserName(data.username);
-      setBio(data.bio);
-      setWebsite(data.website);
-      setGithub(data.github);
+      setUserName(data.username || '');
+      setBio(data.bio || '');
+      setWebsite(data.website || '');
+      setGithub(data.github || '');
       setAddress(
         !data.location || !data.location.formattedAddress ? '' : data.location.formattedAddress
       );

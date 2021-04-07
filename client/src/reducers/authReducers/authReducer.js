@@ -2,6 +2,7 @@ import { CREATE_USER, LOGIN_USER, LOGOUT_USER, DESTROY_USER } from '../../action
 
 const initialState = {
   userInfo: {},
+  loading: true,
 };
 
 export default (state = initialState, action) => {
@@ -13,6 +14,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userInfo: payload,
+        loading: false,
       };
 
     case LOGOUT_USER:

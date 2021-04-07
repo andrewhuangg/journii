@@ -17,6 +17,7 @@ const initialState = {
   topPosts: [],
   pages: 0,
   page: 0,
+  loading: true,
 };
 
 export default (state = initialState, action) => {
@@ -28,36 +29,42 @@ export default (state = initialState, action) => {
         posts: payload.posts,
         pages: payload.pages,
         page: payload.page,
+        loading: false,
       };
 
     case FETCH_USER_POSTS:
       return {
         ...state,
         userPosts: payload,
+        loading: false,
       };
 
     case FETCH_FOLLOWED_POSTS:
       return {
         ...state,
         followedPosts: payload,
+        loading: false,
       };
 
     case FETCH_LIKED_POSTS:
       return {
         ...state,
         likedPosts: payload,
+        loading: false,
       };
 
     case FETCH_LATEST_POSTS:
       return {
         ...state,
         latestPosts: payload,
+        loading: false,
       };
 
     case FETCH_TOP_POSTS:
       return {
         ...state,
         topPosts: payload,
+        loading: false,
       };
 
     case RESET_POST_LIST:

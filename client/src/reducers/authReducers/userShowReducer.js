@@ -5,6 +5,7 @@ const initialState = {
   currentUser: {
     ownProfile: {},
   },
+  loading: true,
 };
 
 export default (state = initialState, action) => {
@@ -15,12 +16,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentUser: payload,
+        loading: false,
       };
 
     case FETCH_USER_DETAILS:
       return {
         ...state,
         user: payload,
+        loading: false,
       };
 
     case RESET_USER_DETAILS:

@@ -9,7 +9,7 @@ const ProfileGithub = ({ username }) => {
 
   useEffect(() => {
     if (username) dispatch(listGithubRepos(username));
-  }, []);
+  }, [dispatch, username]);
 
   const github = useSelector((state) => state.profiles.profile);
   const { githubList } = github;

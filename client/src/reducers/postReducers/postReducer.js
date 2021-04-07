@@ -18,6 +18,7 @@ const initialState = {
     likes: [],
     follows: [],
   },
+  loading: true,
 };
 
 export default (state = initialState, action) => {
@@ -26,7 +27,7 @@ export default (state = initialState, action) => {
   switch (type) {
     case CREATE_POST:
     case FETCH_POST_DETAILS:
-      return { ...state, post: payload };
+      return { ...state, post: payload, loading: false };
 
     case UPDATE_POST_LIKES:
       return {
@@ -45,6 +46,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         post: { ...state.post, comments: payload },
+        loading: false,
       };
 
     case CREATE_POST_REVIEW:
@@ -52,6 +54,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         post: { ...state.post, reviews: payload },
+        loading: false,
       };
 
     case DESTROY_POST:

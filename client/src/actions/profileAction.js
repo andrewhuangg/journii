@@ -9,6 +9,7 @@ import {
   UPDATE_PROFILE_FOLLOWS,
   FETCH_GITHUB_LIST,
   FETCH_PROFILE_FOLLOWERS,
+  ERROR_FETCH_GITHUB,
 } from './types';
 
 export const listFollowedProfiles = (userId) => async (dispatch) => {
@@ -50,6 +51,7 @@ export const getOwnProfileDetails = () => async (dispatch, getState) => {
       type: FETCH_PROFILE_DETAILS,
       payload: data,
     });
+
     return Promise.resolve(data);
   } catch (error) {
     console.log(error);
@@ -66,14 +68,11 @@ export const getOwnProfileDetails = () => async (dispatch, getState) => {
 export const getProfileDetails = (userId) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/v1/profiles/users/${userId}`);
-    console.log('i am fetching profile details');
 
     dispatch({
       type: FETCH_PROFILE_DETAILS,
       payload: data,
     });
-
-    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -89,8 +88,6 @@ export const getProfileDetails = (userId) => async (dispatch) => {
 export const listProfiles = () => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/v1/profiles`);
-
-    console.log('i am fetching profiles');
 
     dispatch({
       type: FETCH_PROFILE_LIST,
@@ -127,7 +124,8 @@ export const createProfile = (profile) => async (dispatch, getState) => {
       type: CREATE_PROFILE,
       payload: data,
     });
-    return Promise.resolve(data);
+
+    return Promise.resolve();
   } catch (error) {
     // dispatch({
     //   type: PROFILE_CREATE_FAIL,
@@ -159,8 +157,6 @@ export const updateProfile = (profile, id) => async (dispatch, getState) => {
       type: FETCH_PROFILE_DETAILS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -191,7 +187,6 @@ export const deleteProfile = (id) => async (dispatch, getState) => {
     dispatch({
       type: DESTROY_PROFILE,
     });
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -224,8 +219,6 @@ export const addExperience = (experience) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_EXPERIENCE,
       payload: data,
     });
-
-    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     //   dispatch({
@@ -259,8 +252,6 @@ export const deleteExperience = (id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_EXPERIENCE,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -293,8 +284,6 @@ export const addProject = (project) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_PROJECT,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -328,8 +317,6 @@ export const deleteProject = (id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_PROJECT,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -363,8 +350,6 @@ export const followProfile = (profile, id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_FOLLOWS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -398,8 +383,6 @@ export const unfollowProfile = (profile, id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_FOLLOWS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -421,13 +404,8 @@ export const listGithubRepos = (username) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_LIST_GITHUB_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch({
+      type: ERROR_FETCH_GITHUB,
+    });
   }
 };

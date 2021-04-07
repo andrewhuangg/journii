@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { followProfile, unfollowProfile, deleteProfile } from '../../actions/profileAction';
-import { useHistory } from 'react-router-dom';
 
 const ProfileTop = ({
   profile,
@@ -10,16 +9,8 @@ const ProfileTop = ({
   profileUser,
 }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [followed, setFollowed] = useState(false);
-
-  // const userDetails = useSelector((state) => state.auth.userShow);
-  // const { user: profileUser } = userDetails;
-
-  // useEffect(() => {
-  //   dispatch(getUserDetails(match.params.id));
-  // }, [match]);
 
   useEffect(() => {
     follows.map((follow) => follow.user).includes(loggedInUser.id)
@@ -36,9 +27,7 @@ const ProfileTop = ({
   };
 
   const deleteHandler = (id) => {
-    dispatch(deleteProfile(id)).then(() => {
-      history.push('/profiles');
-    });
+    dispatch(deleteProfile(id));
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';
@@ -54,9 +43,7 @@ const ProfileTop = ({
   const unsplashImage = `${unsplashURL}${getRandomSize()}`;
   const randomDefaultImage = {
     backgroundImage: `url(${
-      profileUser.image !== null && profileUser.image !== undefined
-        ? profileUser.image
-        : unsplashImage
+      profileUser.image && profileUser.image.length > 0 ? profileUser.image : unsplashImage
     })`,
   };
 
@@ -67,7 +54,7 @@ const ProfileTop = ({
     <section className='profile-top'>
       <div className='profile-top__image' style={randomDefaultImage}></div>
       <div className='profile-top__text'>
-        <h2 className='profile-top__name'>{user ? user.name.trim() : ''}</h2>
+        <h2 className='profile-top__name'>{user.name && user.name.trim()}</h2>
         <div className='profile-top__bio'>{bio}</div>
         <div className='profile-top__username'>{username}</div>
         <div className='profile-top__social'>

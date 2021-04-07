@@ -25,8 +25,6 @@ export const listFollowedPosts = (userId) => async (dispatch) => {
       type: FETCH_FOLLOWED_POSTS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -47,8 +45,6 @@ export const listLikedPosts = (userId) => async (dispatch) => {
       type: FETCH_LIKED_POSTS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -69,8 +65,6 @@ export const listLatestPosts = (limit) => async (dispatch) => {
       type: FETCH_LATEST_POSTS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -91,8 +85,6 @@ export const listTopPosts = (limit) => async (dispatch) => {
       type: FETCH_TOP_POSTS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -113,8 +105,6 @@ export const listPosts = (keyword = '', pageNumber = '') => async (dispatch) => 
       type: FETCH_POST_LIST,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -135,8 +125,6 @@ export const listUserPosts = (userId) => async (dispatch) => {
       type: FETCH_USER_POSTS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -156,7 +144,6 @@ export const listPostDetails = (id) => async (dispatch) => {
       type: FETCH_POST_DETAILS,
       payload: data,
     });
-
     return Promise.resolve(data);
   } catch (error) {
     console.log(error);
@@ -190,8 +177,6 @@ export const likePost = (post, id) => async (dispatch, getState) => {
       type: UPDATE_POST_LIKES,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -224,8 +209,6 @@ export const unlikePost = (post, id) => async (dispatch, getState) => {
       type: UPDATE_POST_LIKES,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -258,8 +241,6 @@ export const followPost = (post, id) => async (dispatch, getState) => {
       type: UPDATE_POST_FOLLOWS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -292,8 +273,6 @@ export const unfollowPost = (post, id) => async (dispatch, getState) => {
       type: UPDATE_POST_FOLLOWS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -391,8 +370,6 @@ export const updatePost = (post, id) => async (dispatch, getState) => {
       type: FETCH_POST_DETAILS,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -425,8 +402,6 @@ export const createPostComment = (postId, comment) => async (dispatch, getState)
       type: CREATE_POST_COMMENT,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -459,8 +434,6 @@ export const deletePostComment = (postId, commentId) => async (dispatch, getStat
       type: DESTROY_POST_COMMENT,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -493,8 +466,6 @@ export const createPostReview = (postId, review) => async (dispatch, getState) =
       type: CREATE_POST_REVIEW,
       payload: data,
     });
-
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -527,7 +498,6 @@ export const deletePostReview = (postId, reviewId) => async (dispatch, getState)
       type: DESTROY_POST_REVIEW,
       payload: data,
     });
-    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({

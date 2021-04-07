@@ -7,7 +7,7 @@ import {
   UPDATE_PROFILE_PROJECT,
   DESTROY_PROFILE,
   RESET_PROFILE_DETAILS,
-  RESET_POST_DETAILS,
+  ERROR_FETCH_GITHUB,
 } from '../../actions/types';
 
 const initialState = {
@@ -17,6 +17,7 @@ const initialState = {
     follows: [],
     social: {},
   },
+  loading: true,
   githubList: [],
 };
 
@@ -26,7 +27,7 @@ export default (state = initialState, action) => {
   switch (type) {
     case CREATE_PROFILE:
     case FETCH_PROFILE_DETAILS:
-      return { ...state, profile: payload };
+      return { ...state, profile: payload, loading: false };
 
     case UPDATE_PROFILE_FOLLOWS:
       return {
@@ -52,8 +53,14 @@ export default (state = initialState, action) => {
         githubList: payload.data,
       };
 
+    case ERROR_FETCH_GITHUB:
+      return {
+        ...state,
+        githubList: [],
+      };
+
     case DESTROY_PROFILE:
-    case RESET_POST_DETAILS:
+    case RESET_PROFILE_DETAILS:
       return {};
 
     default:

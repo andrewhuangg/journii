@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout, getMe } from '../../actions/authAction';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/authAction';
 import { Link } from 'react-router-dom';
 
-const MenuSlider = ({ menuRef, userInfo, isOpen }) => {
+const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logout());
   };
-
-  useEffect(() => {
-    if (userInfo) dispatch(getMe());
-  }, [userInfo]);
-
-  const userDetails = useSelector((state) => state.auth.userShow);
-  const { currentUser } = userDetails;
 
   // make a go to profile link
   return (

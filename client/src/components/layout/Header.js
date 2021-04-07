@@ -1,16 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import SearchBox from './SearchBox';
 import MenuSlider from './MenuSlider';
+import { getMe } from '../../actions/authAction';
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo } = loginUser;
+
+  const userDetails = useSelector((state) => state.auth.userShow);
+  const { currentUser } = userDetails;
 
   const menuRef = useRef(null);
 
@@ -23,8 +28,10 @@ const Header = () => {
       ? document.addEventListener('click', handleClickSliderOpen)
       : document.removeEventListener('click', handleClickSliderOpen);
 
+    if (userInfo) dispatch(getMe());
+
     return () => document.removeEventListener('click', handleClickSliderOpen);
-  }, [isOpen]);
+  }, [isOpen, userInfo]);
 
   const handleMenuSlider = (e) => {
     setIsOpen(!isOpen);
@@ -40,9 +47,6 @@ const Header = () => {
       </li>
       <li>
         <Link to='/profiles'>Profiles</Link>
-      </li>
-      <li>
-        <Link to='/random'>Profiles</Link>
       </li>
     </ul>
   );
@@ -63,7 +67,7 @@ const Header = () => {
 
   return (
     <>
-      <MenuSlider menuRef={menuRef} userInfo={userInfo} isOpen={isOpen} />
+      <MenuSlider menuRef={menuRef} userInfo={userInfo} isOpen={isOpen} currentUser={currentUser} />
       <header className='header'>
         <nav className='header__nav container'>
           <div className='header__logo-container'>

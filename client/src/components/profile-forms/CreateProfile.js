@@ -1,5 +1,5 @@
-import { useHistory } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { createProfile } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
@@ -7,7 +7,6 @@ import AlertMessage from '../layout/AlertMessage';
 
 const CreateProfile = () => {
   const dispatch = useDispatch();
-
   const history = useHistory();
 
   const [username, setUserName] = useState('');
@@ -24,29 +23,30 @@ const CreateProfile = () => {
   const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
+  const profileShow = useSelector((state) => state.profiles.profile);
+  const { profile, loading } = profileShow;
+
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!bio) {
-      setMessage('bio cannot be empty');
-    } else {
-      dispatch(
-        createProfile({
-          username,
-          bio,
-          website,
-          address,
-          github,
-          youtube,
-          linkedin,
-          twitter,
-          facebook,
-          instagram,
-        })
-      ).then(() => {
-        history.push('/dashboard');
-      });
-    }
+    dispatch(
+      createProfile({
+        username,
+        bio,
+        website,
+        address,
+        github,
+        youtube,
+        linkedin,
+        twitter,
+        facebook,
+        instagram,
+      })
+    ).then(() => {
+      history.push('/dashboard');
+    });
   };
+
+  // if (profile) return <Redirect to='/dashboard' />;
 
   return (
     <div className='cre-profile'>
@@ -60,6 +60,7 @@ const CreateProfile = () => {
               placeholder='Username'
               value={username}
               onChange={(e) => setUserName(e.target.value)}
+              required
             />
           </div>
           <div className='cre-profile__form-control'>
