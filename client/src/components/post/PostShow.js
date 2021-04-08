@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPostDetails } from '../../actions/postAction';
 import { getUserDetails } from '../../actions/authAction';
-import AlertMessage from '../layout/AlertMessage';
 import CreateComment from './CreateComment';
 import ReviewSlider from './ReviewSlider';
 import PostHero from './PostHero';

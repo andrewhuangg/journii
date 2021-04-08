@@ -24,7 +24,7 @@ const ProfileItem = ({
 
   const unsplashImage = `${unsplashURL}${getRandomSize()}`;
   const randomDefaultImage = {
-    backgroundImage: `url(${image.length > 0 ? image : unsplashImage})`,
+    backgroundImage: `url(${image && image.length > 0 ? image : unsplashImage})`,
   };
 
   return (

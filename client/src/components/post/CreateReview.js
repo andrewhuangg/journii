@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import AlertMessage from '../layout/AlertMessage';
-import Spinner from '../layout/Spinner';
 import { createPostReview, listPostDetails } from '../../actions/postAction';
 
 const CreateReview = ({ postId }) => {

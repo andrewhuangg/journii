@@ -92,7 +92,8 @@
     }
   }
 
-  &__follow-btn {
+  &__follow-btn,
+  &__edit-btn {
     border-radius: 5px;
     background-image: linear-gradient(to right, $darkTurquoise, $darkTurquoise);
     margin-right: 1rem;
@@ -103,6 +104,16 @@
 
     &:hover {
       transform: scale(0.9);
+    }
+  }
+
+  #post-hero__edit-link {
+    position: unset;
+    transition: none;
+    color: white;
+
+    &::before {
+      display: none;
     }
   }
 

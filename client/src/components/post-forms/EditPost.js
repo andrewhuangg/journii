@@ -1,14 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updatePost, listPostDetails } from '../../actions/postAction';
-import { POST_UPDATE_RESET } from '../../actions/types';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { updatePost, listPostDetails, deletePost } from '../../actions/postAction';
 import { Link } from 'react-router-dom';
-import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 
-const EditPost = ({ match, history }) => {
+const EditPost = ({ match }) => {
   const dispatch = useDispatch();
   const postId = match.params.id;
 
@@ -18,26 +14,26 @@ const EditPost = ({ match, history }) => {
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
 
-  // const postUpdate = useSelector((state) => state.postUpdate);
-  // const { success: successUpdate, error: errorUpdate } = postUpdate;
+  const postDetails = useSelector((state) => state.posts.post);
+  const { post, loading } = postDetails;
 
-  const postDetails = useSelector((state) => state.postDetails);
-  // const { loading: loadingDetails, post, error: errorDetails } = postDetails;
-  const { post } = postDetails;
+  useEffect(() => {
+    dispatch(listPostDetails(postId)).then((data) => {
+      setText(data.text || '');
+      setTitle(data.title || '');
+      post.image && post.image.length > 0
+        ? setImage(post.image)
+        : data.image && data.image.length > 0
+        ? setImage(data.image)
+        : setImage('');
+    });
+  }, [dispatch, post.image]);
 
-  // useEffect(() => {
-  //   if (successUpdate) {
-  //     // dispatch({ type: POST_UPDATE_RESET });
-  //     history.push(`/posts`);
-  //   }
-  //   if (!post || post._id !== postId) {
-  //     dispatch(listPostDetails(postId));
-  //   } else {
-  //     setTitle(post.title);
-  //     setText(post.text);
-  //     setImage(post.image);
-  //   }
-  // }, [dispatch, post, postId, successUpdate, history]);
+  const deleteHandler = (id) => {
+    dispatch(deletePost(id)).then(() => {
+      window.location.pathname = '/posts';
+    });
+  };
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -62,67 +58,83 @@ const EditPost = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!text) {
-      setMessage('post cannot be empty');
-    } else {
-      setMessage(null);
-      dispatch(updatePost({ text, title, image }, post._id));
-    }
+    dispatch(updatePost({ text, title, image }, post._id));
+  };
+
+  const unsplashURL = 'https://source.unsplash.com/collection/289662/';
+
+  const getRandomNumber = () => {
+    const num = Math.floor(Math.random() * 10) + 900;
+    return num;
+  };
+  const getRandomSize = () => {
+    return `${getRandomNumber()}x${getRandomNumber()}`;
+  };
+
+  const unsplashImage = `${unsplashURL}${getRandomSize()}`;
+  const randomDefaultImage = {
+    backgroundImage: `url(${image ? image : unsplashImage})`,
   };
 
   return (
     <>
-      <Row>
-        <Col mid={4}>
-          <h3>Update Post</h3>
-          <Link to='/posts'>Back to posts</Link>
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                rows={4}
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Spinner />}
-            </Form.Group>
-            <Form.Group controlId='title'>
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type='text'
-                rows={4}
-                placeholder='Title'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+      {!loading && (
+        <div className='editPost'>
+          <div className='editPost__wrapper'>
+            <form className='editPost__form' onSubmit={submitHandler}>
+              <h3>Update Post</h3>
+              <small>* = required field</small>
 
-            <Form.Group controlId='text'>
-              <Form.Control
-                as='textarea'
-                rows={4}
-                placeholder='Create a post...'
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              ></Form.Control>
-              <Form.Text id='textHelpBlock' muted>
-                The world is your playground...
-              </Form.Text>
-            </Form.Group>
+              {image && <div className='editPost__image' style={randomDefaultImage}></div>}
 
-            <Button type='submit' variant='primary'>
-              Update
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+              <div className='editPost__form-control'>
+                <input
+                  className='editPost__form-input'
+                  type='text'
+                  value={image}
+                  placeholder='Image File'
+                  onChange={(e) => setImage(e.target.value)}
+                />
+                <input
+                  className='editPost__form-image-file'
+                  id='image-file'
+                  type='file'
+                  onChange={uploadFileHandler}
+                  accept='image/*,.pdf'
+                />
+              </div>
+
+              <div className='editPost__form-control'>
+                <input
+                  className='editPost__form-input'
+                  type='text'
+                  value={title}
+                  placeholder='* Title'
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className='editPost__form-control'>
+                <textarea
+                  className='editPost__form-textarea'
+                  value={text}
+                  placeholder='* Edit your post...'
+                  onChange={(e) => setText(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div>
+                <button className='editPost__btn'>Update</button>
+                <button className='editPost__delete' onClick={() => deleteHandler(post._id)}>
+                  Delete
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

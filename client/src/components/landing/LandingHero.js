@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LandingHero = () => {
+const LandingHero = ({ userInfo, currentUser }) => {
   return (
     <section className='hero'>
       <div className='container'>
@@ -15,7 +15,16 @@ const LandingHero = () => {
               community, growth, and friendship. We thank you for allowing us to join your journii.
             </p>
           </div>
-          <Link to='/register' className='button hero__cta'>
+          <Link
+            to={
+              !userInfo
+                ? '/register'
+                : currentUser && !currentUser.ownProfile
+                ? '/createprofile'
+                : '/createpost'
+            }
+            className='button hero__cta'
+          >
             Lets get started
           </Link>
         </div>

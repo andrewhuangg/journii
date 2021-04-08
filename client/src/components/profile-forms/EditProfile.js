@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { updateProfile, getOwnProfileDetails } from '../../actions/profileAction';
+import { updateProfile, getOwnProfileDetails, deleteProfile } from '../../actions/profileAction';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [username, setUserName] = useState('');
   const [bio, setBio] = useState('');
@@ -65,6 +63,12 @@ const EditProfile = () => {
         )
       );
     }
+  };
+
+  const deleteHandler = (id) => {
+    dispatch(deleteProfile(id)).then(() => {
+      window.location.pathname = '/profiles';
+    });
   };
 
   return (
@@ -173,7 +177,17 @@ const EditProfile = () => {
                 </div>
               </>
             )}
-            <button className='editProfile__form-btn'>Update</button>
+            <div className='editProfile__btn-wrapper'>
+              <button className='editProfile__form-btn'>Update</button>
+              <button
+                className='editProfile__form-delete'
+                onClick={() => {
+                  deleteHandler(profile._id);
+                }}
+              >
+                Delete
+              </button>
+            </div>
           </form>
           <button className='editProfile__social-btn' onClick={() => toggleSocial(!displaySocial)}>
             Update Social

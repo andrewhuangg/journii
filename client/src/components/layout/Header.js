@@ -80,7 +80,10 @@ const Header = () => {
             {userInfo ? (
               <>
                 {headerLinks}
-                <Link to='/createpost' className='header__post-btn hide-for-mobile'>
+                <Link
+                  to={currentUser && !currentUser.ownProfile ? '/createprofile' : '/createpost'}
+                  className='header__post-btn hide-for-mobile'
+                >
                   Create Post
                 </Link>
                 <button onClick={handleMenuSlider} className='menu__btn'>

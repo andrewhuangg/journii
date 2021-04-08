@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { followProfile, unfollowProfile, deleteProfile } from '../../actions/profileAction';
 
 const ProfileTop = ({
@@ -27,7 +27,9 @@ const ProfileTop = ({
   };
 
   const deleteHandler = (id) => {
-    dispatch(deleteProfile(id));
+    dispatch(deleteProfile(id)).then(() => {
+      window.location.pathname = '/profiles';
+    });
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';

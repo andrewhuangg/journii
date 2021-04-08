@@ -15,8 +15,12 @@ const Landing = () => {
 
   const postTopRated = useSelector((state) => state.posts.postList);
   const { topPosts } = postTopRated;
+
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo } = loginUser;
+
+  const loggedInUser = useSelector((state) => state.auth.userShow);
+  const { currentUser } = loggedInUser;
 
   useEffect(() => {
     dispatch(listTopPosts(4));
@@ -28,7 +32,7 @@ const Landing = () => {
 
       <LandingShowcase userInfo={userInfo} />
 
-      <LandingHero />
+      <LandingHero currentUser={currentUser} userInfo={userInfo} />
 
       <LandingFeature />
 

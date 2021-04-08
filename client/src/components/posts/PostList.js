@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPosts } from '../../actions/postAction';
-import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 import PostItem from './PostItem';
 import Paginate from '../layout/Paginate';
 import Meta from '../layout/Meta';

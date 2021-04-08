@@ -8,11 +8,9 @@ import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
 import { useHistory } from 'react-router-dom';
-import { RESET_PROFILE_DETAILS } from '../../actions/types';
 
 const ProfileShow = ({ match }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo } = loginUser;
@@ -28,11 +26,6 @@ const ProfileShow = ({ match }) => {
   useEffect(() => {
     dispatch(getProfileDetails(match.params.id));
     dispatch(getUserDetails(match.params.id));
-
-    // if (deleted) {
-    //   history.push('/profiles');
-    //   dispatch({ type: RESET_PROFILE_DETAILS });
-    // }
   }, [dispatch, match.params.id]);
 
   return (

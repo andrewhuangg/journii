@@ -80,9 +80,15 @@ const PostHero = ({
                 {followed ? 'Unfollow' : 'Follow'}
               </button>
             ) : (
-              <button className='post-hero__delete-btn' onClick={() => deleteHandler(_id)}>
-                <i className='fas fa-trash'></i>
-              </button>
+              <>
+                <Link to={`/editpost/${_id}`} id='post-hero__edit-link'>
+                  <button className='post-hero__edit-btn'>Edit</button>
+                </Link>
+
+                <button className='post-hero__delete-btn' onClick={() => deleteHandler(_id)}>
+                  <i className='fas fa-trash'></i>
+                </button>
+              </>
             )}
           </div>
         </div>

@@ -187,6 +187,8 @@ export const deleteProfile = (id) => async (dispatch, getState) => {
     dispatch({
       type: DESTROY_PROFILE,
     });
+
+    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({

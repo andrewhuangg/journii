@@ -91,13 +91,16 @@ exports.logout = asyncHandler(async (req, res) => {
 exports.updateDetails = asyncHandler(async (req, res) => {
   let user = await User.findById(req.user.id);
   if (!user) throw new ErrorResponse('User not found', 401);
+
   const fieldsToUpdate = {
     name: req.body.name || user.name,
     email: req.body.email || user.email,
     phone: req.body.phone || user.phone,
     about: req.body.about || user.about,
-    image: req.body.image || user.image,
+    image: '',
   };
+
+  if (req.body.image.length > 0) fieldsToUpdate.image = req.body.image;
 
   user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
     new: true,

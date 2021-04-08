@@ -100,6 +100,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       type: FETCH_USER_DETAILS,
       payload: data,
     });
+    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({

@@ -6,7 +6,7 @@ import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import { getUserDetails, updateUserInfo } from '../../actions/authAction';
 
-const UserProfile = ({ history }) => {
+const UserProfile = () => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -20,22 +20,17 @@ const UserProfile = ({ history }) => {
   const userDetails = useSelector((state) => state.auth.userShow);
   const { user } = userDetails;
 
-  const loginUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo } = loginUser;
-
   useEffect(() => {
-    if (!userInfo) {
-      history.push('/login');
-    } else {
-      if (!user || !user.name) {
-        dispatch(getUserDetails('me'));
-      } else {
-        setName(user.name);
-        setEmail(user.email);
-        user.image ? setImage(user.image) : setImage('');
-      }
-    }
-  }, [dispatch, history, userInfo, user]);
+    dispatch(getUserDetails('me')).then((data) => {
+      setName(data.name);
+      setEmail(data.email);
+      user.image && user.image.length > 0
+        ? setImage(user.image)
+        : data.image && data.image.length > 0
+        ? setImage(data.image)
+        : setImage('');
+    });
+  }, [dispatch, user.image]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -50,6 +45,7 @@ const UserProfile = ({ history }) => {
       };
 
       const { data } = await axios.post('/api/v1/upload', formData, config);
+
       setImage(data);
       setUploading(false);
     } catch (error) {
@@ -80,7 +76,7 @@ const UserProfile = ({ history }) => {
 
   const unsplashImage = `${unsplashURL}${getRandomSize()}`;
   const randomDefaultImage = {
-    backgroundImage: `url(${user && user.image ? user.image : unsplashImage})`,
+    backgroundImage: `url(${user.image && user.image.length > 0 ? user.image : unsplashImage})`,
   };
 
   return (
@@ -90,7 +86,7 @@ const UserProfile = ({ history }) => {
           <form className='userProfile__form' onSubmit={submitHandler}>
             <h3>Personal</h3>
             <small>* = required field</small>
-            {user.image && <div className='userProfile__image' style={randomDefaultImage}></div>}
+            <div className='userProfile__image' style={randomDefaultImage}></div>
             <div className='userProfile__form-control'>
               <input
                 className='userProfile__form-input'
