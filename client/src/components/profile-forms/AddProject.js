@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import { addProject, getOwnProfileDetails } from '../../actions/profileAction';
-import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 
 const AddProject = ({ history }) => {
   const dispatch = useDispatch();
@@ -17,142 +13,140 @@ const AddProject = ({ history }) => {
   const [to, setTo] = useState('');
   const [current, setCurrent] = useState(false);
   const [website, setWebsite] = useState('');
-  const [toDateDisabled, toggleDisabled] = useState(false);
-  const [message, setMessage] = useState(null);
 
-  const profileExperience = useSelector((state) => state.profiles.profile);
-  const { profile } = profileExperience;
+  const [message, setMessage] = useState(null);
+  const [toDateDisabled, toggleDisabled] = useState(false);
+
+  const profileDetails = useSelector((state) => state.profiles.profile);
+  const { profile, loading } = profileDetails;
 
   useEffect(() => {
     dispatch(getOwnProfileDetails());
-  }, []);
+  }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!name || !from) {
-      setMessage('name, from, fields cannot be empty');
-    } else {
-      setMessage(null);
-      dispatch(
-        addProject({
-          name,
-          description,
-          from,
-          to,
-          current,
-          website,
-          features,
-          technologies,
-        })
-      ).then(() => {
-        history.push(`/profile/${profile.user.id}`);
-      });
-    }
+    dispatch(
+      addProject({
+        name,
+        description,
+        from,
+        to,
+        current,
+        website,
+        features,
+        technologies,
+      })
+    ).then(() => {
+      history.push(`/profile/${profile.user.id}`);
+    });
   };
 
   return (
-    <Row>
-      <Col md={4}>
-        <h2>Add Project</h2>
-        <small>* = required field</small>
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='* Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+    <>
+      {!loading && (
+        <div className='addProject'>
+          <div className='addProject__wrapper'>
+            <form className='addProject__form' onSubmit={submitHandler}>
+              <h3>Add Project</h3>
+              <small>* = required field</small>
 
-          <Form.Group controlId='technologies'>
-            <Form.Label>Technologies</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Technologies'
-              value={technologies}
-              onChange={(e) => setTechnologies(e.target.value)}
-            ></Form.Control>
-            <Form.Text id='textHelpBlock' muted>
-              Comma separated, e.g. 'MongoDb, ExpressJs, ReactJs, NodeJs, etc,.'
-            </Form.Text>
-          </Form.Group>
+              <div className='addProject__form-control'>
+                <input
+                  className='addProject__form-input'
+                  type='text'
+                  placeholder='* Name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
 
-          <Form.Group controlId='features'>
-            <Form.Label>Features</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Features'
-              value={features}
-              onChange={(e) => setFeatures(e.target.value)}
-            ></Form.Control>
-            <Form.Text id='textHelpBlock' muted>
-              Comma separated, e.g. 'Basic CRUD, Follow Profiles, Like Posts, etc,.'
-            </Form.Text>
-          </Form.Group>
+              <div className='addProject__form-control'>
+                <input
+                  className='addProject__form-input'
+                  type='text'
+                  placeholder='Project Technologies - Comma separated, e.g. MongoDb, ExpressJs, ReactJs, NodeJs, etc,.'
+                  value={technologies}
+                  onChange={(e) => setTechnologies(e.target.value)}
+                />
+              </div>
 
-          <Form.Group controlId='current'>
-            <Form.Label>Project In Progress</Form.Label>
-            <Form.Check
-              type='checkbox'
-              placeholder='Current'
-              value={current}
-              checked={current}
-              onChange={(e) => {
-                setCurrent(!current);
-                toggleDisabled(!toDateDisabled);
-              }}
-            ></Form.Check>
-          </Form.Group>
+              <div className='addProject__form-control'>
+                <input
+                  className='addProject__form-input'
+                  type='text'
+                  placeholder='Project Features - Comma separated, e.g. Basic CRUD, Follow Profiles, Like Posts, etc,.'
+                  value={features}
+                  onChange={(e) => setFeatures(e.target.value)}
+                />
+              </div>
 
-          <Form.Group controlId='from'>
-            <Form.Label>{current ? 'Start' : '* From'}</Form.Label>
-            <Form.Control
-              type='date'
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              <div className='addProject__form-control-date'>
+                <div className='addProject__date-container'>
+                  <input
+                    className='addProject__input-checkbox'
+                    type='checkbox'
+                    value={current}
+                    onChange={(e) => {
+                      setCurrent(!current);
+                      toggleDisabled(!toDateDisabled);
+                    }}
+                  />
+                  <label>Project In Progress</label>
+                </div>
 
-          {!toDateDisabled && (
-            <Form.Group controlId='to'>
-              <Form.Label>To</Form.Label>
-              <Form.Control
-                type='date'
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-                disabled={toDateDisabled ? 'disabled' : ''}
-              ></Form.Control>
-            </Form.Group>
-          )}
+                <div className='addProject__date-container'>
+                  <label>{current ? '* Start' : '* From'}</label>
+                  <input
+                    className='addProject__form-input-date'
+                    type='date'
+                    value={from}
+                    onChange={(e) => setFrom(e.target.value)}
+                    required
+                  />
+                </div>
 
-          <Form.Group controlId='website'>
-            <Form.Label>Project Website</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='website'
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+                {!toDateDisabled && (
+                  <div className='addProject__date-container'>
+                    <label>to</label>
+                    <input
+                      className='addProject__form-input-date'
+                      type='date'
+                      value={to}
+                      onChange={(e) => setTo(e.target.value)}
+                      disabled={toDateDisabled ? 'disabled' : ''}
+                    />
+                  </div>
+                )}
+              </div>
 
-          <Form.Group controlId='description'>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as='textarea'
-              placeholder='Description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              <div className='addProject__form-control'>
+                <input
+                  className='addProject__form-input'
+                  type='text'
+                  value={website}
+                  placeholder=' Project Website'
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
 
-          <Button type='submit' variant='primary'>
-            Add Project
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+              <div className='addProject__form-control'>
+                <textarea
+                  className='addProject__form-textarea'
+                  value={description}
+                  placeholder=' Project Description'
+                  onChange={(e) => setDescription(e.target.value)}
+                  maxLength='500'
+                />
+              </div>
+
+              <button className='addProject__btn'>Add Project</button>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

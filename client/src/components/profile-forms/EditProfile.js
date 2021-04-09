@@ -37,7 +37,7 @@ const EditProfile = () => {
       setLinkedin(!data.social || !data.social.linkedin ? '' : data.social.linkedin);
       setInstagram(!data.social || !data.social.instagram ? '' : data.social.instagram);
     });
-  }, []);
+  }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();

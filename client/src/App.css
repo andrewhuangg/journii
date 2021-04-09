@@ -4786,4 +4786,231 @@ button:hover::before,
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
 }
+
+.addProject {
+  height: 100vh;
+  width: 100vw;
+}
+
+@media (min-width: 40em) {
+  .addProject {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 0;
+    margin-top: 5rem;
+    overflow: hidden;
+  }
+}
+
+.addProject__wrapper {
+  background-color: whitesmoke;
+  padding: 1.25rem 2.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  height: 98%;
+}
+
+@media (min-width: 40em) {
+  .addProject__wrapper {
+    height: 50rem;
+  }
+}
+
+.addProject__form {
+  width: 36rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+}
+
+.addProject__form h3 {
+  margin-top: 1rem;
+}
+
+.addProject__form h3,
+.addProject__form small {
+  margin-bottom: 2rem;
+  color: #6e9eaf;
+}
+
+@media (min-width: 40em) {
+  .addProject__form {
+    width: 100%;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+.addProject__form-control {
+  margin: 0 0 2rem;
+  width: 30rem;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+@media (min-width: 40em) {
+  .addProject__form-control {
+    width: 40rem;
+  }
+}
+
+.addProject__form-control-date {
+  width: 30rem;
+  margin: 0 0 2rem;
+  padding: 0 0.5rem 0 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (min-width: 40em) {
+  .addProject__form-control-date {
+    width: 40rem;
+  }
+}
+
+.addProject__form-control-date label {
+  margin-right: 0.5rem;
+  font-size: 0.63rem;
+  font-weight: 400;
+  color: #495465;
+}
+
+@media (min-width: 40em) {
+  .addProject__form-control-date label {
+    font-size: 0.875rem;
+  }
+}
+
+.addProject__date-container {
+  margin-right: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.addProject__input-checkbox {
+  display: block;
+  font-size: 0.875rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.addProject__form-input-date {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+@media (min-width: 40em) {
+  .addProject__form-input-date {
+    font-size: 0.875rem;
+  }
+}
+
+.addProject__form-input-date:focus,
+.addProject__form-input-date :valid {
+  outline: 0;
+}
+
+.addProject__form-input-date:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.addProject__form-input {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  width: 100%;
+  padding: 0 0 0.9375rem 0;
+  font-size: 0.65rem;
+  color: #495465;
+  cursor: pointer;
+}
+
+@media (min-width: 40em) {
+  .addProject__form-input {
+    font-size: 0.875rem;
+  }
+}
+
+.addProject__form-input:focus,
+.addProject__form-input :valid {
+  outline: 0;
+}
+
+.addProject__form-input:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.addProject__form-textarea {
+  resize: none;
+  width: 100%;
+  height: 10rem;
+}
+
+.addProject__btn {
+  padding: 0.5rem 0.75rem;
+  margin-right: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.addProject__btn:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
 /*# sourceMappingURL=App.css.map */
