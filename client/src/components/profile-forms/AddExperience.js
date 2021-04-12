@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import { addExperience, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
@@ -19,124 +18,126 @@ const AddExperience = ({ history }) => {
   const [message, setMessage] = useState(null);
 
   const profileExperience = useSelector((state) => state.profiles.profile);
-  const { profile } = profileExperience;
+  const { profile, loading } = profileExperience;
 
   useEffect(() => {
     dispatch(getOwnProfileDetails());
-  }, []);
+  }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!title || !company || !from) {
-      setMessage('title, company, from, fields cannot be empty');
-    } else {
-      setMessage(null);
-      dispatch(
-        addExperience({
-          title,
-          company,
-          from,
-          to,
-          current,
-          address,
-          description,
-        })
-      ).then(() => {
-        history.push(`/profile/${profile.user.id}`);
-      });
-    }
+    dispatch(
+      addExperience({
+        title,
+        company,
+        from,
+        to,
+        current,
+        address,
+        description,
+      })
+    ).then(() => {
+      history.push(`/profile/${profile.user.id}`);
+    });
   };
 
   return (
-    <Row>
-      <Col md={4}>
-        <h2>Add Experience</h2>
-        <small>* = required field</small>
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='title'>
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='* Title'
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+    <>
+      {!loading && (
+        <div className='editExperience'>
+          <div className='editExperience__wrapper'>
+            <form className='editExperience__form' onSubmit={submitHandler}>
+              <h3>Add Experience</h3>
+              <small>* = required field</small>
 
-          <Form.Group controlId='company'>
-            <Form.Label>Company</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='* Company'
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-            ></Form.Control>
-            <Form.Text id='textHelpBlock' muted>
-              Could be your company or volunteer group
-            </Form.Text>
-          </Form.Group>
+              <div className='editExperience__form-control'>
+                <input
+                  className='editExperience__form-input'
+                  type='text'
+                  placeholder='* Title'
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+              </div>
 
-          <Form.Group controlId='current'>
-            <Form.Label>Current Job</Form.Label>
-            <Form.Check
-              type='checkbox'
-              placeholder='Current'
-              value={current}
-              checked={current}
-              onChange={(e) => {
-                setCurrent(!current);
-                toggleDisabled(!toDateDisabled);
-              }}
-            ></Form.Check>
-          </Form.Group>
+              <div className='editExperience__form-control'>
+                <input
+                  className='editExperience__form-input'
+                  type='text'
+                  placeholder='* Company'
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  required
+                />
+                <small>Could be your company or volunteer group etc.,</small>
+              </div>
 
-          <Form.Group controlId='from'>
-            <Form.Label>{current ? 'Start' : '* From'}</Form.Label>
-            <Form.Control
-              type='date'
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              <div className='editExperience__form-control-date'>
+                <div className='editExperience__date-container'>
+                  <input
+                    className='editExperience__input-checkbox'
+                    type='checkbox'
+                    value={current}
+                    onChange={(e) => {
+                      setCurrent(!current);
+                      toggleDisabled(!toDateDisabled);
+                    }}
+                  />
+                  <label>Current Experience</label>
+                </div>
 
-          {!toDateDisabled && (
-            <Form.Group controlId='to'>
-              <Form.Label>To</Form.Label>
-              <Form.Control
-                type='date'
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-                disabled={toDateDisabled ? 'disabled' : ''}
-              ></Form.Control>
-            </Form.Group>
-          )}
+                <div className='editExperience__date-container'>
+                  <label>{current ? '* Start' : '* From'}</label>
+                  <input
+                    className='editExperience__form-input-date'
+                    type='date'
+                    value={from}
+                    onChange={(e) => setFrom(e.target.value)}
+                    required
+                  />
+                </div>
 
-          <Form.Group controlId='address'>
-            <Form.Label>Address</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Address'
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+                {!toDateDisabled && (
+                  <div className='editExperience__date-container'>
+                    <label>to</label>
+                    <input
+                      className='editExperience__form-input-date'
+                      type='date'
+                      value={to}
+                      onChange={(e) => setTo(e.target.value)}
+                      disabled={toDateDisabled ? 'disabled' : ''}
+                    />
+                  </div>
+                )}
+              </div>
 
-          <Form.Group controlId='description'>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as='textarea'
-              placeholder='Description'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              <div className='editExperience__form-control'>
+                <input
+                  className='editExperience__form-input'
+                  type='text'
+                  placeholder='Address'
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
 
-          <Button type='submit' variant='primary'>
-            Add Experience
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+              <div className='editExperience__form-control'>
+                <textarea
+                  className='editExperience__form-textarea'
+                  value={description}
+                  placeholder='Talk about your experience'
+                  onChange={(e) => setDescription(e.target.value)}
+                  maxLength='500'
+                />
+              </div>
+
+              <button className='editExperience__btn'>Add Experience</button>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

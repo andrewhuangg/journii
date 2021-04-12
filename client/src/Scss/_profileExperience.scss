@@ -4,6 +4,7 @@
   align-items: center;
   text-align: center;
   color: $darkBlue;
+  overflow-x: auto;
 
   @include breakpoint-up(medium) {
     grid-column: 1 / 3;
@@ -15,7 +16,7 @@
   }
 
   &__title {
-    margin: 1rem auto;
+    margin: 0.5rem auto;
     font-size: 2rem;
     line-height: 1.15;
     font-weight: 400;
@@ -46,6 +47,7 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    justify-content: center;
     margin: 1rem auto;
     width: 30rem;
     padding: 1rem 0.5rem;
@@ -55,8 +57,8 @@
       align-items: flex-start;
       margin: 0;
       padding: 1rem;
-      width: auto;
-      justify-content: center;
+      width: 20rem;
+      justify-content: flex-start;
     }
   }
 
@@ -102,7 +104,13 @@
   &__company-info,
   &__address,
   &__description {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 16rem;
   }
 
   &__company {

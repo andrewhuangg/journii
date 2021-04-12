@@ -126,7 +126,7 @@ const AddProject = ({ history }) => {
                   className='addProject__form-input'
                   type='text'
                   value={website}
-                  placeholder=' Project Website'
+                  placeholder='Project Website'
                   onChange={(e) => setWebsite(e.target.value)}
                 />
               </div>
@@ -135,7 +135,7 @@ const AddProject = ({ history }) => {
                 <textarea
                   className='addProject__form-textarea'
                   value={description}
-                  placeholder=' Project Description'
+                  placeholder='Talk about your project'
                   onChange={(e) => setDescription(e.target.value)}
                   maxLength='500'
                 />
