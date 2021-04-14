@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { followProfile, unfollowProfile, deleteProfile } from '../../actions/profileAction';
+import Modal from '../layout/Modal';
 
 const ProfileTop = ({
   profile,
@@ -11,6 +12,8 @@ const ProfileTop = ({
   const dispatch = useDispatch();
 
   const [followed, setFollowed] = useState(false);
+  const [type, setType] = useState('');
+  const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
     follows.map((follow) => follow.user).includes(loggedInUser.id)
@@ -31,6 +34,13 @@ const ProfileTop = ({
       window.location.pathname = '/profiles';
     });
   };
+
+  const toggleModalState = (type) => {
+    setModalState(!modalState);
+    setType(type);
+  };
+
+  console.log(type, modalState);
 
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';
 
@@ -115,8 +125,27 @@ const ProfileTop = ({
               <i className='fas fa-trash'></i>
             </button>
           )}
+          <button className='modal__btn btn-like' onClick={() => toggleModalState('LIKED_POSTS')}>
+            Liked Posts
+          </button>
+          <button
+            className='modal__btn btn-follow'
+            onClick={() => toggleModalState('FOLLOWED_POSTS')}
+          >
+            Followed Posts
+          </button>
+          <button className='modal__btn btn-user' onClick={() => toggleModalState('USER_POSTS')}>
+            My Posts
+          </button>
+          <button
+            className='modal__btn btn-profile'
+            onClick={() => toggleModalState('FOLLOWED_PROFILES')}
+          >
+            Following
+          </button>
         </div>
       </div>
+      <Modal userInfo={loggedInUser} type={type} modalState={modalState} />
     </section>
   );
 };

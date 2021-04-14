@@ -2,9 +2,13 @@
   &__right {
     flex: 1;
     height: 30rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: 50rem;
   }
 
-  &__top-posts {
+  &__right-container {
     margin: 0.75rem;
     background-color: white;
     overflow-y: scroll;
@@ -43,6 +47,14 @@
           opacity: 1;
         }
       }
+    }
+
+    a,
+    p {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .fa-star {

@@ -25,6 +25,7 @@ export const listFollowedPosts = (userId) => async (dispatch) => {
       type: FETCH_FOLLOWED_POSTS,
       payload: data,
     });
+    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -45,6 +46,7 @@ export const listLikedPosts = (userId) => async (dispatch) => {
       type: FETCH_LIKED_POSTS,
       payload: data,
     });
+    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -125,6 +127,7 @@ export const listUserPosts = (userId) => async (dispatch) => {
       type: FETCH_USER_POSTS,
       payload: data,
     });
+    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({
@@ -370,6 +373,8 @@ export const updatePost = (post, id) => async (dispatch, getState) => {
       type: FETCH_POST_DETAILS,
       payload: data,
     });
+
+    return Promise.resolve();
   } catch (error) {
     console.log(error);
     // dispatch({

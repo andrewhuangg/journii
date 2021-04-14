@@ -45,8 +45,6 @@ const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
               <Link to='/'></Link>
             </li> */}
 
-            {/* make links for other users as well - related to likedposts and followed posts for other users too, share component and lists */}
-
             {/* <li> //liked posts
               <Link to='/'></Link>
             </li> */}

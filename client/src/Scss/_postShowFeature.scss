@@ -121,6 +121,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
     color: $darkBlue;
+    word-break: break-all;
 
     @include breakpoint-up(large) {
       grid-column: 2 / 6;

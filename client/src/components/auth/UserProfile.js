@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Button, Row, Col, Image } from 'react-bootstrap';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 import { getUserDetails, updateUserInfo } from '../../actions/authAction';

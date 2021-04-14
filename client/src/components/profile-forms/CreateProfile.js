@@ -51,6 +51,7 @@ const CreateProfile = () => {
               placeholder='Username'
               value={username}
               onChange={(e) => setUserName(e.target.value)}
+              maxLength='30'
               required
             />
           </div>

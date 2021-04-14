@@ -20,6 +20,7 @@ export const listFollowedProfiles = (userId) => async (dispatch) => {
       type: FETCH_PROFILE_FOLLOWERS,
       payload: data,
     });
+    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({

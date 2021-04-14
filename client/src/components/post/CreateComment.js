@@ -33,6 +33,7 @@ const CreateComment = ({ postId }) => {
               placeholder='The world is your playground...'
               value={text}
               onChange={(e) => setText(e.target.value)}
+              maxLength='2000'
             />
             <button className='comment__form-btn' type='submit'>
               Submit

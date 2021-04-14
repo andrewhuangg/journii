@@ -1,0 +1,23 @@
+.useritemlist {
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  &__container {
+    width: 95%;
+  }
+
+  &__item {
+    background-color: white;
+    border-radius: 0.4rem;
+
+    p {
+      display: block;
+      margin: 1rem 0rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

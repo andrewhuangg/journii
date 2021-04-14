@@ -37,9 +37,10 @@
       line-height: 1.15;
       color: $darkBlue;
       margin-bottom: 1.5rem;
+      word-break: break-all;
 
       @include breakpoint-up(large) {
-        font-size: $font-xlg;
+        font-size: 1.75rem;
       }
     }
 

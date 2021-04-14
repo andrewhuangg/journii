@@ -58,7 +58,9 @@ const EditPost = ({ match }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updatePost({ text, title, image }, post._id));
+    dispatch(updatePost({ text, title, image }, post._id)).then(() => {
+      window.location.pathname = `/posts/${postId}`;
+    });
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';
@@ -111,6 +113,7 @@ const EditPost = ({ match }) => {
                   value={title}
                   placeholder='* Title'
                   onChange={(e) => setTitle(e.target.value)}
+                  maxLength='100'
                   required
                 />
               </div>

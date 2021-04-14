@@ -88,6 +88,7 @@ const CreatePost = ({ history }) => {
                 value={title}
                 placeholder='* Title'
                 onChange={(e) => setTitle(e.target.value)}
+                maxLength='100'
                 required
               />
             </div>

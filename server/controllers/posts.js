@@ -81,9 +81,6 @@ exports.updatePost = asyncHandler(async (req, res) => {
   if (post.user.toString() !== req.user._id.toString())
     throw new ErrorResponse(`User ${req.user._id} is not authorized to update this post`, 401);
 
-  console.log(req.body.image, 84);
-  console.log(req.body.image.length, 85);
-
   const postImageField = { image: '' };
 
   if (req.body.image.length > 0) postImageField.image = req.body.image;

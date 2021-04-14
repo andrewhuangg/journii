@@ -46,6 +46,7 @@
 
   &__title {
     font-size: $font-med;
+    word-break: break-all;
   }
 
   &__stats {

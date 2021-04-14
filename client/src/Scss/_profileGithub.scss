@@ -4,6 +4,7 @@
   align-items: center;
   text-align: center;
   color: $darkBlue;
+  padding: 0.1rem;
 
   @include breakpoint-up(medium) {
     grid-column: 1 / 3;

@@ -62,10 +62,10 @@
     font-size: $font-sm;
     line-height: 1.15;
     width: 22rem;
+    word-break: break-all;
 
     @include breakpoint-up(large) {
       width: 30rem;
-      word-wrap: break-word;
     }
   }
 

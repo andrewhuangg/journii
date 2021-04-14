@@ -1243,12 +1243,17 @@ button:hover::before,
   line-height: 1.1;
   font-weight: 700;
   margin-bottom: 0.75rem;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .post-item__text {
   font-size: 0.875rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
+  word-break: break-all;
 }
 
 .post-item__likes, .post-item__follows, .post-item__comments, .post-item__date, .post-item__rating {
@@ -1580,7 +1585,7 @@ button:hover::before,
   font-size: 0.8rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
-  overflow: hidden;
+  word-break: break-all;
 }
 
 .profile-item__created, .profile-item__followers {
@@ -1713,11 +1718,12 @@ button:hover::before,
   line-height: 1.15;
   color: #495465;
   margin-bottom: 1.5rem;
+  word-break: break-all;
 }
 
 @media (min-width: 64em) {
   .post-hero__header h1 {
-    font-size: 3.25rem;
+    font-size: 1.75rem;
   }
 }
 
@@ -2021,6 +2027,7 @@ button:hover::before,
   padding-left: 1rem;
   padding-right: 1rem;
   color: #495465;
+  word-break: break-all;
 }
 
 @media (min-width: 64em) {
@@ -2184,6 +2191,7 @@ button:hover::before,
   font-size: 0.875rem;
   line-height: 1.5;
   margin-bottom: 0.5rem;
+  word-break: break-all;
 }
 
 .comments__delete-btn {
@@ -2338,6 +2346,7 @@ button:hover::before,
   color: #495465;
   font-size: 0.875rem;
   line-height: 1.5;
+  word-break: break-all;
 }
 
 .reviews__delete-btn {
@@ -2623,12 +2632,12 @@ button:hover::before,
   font-size: 0.875rem;
   line-height: 1.15;
   width: 22rem;
+  word-break: break-all;
 }
 
 @media (min-width: 64em) {
   .profile-top__bio {
     width: 30rem;
-    word-wrap: break-word;
   }
 }
 
@@ -2767,6 +2776,7 @@ button:hover::before,
           align-items: center;
   text-align: center;
   color: #495465;
+  padding: 0.1rem;
 }
 
 @media (min-width: 40em) {
@@ -2971,7 +2981,7 @@ button:hover::before,
           align-items: center;
   text-align: center;
   color: #495465;
-  overflow-x: auto;
+  padding: 0.1rem;
 }
 
 @media (min-width: 40em) {
@@ -3069,7 +3079,7 @@ button:hover::before,
             align-items: flex-start;
     margin: 0;
     padding: 1rem;
-    width: 20rem;
+    width: auto;
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
@@ -3134,9 +3144,7 @@ button:hover::before,
 }
 
 .profile-experience__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 16rem;
+  word-break: break-all;
 }
 
 .profile-experience__company {
@@ -3262,7 +3270,7 @@ button:hover::before,
           align-items: center;
   text-align: center;
   color: #495465;
-  overflow-x: auto;
+  padding: 0.1rem;
 }
 
 @media (min-width: 40em) {
@@ -3343,12 +3351,8 @@ button:hover::before,
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   margin: 1rem auto;
   width: 30rem;
-  height: 20rem;
   padding: 1rem 0.5rem;
   -webkit-box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
           box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
@@ -3361,10 +3365,10 @@ button:hover::before,
             align-items: flex-start;
     margin: 0;
     padding: 1rem;
-    width: 20rem;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
+    width: auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 
@@ -3390,7 +3394,7 @@ button:hover::before,
 }
 
 .profile-project__header, .profile-project__website, .profile-project__description, .profile-project__body {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .profile-project__name {
@@ -3464,8 +3468,7 @@ button:hover::before,
 .profile-project__description {
   font-size: 0.875rem;
   line-height: 1.15;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 .profile-project__body {
@@ -3982,6 +3985,7 @@ button:hover::before,
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .editProfile__form-input:focus,
@@ -4162,6 +4166,7 @@ button:hover::before,
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .cre-profile__form-input:focus,
@@ -4248,8 +4253,8 @@ button:hover::before,
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-flow: row;
-          flex-flow: row;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -4290,6 +4295,16 @@ button:hover::before,
   overflow-y: scroll;
 }
 
+.dashboard__post-following-container p,
+.dashboard__post-following-container a, .dashboard__liked-container p,
+.dashboard__liked-container a, .dashboard__follower-container p,
+.dashboard__follower-container a {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dashboard__post-following-container {
   font-size: 0.875rem;
   padding: 0.5rem;
@@ -4320,9 +4335,16 @@ button:hover::before,
       -ms-flex: 1;
           flex: 1;
   height: 30rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+  height: 50rem;
 }
 
-.dashboard__top-posts {
+.dashboard__right-container {
   margin: 0.75rem;
   background-color: white;
   overflow-y: scroll;
@@ -4373,6 +4395,14 @@ button:hover::before,
 
 .dashboard__post-container a:hover::before {
   opacity: 1;
+}
+
+.dashboard__post-container a,
+.dashboard__post-container p {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dashboard__post-container .fa-star {
@@ -4431,6 +4461,7 @@ button:hover::before,
 
 .dashboard__title {
   font-size: 1.125rem;
+  word-break: break-all;
 }
 
 .dashboard__stats {
@@ -5256,5 +5287,78 @@ button:hover::before,
 .editExperience__btn:hover {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
+}
+
+.useritemlist {
+  overflow-y: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.useritemlist__container {
+  width: 95%;
+}
+
+.useritemlist__item {
+  background-color: white;
+  border-radius: 0.4rem;
+}
+
+.useritemlist__item p {
+  display: block;
+  margin: 1rem 0rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal__container {
+  width: 70%;
+  height: 85%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 5rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  background-color: #b3cace;
+}
+
+.modalshowing-true {
+  z-index: 10;
+  opacity: 1;
+  pointer-events: visible;
 }
 /*# sourceMappingURL=App.css.map */

@@ -53,6 +53,7 @@
     color: $darkBlue;
     font-size: $font-sm;
     line-height: 1.5;
+    word-break: break-all;
   }
 
   &__delete-btn {

@@ -7,7 +7,7 @@ import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
-import { useHistory } from 'react-router-dom';
+import UserItemList from '../posts/UserItemList';
 
 const ProfileShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -21,6 +21,8 @@ const ProfileShow = ({ match }) => {
   const profileShow = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileShow;
 
+  const [type, setType] = useState('');
+
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const ProfileShow = ({ match }) => {
     <>
       {!loading && (
         <div className='profileShow container'>
+          {/* <UserItemList userInfo={userInfo} type={'FOLLOWED_POSTS'} /> */}
           <ProfileTop profile={profile} loggedInUser={userInfo} profileUser={user} />
           {profile.github && <ProfileGithub username={profile.github} />}
           <ProfileExperience

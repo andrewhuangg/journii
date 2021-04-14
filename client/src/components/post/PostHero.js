@@ -60,7 +60,7 @@ const PostHero = ({
           <h1>{title}</h1>
           <p>
             Publisher{' '}
-            <Link to={{ pathname: `/profile/${id}` }} className='post-hero__a'>
+            <Link to={`/profile/${id}`} className='post-hero__a'>
               {name}
             </Link>
           </p>
