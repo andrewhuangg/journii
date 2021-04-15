@@ -35,23 +35,25 @@ const Dashboard = ({ match }) => {
     setModalState(!modalState);
     setType(type);
     setLocation(location);
+    setWindowOffSet(window.scrollY);
   };
 
   useEffect(() => {
+    const dashboardView = document.querySelector('.modaldashboard');
     if (modalState) {
       document.addEventListener('click', handleModalRef);
-      setWindowOffSet(window.scrollY);
       document.body.setAttribute(
         'style',
-        `position: fixed; 
-      top: -${windowOffSet}px;
-      left: 0;
-      right: 0;
-      `
+        `position: fixed;
+        top: -${windowOffSet}px;
+        left: 0;
+        right: 0;
+        `
       );
+      dashboardView.setAttribute('style', `top: ${windowOffSet}px`);
     } else {
-      document.removeEventListener('click', handleModalRef);
       document.body.setAttribute('style', '');
+      document.removeEventListener('click', handleModalRef);
       window.scrollTo(0, windowOffSet);
     }
 

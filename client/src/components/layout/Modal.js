@@ -2,7 +2,6 @@ import React from 'react';
 import UserItemList from '../posts/UserItemList';
 
 const Modal = ({ modalState, userInfo, type, modalRef, setModalState, location }) => {
-  console.log(location);
   return (
     <>
       <div className={`modal modalshowing-${modalState} modal${location}`}>

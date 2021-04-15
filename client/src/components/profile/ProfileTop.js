@@ -36,20 +36,21 @@ const ProfileTop = ({
 
   // windowScroll borrowed from https://medium.com/yet-sh/in-react-how-to-prevent-body-from-scrolling-when-a-modal-is-opened-bf3b90647902
   useEffect(() => {
+    const profileTopView = document.querySelector('.modal');
     if (modalState) {
       document.addEventListener('click', handleModalRef);
-      setWindowOffSet(window.scrollY);
       document.body.setAttribute(
         'style',
         `position: fixed; 
-      top: -${windowOffSet}px;
-      left: 0;
-      right: 0;
-      `
+        top: -${windowOffSet}px;
+        left: 0;
+        right: 0;
+        `
       );
+      profileTopView.setAttribute('style', `top: ${windowOffSet}px`);
     } else {
-      document.removeEventListener('click', handleModalRef);
       document.body.setAttribute('style', '');
+      document.removeEventListener('click', handleModalRef);
       window.scrollTo(0, windowOffSet);
     }
 
@@ -73,6 +74,7 @@ const ProfileTop = ({
   const toggleModalState = (type) => {
     setModalState(!modalState);
     setType(type);
+    setWindowOffSet(window.scrollY);
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';
