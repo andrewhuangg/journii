@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listUserPosts, listTopPosts } from '../../actions/postAction';
 import { Link } from 'react-router-dom';
 import Rating from '../layout/Rating';
+import { MODAL_USER_POSTS, MODAL_TOP_POSTS } from '../../actions/types';
 
-const DashboardRight = ({ userInfo }) => {
+const DashboardRight = ({ userInfo, toggleModalState }) => {
   const dispatch = useDispatch();
   const dashboardPosts = useSelector((state) => state.posts.postList);
   const { topPosts, userPosts } = dashboardPosts;
@@ -17,22 +18,22 @@ const DashboardRight = ({ userInfo }) => {
   return (
     <aside className='dashboard__right'>
       <div className='dashboard__right-container'>
-        <h6>Top Posts</h6>
-        {topPosts.map((post) => (
+        <h6 onClick={() => toggleModalState(MODAL_USER_POSTS, 'dashboard')}>My Posts</h6>
+        {userPosts.map((post) => (
           <div className='dashboard__post-container' key={post._id}>
             <Link to={`posts/${post._id}`}>
               <p>{post.title}</p>
-              <Rating value={post.rating} />
             </Link>
           </div>
         ))}
       </div>
       <div className='dashboard__right-container'>
-        <h6>My Posts</h6>
-        {userPosts.map((post) => (
+        <h6 onClick={() => toggleModalState(MODAL_TOP_POSTS, 'dashboard')}>Top 20 Posts</h6>
+        {topPosts.map((post) => (
           <div className='dashboard__post-container' key={post._id}>
             <Link to={`posts/${post._id}`}>
               <p>{post.title}</p>
+              <Rating value={post.rating} />
             </Link>
           </div>
         ))}

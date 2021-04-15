@@ -193,11 +193,10 @@
   &__btn {
     border-radius: 5px;
     background-image: linear-gradient(to right, $salmon, $salmon);
-    font-size: 0.75rem;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.7rem;
     cursor: pointer;
     transition: all 200ms ease-in-out;
-    width: 4rem;
-    padding: 0.5rem;
 
     &:hover {
       transform: scale(0.9);

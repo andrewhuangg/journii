@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { followProfile, unfollowProfile, deleteProfile } from '../../actions/profileAction';
 import Modal from '../layout/Modal';
+import {
+  MODAL_LIKED_POSTS,
+  MODAL_FOLLOWED_POSTS,
+  MODAL_USER_POSTS,
+  MODAL_FOLLOWED_PROFILES,
+} from '../../actions/types';
 
 const ProfileTop = ({
   profile,
@@ -14,12 +20,41 @@ const ProfileTop = ({
   const [followed, setFollowed] = useState(false);
   const [type, setType] = useState('');
   const [modalState, setModalState] = useState(false);
+  const [windowOffSet, setWindowOffSet] = useState(0);
 
   useEffect(() => {
     follows.map((follow) => follow.user).includes(loggedInUser.id)
       ? setFollowed(true)
       : setFollowed(false);
   }, [follows]);
+
+  const modalRef = useRef(null);
+
+  const handleModalRef = (e) => {
+    modalRef.current && !modalRef.current.contains(e.target) && setModalState(!modalState);
+  };
+
+  // windowScroll borrowed from https://medium.com/yet-sh/in-react-how-to-prevent-body-from-scrolling-when-a-modal-is-opened-bf3b90647902
+  useEffect(() => {
+    if (modalState) {
+      document.addEventListener('click', handleModalRef);
+      setWindowOffSet(window.scrollY);
+      document.body.setAttribute(
+        'style',
+        `position: fixed; 
+      top: -${windowOffSet}px;
+      left: 0;
+      right: 0;
+      `
+      );
+    } else {
+      document.removeEventListener('click', handleModalRef);
+      document.body.setAttribute('style', '');
+      window.scrollTo(0, windowOffSet);
+    }
+
+    return () => document.removeEventListener('click', handleModalRef);
+  }, [modalState]);
 
   const profileFollowHandler = (profile, id) => {
     dispatch(followProfile(profile, id));
@@ -39,8 +74,6 @@ const ProfileTop = ({
     setModalState(!modalState);
     setType(type);
   };
-
-  console.log(type, modalState);
 
   const unsplashURL = 'https://source.unsplash.com/collection/614531/';
 
@@ -125,27 +158,39 @@ const ProfileTop = ({
               <i className='fas fa-trash'></i>
             </button>
           )}
-          <button className='modal__btn btn-like' onClick={() => toggleModalState('LIKED_POSTS')}>
+          <button
+            className='modal__btn btn-like'
+            onClick={() => toggleModalState(MODAL_LIKED_POSTS)}
+          >
             Liked Posts
           </button>
           <button
             className='modal__btn btn-follow'
-            onClick={() => toggleModalState('FOLLOWED_POSTS')}
+            onClick={() => toggleModalState(MODAL_FOLLOWED_POSTS)}
           >
             Followed Posts
           </button>
-          <button className='modal__btn btn-user' onClick={() => toggleModalState('USER_POSTS')}>
+          <button
+            className='modal__btn btn-user'
+            onClick={() => toggleModalState(MODAL_USER_POSTS)}
+          >
             My Posts
           </button>
           <button
             className='modal__btn btn-profile'
-            onClick={() => toggleModalState('FOLLOWED_PROFILES')}
+            onClick={() => toggleModalState(MODAL_FOLLOWED_PROFILES)}
           >
             Following
           </button>
         </div>
       </div>
-      <Modal userInfo={loggedInUser} type={type} modalState={modalState} />
+      <Modal
+        userInfo={loggedInUser}
+        type={type}
+        modalState={modalState}
+        modalRef={modalRef}
+        setModalState={setModalState}
+      />
     </section>
   );
 };

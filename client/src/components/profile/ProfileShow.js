@@ -7,7 +7,6 @@ import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
-import UserItemList from '../posts/UserItemList';
 
 const ProfileShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -20,8 +19,6 @@ const ProfileShow = ({ match }) => {
 
   const profileShow = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileShow;
-
-  const [type, setType] = useState('');
 
   const [message, setMessage] = useState(null);
 

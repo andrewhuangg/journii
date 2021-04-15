@@ -111,6 +111,22 @@
     }
   }
 
+  &__cta {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+
+    button:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    @include breakpoint-up(medium) {
+      justify-content: flex-start;
+      width: 102%;
+    }
+  }
+
   &__follow {
     display: flex;
     flex-flow: column nowrap;
@@ -129,15 +145,15 @@
 
     &:hover {
       color: $salmon;
-      scale: 1.5;
+      transform: scale(1.5);
     }
   }
 
   &__follow-btn {
-    padding: 0.5rem 0.75rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
     border-radius: 5px;
     background-image: linear-gradient(to right, $pinkLemonade, $pinkLemonade);
-    font-size: 0.75rem;
     cursor: pointer;
     transition: all 200ms ease-in-out;
     margin-right: 1rem;
@@ -148,8 +164,8 @@
   }
 
   &__delete-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
     border-radius: 5px;
     background-image: linear-gradient(to right, $salmon, $salmon);
     transition: all 200ms ease-in-out;

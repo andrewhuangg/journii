@@ -87,6 +87,7 @@ export const listTopPosts = (limit) => async (dispatch) => {
       type: FETCH_TOP_POSTS,
       payload: data,
     });
+    return Promise.resolve(data);
   } catch (error) {
     console.log(error);
     // dispatch({

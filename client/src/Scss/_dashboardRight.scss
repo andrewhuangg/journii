@@ -11,7 +11,25 @@
   &__right-container {
     margin: 0.75rem;
     background-color: white;
-    overflow-y: scroll;
+    overflow-y: auto;
+
+    h6 {
+      cursor: pointer;
+      position: relative;
+      transition: color 100ms ease-in-out;
+
+      &:hover {
+        color: $dadJeansBlue;
+        border: 3px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(to right, $dadJeansBlue, $dadJeansBlue);
+        transition: border 100ms ease-in-out;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
   }
 
   &__post-container {
