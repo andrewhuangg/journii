@@ -1,22 +1,40 @@
 .dashboard {
   &__right {
+    display: flex;
     flex: 1;
-    height: 30rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    height: 50rem;
+    order: 0;
+
+    @include breakpoint-down(small) {
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @include breakpoint-up(medium) {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      height: 50rem;
+      order: unset;
+    }
   }
 
   &__right-container {
-    margin: 0.75rem;
-    background-color: white;
-    overflow-y: auto;
+    @include breakpoint-up(medium) {
+      margin: 0.75rem;
+      background-color: white;
+      overflow-y: auto;
+    }
 
     h6 {
       cursor: pointer;
       position: relative;
       transition: color 100ms ease-in-out;
+      font-size: 0.75rem;
+
+      @include breakpoint-up(medium) {
+        font-size: inherit;
+      }
 
       &:hover {
         color: $dadJeansBlue;
@@ -35,6 +53,10 @@
   &__post-container {
     font-size: $font-sm;
     padding: 0.5rem;
+
+    @include breakpoint-down(small) {
+      display: none;
+    }
 
     a {
       display: flex;

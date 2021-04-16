@@ -1,15 +1,23 @@
 .dashboard {
   display: flex;
   background-color: hsl(0, 0%, 98%);
+  flex-flow: column nowrap;
+
+  @include breakpoint-up(medium) {
+    flex-flow: row nowrap;
+  }
 
   h6 {
     margin: 0px;
-    width: 100%;
     font-size: 1.125rem;
     font-weight: 400;
     padding: 0.5rem;
     border-bottom: 1px solid $lightGray;
     color: $dadJeansBlue;
+
+    @include breakpoint-up(medium) {
+      width: 100%;
+    }
   }
 
   p {

@@ -1,16 +1,31 @@
 .dashboard {
   &__main-content {
     flex: 3;
+    order: 2;
+
+    @include breakpoint-up(medium) {
+      order: unset;
+    }
   }
 
   &__main-container {
     margin: 0.75rem;
     overflow-y: auto;
+    @include breakpoint-down(small) {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+    }
 
     h6 {
       color: $pinkLemonade;
-      font-size: $font-lg;
+      font-size: $font-xlg;
       padding: 0.25rem 0;
+
+      @include breakpoint-up(medium) {
+        font-size: $font-lg;
+      }
     }
 
     a {
@@ -19,12 +34,15 @@
   }
 
   &__item {
+    width: 37rem;
     margin-bottom: 2rem;
     border-radius: 0.35rem;
-    overflow: hidden;
     background-color: white;
     &:hover {
       transform: scale(1.02);
+    }
+    @include breakpoint-up(medium) {
+      width: unset;
     }
   }
 
