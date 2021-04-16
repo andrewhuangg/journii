@@ -10,11 +10,7 @@ const ReviewSlider = ({
   sliderRef,
 }) => {
   return (
-    <nav
-      className={`review__slider ${isOpen ? 'review__slider--active' : ''}`}
-      id='review__slider'
-      ref={sliderRef}
-    >
+    <nav className={`review__slider ${isOpen ? 'review__slider--active' : ''}`} ref={sliderRef}>
       <div
         className={`hamburger ${isOpen ? 'hamburger--active' : ''}`}
         id='hamburger'

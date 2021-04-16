@@ -14,8 +14,7 @@ const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
   return (
     <>
       <nav
-        className={`menu__slider ${isOpen ? 'menu__slider--active' : ''}`}
-        id='menu__slider'
+        className={`menu__slider ${isOpen ? 'menu__slider--active' : ''} hide-for-mobile`}
         ref={menuRef}
       >
         <div className='menu'>

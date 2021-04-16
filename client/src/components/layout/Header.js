@@ -5,11 +5,13 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import SearchBox from './SearchBox';
 import MenuSlider from './MenuSlider';
+import MobileMenu from './MobileMenu';
 import { getMe } from '../../actions/authAction';
 
 const Header = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo } = loginUser;
@@ -18,9 +20,14 @@ const Header = () => {
   const { currentUser } = userDetails;
 
   const menuRef = useRef(null);
+  const mobileRef = useRef(null);
 
   const handleClickSliderOpen = (e) => {
     menuRef.current && !menuRef.current.contains(e.target) && setIsOpen(false);
+  };
+
+  const handleMobileOpen = (e) => {
+    mobileRef.current && !mobileRef.current.contains(e.target) && setMobileOpen(false);
   };
 
   useEffect(() => {
@@ -28,13 +35,34 @@ const Header = () => {
       ? document.addEventListener('click', handleClickSliderOpen)
       : document.removeEventListener('click', handleClickSliderOpen);
 
+    mobileOpen
+      ? document.addEventListener('click', handleMobileOpen)
+      : document.removeEventListener('click', handleMobileOpen);
+
     if (userInfo) dispatch(getMe());
 
-    return () => document.removeEventListener('click', handleClickSliderOpen);
-  }, [isOpen, userInfo]);
+    return () => {
+      document.removeEventListener('click', handleClickSliderOpen);
+      document.removeEventListener('click', handleMobileOpen);
+    };
+  }, [mobileOpen, isOpen, userInfo]);
+
+  // useEffect(() => {
+  //   mobileOpen
+  //     ? document.addEventListener('click', handleMobileOpen)
+  //     : document.removeEventListener('click', handleMobileOpen);
+
+  //   if (userInfo) dispatch(getMe());
+
+  //   return () => document.removeEventListener('click', handleMobileOpen);
+  // }, [mobileOpen, userInfo]);
 
   const handleMenuSlider = (e) => {
     setIsOpen(!isOpen);
+  };
+
+  const handleMobileMenu = (e) => {
+    setMobileOpen(!mobileOpen);
   };
 
   const headerLinks = (
@@ -68,6 +96,14 @@ const Header = () => {
   return (
     <>
       <MenuSlider menuRef={menuRef} userInfo={userInfo} isOpen={isOpen} currentUser={currentUser} />
+      <MobileMenu
+        mobileRef={mobileRef}
+        userInfo={userInfo}
+        mobileOpen={mobileOpen}
+        currentUser={currentUser}
+        setMobileOpen={setMobileOpen}
+        mobileOpen={mobileOpen}
+      />
       <header className='header'>
         <nav className='header__nav container'>
           <div className='header__logo-container'>
@@ -94,7 +130,10 @@ const Header = () => {
               <>{authLinks}</>
             )}
           </div>
-          <div className='header__menu hide-for-desktop'>
+          <div
+            className={`mobile-menu__btn open-${mobileOpen} hide-for-desktop`}
+            onClick={handleMobileMenu}
+          >
             <span></span>
             <span></span>
             <span></span>
