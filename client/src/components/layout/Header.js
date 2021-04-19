@@ -47,16 +47,6 @@ const Header = () => {
     };
   }, [mobileOpen, isOpen, userInfo]);
 
-  // useEffect(() => {
-  //   mobileOpen
-  //     ? document.addEventListener('click', handleMobileOpen)
-  //     : document.removeEventListener('click', handleMobileOpen);
-
-  //   if (userInfo) dispatch(getMe());
-
-  //   return () => document.removeEventListener('click', handleMobileOpen);
-  // }, [mobileOpen, userInfo]);
-
   const handleMenuSlider = (e) => {
     setIsOpen(!isOpen);
   };

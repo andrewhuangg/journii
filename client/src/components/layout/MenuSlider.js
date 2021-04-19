@@ -42,24 +42,13 @@ const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
                 <Link to='/createprofile'>Create Profile</Link>
               </li>
             )}
-            {/* need to add edit post somewhere... and list all posts by user id */}
             {/* <li> //update password ---> add in edit user?
-              <Link to='/'></Link>
-            </li> */}
-
-            {/* <li> //liked posts
-              <Link to='/'></Link>
-            </li> */}
-            {/* <li> //followed posts
-              <Link to='/'></Link>
-            </li> */}
-            {/* <li> //top posts
               <Link to='/'></Link>
             </li> */}
             {userInfo && (
               <li>
                 <Link to='#' onClick={logoutHandler}>
-                  logout
+                  Logout
                 </Link>
               </li>
             )}
