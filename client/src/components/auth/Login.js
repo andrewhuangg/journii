@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 
 const Login = () => {
   const [email, setEmail] = useState('');

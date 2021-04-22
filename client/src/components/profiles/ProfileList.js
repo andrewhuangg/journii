@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProfiles } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 import ProfileItem from './ProfileItem';
 import Meta from '../layout/Meta';
 

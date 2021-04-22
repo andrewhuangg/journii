@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileDetails } from '../../actions/profileAction';
 import { getUserDetails } from '../../actions/authAction';
-import AlertMessage from '../layout/AlertMessage';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';

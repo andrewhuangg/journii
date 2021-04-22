@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listGithubRepos } from '../../actions/profileAction';
-import AlertMessage from '../layout/AlertMessage';
 import GithubItem from './GithubItem';
 
 const ProfileGithub = ({ username }) => {

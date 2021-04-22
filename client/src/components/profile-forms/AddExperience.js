@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addExperience, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 
 const AddExperience = ({ history }) => {
   const dispatch = useDispatch();

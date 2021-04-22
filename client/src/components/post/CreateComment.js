@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPostComment, listPostDetails } from '../../actions/postAction';
-import AlertMessage from '../layout/AlertMessage';
 import Spinner from '../layout/Spinner';
 
 const CreateComment = ({ postId }) => {

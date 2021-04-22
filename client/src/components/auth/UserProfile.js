@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 import { getUserDetails, updateUserInfo } from '../../actions/authAction';
 
 const UserProfile = () => {

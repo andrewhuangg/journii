@@ -7,7 +7,6 @@ import {
   listTopPosts,
 } from '../../actions/postAction';
 import Spinner from '../layout/Spinner';
-import AlertMessage from '../layout/AlertMessage';
 import Meta from '../layout/Meta';
 
 const UserPostList = () => {
