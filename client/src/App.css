@@ -5995,4 +5995,117 @@ button:hover::before,
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
 }
+
+.spinner {
+  position: relative;
+  height: 5rem;
+  width: 5rem;
+}
+
+.spinner::after, .spinner::before {
+  content: '';
+  position: absolute;
+  top: -2.5rem;
+  left: -2.5rem;
+  width: 0;
+  height: 0;
+  border: 5rem solid transparent;
+  border-bottom-color: #6e9eaf;
+  -webkit-animation: firstRotate 1s linear infinite 0.1s;
+          animation: firstRotate 1s linear infinite 0.1s;
+}
+
+.spinner::before {
+  border-bottom-color: #e97272;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-animation: secondRotate 1s linear infinite;
+          animation: secondRotate 1s linear infinite;
+}
+
+@-webkit-keyframes firstRotate {
+  0%,
+  25% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes firstRotate {
+  0%,
+  25% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes secondRotate {
+  0%,
+  25% {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+  100% {
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+@keyframes secondRotate {
+  0%,
+  25% {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+  }
+  100% {
+    -webkit-transform: rotate(450deg);
+            transform: rotate(450deg);
+  }
+}
+
+.spinner__overlay {
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 /*# sourceMappingURL=App.css.map */

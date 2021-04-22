@@ -17,7 +17,7 @@ const ProfileList = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <section className='profile-list container'>
           <Meta title='journii | Profiles' />
           <h1 className='profile-list__header'>Profiles</h1>
@@ -27,6 +27,8 @@ const ProfileList = () => {
             ))}
           </section>
         </section>
+      ) : (
+        <Spinner />
       )}
     </>
   );

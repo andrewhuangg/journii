@@ -10,7 +10,6 @@ import DashboardMain from './DashboardMain';
 const Dashboard = ({ match }) => {
   const dispatch = useDispatch();
   const keyword = match.params.keyword;
-  const pageNumber = match.params.pageNumber || 1;
 
   const [type, setType] = useState('');
   const [location, setLocation] = useState('');
@@ -21,15 +20,15 @@ const Dashboard = ({ match }) => {
   const { userInfo } = loginUser;
 
   const posts = useSelector((state) => state.posts.postList);
-  const { latestPosts, pages, page } = posts;
+  const { latestPosts, loading } = posts;
 
   useEffect(() => {
     if (!keyword) {
       dispatch(listLatestPosts());
     } else {
-      dispatch(listLatestPosts(10, keyword, pageNumber, pages, page));
+      dispatch(listLatestPosts(10, keyword));
     }
-  }, [dispatch, keyword, pageNumber]);
+  }, [dispatch, keyword]);
 
   const modalRef = useRef(null);
 
@@ -68,19 +67,24 @@ const Dashboard = ({ match }) => {
 
   return (
     <>
-      <main className='dashboard container'>
-        <DashboardLeft userInfo={userInfo} toggleModalState={toggleModalState} />
-        <DashboardMain
-          latestPosts={latestPosts}
-          type={type}
-          userInfo={userInfo}
-          modalState={modalState}
-          modalRef={modalRef}
-          setModalState={setModalState}
-          location={location}
-        />
-        <DashboardRight userInfo={userInfo} toggleModalState={toggleModalState} />
-      </main>
+      {!loading ? (
+        <main className='dashboard container'>
+          <Meta title='journii | Home' />
+          <DashboardLeft userInfo={userInfo} toggleModalState={toggleModalState} />
+          <DashboardMain
+            latestPosts={latestPosts}
+            type={type}
+            userInfo={userInfo}
+            modalState={modalState}
+            modalRef={modalRef}
+            setModalState={setModalState}
+            location={location}
+          />
+          <DashboardRight userInfo={userInfo} toggleModalState={toggleModalState} />
+        </main>
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { register } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -68,8 +69,9 @@ const Register = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <div className='auth'>
+          <Meta title='journii | Register' />
           <div className='auth__wrapper'>
             <h1 className='auth__header'>Sign up</h1>
             <form onSubmit={submitHandler} className='auth__form'>
@@ -137,6 +139,8 @@ const Register = () => {
             </form>
           </div>
         </div>
+      ) : (
+        <Spinner />
       )}
     </>
   );

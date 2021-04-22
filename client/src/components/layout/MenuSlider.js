@@ -22,7 +22,7 @@ const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
             <li>
               <Link to='/userinfo'>Edit User</Link>
             </li>
-            {currentUser.ownProfile ? (
+            {userInfo && currentUser.ownProfile ? (
               <>
                 <li>
                   <Link to={`/profile/${userInfo.id}`}>My Profile</Link>

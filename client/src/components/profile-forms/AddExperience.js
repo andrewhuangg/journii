@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addExperience, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const AddExperience = ({ history }) => {
   const dispatch = useDispatch();
@@ -42,8 +43,9 @@ const AddExperience = ({ history }) => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <div className='editExperience'>
+          <Meta title='journii | Add Experience' />
           <div className='editExperience__wrapper'>
             <form className='editExperience__form' onSubmit={submitHandler}>
               <h3>Add Experience</h3>
@@ -135,6 +137,8 @@ const AddExperience = ({ history }) => {
             </form>
           </div>
         </div>
+      ) : (
+        <Spinner />
       )}
     </>
   );

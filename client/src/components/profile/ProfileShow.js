@@ -6,6 +6,8 @@ import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
+import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const ProfileShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -28,9 +30,9 @@ const ProfileShow = ({ match }) => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <div className='profileShow container'>
-          {/* <UserItemList userInfo={userInfo} type={'FOLLOWED_POSTS'} /> */}
+          <Meta title='journii | Profile' />
           <ProfileTop profile={profile} loggedInUser={userInfo} profileUser={user} />
           {profile.github && <ProfileGithub username={profile.github} />}
           <ProfileExperience
@@ -44,7 +46,9 @@ const ProfileShow = ({ match }) => {
             profileOwner={profile.user}
           />
         </div>
-      )}{' '}
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

@@ -1,0 +1,65 @@
+.spinner {
+  position: relative;
+  height: 5rem;
+  width: 5rem;
+
+  &::after,
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: -2.5rem;
+    width: 0;
+    height: 0;
+    border: 5rem solid transparent;
+    border-bottom-color: $dadJeansBlue;
+    animation: firstRotate 1s linear infinite 0.1s;
+  }
+
+  &::before {
+    border-bottom-color: $salmon;
+    transform: rotate(90deg);
+    animation: secondRotate 1s linear infinite;
+  }
+
+  @keyframes firstRotate {
+    0%,
+    25% {
+      transform: rotate(0deg);
+    }
+
+    50%,
+    75% {
+      transform: rotate(180deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes secondRotate {
+    0%,
+    25% {
+      transform: rotate(90deg);
+    }
+
+    50%,
+    75% {
+      transform: rotate(270deg);
+    }
+
+    100% {
+      transform: rotate(450deg);
+    }
+  }
+
+  &__overlay {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+}

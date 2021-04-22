@@ -19,7 +19,7 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
           </div>
           <ul>
             <li>
-              <Link to='/dashboard'>Home</Link>
+              <Link to='/dashboard'>Dashboard</Link>
             </li>
             <li>
               <Link to='/posts'>Posts</Link>
@@ -30,7 +30,7 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
             <li>
               <Link to='/userinfo'>Edit User</Link>
             </li>
-            {currentUser.ownProfile ? (
+            {userInfo && currentUser.ownProfile ? (
               <>
                 <li>
                   <Link to={`/profile/${userInfo.id}`}>My Profile</Link>

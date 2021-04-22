@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, getOwnProfileDetails, deleteProfile } from '../../actions/profileAction';
+import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,7 @@ const EditProfile = () => {
   const [displaySocial, toggleSocial] = useState(false);
 
   const profileDetails = useSelector((state) => state.profiles.profile);
-  const { profile } = profileDetails;
+  const { profile, loading } = profileDetails;
 
   useEffect(() => {
     dispatch(getOwnProfileDetails()).then((data) => {
@@ -73,128 +75,136 @@ const EditProfile = () => {
 
   return (
     <>
-      <div className='editProfile'>
-        <div className='editProfile__wrapper'>
-          <form className='editProfile__form' onSubmit={submitHandler}>
-            <h3>Update Profile</h3>
-            <div className='editProfile__form-control'>
-              <input
-                className='editProfile__form-input'
-                type='text'
-                value={username}
-                placeholder='Username'
-                onChange={(e) => setUserName(e.target.value)}
-              />
-            </div>
-            <div className='editProfile__form-control'>
-              <input
-                className='editProfile__form-input'
-                type='text'
-                value={website}
-                placeholder='Website'
-                onChange={(e) => setWebsite(e.target.value)}
-              />
-            </div>
-            <div className='editProfile__form-control'>
-              <input
-                className='editProfile__form-input'
-                type='text'
-                value={address}
-                placeholder='Address'
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <div className='editProfile__form-control'>
-              <input
-                className='editProfile__form-input'
-                type='text'
-                value={github}
-                placeholder='Github Username'
-                onChange={(e) => setGithub(e.target.value)}
-              />
-              <small>
-                If you want your latest repos and a Github link, include your username. Your
-                username can be found here "github.com/YOUR_USERNAME"
-              </small>
-            </div>
-            <div className='editProfile__form-control'>
-              <textarea
-                className='editProfile__form-textarea'
-                type='text'
-                value={bio}
-                placeholder='Bio'
-                onChange={(e) => setBio(e.target.value)}
-              />
-              <small>Tell us a bit about yourself</small>
-            </div>
+      {!loading ? (
+        <div className='editProfile'>
+          <Meta title='journii | Edit Profile' />
+          <div className='editProfile__wrapper'>
+            <form className='editProfile__form' onSubmit={submitHandler}>
+              <h3>Update Profile</h3>
+              <div className='editProfile__form-control'>
+                <input
+                  className='editProfile__form-input'
+                  type='text'
+                  value={username}
+                  placeholder='Username'
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+              </div>
+              <div className='editProfile__form-control'>
+                <input
+                  className='editProfile__form-input'
+                  type='text'
+                  value={website}
+                  placeholder='Website'
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
+              <div className='editProfile__form-control'>
+                <input
+                  className='editProfile__form-input'
+                  type='text'
+                  value={address}
+                  placeholder='Address'
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+              <div className='editProfile__form-control'>
+                <input
+                  className='editProfile__form-input'
+                  type='text'
+                  value={github}
+                  placeholder='Github Username'
+                  onChange={(e) => setGithub(e.target.value)}
+                />
+                <small>
+                  If you want your latest repos and a Github link, include your username. Your
+                  username can be found here "github.com/YOUR_USERNAME"
+                </small>
+              </div>
+              <div className='editProfile__form-control'>
+                <textarea
+                  className='editProfile__form-textarea'
+                  type='text'
+                  value={bio}
+                  placeholder='Bio'
+                  onChange={(e) => setBio(e.target.value)}
+                />
+                <small>Tell us a bit about yourself</small>
+              </div>
 
-            {displaySocial && (
-              <>
-                <div className='editProfile__form-control'>
-                  <input
-                    className='editProfile__form-input'
-                    type='text'
-                    value={twitter}
-                    placeholder='Twitter Url'
-                    onChange={(e) => setTwitter(e.target.value)}
-                  />
-                </div>
-                <div className='editProfile__form-control'>
-                  <input
-                    className='editProfile__form-input'
-                    type='text'
-                    value={facebook}
-                    placeholder='Facebook Url'
-                    onChange={(e) => setFacebook(e.target.value)}
-                  />
-                </div>
-                <div className='editProfile__form-control'>
-                  <input
-                    className='editProfile__form-input'
-                    type='text'
-                    value={youtube}
-                    placeholder='Youtube Url'
-                    onChange={(e) => setYoutube(e.target.value)}
-                  />
-                </div>
-                <div className='editProfile__form-control'>
-                  <input
-                    className='editProfile__form-input'
-                    type='text'
-                    value={linkedin}
-                    placeholder='LinkedIn Url'
-                    onChange={(e) => setLinkedin(e.target.value)}
-                  />
-                </div>
-                <div className='editProfile__form-control'>
-                  <input
-                    className='editProfile__form-input'
-                    type='text'
-                    value={instagram}
-                    placeholder='Instagram Url'
-                    onChange={(e) => setInstagram(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
-            <div className='editProfile__btn-wrapper'>
-              <button className='editProfile__form-btn'>Update</button>
-              <button
-                className='editProfile__form-delete'
-                onClick={() => {
-                  deleteHandler(profile._id);
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </form>
-          <button className='editProfile__social-btn' onClick={() => toggleSocial(!displaySocial)}>
-            Update Social
-          </button>
-          <label>Optional</label>
+              {displaySocial && (
+                <>
+                  <div className='editProfile__form-control'>
+                    <input
+                      className='editProfile__form-input'
+                      type='text'
+                      value={twitter}
+                      placeholder='Twitter Url'
+                      onChange={(e) => setTwitter(e.target.value)}
+                    />
+                  </div>
+                  <div className='editProfile__form-control'>
+                    <input
+                      className='editProfile__form-input'
+                      type='text'
+                      value={facebook}
+                      placeholder='Facebook Url'
+                      onChange={(e) => setFacebook(e.target.value)}
+                    />
+                  </div>
+                  <div className='editProfile__form-control'>
+                    <input
+                      className='editProfile__form-input'
+                      type='text'
+                      value={youtube}
+                      placeholder='Youtube Url'
+                      onChange={(e) => setYoutube(e.target.value)}
+                    />
+                  </div>
+                  <div className='editProfile__form-control'>
+                    <input
+                      className='editProfile__form-input'
+                      type='text'
+                      value={linkedin}
+                      placeholder='LinkedIn Url'
+                      onChange={(e) => setLinkedin(e.target.value)}
+                    />
+                  </div>
+                  <div className='editProfile__form-control'>
+                    <input
+                      className='editProfile__form-input'
+                      type='text'
+                      value={instagram}
+                      placeholder='Instagram Url'
+                      onChange={(e) => setInstagram(e.target.value)}
+                    />
+                  </div>
+                </>
+              )}
+              <div className='editProfile__btn-wrapper'>
+                <button className='editProfile__form-btn'>Update</button>
+                <button
+                  className='editProfile__form-delete'
+                  onClick={() => {
+                    deleteHandler(profile._id);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </form>
+            <button
+              className='editProfile__social-btn'
+              onClick={() => toggleSocial(!displaySocial)}
+            >
+              Update Social
+            </button>
+            <label>Optional</label>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

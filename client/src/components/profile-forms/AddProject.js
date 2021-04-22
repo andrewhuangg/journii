@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addProject, getOwnProfileDetails } from '../../actions/profileAction';
+import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const AddProject = ({ history }) => {
   const dispatch = useDispatch();
@@ -44,8 +46,9 @@ const AddProject = ({ history }) => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <div className='addProject'>
+          <Meta title='journii | Add Project' />
           <div className='addProject__wrapper'>
             <form className='addProject__form' onSubmit={submitHandler}>
               <h3>Add Project</h3>
@@ -145,6 +148,8 @@ const AddProject = ({ history }) => {
             </form>
           </div>
         </div>
+      ) : (
+        <Spinner />
       )}
     </>
   );

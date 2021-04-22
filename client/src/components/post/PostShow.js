@@ -8,6 +8,7 @@ import PostHero from './PostHero';
 import CommentList from './CommentList';
 import Meta from '../layout/Meta';
 import PostFeature from './PostFeature';
+import Spinner from '../layout/Spinner';
 
 const PostShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const PostShow = ({ match }) => {
   const { user } = userDetails;
 
   const postShow = useSelector((state) => state.posts.post);
-  const { post } = postShow;
+  const { post, loading } = postShow;
 
   useEffect(() => {
     dispatch(listPostDetails(match.params.id)).then((post) => {
@@ -50,24 +51,30 @@ const PostShow = ({ match }) => {
 
   return (
     <>
-      <Meta title={`journii | ${post.title}`} />
-      <ReviewSlider
-        post={post}
-        handleReviewSlider={handleReviewSlider}
-        userInfo={userInfo}
-        sliderRef={sliderRef}
-        isOpen={isOpen}
-        reviews
-      />
-      <PostHero
-        post={post}
-        handleReviewSlider={handleReviewSlider}
-        userInfo={userInfo}
-        user={user}
-      />
-      <PostFeature post={post} userInfo={userInfo} />
-      <CreateComment postId={post && post._id} />
-      <CommentList post={post} userInfo={userInfo} />
+      {!loading ? (
+        <>
+          <Meta title='journii | Post' />
+          <ReviewSlider
+            post={post}
+            handleReviewSlider={handleReviewSlider}
+            userInfo={userInfo}
+            sliderRef={sliderRef}
+            isOpen={isOpen}
+            reviews
+          />
+          <PostHero
+            post={post}
+            handleReviewSlider={handleReviewSlider}
+            userInfo={userInfo}
+            user={user}
+          />
+          <PostFeature post={post} userInfo={userInfo} />
+          <CreateComment postId={post && post._id} />
+          <CommentList post={post} userInfo={userInfo} />{' '}
+        </>
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

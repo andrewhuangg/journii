@@ -42,16 +42,16 @@ const App = () => {
 
             <PrivateRoute exact path='/createprofile' component={CreateProfile} />
             <PrivateRoute exact path='/editprofile' component={EditProfile} />
-            <Route exact path='/profiles' component={ProfileList} />
-            <Route exact path='/profile/:id' component={ProfileShow} />
+            <PrivateRoute exact path='/profiles' component={ProfileList} />
+            <PrivateRoute exact path='/profile/:id' component={ProfileShow} />
             <PrivateRoute exact path='/addexperience' component={AddExperience} />
             <PrivateRoute exact path='/addproject' component={AddProject} />
 
             <PrivateRoute exact path='/createpost' component={CreatePost} />
             <PrivateRoute exact path='/editpost/:id' component={EditPost} />
-            <Route exact path='/posts' component={PostList} />
-            <Route exact path='/posts/:id' component={PostShow} />
-            <Route exact path='/search/:keyword' component={Dashboard} />
+            <PrivateRoute exact path='/posts' component={PostList} />
+            <PrivateRoute exact path='/posts/:id' component={PostShow} />
+            <PrivateRoute exact path='/search/:keyword' component={Dashboard} />
           </Switch>
         </>
       </Router>

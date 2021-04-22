@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const loginUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo } = loginUser;
+  const { userInfo, loading } = loginUser;
 
   useEffect(() => {
     wrapLabelsWithSpan();
@@ -35,43 +36,48 @@ const Login = () => {
 
   return (
     <>
-      <div className='auth'>
-        <div className='auth__wrapper'>
-          <h1 className='auth__header'>Sign In</h1>
-          <form onSubmit={submitHandler} className='auth__form'>
-            <div className='auth__form-control'>
-              <input
-                className='auth__input'
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder='Email'
-                required
-              />
-              <label>Email</label>
-            </div>
+      {!loading ? (
+        <div className='auth'>
+          <div className='auth__wrapper'>
+            <Meta title='journii | Login' />
+            <h1 className='auth__header'>Sign In</h1>
+            <form onSubmit={submitHandler} className='auth__form'>
+              <div className='auth__form-control'>
+                <input
+                  className='auth__input'
+                  type='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder='Email'
+                  required
+                />
+                <label>Email</label>
+              </div>
 
-            <div className='auth__form-control'>
-              <input
-                className='auth__input'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder='Password'
-                required
-              />
-              <label>Password</label>
-            </div>
+              <div className='auth__form-control'>
+                <input
+                  className='auth__input'
+                  type='password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder='Password'
+                  required
+                />
+                <label>Password</label>
+              </div>
 
-            <button className='auth__btn' type='submit'>
-              Sign In
-            </button>
-            <p className='auth__redirect'>
-              New User? <Link to='/register'>Register</Link>
-            </p>
-          </form>
+              <button className='auth__btn' type='submit'>
+                Sign In
+              </button>
+              <p className='auth__redirect'>
+                New User? <Link to='/register'>Register</Link>
+              </p>
+            </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };
