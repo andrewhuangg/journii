@@ -16,7 +16,7 @@ const Landing = () => {
   const { topPosts } = postTopRated;
 
   const loginUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo } = loginUser;
+  const { userInfo, loading } = loginUser;
 
   const loggedInUser = useSelector((state) => state.auth.userShow);
   const { currentUser } = loggedInUser;
@@ -27,17 +27,23 @@ const Landing = () => {
 
   return (
     <>
-      <Meta />
+      {!loading ? (
+        <>
+          <Meta />
 
-      <LandingShowcase userInfo={userInfo} />
+          <LandingShowcase userInfo={userInfo} />
 
-      <LandingHero currentUser={currentUser} userInfo={userInfo} />
+          <LandingHero currentUser={currentUser} userInfo={userInfo} />
 
-      <LandingFeature />
+          <LandingFeature />
 
-      <LandingPosts posts={topPosts} userInfo={userInfo} />
+          <LandingPosts posts={topPosts} userInfo={userInfo} />
 
-      <LandingFooter />
+          <LandingFooter />
+        </>
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

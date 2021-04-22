@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import Rating from '../layout/Rating';
 
-const PostItem = ({ post: { _id, text, title, image, rating, numReviews, likes, createdAt } }) => {
+const PostItem = ({
+  post: { _id, text, title, image, rating, numReviews, likes, createdAt, name },
+}) => {
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';
 
   const getRandomNumber = () => {

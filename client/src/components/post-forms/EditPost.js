@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updatePost, listPostDetails, deletePost } from '../../actions/postAction';
 import { Link } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
+import Meta from '../layout/Meta';
 
 const EditPost = ({ match }) => {
   const dispatch = useDispatch();
@@ -80,8 +82,9 @@ const EditPost = ({ match }) => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <div className='editPost'>
+          <Meta title='journii | Edit Post' />
           <div className='editPost__wrapper'>
             <form className='editPost__form' onSubmit={submitHandler}>
               <h3>Update Post</h3>
@@ -137,6 +140,8 @@ const EditPost = ({ match }) => {
             </form>
           </div>
         </div>
+      ) : (
+        <Spinner />
       )}
     </>
   );

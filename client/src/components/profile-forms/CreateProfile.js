@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createProfile } from '../../actions/profileAction';
+import Meta from '../layout/Meta';
 
 const CreateProfile = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const CreateProfile = () => {
 
   return (
     <div className='cre-profile'>
+      <Meta title='journii | Create Your Profile' />
       <div className='cre-profile__wrapper'>
         <form onSubmit={submitHandler} className='cre-profile__form'>
           <h3>Create Your Profile</h3>

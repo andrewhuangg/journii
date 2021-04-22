@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../actions/postAction';
+import Meta from '../layout/Meta';
 
 const CreatePost = ({ history }) => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const CreatePost = ({ history }) => {
   return (
     <>
       <div className='createPost'>
+        <Meta title='journii | Create A Post' />
         <div className='createPost__wrapper'>
           <form className='createPost__form' onSubmit={submitHandler}>
             <h3>Share your thoughts...</h3>
