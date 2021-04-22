@@ -15,13 +15,30 @@ exports.getTopPosts = asyncHandler(async (req, res) => {
 });
 
 // @desc      Get latest posts
-// @route     GET /api/v1/posts/latest/:limit
+// @route     GET /api/v1/posts/latest/:limit/?keyword=:keyword&pageNumber=:pageNumber
 // @access    Public
 
 exports.getLatestPosts = asyncHandler(async (req, res) => {
   const limit = parseInt(req.params.limit);
-  const posts = await Post.find({}).sort({ createdAt: -1 }).limit(limit);
-  res.status(200).json(posts);
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword
+    ? {
+        title: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const count = await Post.countDocuments({ ...keyword });
+  const posts = await Post.find({ ...keyword })
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .skip(limit * (page - 1));
+
+  const pages = Math.ceil(count / limit);
+  res.status(200).json({ posts, page, pages });
 });
 
 // @desc      Get liked posts
@@ -99,26 +116,8 @@ exports.updatePost = asyncHandler(async (req, res) => {
 // @access    Public
 
 exports.getPosts = asyncHandler(async (req, res) => {
-  const pageSize = 10;
-  const page = Number(req.query.pageNumber) || 1;
-
-  const keyword = req.query.keyword
-    ? {
-        title: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {};
-
-  const count = await Post.countDocuments({ ...keyword });
-  const posts = await Post.find({ ...keyword })
-    .sort('-createdAt')
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
-
-  const pages = Math.ceil(count / pageSize);
-  res.status(200).json({ posts, page, pages });
+  const posts = await Post.find({}).sort('-createdAt');
+  res.status(200).json(posts);
 });
 
 // @desc      Get all posts by id

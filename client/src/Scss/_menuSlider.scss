@@ -32,4 +32,36 @@
 }
 
 .menu {
+  height: 100%;
+  width: 100%;
+
+  ul {
+    height: 100%;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: hsl(34, 33%, 96%);
+
+    li {
+      padding: 0.4rem;
+      margin-bottom: 0.3rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border-radius: 5px;
+      background-color: rgba(236, 179, 144, 0.75);
+      cursor: pointer;
+      transition: all 200ms ease-in-out;
+
+      &:hover {
+        transform: scale(0.95);
+      }
+
+      a {
+        width: 100%;
+        padding: 0.5rem;
+        color: hsl(34, 33%, 96%);
+        background-color: rgba(223, 120, 97, 0.6);
+      }
+    }
+  }
 }

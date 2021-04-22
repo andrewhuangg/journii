@@ -51,12 +51,7 @@ const App = () => {
             <PrivateRoute exact path='/editpost/:id' component={EditPost} />
             <Route exact path='/posts' component={PostList} />
             <Route exact path='/posts/:id' component={PostShow} />
-
-            <Route exact path='/search/:keyword' component={PostList} />
-            {/* remember to switch postlist back to dashboard */}
-            <Route exact path='/page/:pageNumber' component={PostList} />
-            {/* remember to switch postlist back to dashboard */}
-            <Route exact path='/search/:keyword/page/:pageNumber' component={PostList} />
+            <Route exact path='/search/:keyword' component={Dashboard} />
           </Switch>
         </>
       </Router>

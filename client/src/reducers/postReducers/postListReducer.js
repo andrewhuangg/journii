@@ -26,9 +26,7 @@ export default (state = initialState, action) => {
     case FETCH_POST_LIST:
       return {
         ...state,
-        posts: payload.posts,
-        pages: payload.pages,
-        page: payload.page,
+        posts: payload,
         loading: false,
       };
 
@@ -56,7 +54,9 @@ export default (state = initialState, action) => {
     case FETCH_LATEST_POSTS:
       return {
         ...state,
-        latestPosts: payload,
+        latestPosts: payload.posts,
+        pages: payload.pages,
+        page: payload.page,
         loading: false,
       };
 

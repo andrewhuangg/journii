@@ -10,6 +10,8 @@ import DashboardMain from './DashboardMain';
 const Dashboard = ({ match }) => {
   const dispatch = useDispatch();
   const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
+
   const [type, setType] = useState('');
   const [location, setLocation] = useState('');
   const [modalState, setModalState] = useState(false);
@@ -19,11 +21,15 @@ const Dashboard = ({ match }) => {
   const { userInfo } = loginUser;
 
   const posts = useSelector((state) => state.posts.postList);
-  const { latestPosts } = posts;
+  const { latestPosts, pages, page } = posts;
 
   useEffect(() => {
-    dispatch(listLatestPosts());
-  }, []);
+    if (!keyword) {
+      dispatch(listLatestPosts());
+    } else {
+      dispatch(listLatestPosts(10, keyword, pageNumber, pages, page));
+    }
+  }, [dispatch, keyword, pageNumber]);
 
   const modalRef = useRef(null);
 

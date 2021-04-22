@@ -4803,8 +4803,8 @@ button:hover::before,
   padding: 0.5rem;
   border: 0;
   width: 2rem;
-  -webkit-transition: width 0.3s ease;
-  transition: width 0.3s ease;
+  -webkit-transition: width 0.5s ease;
+  transition: width 0.5s ease;
 }
 
 .search__btn {
@@ -4815,10 +4815,10 @@ button:hover::before,
   border-radius: 0.9rem;
   background-image: -webkit-gradient(linear, left top, right top, from(#f0b28f), to(#edb592));
   background-image: linear-gradient(to right, #f0b28f, #edb592);
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
-  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  transition: -webkit-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
 }
 
 .search__input:focus, .search__btn:focus {
@@ -4873,6 +4873,49 @@ button:hover::before,
 .menu__slider--active {
   -webkit-transform: translateX(0);
           transform: translateX(0);
+}
+
+.menu {
+  height: 100%;
+  width: 100%;
+}
+
+.menu ul {
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #f8f5f1;
+}
+
+.menu ul li {
+  padding: 0.4rem;
+  margin-bottom: 0.3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  background-color: rgba(236, 179, 144, 0.75);
+  cursor: pointer;
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.menu ul li:hover {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+
+.menu ul li a {
+  width: 100%;
+  padding: 0.5rem;
+  color: #f8f5f1;
+  background-color: rgba(223, 120, 97, 0.6);
 }
 
 .editPost {
@@ -5740,7 +5783,7 @@ button:hover::before,
 
 @media (min-width: 40em) {
   .modaldashboard__container {
-    height: 40rem;
+    height: 35rem;
     width: 30rem;
   }
 }

@@ -2,21 +2,17 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listPosts } from '../../actions/postAction';
 import PostItem from './PostItem';
-import Paginate from '../layout/Paginate';
 import Meta from '../layout/Meta';
 
-const PostList = ({ match }) => {
+const PostList = () => {
   const dispatch = useDispatch();
-  const keyword = match.params.keyword;
-  const pageNumber = match.params.pageNumber || 1;
 
   const postList = useSelector((state) => state.posts.postList);
-  const { posts, pages, page, loading } = postList;
+  const { posts, loading } = postList;
 
   useEffect(() => {
-    dispatch(listPosts(keyword, pageNumber));
-    // }, [dispatch, successDelete, keyword, pageNumber, userInfo]);
-  }, [keyword, pageNumber]);
+    dispatch(listPosts());
+  }, []);
 
   return (
     <>
@@ -32,9 +28,6 @@ const PostList = ({ match }) => {
               <PostItem key={post._id} post={post} />
             ))}
           </section>
-          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
-          </div>
         </section>
       )}
     </>

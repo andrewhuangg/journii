@@ -59,9 +59,11 @@ export const listLikedPosts = (userId) => async (dispatch) => {
   }
 };
 
-export const listLatestPosts = (limit) => async (dispatch) => {
+export const listLatestPosts = (limit, keyword = '', pageNumber = '') => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/v1/posts/latest/${limit}`);
+    const { data } = await axios.get(
+      `/api/v1/posts/latest/${limit}/?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
 
     dispatch({
       type: FETCH_LATEST_POSTS,
@@ -100,9 +102,9 @@ export const listTopPosts = (limit) => async (dispatch) => {
   }
 };
 
-export const listPosts = (keyword = '', pageNumber = '') => async (dispatch) => {
+export const listPosts = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/v1/posts?keyword=${keyword}&pageNumber=${pageNumber}`);
+    const { data } = await axios.get('/api/v1/posts');
 
     dispatch({
       type: FETCH_POST_LIST,
