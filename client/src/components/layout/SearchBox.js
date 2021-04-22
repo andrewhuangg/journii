@@ -45,7 +45,7 @@ const SearchBox = ({ history }) => {
         <input
           className='search__input'
           type='text'
-          placeholder='Search...'
+          placeholder='search posts...'
           onChange={(e) => setKeyword(e.target.value)}
         ></input>
         <button type='submit' className='search__btn' onClick={handleSearchTransition}>

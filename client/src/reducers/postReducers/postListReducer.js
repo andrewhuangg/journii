@@ -15,8 +15,6 @@ const initialState = {
   likedPosts: [],
   latestPosts: [],
   topPosts: [],
-  pages: 0,
-  page: 0,
   loading: true,
 };
 
@@ -54,9 +52,7 @@ export default (state = initialState, action) => {
     case FETCH_LATEST_POSTS:
       return {
         ...state,
-        latestPosts: payload.posts,
-        pages: payload.pages,
-        page: payload.page,
+        latestPosts: payload,
         loading: false,
       };
 

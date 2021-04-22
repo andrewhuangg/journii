@@ -15,12 +15,11 @@ exports.getTopPosts = asyncHandler(async (req, res) => {
 });
 
 // @desc      Get latest posts
-// @route     GET /api/v1/posts/latest/:limit/?keyword=:keyword&pageNumber=:pageNumber
+// @route     GET /api/v1/posts/latest/:limit/?keyword=:keyword
 // @access    Public
 
 exports.getLatestPosts = asyncHandler(async (req, res) => {
   const limit = parseInt(req.params.limit);
-  const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword
     ? {
@@ -31,14 +30,11 @@ exports.getLatestPosts = asyncHandler(async (req, res) => {
       }
     : {};
 
-  const count = await Post.countDocuments({ ...keyword });
   const posts = await Post.find({ ...keyword })
     .sort({ createdAt: -1 })
-    .limit(limit)
-    .skip(limit * (page - 1));
+    .limit(limit);
 
-  const pages = Math.ceil(count / limit);
-  res.status(200).json({ posts, page, pages });
+  res.status(200).json(posts);
 });
 
 // @desc      Get liked posts

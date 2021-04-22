@@ -8,6 +8,7 @@ import Meta from '../layout/Meta';
 
 const ProfileList = () => {
   const dispatch = useDispatch();
+
   const profileList = useSelector((state) => state.profiles.profileList);
   const { profiles, loading } = profileList;
 
