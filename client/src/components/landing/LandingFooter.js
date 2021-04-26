@@ -23,8 +23,8 @@ const LandingFooter = () => {
         </div>
 
         <div className='footer__links col1'>
-          <Link to='#'>About</Link>
-          <Link to='#'>Contact</Link>
+          <Link to='/about'>About</Link>
+          <Link to='/contact'>Contact</Link>
         </div>
 
         <div className='footer__cta'>

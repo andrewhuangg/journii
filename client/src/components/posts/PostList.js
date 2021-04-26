@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listPosts } from '../../actions/postAction';
 import PostItem from './PostItem';
 import Meta from '../layout/Meta';
+import Spinner from '../layout/Spinner';
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const PostList = () => {
 
   return (
     <>
-      {!loading && (
+      {!loading ? (
         <section className='post-list container'>
           <Meta title='journii | Posts' />
           <div className='post-list__header'>
@@ -29,6 +30,8 @@ const PostList = () => {
             ))}
           </section>
         </section>
+      ) : (
+        <Spinner />
       )}
     </>
   );

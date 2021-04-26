@@ -17,6 +17,7 @@ import PostShow from './components/post/PostShow';
 import CreatePost from './components/post-forms/CreatePost';
 import EditPost from './components/post-forms/EditPost';
 import PrivateRoute from './components/routing/PrivateRoute';
+import About from './components/landing/About';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -34,6 +35,8 @@ const App = () => {
           <Route path='/' component={Header} />
           <Route exact path='/' component={Landing} />
           <Switch>
+            <Route exact path='/about' component={About} />
+            <Route exact path='/contact' component={About} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
 
             <Route exact path='/login' component={Login} />

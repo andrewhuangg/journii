@@ -1,0 +1,116 @@
+.about {
+  // direct childs of __container, so _header, _contact, and _info
+  &__container {
+    padding: 1.8rem;
+    background-color: hsl(0, 0%, 99%);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    max-width: 40rem;
+    margin: auto;
+
+    > * {
+      padding: 1.8rem 1.5rem;
+    }
+
+    @include breakpoint-up(medium) {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, auto);
+    }
+
+    h2,
+    h3 {
+      line-height: 1.15;
+    }
+
+    h3 {
+      font-size: $font-med;
+      font-weight: bold;
+      color: $lightSand;
+    }
+  }
+
+  &__header {
+    background-color: white;
+    h2 {
+      color: $darkTurquoise;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.75rem;
+      color: $blueGray;
+    }
+
+    @include breakpoint-up(medium) {
+      grid-column: 1 / 3;
+    }
+  }
+
+  &__subtitle {
+    margin-bottom: 0.5rem;
+    color: hsl(165, 69%, 40%);
+    font-size: $font-med;
+    font-weight: bold;
+  }
+
+  &__contact {
+    background-color: $peach;
+    small {
+      margin-bottom: 0.75rem;
+      display: block;
+      font-size: $font-sm;
+      font-weight: normal;
+      color: white;
+      opacity: 0.9;
+
+      @include breakpoint-up(medium) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    a {
+      padding: 0.75rem;
+      display: block;
+      color: white;
+      background-color: hsl(0, 100%, 75%);
+      text-align: center;
+      border-radius: 0.25rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transition: background-color 150ms ease-in-out;
+      font-size: $font-med;
+
+      &:hover {
+        transform: scale(0.98);
+        background-color: $salmon;
+      }
+    }
+
+    @include breakpoint-up(medium) {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: flex-start;
+    }
+  }
+  &__info {
+    background-color: $mint;
+
+    h3 {
+      color: $darkTurquoise;
+    }
+
+    ul,
+    li {
+      font-size: 0.7rem;
+      margin-bottom: 0.25rem;
+      color: $darkTurquoise;
+    }
+
+    li {
+      line-height: 1.35;
+    }
+  }
+}
