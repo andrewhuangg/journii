@@ -7,6 +7,8 @@ import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 
 const Register = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,8 +16,6 @@ const Register = () => {
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState(null);
-
-  const dispatch = useDispatch();
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo, loading } = loginUser;

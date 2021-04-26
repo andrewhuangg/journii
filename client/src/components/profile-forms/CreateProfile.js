@@ -8,7 +8,6 @@ const CreateProfile = () => {
 
   const [username, setUserName] = useState('');
   const [bio, setBio] = useState('');
-  const [website, setWebsite] = useState('');
   const [address, setAddress] = useState('');
   const [github, setGithub] = useState('');
   const [youtube, setYoutube] = useState('');
@@ -16,7 +15,7 @@ const CreateProfile = () => {
   const [facebook, setFacebook] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [instagram, setInstagram] = useState('');
-
+  const [website, setWebsite] = useState('');
   const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
@@ -61,8 +60,9 @@ const CreateProfile = () => {
             <input
               className='cre-profile__form-input'
               type='text'
-              placeholder='Website'
+              placeholder='Website - https://example.com'
               value={website}
+              pattern='https://.*'
               onChange={(e) => setWebsite(e.target.value)}
             />
           </div>
@@ -105,7 +105,8 @@ const CreateProfile = () => {
                 <input
                   className='cre-profile__form-input'
                   type='text'
-                  placeholder='Twitter Url'
+                  placeholder='Twitter Url - https://twitter.com'
+                  pattern='https://.*'
                   value={twitter}
                   onChange={(e) => setTwitter(e.target.value)}
                 />
@@ -114,7 +115,8 @@ const CreateProfile = () => {
                 <input
                   className='cre-profile__form-input'
                   type='text'
-                  placeholder='Facebook Url'
+                  placeholder='Facebook Url - https://facebook.com'
+                  pattern='https://.*'
                   value={facebook}
                   onChange={(e) => setFacebook(e.target.value)}
                 />
@@ -123,7 +125,8 @@ const CreateProfile = () => {
                 <input
                   className='cre-profile__form-input'
                   type='text'
-                  placeholder='Youtube Url'
+                  placeholder='Youtube Url - https://youtube.com'
+                  pattern='https://.*'
                   value={youtube}
                   onChange={(e) => setYoutube(e.target.value)}
                 />
@@ -132,7 +135,8 @@ const CreateProfile = () => {
                 <input
                   className='cre-profile__form-input'
                   type='text'
-                  placeholder='Linkedin Url'
+                  placeholder='Linkedin Url - https://linkedin.com'
+                  pattern='https://.*'
                   value={linkedin}
                   onChange={(e) => setLinkedin(e.target.value)}
                 />
@@ -141,9 +145,10 @@ const CreateProfile = () => {
                 <input
                   className='cre-profile__form-input'
                   type='text'
-                  placeholder='Instagram Url'
+                  placeholder='Instagram Url - https://instagram.com'
                   value={instagram}
                   onChange={(e) => setInstagram(e.target.value)}
+                  pattern='https://.*'
                 />
               </div>
             </>

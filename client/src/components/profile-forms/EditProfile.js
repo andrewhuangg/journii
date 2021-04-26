@@ -24,6 +24,8 @@ const EditProfile = () => {
   const profileDetails = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileDetails;
 
+  console.log(website);
+
   useEffect(() => {
     dispatch(getOwnProfileDetails()).then((data) => {
       setUserName(data.username || '');

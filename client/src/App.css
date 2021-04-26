@@ -3859,7 +3859,7 @@ button:hover::before,
 }
 
 .userProfile__form-image-file {
-  width: 100%;
+  width: 40%;
   font-size: 0.75rem;
 }
 

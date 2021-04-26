@@ -11,15 +11,15 @@ const LandingFooter = () => {
         </Link>
 
         <div className='footer__social'>
-          <Link to='#' alt='Linkedin' target='_blank' rel='noopener noreferrer'>
+          <a target='_blank' href='https://www.linkedin.com/in/anhuangg/' rel='noopener noreferrer'>
             <i className='fab fa-linkedin fa-1x' />
-          </Link>
-          <Link to='#' alt='Github' target='_blank' rel='noopener noreferrer'>
+          </a>
+          <a target='_blank' href='https://github.com/andrewhuangg' rel='noopener noreferrer'>
             <i className='fab fa-github fa-1x' />
-          </Link>
-          <Link to='#' alt='AngelList' target='_blank' rel='noopener noreferrer'>
+          </a>
+          <a target='_blank' href='https://angel.co/u/andrewhuang' rel='noopener noreferrer'>
             <i className='fab fa-angellist fa-1x' />
-          </Link>
+          </a>
         </div>
 
         <div className='footer__links col1'>
@@ -28,7 +28,7 @@ const LandingFooter = () => {
         </div>
 
         <div className='footer__cta'>
-          <Link to='#' className='button'>
+          <Link to='/register' className='button'>
             Sign Up
           </Link>
         </div>
