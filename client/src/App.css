@@ -699,23 +699,34 @@ button:hover::before,
   background-color: #829b97;
   color: white;
   padding: 2.5rem;
-  text-align: center;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
 }
 
-@media (min-width: 64em) {
+.footer .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.footer .container > :not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 40em) {
   .footer .container {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 2fr 1fr 2fr;
-        grid-template-columns: 2fr 1fr 2fr;
-    -ms-grid-rows: 1fr auto;
-        grid-template-rows: 1fr auto;
-        grid-template-areas: 'logo links1 cta' 'social links1 copyright';
-    gap: 1rem;
-    justify-items: flex-start;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
   }
 }
 
@@ -725,43 +736,17 @@ button:hover::before,
 
 .footer__logo {
   display: inline-block;
-  height: 2rem;
-  width: 10%;
+  width: 5rem;
+  height: 5rem;
 }
 
 .footer__logo svg {
-  opacity: 0.75;
   height: 100%;
   width: 100%;
 }
 
-@media (max-width: 63.9375em) {
-  .footer__logo {
-    margin-bottom: 1.875rem;
-  }
-}
-
-@media (min-width: 64em) {
-  .footer__logo {
-    grid-area: logo;
-  }
-}
-
-@media (max-width: 63.9375em) {
-  .footer__social {
-    margin-bottom: 1.875rem;
-  }
-}
-
-@media (min-width: 64em) {
-  .footer__social {
-    grid-area: social;
-  }
-}
-
 .footer__social a {
-  height: 1.25rem;
-  display: inline-block;
+  font-size: 1.5rem;
 }
 
 .footer__social a i {
@@ -771,6 +756,12 @@ button:hover::before,
 
 .footer__social a:hover i {
   color: #e97272;
+}
+
+@media (min-width: 40em) {
+  .footer__social a {
+    font-size: 2rem;
+  }
 }
 
 .footer__social a:not(:last-child) {
@@ -783,34 +774,24 @@ button:hover::before,
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   font-size: 0.9375rem;
 }
 
-@media (max-width: 63.9375em) {
+@media (min-width: 40em) {
   .footer__links {
-    margin-bottom: 1.875rem;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+    font-size: 1.125rem;
   }
-}
-
-@media (min-width: 64em) {
-  .footer__links {
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-box-align: start;
-        -ms-flex-align: start;
-            align-items: flex-start;
-  }
-}
-
-@media (min-width: 64em) {
-  .footer__links.col1 {
-    grid-area: links1;
+  .footer__links a:not(:last-child) {
+    margin-right: 1rem;
   }
 }
 
@@ -824,38 +805,30 @@ button:hover::before,
   color: #e97272;
 }
 
-@media (min-width: 64em) {
-  .footer__cta {
-    grid-area: cta;
-    -ms-grid-column-align: end;
-        justify-self: end;
-  }
+.footer__cta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.footer__cta a:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .footer__cta .button {
   color: white;
 }
 
-@media (max-width: 63.9375em) {
-  .footer__cta .button {
-    margin-bottom: 1.875rem;
-  }
-}
-
 .footer__copyright {
   font-size: 0.8125rem;
   color: #495465;
-}
-
-@media (min-width: 64em) {
-  .footer__copyright {
-    grid-area: copyright;
-    -ms-grid-column-align: end;
-        justify-self: end;
-    -ms-flex-item-align: end;
-        -ms-grid-row-align: end;
-        align-self: end;
-  }
 }
 
 .auth {

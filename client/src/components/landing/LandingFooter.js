@@ -22,7 +22,7 @@ const LandingFooter = () => {
           </a>
         </div>
 
-        <div className='footer__links col1'>
+        <div className='footer__links'>
           <Link to='/about'>About</Link>
           <Link to='/contact'>Contact</Link>
         </div>
@@ -31,9 +31,8 @@ const LandingFooter = () => {
           <Link to='/register' className='button'>
             Sign Up
           </Link>
+          <div className='footer__copyright'>&copy; journii. All Rights Reserved.</div>
         </div>
-
-        <div className='footer__copyright'>&copy; journii. All Rights Reserved.</div>
       </div>
     </footer>
   );
