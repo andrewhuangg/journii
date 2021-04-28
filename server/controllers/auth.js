@@ -55,6 +55,14 @@ exports.login = asyncHandler(async (req, res) => {
 
   if (user && isMatch) {
     const token = user.getSignedJwtToken();
+
+    if (user.resetPasswordExpire) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+
+      await user.save();
+    }
+
     res.status(200).json({
       token,
       id: user._id,
@@ -164,10 +172,7 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
 
   await user.save({ validateBeforeSave: false });
 
-  // Create resetUrl
-  const resetURL = `${req.protocol}://${req.get('host')}/api/v1/auth/resetpassword/${resetToken}`;
-
-  const message = `you are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetURL}`;
+  const message = `you are receiving this email because you (or someone else) has requested the reset of a password. \n\nPlease provide this token ${resetToken} when resetting your password. \n\nThis token will expire in 10 minutes and you will need to reset your password again.`;
 
   try {
     await sendEmail({

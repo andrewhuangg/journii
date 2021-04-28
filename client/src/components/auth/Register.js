@@ -78,7 +78,7 @@ const Register = () => {
               <div className='auth__image'>
                 <label>Image</label>
                 <input type='text' value={image} onChange={(e) => setImage(e.target.value)} />
-                <input type='file' onChange={uploadFileHandler} />
+                <input type='file' className='auth__file' onChange={uploadFileHandler} />
                 {uploading && <Spinner />}
               </div>
 

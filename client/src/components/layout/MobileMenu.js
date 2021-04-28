@@ -18,19 +18,38 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
             </div>
           </div>
           <ul>
-            <li>
-              <Link to='/dashboard'>Dashboard</Link>
-            </li>
-            <li>
-              <Link to='/posts'>Posts</Link>
-            </li>
-            <li>
-              <Link to='/profiles'>Profiles</Link>
-            </li>
-            <li>
-              <Link to='/userinfo'>Edit User</Link>
-            </li>
-            {userInfo && currentUser.ownProfile ? (
+            {userInfo ? (
+              <>
+                <li>
+                  <Link to='/dashboard'>Dashboard</Link>
+                </li>
+                <li>
+                  <Link to='/posts'>Posts</Link>
+                </li>
+                <li>
+                  <Link to='/profiles'>Profiles</Link>
+                </li>
+                <li>
+                  <Link to='/userinfo'>Edit User</Link>
+                </li>
+                <li>
+                  <Link to='/createprofile'>Create Profile</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to='/'>Home</Link>
+                </li>
+                <li>
+                  <Link to='/register'>Signup</Link>
+                </li>
+                <li>
+                  <Link to='/login'>Login</Link>
+                </li>
+              </>
+            )}
+            {userInfo && currentUser.ownProfile && (
               <>
                 <li>
                   <Link to={`/profile/${userInfo.id}`}>My Profile</Link>
@@ -45,10 +64,6 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
                   <Link to='/addproject'>Add Project</Link>
                 </li>
               </>
-            ) : (
-              <li>
-                <Link to='/createprofile'>Create Profile</Link>
-              </li>
             )}
             {userInfo && (
               <li>

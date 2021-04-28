@@ -18,6 +18,8 @@ import CreatePost from './components/post-forms/CreatePost';
 import EditPost from './components/post-forms/EditPost';
 import PrivateRoute from './components/routing/PrivateRoute';
 import About from './components/landing/About';
+import ForgotPassword from './components/auth/ForgotPassword';
+import ResetPassword from './components/auth/ResetPassword';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -41,6 +43,8 @@ const App = () => {
 
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/forgotpassword' component={ForgotPassword} />
+            <Route exact path='/resetpassword' component={ResetPassword} />
             <PrivateRoute exact path='/userinfo' component={UserProfile} />
 
             <PrivateRoute exact path='/createprofile' component={CreateProfile} />

@@ -1,4 +1,8 @@
 .auth {
+  @include breakpoint-down(small) {
+    max-width: 24rem;
+    margin: 0 auto;
+  }
   @include breakpoint-up(medium) {
     display: flex;
     flex-direction: column;
@@ -24,6 +28,15 @@
   &__header {
     text-align: center;
     margin-bottom: 1.25rem;
+  }
+
+  &__image {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &__file {
+    width: 65%;
   }
 
   &__form-control {
@@ -107,8 +120,14 @@
   }
 
   &__redirect {
+    margin-bottom: 0;
+
     a:hover {
       border-bottom: 2px solid $darkTurquoise;
     }
+  }
+
+  &__forgotpassword {
+    font-size: $font-sm;
   }
 }

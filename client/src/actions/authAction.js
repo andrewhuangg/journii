@@ -11,6 +11,8 @@ import {
   FETCH_USER_DETAILS,
   LOGOUT_USER,
   DESTROY_USER,
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
 } from './types';
 
 export const register = (user) => async (dispatch) => {
@@ -176,4 +178,42 @@ export const updateUserInfo = (user) => async (dispatch, getState) => {
     //       : error.message,
     // });
   }
+};
+
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    await axios.post(`/api/v1/auth/forgotpassword`, { email }, config);
+
+    dispatch({
+      type: FORGOT_PASSWORD,
+    });
+
+    return Promise.resolve();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const resetPassword = (password, resettoken) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    await axios.put(`/api/v1/auth/resetpassword/${resettoken}`, { password }, config);
+
+    dispatch({
+      type: RESET_PASSWORD,
+    });
+
+    return Promise.resolve();
+  } catch (error) {}
 };

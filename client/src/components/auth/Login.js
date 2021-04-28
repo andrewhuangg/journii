@@ -73,6 +73,9 @@ const Login = () => {
                 New User? <Link to='/register'>Register</Link>
               </p>
             </form>
+            <Link to='/forgotpassword' className='auth__forgotpassword'>
+              forgot password
+            </Link>
           </div>
         </div>
       ) : (
