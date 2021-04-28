@@ -3775,6 +3775,9 @@ button:hover::before,
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
 }
 
@@ -3877,6 +3880,25 @@ button:hover::before,
 .userProfile__form-btn:hover {
   -webkit-transform: scale(0.98);
           transform: scale(0.98);
+}
+
+.userProfile__updatepassword-link {
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+  cursor: pointer;
+  color: white;
+}
+
+.userProfile__updatepassword-link:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+  opacity: 0.75;
 }
 
 .editProfile {
@@ -5857,7 +5879,7 @@ button:hover::before,
 }
 
 .mobile-menu__container {
-  height: 25rem;
+  height: 30rem;
   width: 30rem;
   margin-top: 7rem;
   display: -webkit-box;
@@ -6278,47 +6300,11 @@ button:hover::before,
 }
 
 .forgotpassword__wrapper {
-  height: 20rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  height: 15rem;
+  width: 20rem;
+  margin: 0 auto;
+  margin-top: 3rem;
   padding: 1.25rem 2.5rem;
-  border: 0;
-  background-color: whitesmoke;
-  border-radius: 0.625rem;
-}
-
-@media (max-width: 39.9375em) {
-  .forgotpassword__wrapper {
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 5rem;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
-}
-
-.forgotpassword__header {
-  font-size: 2rem;
-  margin-bottom: 0;
-}
-
-@media (max-width: 39.9375em) {
-  .forgotpassword__header {
-    font-size: 1.125rem;
-    margin-bottom: 3rem;
-  }
-}
-
-.forgotpassword__form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -6332,16 +6318,54 @@ button:hover::before,
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
+  border: 0;
+  background-color: whitesmoke;
+  border-radius: 0.625rem;
+}
+
+@media (min-width: 40em) {
+  .forgotpassword__wrapper {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+.forgotpassword__header {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 40em) {
+  .forgotpassword__header {
+    text-align: left;
+  }
+}
+
+.forgotpassword__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
   width: 100%;
-  height: 100%;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 40em) {
   .forgotpassword__form {
-    height: 75%;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
@@ -6354,13 +6378,13 @@ button:hover::before,
 }
 
 .forgotpassword__input {
+  width: 100%;
+  padding: 0 0 0.9375rem 0;
   display: block;
   background-color: transparent;
   border: 0;
   border-bottom: 2px solid #6e9eaf;
-  width: 100%;
-  padding: 0 0 0.9375rem 0;
-  font-size: 0.65rem;
+  font-size: 0.875rem;
   color: #495465;
   cursor: pointer;
 }
@@ -6391,18 +6415,11 @@ button:hover::before,
   -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
   cursor: pointer;
-  margin-top: 2rem;
-}
-
-@media (min-width: 40em) {
-  .forgotpassword__btn {
-    margin: 0;
-  }
 }
 
 .forgotpassword__btn:hover {
-  -webkit-transform: scale(0.95);
-          transform: scale(0.95);
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
 }
 
 .resetpassword {
@@ -6427,14 +6444,14 @@ button:hover::before,
             align-items: center;
     margin: 0;
     margin-top: 5rem;
-    overflow: hidden;
   }
 }
 
 .resetpassword__wrapper {
+  width: 25rem;
   height: 25rem;
-  width: 30rem;
-  margin: 5rem auto;
+  margin: 0 auto;
+  margin-top: 3rem;
   padding: 1.25rem 2.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -6443,40 +6460,64 @@ button:hover::before,
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  background-color: whitesmoke;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border: 0;
   border-radius: 0.625rem;
+  background-color: whitesmoke;
 }
 
 @media (min-width: 40em) {
   .resetpassword__wrapper {
-    margin: 0;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
 }
 
 .resetpassword__header {
-  font-size: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 40em) {
+  .resetpassword__header {
+    text-align: left;
+    margin-bottom: 3rem;
+  }
 }
 
 .resetpassword__form {
-  height: 100%;
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 40em) {
+  .resetpassword__form {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
 }
 
 .resetpassword__form-control {
@@ -6486,22 +6527,14 @@ button:hover::before,
 
 .resetpassword__input {
   width: 100%;
-  margin-bottom: 1rem;
   padding: 0 0 0.9375rem 0;
   display: block;
   background-color: transparent;
   border: 0;
   border-bottom: 2px solid #6e9eaf;
-  font-size: 0.65rem;
+  font-size: 0.875rem;
   color: #495465;
   cursor: pointer;
-  font-size: 0.875rem;
-}
-
-@media (min-width: 40em) {
-  .resetpassword__input {
-    font-size: 1.125rem;
-  }
 }
 
 .resetpassword__input:focus,
@@ -6516,7 +6549,6 @@ button:hover::before,
 
 .resetpassword__btn {
   padding: 0.5rem 0.75rem;
-  margin-right: 1rem;
   font-size: 0.75rem;
   text-transform: uppercase;
   border-radius: 5px;
@@ -6528,7 +6560,168 @@ button:hover::before,
 }
 
 .resetpassword__btn:hover {
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+.updatepassword {
+  height: 100vh;
+  width: 100vw;
+}
+
+@media (min-width: 40em) {
+  .updatepassword {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 0;
+    margin-top: 5rem;
+  }
+}
+
+.updatepassword__wrapper {
+  width: 25rem;
+  height: 25rem;
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 1.25rem 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 0;
+  border-radius: 0.625rem;
+  background-color: whitesmoke;
+}
+
+@media (min-width: 40em) {
+  .updatepassword__wrapper {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+.updatepassword__header {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 40em) {
+  .updatepassword__header {
+    text-align: left;
+    margin-bottom: 3rem;
+  }
+}
+
+.updatepassword__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 40em) {
+  .updatepassword__form {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+.updatepassword__form-control {
+  margin: 0 0 2rem;
+  width: 100%;
+}
+
+.updatepassword__input {
+  width: 100%;
+  padding: 0 0 0.9375rem 0;
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  font-size: 0.875rem;
+  color: #495465;
+  cursor: pointer;
+}
+
+.updatepassword__input:focus,
+.updatepassword__input :valid {
+  outline: 0;
+}
+
+.updatepassword__input:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.updatepassword__btn {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.updatepassword__btn:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+}
+
+.updatepassword__updateprofile-link {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#5faba8), to(#5faba8));
+  background-image: linear-gradient(to right, #5faba8, #5faba8);
+  -webkit-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+  cursor: pointer;
+  color: white;
+}
+
+.updatepassword__updateprofile-link:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+  opacity: 0.75;
 }
 /*# sourceMappingURL=App.css.map */

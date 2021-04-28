@@ -42,9 +42,9 @@ const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
                 <Link to='/createprofile'>Create Profile</Link>
               </li>
             )}
-            {/* <li> //update password ---> add in edit user?
-              <Link to='/'></Link>
-            </li> */}
+            <li>
+              <Link to='/updatepassword'>Update Password</Link>
+            </li>
             {userInfo && (
               <li>
                 <Link to='#' onClick={logoutHandler}>

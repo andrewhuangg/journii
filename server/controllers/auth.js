@@ -133,9 +133,7 @@ exports.updatePassword = asyncHandler(async (req, res) => {
   user.password = req.body.newPassword;
   await user.save();
 
-  const token = user.getSignedJwtToken();
-
-  res.status(200).json({ token });
+  res.status(200).json({ msg: 'password updated' });
 });
 
 // @desc      Delete User

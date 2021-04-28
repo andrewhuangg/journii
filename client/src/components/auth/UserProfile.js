@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
@@ -120,6 +121,9 @@ const UserProfile = () => {
               </div>
               <button className='userProfile__form-btn'>Update</button>
             </form>
+            <Link to='/updatepassword' className='userProfile__updatepassword-link'>
+              Update Password
+            </Link>
           </div>
         </div>
       ) : (

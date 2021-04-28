@@ -36,6 +36,8 @@ const ResetPassword = ({ history }) => {
                 placeholder='reset token'
                 required
               />
+            </div>
+            <div className='resetpassword__form-control'>
               <input
                 className='resetpassword__input'
                 type='password'
@@ -44,6 +46,8 @@ const ResetPassword = ({ history }) => {
                 placeholder='password'
                 required
               />
+            </div>
+            <div className='resetpassword__form-control'>
               <input
                 className='resetpassword__input'
                 type='password'

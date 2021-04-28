@@ -20,6 +20,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import About from './components/landing/About';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
+import UpdatePassword from './components/auth/UpdatePassword';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -46,6 +47,7 @@ const App = () => {
             <Route exact path='/forgotpassword' component={ForgotPassword} />
             <Route exact path='/resetpassword' component={ResetPassword} />
             <PrivateRoute exact path='/userinfo' component={UserProfile} />
+            <PrivateRoute exact path='/updatepassword' component={UpdatePassword} />
 
             <PrivateRoute exact path='/createprofile' component={CreateProfile} />
             <PrivateRoute exact path='/editprofile' component={EditProfile} />

@@ -13,6 +13,7 @@ import {
   DESTROY_USER,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
+  UPDATE_PASSWORD,
 } from './types';
 
 export const register = (user) => async (dispatch) => {
@@ -212,6 +213,38 @@ export const resetPassword = (password, resettoken) => async (dispatch) => {
 
     dispatch({
       type: RESET_PASSWORD,
+    });
+
+    return Promise.resolve();
+  } catch (error) {}
+};
+
+export const updatePassword = (currentPassword, newPassword) => async (dispatch, getState) => {
+  try {
+    const {
+      auth: {
+        userAuth: { userInfo },
+      },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.put(
+      '/api/v1/auth/updatepassword',
+      {
+        currentPassword,
+        newPassword,
+      },
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PASSWORD,
     });
 
     return Promise.resolve();

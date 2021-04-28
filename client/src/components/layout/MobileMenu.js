@@ -35,6 +35,9 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
                 <li>
                   <Link to='/createprofile'>Create Profile</Link>
                 </li>
+                <li>
+                  <Link to='/updatepassword'>Update Password</Link>
+                </li>
               </>
             ) : (
               <>
