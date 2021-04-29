@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPostComment, listPostDetails } from '../../actions/postAction';
-import Spinner from '../layout/Spinner';
+import { setAlert } from '../../actions/alertAction';
 
 const CreateComment = ({ postId }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
   const [message, setMessage] = useState(null);
 
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
+
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!text) {
-      setMessage('comment cannot be empty');
-    } else {
-      setMessage(null);
+    if (text.length <= 1999) {
       dispatch(createPostComment(postId, { text })).then(() => {
-        dispatch(listPostDetails(postId));
         setText('');
+        dispatch(listPostDetails(postId));
       });
+    } else {
+      dispatch(setAlert('your comment cannot contain more than 2000 chars', 'error'));
     }
   };
 
@@ -33,6 +35,7 @@ const CreateComment = ({ postId }) => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               maxLength='2000'
+              required
             />
             <button className='comment__form-btn' type='submit'>
               Submit

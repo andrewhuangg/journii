@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPostReview, listPostDetails } from '../../actions/postAction';
+import { setAlert } from '../../actions/alertAction';
 
 const CreateReview = ({ postId }) => {
   const dispatch = useDispatch();
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const [message, setMessage] = useState(null);
+
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!rating) {
-      setMessage('rating cannot be empty');
-    } else {
-      dispatch(createPostReview(postId, { rating, comment })).then(() => {
+    dispatch(createPostReview(postId, { rating, comment })).then((data) => {
+      if (data) {
         dispatch(listPostDetails(postId));
         setRating(0);
         setComment('');
-      });
-    }
+      }
+    });
   };
+
+  // need to add rating selection to rating item
 
   return (
     <>
@@ -32,6 +35,7 @@ const CreateReview = ({ postId }) => {
               className='review__select'
               value={rating}
               onChange={(e) => setRating(e.target.value)}
+              required
             >
               <option value=''>Select...</option>
               <option value='1'>1 - Poor</option>

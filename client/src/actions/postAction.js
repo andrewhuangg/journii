@@ -16,6 +16,7 @@ import {
   FETCH_LATEST_POSTS,
   FETCH_USER_POSTS,
 } from './types';
+import { setAlert } from './alertAction';
 
 export const listFollowedPosts = (userId) => async (dispatch) => {
   try {
@@ -27,14 +28,7 @@ export const listFollowedPosts = (userId) => async (dispatch) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_LIST_FOLLOWED_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -48,14 +42,7 @@ export const listLikedPosts = (userId) => async (dispatch) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_LIST_LIKED_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -68,14 +55,7 @@ export const listLatestPosts = (limit, keyword = '') => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_LATEST_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -89,14 +69,7 @@ export const listTopPosts = (limit) => async (dispatch) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_TOP_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -109,14 +82,7 @@ export const listPosts = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_LIST_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -130,14 +96,7 @@ export const listUserPosts = (userId) => async (dispatch) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_LIST_USER_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -150,14 +109,7 @@ export const listPostDetails = (id) => async (dispatch) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_DETAILS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -182,14 +134,7 @@ export const likePost = (post, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_UPDATE_LIKES_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -214,14 +159,7 @@ export const unlikePost = (post, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_UPDATE_LIKES_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -246,14 +184,7 @@ export const followPost = (post, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_UPDATE_FOLLOWS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -278,14 +209,7 @@ export const unfollowPost = (post, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_UPDATE_FOLLOWS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -311,14 +235,7 @@ export const deletePost = (id) => async (dispatch, getState) => {
 
     return Promise.resolve();
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_DELETE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -345,14 +262,7 @@ export const createPost = (post) => async (dispatch, getState) => {
 
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_CREATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -375,16 +285,9 @@ export const updatePost = (post, id) => async (dispatch, getState) => {
       payload: data,
     });
 
-    return Promise.resolve();
+    return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_UPDATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -409,14 +312,7 @@ export const createPostComment = (postId, comment) => async (dispatch, getState)
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_CREATE_COMMENT_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -441,14 +337,7 @@ export const deletePostComment = (postId, commentId) => async (dispatch, getStat
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_DELETE_COMMENT_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -472,15 +361,10 @@ export const createPostReview = (postId, review) => async (dispatch, getState) =
       type: CREATE_POST_REVIEW,
       payload: data,
     });
+
+    return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_CREATE_REVIEW_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -505,13 +389,6 @@ export const deletePostReview = (postId, reviewId) => async (dispatch, getState)
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: POST_DELETE_REVIEW_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };

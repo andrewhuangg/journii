@@ -42,7 +42,7 @@ exports.getLatestPosts = asyncHandler(async (req, res) => {
 // @access    Public
 exports.getLikedPosts = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
-  if (!userId) throw new Error(`user not found with the id of ${userId}`, 404);
+  if (!userId) throw new ErrorResponse(`user not found with the id of ${userId}`, 404);
 
   const posts = await Post.find({ 'likes.user': userId });
   return res.status(200).json(posts);
@@ -54,7 +54,7 @@ exports.getLikedPosts = asyncHandler(async (req, res) => {
 
 exports.getFollowedPosts = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
-  if (!userId) throw new Error(`user not found with the id of ${req.params.userId}`, 404);
+  if (!userId) throw new ErrorResponse(`user not found with the id of ${req.params.userId}`, 404);
 
   const posts = await Post.find({ 'follows.user': userId });
   return res.status(200).json(posts);

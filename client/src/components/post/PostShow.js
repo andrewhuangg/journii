@@ -27,7 +27,7 @@ const PostShow = ({ match }) => {
 
   useEffect(() => {
     dispatch(listPostDetails(match.params.id)).then((post) => {
-      dispatch(getUserDetails(post.user.id));
+      if (post) dispatch(getUserDetails(post.user.id));
     });
   }, []);
 

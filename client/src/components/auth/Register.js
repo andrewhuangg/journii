@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { register } from '../../actions/authAction';
+import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 
@@ -15,10 +16,12 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState(null);
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo, loading } = loginUser;
+
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
 
   const wrapLabelsWithSpan = () => {
     const labels = document.querySelectorAll('.auth__form-control label');
@@ -60,9 +63,8 @@ const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      dispatch(setAlert('passwords do not match', 'error'));
     } else {
-      setMessage(null);
       dispatch(register({ name, email, password, image }));
     }
   };

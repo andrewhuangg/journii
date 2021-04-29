@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updatePost, listPostDetails, deletePost } from '../../actions/postAction';
-import { Link } from 'react-router-dom';
+import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 
@@ -12,22 +12,26 @@ const EditPost = ({ match }) => {
 
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
-  const [message, setMessage] = useState(null);
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
 
   const postDetails = useSelector((state) => state.posts.post);
   const { post, loading } = postDetails;
 
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
+
   useEffect(() => {
     dispatch(listPostDetails(postId)).then((data) => {
-      setText(data.text || '');
-      setTitle(data.title || '');
-      post.image && post.image.length > 0
-        ? setImage(post.image)
-        : data.image && data.image.length > 0
-        ? setImage(data.image)
-        : setImage('');
+      if (data) {
+        setText(data.text || '');
+        setTitle(data.title || '');
+        post.image && post.image.length > 0
+          ? setImage(post.image)
+          : data.image && data.image.length > 0
+          ? setImage(data.image)
+          : setImage('');
+      }
     });
   }, [dispatch, post.image]);
 
@@ -60,9 +64,18 @@ const EditPost = ({ match }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updatePost({ text, title, image }, post._id)).then(() => {
-      window.location.pathname = `/posts/${postId}`;
-    });
+    if (title.length <= 99) {
+      dispatch(updatePost({ text, title, image }, post._id)).then((data) => {
+        if (data) window.location.pathname = `/posts/${postId}`;
+      });
+    } else {
+      dispatch(
+        setAlert(
+          'title may not contain more than 100 chars, please edit your post to continue',
+          'error'
+        )
+      );
+    }
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';

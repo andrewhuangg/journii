@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { setAlert } from '../../actions/alertAction';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../../actions/postAction';
 import Meta from '../layout/Meta';
 
@@ -9,9 +10,11 @@ const CreatePost = ({ history }) => {
 
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
-  const [message, setMessage] = useState(null);
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
+
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -36,11 +39,20 @@ const CreatePost = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createPost({ text, title, image })).then((data) => {
-      setText('');
-      setTitle('');
-      history.push(`/posts/${data._id}`);
-    });
+    if (title.length <= 99) {
+      dispatch(createPost({ text, title, image })).then((data) => {
+        setText('');
+        setTitle('');
+        if (data) history.push(`/posts/${data._id}`);
+      });
+    } else {
+      dispatch(
+        setAlert(
+          'title may not contain more than 100 chars, please edit your post to continue',
+          'error'
+        )
+      );
+    }
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';

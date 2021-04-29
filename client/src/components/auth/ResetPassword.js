@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { resetPassword } from '../../actions/authAction';
-import { useDispatch } from 'react-redux';
+import { setAlert } from '../../actions/alertAction';
+import { useDispatch, useSelector } from 'react-redux';
 import Meta from '../layout/Meta';
 
 const ResetPassword = ({ history }) => {
@@ -8,15 +9,19 @@ const ResetPassword = ({ history }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [resetToken, setResetToken] = useState('');
-  const [message, setMessage] = useState('');
+
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
+
+  // check to remove alerts before going to production
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      dispatch(setAlert('passwords do not match', 'error'));
     } else {
       dispatch(resetPassword(password, resetToken)).then(() => {
-        history.push('/login');
+        if (alerts.length < 1) history.push('/login');
       });
     }
   };

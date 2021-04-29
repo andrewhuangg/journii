@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deletePost, followPost, unfollowPost } from '../../actions/postAction';
+import { setAlert } from '../../actions/alertAction';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
@@ -14,11 +15,23 @@ const PostHero = ({
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
 
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
+
   useEffect(() => {
     follows.map((follow) => follow.user).includes(userInfo.id)
       ? setFollowed(true)
       : setFollowed(false);
-  }, [follows]);
+
+    if (title.length > 99) {
+      dispatch(
+        setAlert(
+          'title may not contain more than 100 chars, please edit your post to continue',
+          'error'
+        )
+      );
+    }
+  }, [title, follows]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id)).then(() => {

@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
         profiles: payload,
         loading: false,
       };
+
     default:
       return state;
   }

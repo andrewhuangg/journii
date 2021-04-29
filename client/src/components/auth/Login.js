@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/authAction';
+import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 
@@ -11,7 +12,20 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const loginUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo, loading } = loginUser;
+  const { userInfo, loading, error } = loginUser;
+
+  const alertMessage = useSelector((state) => state.common.alerts);
+  const { alerts } = alertMessage;
+
+  const wrapLabelsWithSpan = () => {
+    const labels = document.querySelectorAll('.auth__form-control label');
+    labels.forEach((label) => {
+      label.innerHTML = label.innerText
+        .split('')
+        .map((char, idx) => `<span style="transition-delay:${idx * 50}ms">${char}</span>`)
+        .join('');
+    });
+  };
 
   useEffect(() => {
     wrapLabelsWithSpan();
@@ -22,16 +36,6 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
-  };
-
-  const wrapLabelsWithSpan = () => {
-    const labels = document.querySelectorAll('.auth__form-control label');
-    labels.forEach((label) => {
-      label.innerHTML = label.innerText
-        .split('')
-        .map((char, idx) => `<span style="transition-delay:${idx * 50}ms">${char}</span>`)
-        .join('');
-    });
   };
 
   return (

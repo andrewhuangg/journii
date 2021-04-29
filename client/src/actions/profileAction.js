@@ -11,6 +11,7 @@ import {
   FETCH_PROFILE_FOLLOWERS,
   ERROR_FETCH_GITHUB,
 } from './types';
+import { setAlert } from './alertAction';
 
 export const listFollowedProfiles = (userId) => async (dispatch) => {
   try {
@@ -22,14 +23,7 @@ export const listFollowedProfiles = (userId) => async (dispatch) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_LIST_FOLLOWED_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -55,14 +49,7 @@ export const getOwnProfileDetails = () => async (dispatch, getState) => {
 
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_DETAILS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -75,14 +62,7 @@ export const getProfileDetails = (userId) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_DETAILS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -95,14 +75,7 @@ export const listProfiles = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_LIST_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -128,13 +101,7 @@ export const createProfile = (profile) => async (dispatch, getState) => {
 
     return Promise.resolve();
   } catch (error) {
-    // dispatch({
-    //   type: PROFILE_CREATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -159,14 +126,7 @@ export const updateProfile = (profile, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_UPDATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -191,14 +151,7 @@ export const deleteProfile = (id) => async (dispatch, getState) => {
 
     return Promise.resolve();
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_DELETE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -223,14 +176,7 @@ export const addExperience = (experience) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    //   dispatch({
-    //     type: PROFILE_UPDATE_EXPERIENCES_FAIL,
-    //     payload:
-    //       error.response && error.response.data.message
-    //         ? error.response.data.message.split(',').join(' ')
-    //         : error.message,
-    //   });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -256,14 +202,7 @@ export const deleteExperience = (id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_UPDATE_EXPERIENCES_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -288,14 +227,7 @@ export const addProject = (project) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_UPDATE_PROJECTS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -321,14 +253,7 @@ export const deleteProject = (id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_UPDATE_PROJECTS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -354,14 +279,7 @@ export const followProfile = (profile, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_UPDATE_FOLLOWS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -387,14 +305,7 @@ export const unfollowProfile = (profile, id) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: PROFILE_UPDATE_FOLLOWS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -410,5 +321,6 @@ export const listGithubRepos = (username) => async (dispatch) => {
     dispatch({
       type: ERROR_FETCH_GITHUB,
     });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };

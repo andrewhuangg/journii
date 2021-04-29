@@ -15,6 +15,7 @@ import {
   RESET_PASSWORD,
   UPDATE_PASSWORD,
 } from './types';
+import { setAlert } from './alertAction';
 
 export const register = (user) => async (dispatch) => {
   try {
@@ -35,14 +36,7 @@ export const register = (user) => async (dispatch) => {
     });
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: USER_REGISTER_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -61,14 +55,7 @@ export const login = (email, password) => async (dispatch) => {
     });
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: USER_LOGIN_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -105,14 +92,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     });
     return Promise.resolve(data);
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: USER_DETAILS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -138,14 +118,7 @@ export const getMe = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: USER_DETAILS_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -170,14 +143,7 @@ export const updateUserInfo = (user) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
-    // dispatch({
-    //   type: USER_UPDATE_INFO_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message.split(',').join(' ')
-    //       : error.message,
-    // });
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -197,7 +163,7 @@ export const forgotPassword = (email) => async (dispatch) => {
 
     return Promise.resolve();
   } catch (error) {
-    console.log(error);
+    dispatch(setAlert(error.response.data.message, 'error'));
   }
 };
 
@@ -216,7 +182,9 @@ export const resetPassword = (password, resettoken) => async (dispatch) => {
     });
 
     return Promise.resolve();
-  } catch (error) {}
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
 };
 
 export const updatePassword = (currentPassword, newPassword) => async (dispatch, getState) => {
@@ -248,5 +216,7 @@ export const updatePassword = (currentPassword, newPassword) => async (dispatch,
     });
 
     return Promise.resolve();
-  } catch (error) {}
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
 };
