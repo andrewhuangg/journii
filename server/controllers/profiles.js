@@ -336,7 +336,7 @@ exports.getGithubRepo = asyncHandler(async (req, res) => {
   request(options, (err, response, body) => {
     if (err) console.error(err.message);
     if (response.statusCode !== 200) {
-      return res.status(404).json({ msg: 'no github profile found' });
+      return res.status(404).json({ message: 'no github profile found' });
     }
 
     res.status(200).json({ data: JSON.parse(body) });

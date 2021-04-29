@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateExperience, getOwnProfileDetails } from '../../actions/profileAction';
+import { updateExperience, getOwnProfileDetails, getExperience } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 
-const UpdateExperience = ({ history }) => {
+const UpdateExperience = ({ match, history }) => {
   const dispatch = useDispatch();
+  const experienceId = match.params.id;
 
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('');
@@ -19,24 +20,66 @@ const UpdateExperience = ({ history }) => {
   const profileExperience = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileExperience;
 
+  const formatDate = (date) => {
+    let [month, day, year] = new Date(date).toLocaleDateString('en-US').split('/');
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+
   useEffect(() => {
-    dispatch(getOwnProfileDetails());
+    dispatch(getOwnProfileDetails()).then((data) => {
+      if (data) {
+        dispatch(getExperience(data._id, experienceId)).then((exp) => {
+          if (exp) {
+            setTitle(exp.title || '');
+            setCompany(exp.company || '');
+            setAddress(exp.address || '');
+            setDescription(exp.description || '');
+
+            let from;
+            if (exp.from) from = formatDate(exp.from);
+
+            let to;
+            if (exp.to) to = formatDate(exp.to);
+
+            setFrom(from || '');
+            setTo(to || '');
+
+            if (exp.current) {
+              setCurrent(exp.current || '');
+              toggleDisabled(!toDateDisabled);
+              document.getElementById('checked').checked = true;
+            } else {
+              document.getElementById('checked').checked = false;
+            }
+          }
+        });
+      }
+    });
   }, [dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      updateExperience({
-        title,
-        company,
-        from,
-        to,
-        current,
-        address,
-        description,
-      })
-    ).then(() => {
-      history.push(`/profile/${profile.user.id}`);
+      updateExperience(
+        {
+          title,
+          company,
+          from,
+          to,
+          current,
+          address,
+          description,
+        },
+        profile._id,
+        experienceId
+      )
+    ).then((data) => {
+      if (data) history.push(`/profile/${profile.user.id}`);
     });
   };
 
@@ -77,6 +120,7 @@ const UpdateExperience = ({ history }) => {
                 <div className='updateExperience__date-container'>
                   <input
                     className='updateExperience__input-checkbox'
+                    id='checked'
                     type='checkbox'
                     value={current}
                     onChange={(e) => {

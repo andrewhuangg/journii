@@ -3,7 +3,9 @@ import {
   FETCH_PROFILE_DETAILS,
   FETCH_GITHUB_LIST,
   UPDATE_PROFILE_FOLLOWS,
+  FETCH_PROFILE_EXPERIENCE,
   UPDATE_PROFILE_EXPERIENCE,
+  FETCH_PROFILE_PROJECT,
   UPDATE_PROFILE_PROJECT,
   DESTROY_PROFILE,
   RESET_PROFILE_DETAILS,
@@ -17,6 +19,8 @@ const initialState = {
     follows: [],
     social: {},
   },
+  experience: {},
+  project: {},
   loading: true,
   githubList: [],
 };
@@ -33,6 +37,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         profile: { ...state.profile, follows: payload },
+      };
+
+    case FETCH_PROFILE_EXPERIENCE:
+      return {
+        ...state,
+        experience: payload,
       };
 
     case UPDATE_PROFILE_EXPERIENCE:

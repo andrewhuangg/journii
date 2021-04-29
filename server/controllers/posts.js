@@ -156,7 +156,7 @@ exports.deletePost = asyncHandler(async (req, res) => {
 
   await post.remove();
 
-  res.status(200).json({ msg: 'post removed' });
+  res.status(200).json({ message: 'post removed' });
 });
 
 // @desc      Like a post

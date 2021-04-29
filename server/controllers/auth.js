@@ -92,7 +92,7 @@ exports.getMe = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.logout = asyncHandler(async (req, res) => {
-  res.status(200).json({ msg: 'User successfully logged out' });
+  res.status(200).json({ message: 'User successfully logged out' });
 });
 
 // @desc      Update user details
@@ -136,7 +136,7 @@ exports.updatePassword = asyncHandler(async (req, res) => {
   user.password = req.body.newPassword;
   await user.save();
 
-  res.status(200).json({ msg: 'password updated' });
+  res.status(200).json({ message: 'password updated' });
 });
 
 // @desc      Delete User
@@ -157,7 +157,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
   await user.remove();
 
-  res.status(200).json({ msg: 'User successfully removed ' });
+  res.status(200).json({ message: 'User successfully removed ' });
 });
 
 // @desc      Forgot password
@@ -182,7 +182,7 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
       message,
     });
 
-    res.status(200).json({ msg: 'Email sent' });
+    res.status(200).json({ message: 'Email sent' });
   } catch (err) {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;

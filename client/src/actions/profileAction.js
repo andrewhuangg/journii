@@ -4,7 +4,9 @@ import {
   FETCH_PROFILE_DETAILS,
   CREATE_PROFILE,
   DESTROY_PROFILE,
+  FETCH_PROFILE_EXPERIENCE,
   UPDATE_PROFILE_EXPERIENCE,
+  FETCH_PROFILE_PROJECT,
   UPDATE_PROFILE_PROJECT,
   UPDATE_PROFILE_FOLLOWS,
   FETCH_GITHUB_LIST,
@@ -234,6 +236,37 @@ export const updateExperience = (experience, profileId, experienceId) => async (
 
     dispatch({
       type: UPDATE_PROFILE_EXPERIENCE,
+      payload: data,
+    });
+
+    return Promise.resolve(data);
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
+};
+
+export const getExperience = (profileId, experienceId) => async (dispatch, getState) => {
+  try {
+    const {
+      auth: {
+        userAuth: { userInfo },
+      },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/v1/profiles/${profileId}/profileexperience/${experienceId}`,
+      config
+    );
+
+    dispatch({
+      type: FETCH_PROFILE_EXPERIENCE,
       payload: data,
     });
 
