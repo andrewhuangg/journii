@@ -151,7 +151,7 @@ export const deleteProfile = (id) => async (dispatch, getState) => {
 
     return Promise.resolve();
   } catch (error) {
-    dispatch(setAlert(error.response.data.message, 'error'));
+    dispatch(setAlert('unable to delete profile', 'error'));
   }
 };
 
@@ -175,6 +175,8 @@ export const addExperience = (experience) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_EXPERIENCE,
       payload: data,
     });
+
+    return Promise.resolve();
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }
@@ -201,6 +203,41 @@ export const deleteExperience = (id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_EXPERIENCE,
       payload: data,
     });
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
+};
+
+export const updateExperience = (experience, profileId, experienceId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const {
+      auth: {
+        userAuth: { userInfo },
+      },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/profiles/${profileId}/experience/${experienceId}`,
+      experience,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PROFILE_EXPERIENCE,
+      payload: data,
+    });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }

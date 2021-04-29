@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteExperience } from '../../actions/profileAction';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 const ExperienceItem = ({
@@ -38,9 +39,14 @@ const ExperienceItem = ({
         <div className='profile-experience__description'>{description}</div>
         <div className='profile-experience__address'>{address}</div>
         {currentUserId === profileOwner._id && (
-          <button className='profile-experience__btn' onClick={() => deleteHandler(_id)}>
-            <i className='fas fa-trash'></i>
-          </button>
+          <div className='profile-experience__btn-wrapper'>
+            <button className='profile-experience__btn' onClick={() => deleteHandler(_id)}>
+              <i className='fas fa-trash'></i>
+            </button>
+            <Link to={`/updateexperience/${_id}`} className='profile-experience__update'>
+              Update
+            </Link>
+          </div>
         )}
       </div>
     </>

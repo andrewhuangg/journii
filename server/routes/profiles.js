@@ -10,6 +10,7 @@ const {
   createProfileExperience,
   deleteProfileExperience,
   updateProfileExperience,
+  getProfileExperience,
   createProfileProject,
   deleteProfileProject,
   updateProfileProject,
@@ -35,6 +36,7 @@ router.route('/github/:username').get(getGithubRepo);
 router.route('/unfollow/:id').put(protect, unfollowProfile);
 router.route('/follow/:id').put(protect, followProfile);
 router.route('/:id/experience/:experienceId').put(protect, updateProfileExperience);
+router.route('/:id/profileexperience/:experienceId').get(protect, getProfileExperience);
 router.route('/:id/project/:projectId').put(protect, updateProfileProject);
 router.route('/:id').put(protect, updateProfile).delete(protect, deleteProfile);
 router.route('/').get(getProfiles).post(protect, createProfile);

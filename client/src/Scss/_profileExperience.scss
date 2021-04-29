@@ -190,19 +190,43 @@
     }
   }
 
+  &__btn-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__btn {
+    margin-right: 1rem;
+    padding: 0.4rem 0.7rem;
     border-radius: 5px;
     background-image: linear-gradient(to right, $salmon, $salmon);
-    padding: 0.4rem 0.7rem;
     font-size: 0.7rem;
     cursor: pointer;
     transition: all 200ms ease-in-out;
 
     &:hover {
-      transform: scale(0.9);
+      transform: scale(0.98);
     }
     .fa-trash {
       font-size: 0.8rem;
+    }
+  }
+
+  &__update {
+    padding: 0.5rem;
+    font-size: 0.55rem;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, $dadJeansBlue, $dadJeansBlue);
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(0.98);
+      opacity: 0.75;
     }
   }
 }

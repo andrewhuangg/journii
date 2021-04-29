@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addExperience, getOwnProfileDetails } from '../../actions/profileAction';
+import { updateExperience, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 
-const AddExperience = ({ history }) => {
+const UpdateExperience = ({ history }) => {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState('');
@@ -15,7 +15,6 @@ const AddExperience = ({ history }) => {
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [toDateDisabled, toggleDisabled] = useState(false);
-  const [message, setMessage] = useState(null);
 
   const profileExperience = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileExperience;
@@ -27,7 +26,7 @@ const AddExperience = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      addExperience({
+      updateExperience({
         title,
         company,
         from,
@@ -44,16 +43,16 @@ const AddExperience = ({ history }) => {
   return (
     <>
       {!loading ? (
-        <div className='addExperience'>
-          <Meta title='journii | Add Experience' />
-          <div className='addExperience__wrapper'>
-            <form className='addExperience__form' onSubmit={submitHandler}>
-              <h3>Add Experience</h3>
+        <div className='updateExperience'>
+          <Meta title='journii | Update Experience' />
+          <div className='updateExperience__wrapper'>
+            <form className='updateExperience__form' onSubmit={submitHandler}>
+              <h3>Update Experience</h3>
               <small>* = required field</small>
 
-              <div className='addExperience__form-control'>
+              <div className='updateExperience__form-control'>
                 <input
-                  className='addExperience__form-input'
+                  className='updateExperience__form-input'
                   type='text'
                   placeholder='* Title'
                   value={title}
@@ -62,9 +61,9 @@ const AddExperience = ({ history }) => {
                 />
               </div>
 
-              <div className='addExperience__form-control'>
+              <div className='updateExperience__form-control'>
                 <input
-                  className='addExperience__form-input'
+                  className='updateExperience__form-input'
                   type='text'
                   placeholder='* Company'
                   value={company}
@@ -74,10 +73,10 @@ const AddExperience = ({ history }) => {
                 <small>Could be your company or volunteer group etc.,</small>
               </div>
 
-              <div className='addExperience__form-control-date'>
-                <div className='addExperience__date-container'>
+              <div className='updateExperience__form-control-date'>
+                <div className='updateExperience__date-container'>
                   <input
-                    className='addExperience__input-checkbox'
+                    className='updateExperience__input-checkbox'
                     type='checkbox'
                     value={current}
                     onChange={(e) => {
@@ -88,10 +87,10 @@ const AddExperience = ({ history }) => {
                   <label>Current Experience</label>
                 </div>
 
-                <div className='addExperience__date-container'>
+                <div className='updateExperience__date-container'>
                   <label>{current ? '* Start' : '* From'}</label>
                   <input
-                    className='addExperience__form-input-date'
+                    className='updateExperience__form-input-date'
                     type='date'
                     value={from}
                     onChange={(e) => setFrom(e.target.value)}
@@ -100,10 +99,10 @@ const AddExperience = ({ history }) => {
                 </div>
 
                 {!toDateDisabled && (
-                  <div className='addExperience__date-container'>
+                  <div className='updateExperience__date-container'>
                     <label>to</label>
                     <input
-                      className='addExperience__form-input-date'
+                      className='updateExperience__form-input-date'
                       type='date'
                       value={to}
                       onChange={(e) => setTo(e.target.value)}
@@ -113,9 +112,9 @@ const AddExperience = ({ history }) => {
                 )}
               </div>
 
-              <div className='addExperience__form-control'>
+              <div className='updateExperience__form-control'>
                 <input
-                  className='addExperience__form-input'
+                  className='updateExperience__form-input'
                   type='text'
                   placeholder='Address'
                   value={address}
@@ -123,9 +122,9 @@ const AddExperience = ({ history }) => {
                 />
               </div>
 
-              <div className='addExperience__form-control'>
+              <div className='updateExperience__form-control'>
                 <textarea
-                  className='addExperience__form-textarea'
+                  className='updateExperience__form-textarea'
                   value={description}
                   placeholder='Talk about your experience'
                   onChange={(e) => setDescription(e.target.value)}
@@ -133,7 +132,7 @@ const AddExperience = ({ history }) => {
                 />
               </div>
 
-              <button className='addExperience__btn'>Add Experience</button>
+              <button className='updateExperience__btn'>Update</button>
             </form>
           </div>
         </div>
@@ -144,4 +143,4 @@ const AddExperience = ({ history }) => {
   );
 };
 
-export default AddExperience;
+export default UpdateExperience;

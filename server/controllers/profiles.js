@@ -139,7 +139,7 @@ exports.deleteProfile = asyncHandler(async (req, res) => {
 
   await profile.remove();
 
-  res.status(200).json({ msg: 'Profile deleted' });
+  res.status(200).json({ message: 'Profile deleted' });
 });
 
 // @desc      Add profile project
@@ -262,6 +262,34 @@ exports.updateProfileExperience = asyncHandler(async (req, res) => {
   );
 
   res.status(200).json(profile.experiences);
+});
+
+// @desc      Get single profile experience
+// @route     GET /api/v1/profiles/:id/profileexperience/:experienceId
+// @access    Private
+
+exports.getProfileExperience = asyncHandler(async (req, res) => {
+  const profile = await Profile.findOne({ user: req.user._id });
+
+  if (!profile)
+    throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
+
+  if (profile.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
+
+  let profileExperience = await Profile.findOne(
+    { _id: req.params.id, 'experiences._id': req.params.experienceId },
+    'experiences'
+  );
+
+  const experience = profileExperience.experiences.filter(
+    (exp) => exp._id.toString() === req.params.experienceId
+  )[0];
+
+  if (!experience)
+    throw new ErrorResponse(`experience not found with the id of ${req.params.experienceId}`, 404);
+
+  res.status(200).json(experience);
 });
 
 // @desc      Get user repos from Github
