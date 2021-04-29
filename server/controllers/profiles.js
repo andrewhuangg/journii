@@ -205,6 +205,34 @@ exports.deleteProfileProject = asyncHandler(async (req, res) => {
   res.status(200).json(profile.projects);
 });
 
+// @desc      Get single profile project
+// @route     GET /api/v1/profiles/:id/profileproject/:projectId
+// @access    Private
+
+exports.getProfileProject = asyncHandler(async (req, res) => {
+  const profile = await Profile.findOne({ user: req.user._id });
+
+  if (!profile)
+    throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
+
+  if (profile.user.toString() !== req.user._id.toString())
+    throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
+
+  let profileProject = await Profile.findOne(
+    { _id: req.params.id, 'projects._id': req.params.projectId },
+    'projects'
+  );
+
+  const project = profileProject.projects.filter(
+    (proj) => proj._id.toString() === req.params.projectId
+  )[0];
+
+  if (!project)
+    throw new ErrorResponse(`project not found with the id of ${req.params.projectId}`, 404);
+
+  res.status(200).json(project);
+});
+
 // @desc      Add profile experience
 // @route     PUT /api/v1/profiles/experience
 // @access    Private
