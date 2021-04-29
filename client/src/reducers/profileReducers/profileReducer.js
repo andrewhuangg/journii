@@ -51,6 +51,12 @@ export default (state = initialState, action) => {
         profile: { ...state.profile, experiences: payload },
       };
 
+    case FETCH_PROFILE_PROJECT:
+      return {
+        ...state,
+        project: payload,
+      };
+
     case UPDATE_PROFILE_PROJECT:
       return {
         ...state,

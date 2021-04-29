@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteProject } from '../../actions/profileAction';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -54,9 +55,14 @@ const ProjectItem = ({
           </ul>
         </div>
         {currentUserId === profileOwner._id && (
-          <button onClick={() => deleteHandler(_id)} className='profile-project__btn'>
-            <i className='fas fa-trash'></i>
-          </button>
+          <div className='profile-project__btn-wrapper'>
+            <button onClick={() => deleteHandler(_id)} className='profile-project__btn'>
+              <i className='fas fa-trash'></i>
+            </button>
+            <Link to={`/updateproject/${_id}`} className='profile-project__update'>
+              Update
+            </Link>
+          </div>
         )}
       </div>
     </>

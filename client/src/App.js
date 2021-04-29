@@ -11,6 +11,7 @@ import EditProfile from './components/profile-forms/EditProfile';
 import AddExperience from './components/profile-forms/AddExperience';
 import UpdateExperience from './components/profile-forms/UpdateExperience';
 import AddProject from './components/profile-forms/AddProject';
+import UpdateProject from './components/profile-forms/UpdateProject';
 import ProfileList from './components/profiles/ProfileList';
 import ProfileShow from './components/profile/ProfileShow';
 import PostList from './components/posts/PostList';
@@ -57,6 +58,7 @@ const App = () => {
             <PrivateRoute exact path='/addexperience' component={AddExperience} />
             <PrivateRoute exact path='/updateexperience/:id' component={UpdateExperience} />
             <PrivateRoute exact path='/addproject' component={AddProject} />
+            <PrivateRoute exact path='/updateproject/:id' component={UpdateProject} />
 
             <PrivateRoute exact path='/createpost' component={CreatePost} />
             <PrivateRoute exact path='/editpost/:id' component={EditPost} />

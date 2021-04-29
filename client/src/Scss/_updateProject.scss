@@ -1,0 +1,166 @@
+.updateProject {
+  @include breakpoint-up(medium) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    margin-top: 5rem;
+    overflow: hidden;
+  }
+  height: 100vh;
+  width: 100vw;
+
+  &__wrapper {
+    background-color: hsl(0, 0%, 96%);
+    padding: 1.25rem 2.5rem;
+    border: 0;
+    border-radius: 0.625rem;
+    height: 98%;
+
+    @include breakpoint-up(medium) {
+      height: 50rem;
+    }
+  }
+
+  &__form {
+    width: 36rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+
+    h3 {
+      margin-top: 1rem;
+    }
+
+    h3,
+    small {
+      margin-bottom: 2rem;
+      color: $dadJeansBlue;
+    }
+
+    @include breakpoint-up(medium) {
+      width: 100%;
+      align-items: flex-start;
+    }
+  }
+
+  &__form-control {
+    margin: 0 0 2rem;
+    width: 30rem;
+    padding: 0 0.5rem 0 0.5rem;
+
+    @include breakpoint-up(medium) {
+      width: 40rem;
+    }
+  }
+
+  &__form-control-date {
+    width: 30rem;
+    margin: 0 0 2rem;
+    padding: 0 0.5rem 0 0.5rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    @include breakpoint-up(medium) {
+      width: 40rem;
+    }
+
+    label {
+      margin-right: 0.5rem;
+      font-size: 0.63rem;
+      font-weight: 400;
+      color: $darkBlue;
+
+      @include breakpoint-up(medium) {
+        font-size: $font-sm;
+      }
+    }
+  }
+
+  &__date-container {
+    margin-right: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__input-checkbox {
+    display: block;
+    font-size: $font-sm;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+
+  &__form-input-date {
+    display: block;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid $dadJeansBlue;
+    font-size: 0.75rem;
+    cursor: pointer;
+
+    @include breakpoint-up(medium) {
+      font-size: $font-sm;
+    }
+
+    &:focus,
+    :valid {
+      outline: 0;
+    }
+
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+
+  &__form-input {
+    display: block;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid $dadJeansBlue;
+    width: 100%;
+    padding: 0 0 0.9375rem 0;
+    font-size: 0.65rem;
+    color: $darkBlue;
+    cursor: pointer;
+
+    @include breakpoint-up(medium) {
+      font-size: $font-sm;
+    }
+
+    &:focus,
+    :valid {
+      outline: 0;
+    }
+
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+
+  &__form-textarea {
+    resize: none;
+    width: 100%;
+    height: 10rem;
+  }
+
+  &__btn {
+    padding: 0.5rem 0.75rem;
+    margin-right: 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, $dadJeansBlue, $dadJeansBlue);
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+}

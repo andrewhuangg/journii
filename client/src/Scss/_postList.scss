@@ -133,10 +133,12 @@
   }
 
   &__text {
+    max-height: 15rem;
     font-size: $font-sm;
     line-height: 1.5;
     margin-bottom: 0.75rem;
     word-break: break-all;
+    overflow: hidden;
   }
 
   &__likes,

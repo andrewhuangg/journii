@@ -109,6 +109,8 @@
 
   &__description {
     word-break: break-all;
+    overflow: hidden;
+    max-height: 3.5rem;
   }
 
   &__company {

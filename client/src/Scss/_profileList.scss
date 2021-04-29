@@ -190,10 +190,12 @@
   }
 
   &__bio {
+    max-height: 15rem;
     font-size: 0.8rem;
     line-height: 1.5;
     margin-bottom: 0.75rem;
     word-break: break-all;
+    overflow: hidden;
   }
 
   &__created,

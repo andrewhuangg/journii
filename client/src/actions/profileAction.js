@@ -301,6 +301,38 @@ export const addProject = (project) => async (dispatch, getState) => {
   }
 };
 
+export const updateProject = (project, profileId, projectId) => async (dispatch, getState) => {
+  try {
+    const {
+      auth: {
+        userAuth: { userInfo },
+      },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/profiles/${profileId}/project/${projectId}`,
+      project,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PROFILE_PROJECT,
+      payload: data,
+    });
+
+    return Promise.resolve(data);
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
+};
+
 export const deleteProject = (id) => async (dispatch, getState) => {
   try {
     const {
@@ -322,6 +354,37 @@ export const deleteProject = (id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_PROJECT,
       payload: data,
     });
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
+};
+
+export const getProject = (profileId, projectId) => async (dispatch, getState) => {
+  try {
+    const {
+      auth: {
+        userAuth: { userInfo },
+      },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/v1/profiles/${profileId}/profileproject/${projectId}`,
+      config
+    );
+
+    dispatch({
+      type: FETCH_PROFILE_PROJECT,
+      payload: data,
+    });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }
