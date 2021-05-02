@@ -1,0 +1,35 @@
+.alertmessage {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+
+  &__alert {
+    height: 5rem;
+    width: 10rem;
+    padding: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    word-break: break-all;
+    overflow-y: auto;
+    color: $darkBlue;
+    border: 1px solid $salmon;
+    border-radius: 6px;
+    background-color: white;
+  }
+
+  .success {
+    color: $darkTurquoise;
+    border: 1px solid $darkTurquoise;
+  }
+  .error {
+    color: $salmon;
+    border: 1px solid $salmon;
+  }
+}

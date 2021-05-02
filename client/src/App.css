@@ -1240,10 +1240,18 @@ button:hover::before,
 }
 
 .post-item__text {
+  max-height: 15rem;
   font-size: 0.875rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
   word-break: break-all;
+  overflow: hidden;
+}
+
+.post-item__name {
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: #babeca;
 }
 
 .post-item__likes, .post-item__follows, .post-item__comments, .post-item__date, .post-item__rating {
@@ -1572,10 +1580,12 @@ button:hover::before,
 }
 
 .profile-item__bio {
+  max-height: 15rem;
   font-size: 0.8rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
   word-break: break-all;
+  overflow: hidden;
 }
 
 .profile-item__created, .profile-item__followers {
@@ -3167,10 +3177,12 @@ button:hover::before,
 
 .profile-experience__description {
   word-break: break-all;
+  overflow: hidden;
+  max-height: 3.5rem;
 }
 
 .profile-experience__company {
-  font-size: 0.875rem;
+  font-size: 0.6rem;
 }
 
 .profile-experience__company-info {
@@ -3258,11 +3270,28 @@ button:hover::before,
   opacity: 1;
 }
 
+.profile-experience__btn-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .profile-experience__btn {
+  margin-right: 1rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 5px;
   background-image: -webkit-gradient(linear, left top, right top, from(#e97272), to(#e97272));
   background-image: linear-gradient(to right, #e97272, #e97272);
-  padding: 0.4rem 0.7rem;
   font-size: 0.7rem;
   cursor: pointer;
   -webkit-transition: all 200ms ease-in-out;
@@ -3270,12 +3299,31 @@ button:hover::before,
 }
 
 .profile-experience__btn:hover {
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
 }
 
 .profile-experience__btn .fa-trash {
   font-size: 0.8rem;
+}
+
+.profile-experience__update {
+  padding: 0.5rem;
+  font-size: 0.55rem;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.profile-experience__update:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+  opacity: 0.75;
 }
 
 .profile-project {
@@ -3381,15 +3429,16 @@ button:hover::before,
 
 @media (min-width: 40em) {
   .profile-project__item {
+    max-height: 22rem;
+    width: auto;
+    margin: 0;
+    padding: 1rem;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
-    margin: 0;
-    padding: 1rem;
-    width: auto;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
   }
 }
 
@@ -3487,13 +3536,15 @@ button:hover::before,
 }
 
 .profile-project__description {
-  font-size: 0.875rem;
+  max-height: 5rem;
+  font-size: 0.6rem;
   line-height: 1.15;
   word-break: break-all;
+  overflow: hidden;
 }
 
 .profile-project__body {
-  font-size: 0.6rem;
+  max-height: 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3504,6 +3555,8 @@ button:hover::before,
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  font-size: 0.6rem;
+  overflow: hidden;
 }
 
 .profile-project__ul {
@@ -3558,11 +3611,28 @@ button:hover::before,
   border-radius: 50%;
 }
 
+.profile-project__btn-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .profile-project__btn {
+  margin-right: 1rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 5px;
   background-image: -webkit-gradient(linear, left top, right top, from(#e97272), to(#e97272));
   background-image: linear-gradient(to right, #e97272, #e97272);
-  padding: 0.4rem 0.7rem;
   font-size: 0.7rem;
   cursor: pointer;
   -webkit-transition: all 200ms ease-in-out;
@@ -3570,12 +3640,31 @@ button:hover::before,
 }
 
 .profile-project__btn:hover {
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
 }
 
 .profile-project__btn .fa-trash {
   font-size: 0.8rem;
+}
+
+.profile-project__update {
+  padding: 0.5rem;
+  font-size: 0.55rem;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.profile-project__update:hover {
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+  opacity: 0.75;
 }
 
 .createPost {
@@ -5334,13 +5423,13 @@ button:hover::before,
           transform: scale(0.9);
 }
 
-.editExperience {
+.addExperience {
   height: 100vh;
   width: 100vw;
 }
 
 @media (min-width: 40em) {
-  .editExperience {
+  .addExperience {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -5360,7 +5449,7 @@ button:hover::before,
   }
 }
 
-.editExperience__wrapper {
+.addExperience__wrapper {
   background-color: whitesmoke;
   padding: 1.25rem 2.5rem;
   border: 0;
@@ -5369,12 +5458,12 @@ button:hover::before,
 }
 
 @media (min-width: 40em) {
-  .editExperience__wrapper {
+  .addExperience__wrapper {
     height: 50rem;
   }
 }
 
-.editExperience__form {
+.addExperience__form {
   width: 36rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5391,18 +5480,18 @@ button:hover::before,
           flex-flow: column nowrap;
 }
 
-.editExperience__form h3 {
+.addExperience__form h3 {
   margin-top: 1rem;
 }
 
-.editExperience__form h3,
-.editExperience__form small {
+.addExperience__form h3,
+.addExperience__form small {
   margin-bottom: 2rem;
   color: #6e9eaf;
 }
 
 @media (min-width: 40em) {
-  .editExperience__form {
+  .addExperience__form {
     width: 100%;
     -webkit-box-align: start;
         -ms-flex-align: start;
@@ -5410,19 +5499,19 @@ button:hover::before,
   }
 }
 
-.editExperience__form-control {
+.addExperience__form-control {
   margin: 0 0 2rem;
   width: 30rem;
   padding: 0 0.5rem 0 0.5rem;
 }
 
 @media (min-width: 40em) {
-  .editExperience__form-control {
+  .addExperience__form-control {
     width: 40rem;
   }
 }
 
-.editExperience__form-control-date {
+.addExperience__form-control-date {
   width: 30rem;
   margin: 0 0 2rem;
   padding: 0 0.5rem 0 0.5rem;
@@ -5442,12 +5531,12 @@ button:hover::before,
 }
 
 @media (min-width: 40em) {
-  .editExperience__form-control-date {
+  .addExperience__form-control-date {
     width: 40rem;
   }
 }
 
-.editExperience__form-control-date label {
+.addExperience__form-control-date label {
   margin-right: 0.5rem;
   font-size: 0.63rem;
   font-weight: 400;
@@ -5455,12 +5544,12 @@ button:hover::before,
 }
 
 @media (min-width: 40em) {
-  .editExperience__form-control-date label {
+  .addExperience__form-control-date label {
     font-size: 0.875rem;
   }
 }
 
-.editExperience__date-container {
+.addExperience__date-container {
   margin-right: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5477,14 +5566,14 @@ button:hover::before,
           align-items: center;
 }
 
-.editExperience__input-checkbox {
+.addExperience__input-checkbox {
   display: block;
   font-size: 0.875rem;
   cursor: pointer;
   margin-right: 0.5rem;
 }
 
-.editExperience__form-input-date {
+.addExperience__form-input-date {
   display: block;
   background-color: transparent;
   border: 0;
@@ -5494,22 +5583,22 @@ button:hover::before,
 }
 
 @media (min-width: 40em) {
-  .editExperience__form-input-date {
+  .addExperience__form-input-date {
     font-size: 0.875rem;
   }
 }
 
-.editExperience__form-input-date:focus,
-.editExperience__form-input-date :valid {
+.addExperience__form-input-date:focus,
+.addExperience__form-input-date :valid {
   outline: 0;
 }
 
-.editExperience__form-input-date:invalid {
+.addExperience__form-input-date:invalid {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
-.editExperience__form-input {
+.addExperience__form-input {
   display: block;
   background-color: transparent;
   border: 0;
@@ -5522,28 +5611,28 @@ button:hover::before,
 }
 
 @media (min-width: 40em) {
-  .editExperience__form-input {
+  .addExperience__form-input {
     font-size: 0.875rem;
   }
 }
 
-.editExperience__form-input:focus,
-.editExperience__form-input :valid {
+.addExperience__form-input:focus,
+.addExperience__form-input :valid {
   outline: 0;
 }
 
-.editExperience__form-input:invalid {
+.addExperience__form-input:invalid {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
-.editExperience__form-textarea {
+.addExperience__form-textarea {
   resize: none;
   width: 100%;
   height: 10rem;
 }
 
-.editExperience__btn {
+.addExperience__btn {
   padding: 0.5rem 0.75rem;
   margin-right: 1rem;
   font-size: 0.75rem;
@@ -5556,7 +5645,7 @@ button:hover::before,
   cursor: pointer;
 }
 
-.editExperience__btn:hover {
+.addExperience__btn:hover {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
 }
@@ -6723,5 +6812,501 @@ button:hover::before,
   -webkit-transform: scale(0.98);
           transform: scale(0.98);
   opacity: 0.75;
+}
+
+.updateExperience {
+  height: 100vh;
+  width: 100vw;
+}
+
+@media (min-width: 40em) {
+  .updateExperience {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 0;
+    margin-top: 5rem;
+    overflow: hidden;
+  }
+}
+
+.updateExperience__wrapper {
+  background-color: whitesmoke;
+  padding: 1.25rem 2.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  height: 98%;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__wrapper {
+    height: 50rem;
+  }
+}
+
+.updateExperience__form {
+  width: 36rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+}
+
+.updateExperience__form h3 {
+  margin-top: 1rem;
+}
+
+.updateExperience__form h3,
+.updateExperience__form small {
+  margin-bottom: 2rem;
+  color: #6e9eaf;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__form {
+    width: 100%;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+.updateExperience__form-control {
+  margin: 0 0 2rem;
+  width: 30rem;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__form-control {
+    width: 40rem;
+  }
+}
+
+.updateExperience__form-control-date {
+  width: 30rem;
+  margin: 0 0 2rem;
+  padding: 0 0.5rem 0 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__form-control-date {
+    width: 40rem;
+  }
+}
+
+.updateExperience__form-control-date label {
+  margin-right: 0.5rem;
+  font-size: 0.63rem;
+  font-weight: 400;
+  color: #495465;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__form-control-date label {
+    font-size: 0.875rem;
+  }
+}
+
+.updateExperience__date-container {
+  margin-right: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.updateExperience__input-checkbox {
+  display: block;
+  font-size: 0.875rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.updateExperience__form-input-date {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__form-input-date {
+    font-size: 0.875rem;
+  }
+}
+
+.updateExperience__form-input-date:focus,
+.updateExperience__form-input-date :valid {
+  outline: 0;
+}
+
+.updateExperience__form-input-date:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.updateExperience__form-input {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  width: 100%;
+  padding: 0 0 0.9375rem 0;
+  font-size: 0.65rem;
+  color: #495465;
+  cursor: pointer;
+}
+
+@media (min-width: 40em) {
+  .updateExperience__form-input {
+    font-size: 0.875rem;
+  }
+}
+
+.updateExperience__form-input:focus,
+.updateExperience__form-input :valid {
+  outline: 0;
+}
+
+.updateExperience__form-input:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.updateExperience__form-textarea {
+  resize: none;
+  width: 100%;
+  height: 10rem;
+}
+
+.updateExperience__btn {
+  padding: 0.5rem 0.75rem;
+  margin-right: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.updateExperience__btn:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+.updateProject {
+  height: 100vh;
+  width: 100vw;
+}
+
+@media (min-width: 40em) {
+  .updateProject {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin: 0;
+    margin-top: 5rem;
+    overflow: hidden;
+  }
+}
+
+.updateProject__wrapper {
+  background-color: whitesmoke;
+  padding: 1.25rem 2.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  height: 98%;
+}
+
+@media (min-width: 40em) {
+  .updateProject__wrapper {
+    height: 50rem;
+  }
+}
+
+.updateProject__form {
+  width: 36rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+}
+
+.updateProject__form h3 {
+  margin-top: 1rem;
+}
+
+.updateProject__form h3,
+.updateProject__form small {
+  margin-bottom: 2rem;
+  color: #6e9eaf;
+}
+
+@media (min-width: 40em) {
+  .updateProject__form {
+    width: 100%;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+.updateProject__form-control {
+  margin: 0 0 2rem;
+  width: 30rem;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+@media (min-width: 40em) {
+  .updateProject__form-control {
+    width: 40rem;
+  }
+}
+
+.updateProject__form-control-date {
+  width: 30rem;
+  margin: 0 0 2rem;
+  padding: 0 0.5rem 0 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (min-width: 40em) {
+  .updateProject__form-control-date {
+    width: 40rem;
+  }
+}
+
+.updateProject__form-control-date label {
+  margin-right: 0.5rem;
+  font-size: 0.63rem;
+  font-weight: 400;
+  color: #495465;
+}
+
+@media (min-width: 40em) {
+  .updateProject__form-control-date label {
+    font-size: 0.875rem;
+  }
+}
+
+.updateProject__date-container {
+  margin-right: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.updateProject__input-checkbox {
+  display: block;
+  font-size: 0.875rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.updateProject__form-input-date {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+@media (min-width: 40em) {
+  .updateProject__form-input-date {
+    font-size: 0.875rem;
+  }
+}
+
+.updateProject__form-input-date:focus,
+.updateProject__form-input-date :valid {
+  outline: 0;
+}
+
+.updateProject__form-input-date:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.updateProject__form-input {
+  display: block;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #6e9eaf;
+  width: 100%;
+  padding: 0 0 0.9375rem 0;
+  font-size: 0.65rem;
+  color: #495465;
+  cursor: pointer;
+}
+
+@media (min-width: 40em) {
+  .updateProject__form-input {
+    font-size: 0.875rem;
+  }
+}
+
+.updateProject__form-input:focus,
+.updateProject__form-input :valid {
+  outline: 0;
+}
+
+.updateProject__form-input:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.updateProject__form-textarea {
+  resize: none;
+  width: 100%;
+  height: 10rem;
+}
+
+.updateProject__btn {
+  padding: 0.5rem 0.75rem;
+  margin-right: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#6e9eaf), to(#6e9eaf));
+  background-image: linear-gradient(to right, #6e9eaf, #6e9eaf);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.updateProject__btn:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+.alertmessage {
+  max-height: 10rem;
+  max-width: 15rem;
+  height: 8rem;
+  width: 12rem;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+.alertmessage__alert {
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  color: #495465;
+  border-radius: 6px;
+  border: 1px solid #e97272;
+  background-color: white;
+}
+
+.alertmessage__text {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 0.875rem;
+  word-break: break-all;
+  overflow-y: auto;
 }
 /*# sourceMappingURL=App.css.map */

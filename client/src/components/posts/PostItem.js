@@ -29,6 +29,7 @@ const PostItem = ({
         </div>
         <div className='post-item__image' style={randomDefaultImage}></div>
         <div className='post-item__content'>
+          <div className='post-item__name'>By: {name}</div>
           <div className='post-item__title'>{title}</div>
           <div className='post-item__text'>{text}</div>
         </div>

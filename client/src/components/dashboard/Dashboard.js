@@ -6,6 +6,7 @@ import Meta from '../layout/Meta';
 import DashboardLeft from './DashboardLeft';
 import DashboardRight from './DashboardRight';
 import DashboardMain from './DashboardMain';
+import AlertMessage from '../layout/AlertMessage';
 
 const Dashboard = ({ match }) => {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ const Dashboard = ({ match }) => {
       {!loading ? (
         <main className='dashboard container'>
           <Meta title='journii | Home' />
+          <AlertMessage />
           <DashboardLeft userInfo={userInfo} toggleModalState={toggleModalState} />
           <DashboardMain
             latestPosts={latestPosts}
