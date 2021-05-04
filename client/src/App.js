@@ -24,13 +24,10 @@ import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import UpdatePassword from './components/auth/UpdatePassword';
 
-// Redux
 import { Provider } from 'react-redux';
 import store from './store';
 
 import './App.scss';
-
-// CREATE AN ERROR PAGE INCASE A PAGE DOESNT EXIST
 
 const App = () => {
   return (

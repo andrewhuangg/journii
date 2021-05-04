@@ -44,7 +44,6 @@ const PostHero = ({
     dispatch(unfollowPost(post, id));
   };
 
-  // Random Photo Generator
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';
   const getRandomNumber = () => {
     const num = Math.floor(Math.random() * 10) + 900;
@@ -54,7 +53,6 @@ const PostHero = ({
     return `${getRandomNumber()}x${getRandomNumber()}`;
   };
 
-  // Random Photo Generator
   const unsplashImage = `${unsplashURL}${getRandomSize()}`;
   const randomDefaultImage = {
     backgroundImage: `url(${image ? image : unsplashImage})`,

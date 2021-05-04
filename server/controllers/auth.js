@@ -140,7 +140,7 @@ exports.updatePassword = asyncHandler(async (req, res) => {
 });
 
 // @desc      Delete User
-// @route     PUT /api/v1/auth/:id
+// @route     DELETE /api/v1/auth/:id
 // @access    Private
 
 exports.deleteUser = asyncHandler(async (req, res) => {

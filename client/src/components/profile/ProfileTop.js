@@ -37,7 +37,6 @@ const ProfileTop = ({
     modalRef.current && !modalRef.current.contains(e.target) && setModalState(!modalState);
   };
 
-  // windowScroll borrowed from https://medium.com/yet-sh/in-react-how-to-prevent-body-from-scrolling-when-a-modal-is-opened-bf3b90647902
   useEffect(() => {
     const profileTopView = document.querySelector('.modal');
     if (modalState) {

@@ -7,11 +7,11 @@ const QuoteGenerator = () => {
   const dispatch = useDispatch();
   const quoteList = useSelector((state) => state.common.quotes);
   const { quotes } = quoteList;
-  const [delay, setDelay] = useState(8000); //matches quote__bar animation grow time 10s
+  const [delay, setDelay] = useState(8000);
 
   useEffect(() => {
     dispatch(listQuotes());
-  }, []);
+  }, [dispatch]);
 
   useInterval(() => {
     generateRandomQuote(quotes.length);

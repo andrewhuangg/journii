@@ -9,7 +9,7 @@ const PostFeature = ({ post, post: { _id, likes, text, follows }, userInfo }) =>
 
   useEffect(() => {
     likes.map((like) => like.user).includes(userInfo.id) ? setLiked(true) : setLiked(false);
-  }, [likes]);
+  }, [likes, userInfo.id]);
 
   const postLikeHandler = (post, id) => {
     setLiked(true);

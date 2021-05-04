@@ -59,7 +59,6 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// Logout / Clear profile
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: RESET_USER_DETAILS });
@@ -91,6 +90,39 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       payload: data,
     });
     return Promise.resolve(data);
+  } catch (error) {
+    dispatch(setAlert(error.response.data.message, 'error'));
+  }
+};
+
+export const deleteAccount = (id) => async (dispatch, getState) => {
+  try {
+    const {
+      auth: {
+        userAuth: { userInfo },
+      },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/v1/auth/${id}`, config);
+
+    dispatch({
+      type: DESTROY_USER,
+    });
+    localStorage.removeItem('userInfo');
+    dispatch({ type: RESET_USER_DETAILS });
+    dispatch({ type: RESET_POST_DETAILS });
+    dispatch({ type: RESET_POST_LIST });
+    dispatch({ type: RESET_PROFILE_DETAILS });
+    dispatch({ type: RESET_PROFILE_LIST });
+    dispatch({ type: LOGOUT_USER });
+    document.location.href = '/';
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetails, updateUserInfo } from '../../actions/authAction';
+import { getUserDetails, updateUserInfo, deleteAccount } from '../../actions/authAction';
 import { setAlert } from '../../actions/alertAction';
 import AlertMessage from '../layout/AlertMessage';
 import Spinner from '../layout/Spinner';
@@ -58,6 +58,17 @@ const UserProfile = () => {
     dispatch(updateUserInfo({ id: user._id, name, email, image })).then((data) => {
       if (data) dispatch(setAlert('user details updated', 'success'));
     });
+  };
+
+  const deleteAccountHandler = (id) => {
+    if (
+      window.confirm(
+        'Are you sure you want to delete your account? This action cannot be reversed!'
+      )
+    ) {
+      dispatch(deleteAccount(id));
+      setAlert('account deleted', 'success');
+    }
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';
@@ -118,9 +129,17 @@ const UserProfile = () => {
               </div>
               <button className='userProfile__form-btn'>Update</button>
             </form>
-            <Link to='/updatepassword' className='userProfile__updatepassword-link'>
-              Update Password
-            </Link>
+            <div className='userProfile__cta'>
+              <button
+                className='userProfile__delete'
+                onClick={() => deleteAccountHandler(user._id)}
+              >
+                Delete Account
+              </button>
+              <Link to='/updatepassword' className='userProfile__updatepassword-link'>
+                Update Password
+              </Link>
+            </div>
           </div>
         </div>
       ) : (
