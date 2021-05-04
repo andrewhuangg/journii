@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LatestPostItem from './LatestPostItem';
 import Modal from '../layout/Modal';
 
@@ -22,7 +23,9 @@ const DashboardMain = ({
         location={location}
       />
       <div className='dashboard__main-container'>
-        <h6>Latest Posts</h6>
+        <h6>
+          <Link to='/dashboard'>Latest Posts</Link>
+        </h6>
         {latestPosts.map((latestPost) => (
           <div key={latestPost._id}>
             <LatestPostItem post={latestPost} />

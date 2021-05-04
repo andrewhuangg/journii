@@ -22,7 +22,7 @@ const DashboardLeft = ({ userInfo, toggleModalState }) => {
     dispatch(listFollowedPosts(userInfo.id));
     dispatch(listLikedPosts(userInfo.id));
     dispatch(listFollowedProfiles(userInfo.id));
-  }, [userInfo]);
+  }, [dispatch, userInfo]);
 
   return (
     <aside className='dashboard__left'>

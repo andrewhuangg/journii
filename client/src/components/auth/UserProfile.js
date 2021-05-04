@@ -110,6 +110,7 @@ const UserProfile = () => {
                   type='file'
                   onChange={uploadFileHandler}
                 />
+                {uploading && <Spinner />}
               </div>
               <div className='userProfile__form-control'>
                 <input

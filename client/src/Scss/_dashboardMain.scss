@@ -26,6 +26,32 @@
       @include breakpoint-up(medium) {
         font-size: $font-lg;
       }
+
+      a {
+        position: relative;
+        color: $pinkLemonade;
+
+        &::before {
+          content: '';
+          position: absolute;
+          display: block;
+          height: 3px;
+          left: 0;
+          right: 0;
+          bottom: -2px;
+          background: linear-gradient(to right, $pinkLemonade, $sunsetOrange);
+          opacity: 0;
+          transition: opacity 300ms ease-in-out;
+        }
+
+        &:hover {
+          color: $pinkLemonade;
+
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
     }
 
     a {

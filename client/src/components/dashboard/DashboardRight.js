@@ -13,7 +13,7 @@ const DashboardRight = ({ userInfo, toggleModalState }) => {
   useEffect(() => {
     dispatch(listUserPosts(userInfo.id));
     dispatch(listTopPosts(10));
-  }, [userInfo]);
+  }, [dispatch, userInfo]);
 
   return (
     <aside className='dashboard__right'>

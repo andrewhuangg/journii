@@ -28,7 +28,7 @@ const PostHero = ({
         )
       );
     }
-  }, [title, follows]);
+  }, [dispatch, userInfo.id, title, follows]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id)).then(() => {

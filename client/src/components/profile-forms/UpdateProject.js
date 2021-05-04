@@ -65,7 +65,7 @@ const UpdateProject = ({ history, match }) => {
         });
       }
     });
-  }, [dispatch]);
+  }, [dispatch, projectId]);
 
   const submitHandler = (e) => {
     e.preventDefault();

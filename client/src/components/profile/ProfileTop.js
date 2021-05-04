@@ -29,7 +29,7 @@ const ProfileTop = ({
     follows.map((follow) => follow.user).includes(loggedInUser.id)
       ? setFollowed(true)
       : setFollowed(false);
-  }, [follows]);
+  }, [loggedInUser.id, follows]);
 
   const modalRef = useRef(null);
 
@@ -177,7 +177,7 @@ const ProfileTop = ({
                 className='modal__btn btn-user'
                 onClick={() => toggleModalState(MODAL_USER_POSTS)}
               >
-                My Posts
+                {loggedInUser.id !== profileUser.id ? 'User Posts' : 'My Posts'}
               </button>
               <button
                 className='modal__btn btn-profile'

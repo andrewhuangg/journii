@@ -4790,6 +4790,34 @@ button:hover::before,
   }
 }
 
+.dashboard__main-container h6 a {
+  position: relative;
+  color: #d18fbb;
+}
+
+.dashboard__main-container h6 a::before {
+  content: '';
+  position: absolute;
+  display: block;
+  height: 3px;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  background: -webkit-gradient(linear, left top, right top, from(#d18fbb), to(#edb592));
+  background: linear-gradient(to right, #d18fbb, #edb592);
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
+}
+
+.dashboard__main-container h6 a:hover {
+  color: #d18fbb;
+}
+
+.dashboard__main-container h6 a:hover::before {
+  opacity: 1;
+}
+
 .dashboard__main-container a {
   color: #495465;
 }

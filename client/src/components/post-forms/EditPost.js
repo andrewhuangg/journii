@@ -31,7 +31,7 @@ const EditPost = ({ match }) => {
           : setImage('');
       }
     });
-  }, [dispatch, post.image]);
+  }, [dispatch, post.image, postId]);
 
   const deleteHandler = (id) => {
     dispatch(deletePost(id)).then(() => {
@@ -119,6 +119,7 @@ const EditPost = ({ match }) => {
                   onChange={uploadFileHandler}
                   accept='image/*,.pdf'
                 />
+                {uploading && <Spinner />}
               </div>
 
               <div className='editPost__form-control'>

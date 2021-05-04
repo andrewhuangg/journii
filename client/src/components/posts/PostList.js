@@ -14,7 +14,7 @@ const PostList = () => {
 
   useEffect(() => {
     dispatch(listPosts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createPost } from '../../actions/postAction';
 import AlertMessage from '../layout/AlertMessage';
 import Meta from '../layout/Meta';
+import Spinner from '../layout/Spinner';
 
 const CreatePost = ({ history }) => {
   const dispatch = useDispatch();
@@ -93,6 +94,7 @@ const CreatePost = ({ history }) => {
                 onChange={uploadFileHandler}
                 accept='image/*,.pdf'
               />
+              {uploading && <Spinner />}
             </div>
             <div className='createPost__form-control'>
               <input

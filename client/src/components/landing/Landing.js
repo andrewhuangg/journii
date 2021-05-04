@@ -24,7 +24,7 @@ const Landing = () => {
 
   useEffect(() => {
     dispatch(listTopPosts(4));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

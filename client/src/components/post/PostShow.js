@@ -29,7 +29,7 @@ const PostShow = ({ match }) => {
     dispatch(listPostDetails(match.params.id)).then((post) => {
       if (post) dispatch(getUserDetails(post.user.id));
     });
-  }, []);
+  }, [dispatch, match.params.id]);
 
   const sliderRef = useRef(null);
 

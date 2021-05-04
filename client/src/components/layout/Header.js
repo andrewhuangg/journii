@@ -45,7 +45,7 @@ const Header = () => {
       document.removeEventListener('click', handleClickSliderOpen);
       document.removeEventListener('click', handleMobileOpen);
     };
-  }, [mobileOpen, isOpen, userInfo]);
+  }, [mobileOpen, isOpen, userInfo, dispatch]);
 
   const handleMenuSlider = (e) => {
     setIsOpen(!isOpen);
@@ -89,7 +89,6 @@ const Header = () => {
       <MobileMenu
         mobileRef={mobileRef}
         userInfo={userInfo}
-        mobileOpen={mobileOpen}
         currentUser={currentUser}
         setMobileOpen={setMobileOpen}
         mobileOpen={mobileOpen}

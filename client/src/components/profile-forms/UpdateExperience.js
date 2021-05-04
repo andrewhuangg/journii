@@ -62,7 +62,7 @@ const UpdateExperience = ({ match, history }) => {
         });
       }
     });
-  }, [dispatch]);
+  }, [dispatch, experienceId]);
 
   const submitHandler = (e) => {
     e.preventDefault();

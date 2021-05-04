@@ -55,7 +55,7 @@ const UserItemList = ({ userInfo, type, setModalState, modalState }) => {
         setModalList(data);
       });
     }
-  }, [userInfo, type]);
+  }, [dispatch, userInfo, type]);
 
   const renderModalList = (modalType) => {
     return modalType === 'POSTS' ? (
