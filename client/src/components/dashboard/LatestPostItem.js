@@ -32,7 +32,7 @@ const LatestPostItem = ({
         <div className='dashboard__stats'>
           <i className='fas fa-heart'>
             &nbsp;
-            {likes.length}
+            {likes.length > 0 ? likes.length : ''}
           </i>
           <span className='dashboard__spacer' />
           <Rating value={rating} />
