@@ -6,6 +6,7 @@ import { register } from '../../actions/authAction';
 import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -19,9 +20,6 @@ const Register = () => {
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo, loading } = loginUser;
-
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
 
   const wrapLabelsWithSpan = () => {
     const labels = document.querySelectorAll('.auth__form-control label');
@@ -74,6 +72,7 @@ const Register = () => {
       {!loading ? (
         <div className='auth'>
           <Meta title='journii | Register' />
+          <AlertMessage />
           <div className='auth__wrapper'>
             <h1 className='auth__header'>Sign up</h1>
             <form onSubmit={submitHandler} className='auth__form'>
@@ -142,7 +141,10 @@ const Register = () => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

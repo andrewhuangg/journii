@@ -5,6 +5,7 @@ import { updatePost, listPostDetails, deletePost } from '../../actions/postActio
 import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const EditPost = ({ match }) => {
   const dispatch = useDispatch();
@@ -17,9 +18,6 @@ const EditPost = ({ match }) => {
 
   const postDetails = useSelector((state) => state.posts.post);
   const { post, loading } = postDetails;
-
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
 
   useEffect(() => {
     dispatch(listPostDetails(postId)).then((data) => {
@@ -66,6 +64,7 @@ const EditPost = ({ match }) => {
     e.preventDefault();
     if (title.length <= 99) {
       dispatch(updatePost({ text, title, image }, post._id)).then((data) => {
+        dispatch(setAlert('update post succcess', 'success'));
         if (data) window.location.pathname = `/posts/${postId}`;
       });
     } else {
@@ -154,7 +153,10 @@ const EditPost = ({ match }) => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

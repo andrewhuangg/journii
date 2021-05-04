@@ -85,7 +85,10 @@ const Dashboard = ({ match }) => {
           <DashboardRight userInfo={userInfo} toggleModalState={toggleModalState} />
         </main>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

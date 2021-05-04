@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CommentItem from './CommentItem';
 
 const CommentList = ({ post: { comments, _id }, userInfo }) => {

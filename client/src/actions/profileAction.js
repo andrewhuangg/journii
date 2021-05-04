@@ -76,6 +76,8 @@ export const listProfiles = () => async (dispatch) => {
       type: FETCH_PROFILE_LIST,
       payload: data,
     });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }
@@ -205,6 +207,8 @@ export const deleteExperience = (id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_EXPERIENCE,
       payload: data,
     });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }
@@ -354,6 +358,8 @@ export const deleteProject = (id) => async (dispatch, getState) => {
       type: UPDATE_PROFILE_PROJECT,
       payload: data,
     });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }

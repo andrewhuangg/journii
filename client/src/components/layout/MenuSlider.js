@@ -10,7 +10,6 @@ const MenuSlider = ({ menuRef, userInfo, isOpen, currentUser }) => {
     dispatch(logout());
   };
 
-  // make a go to profile link
   return (
     <>
       <nav

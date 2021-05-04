@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateProject, getProject, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
+import { setAlert } from '../../actions/alertAction';
 
 const UpdateProject = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -83,6 +85,7 @@ const UpdateProject = ({ history, match }) => {
         projectId
       )
     ).then((data) => {
+      dispatch(setAlert('update project success', 'success'));
       if (data) history.push(`/profile/${profile.user.id}`);
     });
   };
@@ -92,6 +95,7 @@ const UpdateProject = ({ history, match }) => {
       {!loading ? (
         <div className='updateProject'>
           <Meta title='journii | Update Project' />
+          <AlertMessage />
           <div className='updateProject__wrapper'>
             <form className='updateProject__form' onSubmit={submitHandler}>
               <h3>Update Project</h3>
@@ -193,7 +197,10 @@ const UpdateProject = ({ history, match }) => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

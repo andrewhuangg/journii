@@ -2,20 +2,19 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetails, updateUserInfo } from '../../actions/authAction';
+import { setAlert } from '../../actions/alertAction';
+import AlertMessage from '../layout/AlertMessage';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
-import { getUserDetails, updateUserInfo } from '../../actions/authAction';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [message, setMessage] = useState(null);
 
   const userDetails = useSelector((state) => state.auth.userShow);
   const { user, loading } = userDetails;
@@ -56,12 +55,9 @@ const UserProfile = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-    } else {
-      setMessage(null);
-      dispatch(updateUserInfo({ id: user._id, name, email, password, image }));
-    }
+    dispatch(updateUserInfo({ id: user._id, name, email, image })).then((data) => {
+      if (data) dispatch(setAlert('user details updated', 'success'));
+    });
   };
 
   const unsplashURL = 'https://source.unsplash.com/collection/289662/';
@@ -83,8 +79,9 @@ const UserProfile = () => {
     <>
       {!loading ? (
         <div className='userProfile'>
+          <Meta title='journii | Edit User' />
+          <AlertMessage />
           <div className='userProfile__wrapper'>
-            <Meta title='journii | Edit User' />
             <form className='userProfile__form' onSubmit={submitHandler}>
               <h3>Personal</h3>
               <small>* = required field</small>
@@ -127,7 +124,10 @@ const UserProfile = () => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

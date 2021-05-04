@@ -72,6 +72,7 @@ export default (state = initialState, action) => {
     case ERROR_FETCH_GITHUB:
       return {
         ...state,
+        profile: { ...state.profile, github: '' },
         githubList: [],
       };
 

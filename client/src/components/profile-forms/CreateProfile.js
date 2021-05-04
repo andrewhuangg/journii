@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { setAlert } from '../../actions/alertAction';
 import { createProfile } from '../../actions/profileAction';
 import Meta from '../layout/Meta';
 
@@ -16,7 +17,6 @@ const CreateProfile = () => {
   const [linkedin, setLinkedin] = useState('');
   const [instagram, setInstagram] = useState('');
   const [website, setWebsite] = useState('');
-  const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
   const submitHandler = (e) => {
@@ -35,6 +35,7 @@ const CreateProfile = () => {
         instagram,
       })
     ).then(() => {
+      dispatch(setAlert('create profile success', 'success'));
       window.location.pathname = '/dashboard';
     });
   };

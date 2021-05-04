@@ -8,28 +8,28 @@
   align-items: flex-end;
 
   &__alert {
-    height: 5rem;
-    width: 10rem;
+    max-height: 6rem;
+    max-width: 15rem;
     padding: 1rem;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
-    word-break: break-all;
     overflow-y: auto;
-    color: $darkBlue;
-    border: 1px solid $salmon;
+    border: 3px solid $salmon;
     border-radius: 6px;
     background-color: white;
+    color: $darkBlue;
+    font-weight: 300;
   }
 
   .success {
     color: $darkTurquoise;
-    border: 1px solid $darkTurquoise;
+    border: 3px solid $darkTurquoise;
   }
   .error {
     color: $salmon;
-    border: 1px solid $salmon;
+    border: 3px solid $salmon;
   }
 }

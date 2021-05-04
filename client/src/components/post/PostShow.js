@@ -9,11 +9,11 @@ import CommentList from './CommentList';
 import Meta from '../layout/Meta';
 import PostFeature from './PostFeature';
 import Spinner from '../layout/Spinner';
+import AlertMessage from '../layout/AlertMessage';
 
 const PostShow = ({ match }) => {
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const loginUser = useSelector((state) => state.auth.userAuth);
@@ -54,6 +54,7 @@ const PostShow = ({ match }) => {
       {!loading ? (
         <>
           <Meta title='journii | Post' />
+          <AlertMessage />
           <ReviewSlider
             post={post}
             handleReviewSlider={handleReviewSlider}
@@ -73,7 +74,10 @@ const PostShow = ({ match }) => {
           <CommentList post={post} userInfo={userInfo} />{' '}
         </>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

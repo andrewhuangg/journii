@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, getOwnProfileDetails, deleteProfile } from '../../actions/profileAction';
+import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -18,7 +20,6 @@ const EditProfile = () => {
   const [linkedin, setLinkedin] = useState('');
   const [instagram, setInstagram] = useState('');
 
-  const [message, setMessage] = useState(null);
   const [displaySocial, toggleSocial] = useState(false);
 
   const profileDetails = useSelector((state) => state.profiles.profile);
@@ -44,9 +45,8 @@ const EditProfile = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (bio.length === 0) {
-      setMessage('Bio cannot be empty');
+      dispatch(setAlert('Bio cannot be empty', 'error'));
     } else {
-      setMessage(null);
       dispatch(
         updateProfile(
           {
@@ -64,6 +64,7 @@ const EditProfile = () => {
           profile._id
         )
       );
+      dispatch(setAlert('profile updated', 'success'));
     }
   };
 
@@ -78,6 +79,7 @@ const EditProfile = () => {
       {!loading ? (
         <div className='editProfile'>
           <Meta title='journii | Edit Profile' />
+          <AlertMessage />
           <div className='editProfile__wrapper'>
             <form className='editProfile__form' onSubmit={submitHandler}>
               <h3>Update Profile</h3>
@@ -203,7 +205,10 @@ const EditProfile = () => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

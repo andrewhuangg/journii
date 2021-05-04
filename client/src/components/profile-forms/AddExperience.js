@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addExperience, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const AddExperience = ({ history }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,6 @@ const AddExperience = ({ history }) => {
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [toDateDisabled, toggleDisabled] = useState(false);
-  const [message, setMessage] = useState(null);
 
   const profileExperience = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileExperience;
@@ -46,6 +46,7 @@ const AddExperience = ({ history }) => {
       {!loading ? (
         <div className='addExperience'>
           <Meta title='journii | Add Experience' />
+          <AlertMessage />
           <div className='addExperience__wrapper'>
             <form className='addExperience__form' onSubmit={submitHandler}>
               <h3>Add Experience</h3>
@@ -138,7 +139,10 @@ const AddExperience = ({ history }) => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

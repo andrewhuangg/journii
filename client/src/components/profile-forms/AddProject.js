@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addProject, getOwnProfileDetails } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const AddProject = ({ history }) => {
   const dispatch = useDispatch();
@@ -15,8 +16,6 @@ const AddProject = ({ history }) => {
   const [to, setTo] = useState('');
   const [current, setCurrent] = useState(false);
   const [website, setWebsite] = useState('');
-
-  const [message, setMessage] = useState(null);
   const [toDateDisabled, toggleDisabled] = useState(false);
 
   const profileDetails = useSelector((state) => state.profiles.profile);
@@ -149,7 +148,10 @@ const AddProject = ({ history }) => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

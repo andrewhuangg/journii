@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactComponent as LogoSvg } from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 
-const LandingFooter = () => {
+const LandingFooter = ({ userInfo, currentUser }) => {
   return (
     <footer className='footer'>
       <div className='container'>
@@ -28,8 +28,17 @@ const LandingFooter = () => {
         </div>
 
         <div className='footer__cta'>
-          <Link to='/register' className='button'>
-            Sign Up
+          <Link
+            to={
+              !userInfo
+                ? '/register'
+                : currentUser && !currentUser.ownProfile
+                ? '/createprofile'
+                : '/createpost'
+            }
+            className='button'
+          >
+            {!userInfo ? 'Sign Up' : 'Lets get started'}
           </Link>
           <div className='footer__copyright'>&copy; journii. All Rights Reserved.</div>
         </div>

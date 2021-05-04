@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../actions/authAction';
-import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,10 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const loginUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo, loading, error } = loginUser;
-
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
+  const { userInfo, loading } = loginUser;
 
   const wrapLabelsWithSpan = () => {
     const labels = document.querySelectorAll('.auth__form-control label');
@@ -42,8 +39,9 @@ const Login = () => {
     <>
       {!loading ? (
         <div className='auth'>
+          <Meta title='journii | Login' />
+          <AlertMessage />
           <div className='auth__wrapper'>
-            <Meta title='journii | Login' />
             <h1 className='auth__header'>Sign In</h1>
             <form onSubmit={submitHandler} className='auth__form'>
               <div className='auth__form-control'>
@@ -83,7 +81,10 @@ const Login = () => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

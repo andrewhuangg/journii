@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deletePostReview } from '../../actions/postAction';
+import { setAlert } from '../../actions/alertAction';
 import Moment from 'react-moment';
 import Rating from '../layout/Rating';
 import { Link } from 'react-router-dom';
@@ -13,6 +14,7 @@ const ReviewItem = ({
   const dispatch = useDispatch();
   const deleteReviewHandler = (postId, reviewId) => {
     dispatch(deletePostReview(postId, reviewId));
+    dispatch(setAlert('review deleted', 'success'));
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import TopPostItem from '../layout/TopPostItem';
+import TopPostItem from './TopPostItem';
 
 const LandingPosts = ({ posts, userInfo }) => {
   return (

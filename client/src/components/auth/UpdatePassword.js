@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updatePassword } from '../../actions/authAction';
-import { useDispatch } from 'react-redux';
+import { setAlert } from '../../actions/alertAction';
+import AlertMessage from '../layout/AlertMessage';
 import Meta from '../layout/Meta';
 
-const UpdatePassword = ({ history }) => {
+const UpdatePassword = () => {
   const dispatch = useDispatch();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const [message, setMessage] = useState('');
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      setMessage('Passwords do not match');
+      dispatch(setAlert('passwords do not match', 'error'));
     } else {
       dispatch(updatePassword(currentPassword, newPassword)).then(() => {
+        dispatch(setAlert('password updated', 'success'));
         setCurrentPassword('');
         setNewPassword('');
         setConfirmNewPassword('');
@@ -28,6 +30,7 @@ const UpdatePassword = ({ history }) => {
     <>
       <div className='updatepassword'>
         <Meta title='journii | Update Password' />
+        <AlertMessage />
         <div className='updatepassword__wrapper'>
           <h1 className='updatepassword__header'>Update Password</h1>
           <form className='updatepassword__form' onSubmit={submitHandler}>

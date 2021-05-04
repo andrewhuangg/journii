@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deletePost, followPost, unfollowPost } from '../../actions/postAction';
 import { setAlert } from '../../actions/alertAction';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,6 @@ const PostHero = ({
 }) => {
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
-
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
 
   useEffect(() => {
     follows.map((follow) => follow.user).includes(userInfo.id)
@@ -62,8 +59,6 @@ const PostHero = ({
   const randomDefaultImage = {
     backgroundImage: `url(${image ? image : unsplashImage})`,
   };
-
-  // add loading spinner
 
   return (
     <section className='post-hero container'>

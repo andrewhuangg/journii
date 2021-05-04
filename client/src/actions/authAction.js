@@ -142,6 +142,8 @@ export const updateUserInfo = (user) => async (dispatch, getState) => {
       type: FETCH_USER_DETAILS,
       payload: data,
     });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }

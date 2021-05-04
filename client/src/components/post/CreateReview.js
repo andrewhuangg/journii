@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPostReview, listPostDetails } from '../../actions/postAction';
 import { setAlert } from '../../actions/alertAction';
 
@@ -9,21 +9,17 @@ const CreateReview = ({ postId }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
-
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createPostReview(postId, { rating, comment })).then((data) => {
       if (data) {
         dispatch(listPostDetails(postId));
+        dispatch(setAlert('review created', 'success'));
         setRating(0);
         setComment('');
       }
     });
   };
-
-  // need to add rating selection to rating item
 
   return (
     <>

@@ -8,6 +8,7 @@ import LandingHero from './LandingHero';
 import LandingFeature from './LandingFeature';
 import LandingPosts from './LandingPosts';
 import LandingFooter from './LandingFooter';
+import AlertMessage from '../layout/AlertMessage';
 
 const Landing = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Landing = () => {
       {!loading ? (
         <>
           <Meta />
+          <AlertMessage />
 
           <LandingShowcase userInfo={userInfo} />
 
@@ -39,10 +41,13 @@ const Landing = () => {
 
           <LandingPosts posts={topPosts} userInfo={userInfo} />
 
-          <LandingFooter />
+          <LandingFooter currentUser={currentUser} userInfo={userInfo} />
         </>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

@@ -5,7 +5,6 @@ import {
   listLikedPosts,
   listFollowedPosts,
   listTopPosts,
-  deletePost,
 } from '../../actions/postAction';
 import { listFollowedProfiles } from '../../actions/profileAction';
 import {

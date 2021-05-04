@@ -4,6 +4,7 @@ import { listProfiles } from '../../actions/profileAction';
 import Spinner from '../layout/Spinner';
 import ProfileItem from './ProfileItem';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const ProfileList = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const ProfileList = () => {
       {!loading ? (
         <section className='profile-list container'>
           <Meta title='journii | Profiles' />
+          <AlertMessage />
           <h1 className='profile-list__header'>Profiles</h1>
           <section className='profile-list__grid'>
             {profiles.map((profile) => (
@@ -28,7 +30,10 @@ const ProfileList = () => {
           </section>
         </section>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

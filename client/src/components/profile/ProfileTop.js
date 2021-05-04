@@ -8,12 +8,15 @@ import {
   MODAL_USER_POSTS,
   MODAL_FOLLOWED_PROFILES,
 } from '../../actions/types';
+import Spinner from '../layout/Spinner';
+import AlertMessage from '../layout/AlertMessage';
 
 const ProfileTop = ({
   profile,
   profile: { _id, username, website, user, social, bio, follows },
   loggedInUser,
   profileUser,
+  loading,
 }) => {
   const dispatch = useDispatch();
 
@@ -94,106 +97,112 @@ const ProfileTop = ({
     })`,
   };
 
-  // add loader spinner
-  // check for https:// for social links (as a button instead of anchor and then redirect)
-
   return (
-    <section className='profile-top'>
-      <div className='profile-top__image' style={randomDefaultImage}></div>
-      <div className='profile-top__text'>
-        <h2 className='profile-top__name'>{user.name && user.name.trim()}</h2>
-        <div className='profile-top__bio'>{bio}</div>
-        <div className='profile-top__username'>{username}</div>
-        <div className='profile-top__social'>
-          <div className='profile-top__follow'>
-            <i className='fas fa-users' />
-            {follows.length > 0 && (
-              <div className='profile-top__follow-count'>{follows.length}</div>
-            )}
+    <>
+      {!loading ? (
+        <section className='profile-top'>
+          <div className='profile-top__image' style={randomDefaultImage}></div>
+          <div className='profile-top__text'>
+            <h2 className='profile-top__name'>{user.name && user.name.trim()}</h2>
+            <div className='profile-top__bio'>{bio}</div>
+            <div className='profile-top__username'>{username}</div>
+            <div className='profile-top__social'>
+              <div className='profile-top__follow'>
+                <i className='fas fa-users' />
+                {follows.length > 0 && (
+                  <div className='profile-top__follow-count'>{follows.length}</div>
+                )}
+              </div>
+              {website && (
+                <a href={website} target='_blank' rel='noopener noreferrer'>
+                  <i className='fas fa-globe fa-2x' />
+                </a>
+              )}
+              {social && social.twitter && (
+                <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
+                  <i className='fab fa-twitter fa-2x' />
+                </a>
+              )}
+              {social && social.facebook && (
+                <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
+                  <i className='fab fa-facebook fa-2x' />
+                </a>
+              )}
+              {social && social.linkedin && (
+                <a href={social.linkedin} target='_blank' rel='noopener noreferrer'>
+                  <i className='fab fa-linkedin fa-2x' />
+                </a>
+              )}
+              {social && social.instagram && (
+                <a href={social.instagram} target='_blank' rel='noopener noreferrer'>
+                  <i className='fab fa-instagram fa-2x' />
+                </a>
+              )}
+              {social && social.youtube && (
+                <a href={social.youtube} target='_blank' rel='noopener noreferrer'>
+                  <i className='fab fa-youtube fa-2x' />
+                </a>
+              )}
+            </div>
+            <div className='profile-top__cta'>
+              {/* loggedIn user's id and the profile user id */}
+              {loggedInUser.id !== profileUser.id ? (
+                <button
+                  className='profile-top__follow-btn'
+                  onClick={() => {
+                    followed
+                      ? profileUnfollowHandler(profile, profile._id)
+                      : profileFollowHandler(profile, profile._id);
+                  }}
+                >
+                  {followed ? 'Unfollow' : 'Follow'}
+                </button>
+              ) : (
+                <button className='profile-top__delete-btn' onClick={() => deleteHandler(_id)}>
+                  <i className='fas fa-trash'></i>
+                </button>
+              )}
+              <button
+                className='modal__btn btn-like'
+                onClick={() => toggleModalState(MODAL_LIKED_POSTS)}
+              >
+                Liked Posts
+              </button>
+              <button
+                className='modal__btn btn-follow'
+                onClick={() => toggleModalState(MODAL_FOLLOWED_POSTS)}
+              >
+                Followed Posts
+              </button>
+              <button
+                className='modal__btn btn-user'
+                onClick={() => toggleModalState(MODAL_USER_POSTS)}
+              >
+                My Posts
+              </button>
+              <button
+                className='modal__btn btn-profile'
+                onClick={() => toggleModalState(MODAL_FOLLOWED_PROFILES)}
+              >
+                Following
+              </button>
+            </div>
           </div>
-          {website && (
-            <a href={website} target='_blank' rel='noopener noreferrer'>
-              <i className='fas fa-globe fa-2x' />
-            </a>
-          )}
-          {social && social.twitter && (
-            <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
-              <i className='fab fa-twitter fa-2x' />
-            </a>
-          )}
-          {social && social.facebook && (
-            <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
-              <i className='fab fa-facebook fa-2x' />
-            </a>
-          )}
-          {social && social.linkedin && (
-            <a href={social.linkedin} target='_blank' rel='noopener noreferrer'>
-              <i className='fab fa-linkedin fa-2x' />
-            </a>
-          )}
-          {social && social.instagram && (
-            <a href={social.instagram} target='_blank' rel='noopener noreferrer'>
-              <i className='fab fa-instagram fa-2x' />
-            </a>
-          )}
-          {social && social.youtube && (
-            <a href={social.youtube} target='_blank' rel='noopener noreferrer'>
-              <i className='fab fa-youtube fa-2x' />
-            </a>
-          )}
-        </div>
-        <div className='profile-top__cta'>
-          {/* loggedIn user's id and the profile user id */}
-          {loggedInUser.id !== profileUser.id ? (
-            <button
-              className='profile-top__follow-btn'
-              onClick={() => {
-                followed
-                  ? profileUnfollowHandler(profile, profile._id)
-                  : profileFollowHandler(profile, profile._id);
-              }}
-            >
-              {followed ? 'Unfollow' : 'Follow'}
-            </button>
-          ) : (
-            <button className='profile-top__delete-btn' onClick={() => deleteHandler(_id)}>
-              <i className='fas fa-trash'></i>
-            </button>
-          )}
-          <button
-            className='modal__btn btn-like'
-            onClick={() => toggleModalState(MODAL_LIKED_POSTS)}
-          >
-            Liked Posts
-          </button>
-          <button
-            className='modal__btn btn-follow'
-            onClick={() => toggleModalState(MODAL_FOLLOWED_POSTS)}
-          >
-            Followed Posts
-          </button>
-          <button
-            className='modal__btn btn-user'
-            onClick={() => toggleModalState(MODAL_USER_POSTS)}
-          >
-            My Posts
-          </button>
-          <button
-            className='modal__btn btn-profile'
-            onClick={() => toggleModalState(MODAL_FOLLOWED_PROFILES)}
-          >
-            Following
-          </button>
-        </div>
-      </div>
-      <Modal
-        userInfo={loggedInUser}
-        type={type}
-        modalState={modalState}
-        modalRef={modalRef}
-        setModalState={setModalState}
-      />
-    </section>
+          <Modal
+            userInfo={loggedInUser}
+            type={type}
+            modalState={modalState}
+            modalRef={modalRef}
+            setModalState={setModalState}
+          />
+        </section>
+      ) : (
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
+      )}
+    </>
   );
 };
 

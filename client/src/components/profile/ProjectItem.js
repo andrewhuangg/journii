@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteProject } from '../../actions/profileAction';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 import { v4 as uuidv4 } from 'uuid';
+import { deleteProject } from '../../actions/profileAction';
+import { setAlert } from '../../actions/alertAction';
+import Moment from 'react-moment';
 
 const ProjectItem = ({
   proj: { name, description, technologies, features, from, to, website, _id },
@@ -13,7 +14,9 @@ const ProjectItem = ({
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
-    dispatch(deleteProject(id));
+    dispatch(deleteProject(id)).then((data) => {
+      if (data) dispatch(setAlert('project deleted', 'success'));
+    });
   };
   return (
     <>

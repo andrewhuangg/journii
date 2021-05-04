@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { setAlert } from '../../actions/alertAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPost } from '../../actions/postAction';
+import AlertMessage from '../layout/AlertMessage';
 import Meta from '../layout/Meta';
 
 const CreatePost = ({ history }) => {
@@ -12,9 +13,6 @@ const CreatePost = ({ history }) => {
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
-
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -74,6 +72,7 @@ const CreatePost = ({ history }) => {
     <>
       <div className='createPost'>
         <Meta title='journii | Create A Post' />
+        <AlertMessage />
         <div className='createPost__wrapper'>
           <form className='createPost__form' onSubmit={submitHandler}>
             <h3>Share your thoughts...</h3>

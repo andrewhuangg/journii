@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { deleteExperience } from '../../actions/profileAction';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import { setAlert } from '../../actions/alertAction';
 
 const ExperienceItem = ({
   exp: { title, company, from, to, address, description, _id },
@@ -12,7 +13,9 @@ const ExperienceItem = ({
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
-    dispatch(deleteExperience(id));
+    dispatch(deleteExperience(id)).then((data) => {
+      if (data) dispatch(setAlert('experience deleted', 'success'));
+    });
   };
 
   return (

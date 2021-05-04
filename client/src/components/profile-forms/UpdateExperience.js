@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateExperience, getOwnProfileDetails, getExperience } from '../../actions/profileAction';
+import { setAlert } from '../../actions/alertAction';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const UpdateExperience = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -79,6 +81,7 @@ const UpdateExperience = ({ match, history }) => {
         experienceId
       )
     ).then((data) => {
+      dispatch(setAlert('update experience success', 'success'));
       if (data) history.push(`/profile/${profile.user.id}`);
     });
   };
@@ -181,7 +184,10 @@ const UpdateExperience = ({ match, history }) => {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );

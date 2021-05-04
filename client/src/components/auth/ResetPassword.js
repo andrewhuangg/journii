@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { resetPassword } from '../../actions/authAction';
 import { setAlert } from '../../actions/alertAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const ResetPassword = ({ history }) => {
   const dispatch = useDispatch();
@@ -10,18 +11,14 @@ const ResetPassword = ({ history }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [resetToken, setResetToken] = useState('');
 
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
-
-  // check to remove alerts before going to production
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       dispatch(setAlert('passwords do not match', 'error'));
     } else {
       dispatch(resetPassword(password, resetToken)).then(() => {
-        if (alerts.length < 1) history.push('/login');
+        dispatch(setAlert('reset password success', 'success'));
+        history.push('/login');
       });
     }
   };
@@ -29,6 +26,7 @@ const ResetPassword = ({ history }) => {
     <>
       <div className='resetpassword'>
         <Meta title='journii | Reset Password' />
+        <AlertMessage />
         <div className='resetpassword__wrapper'>
           <h1 className='resetpassword__header'>Reset Password</h1>
           <form onSubmit={submitHandler} className='resetpassword__form'>

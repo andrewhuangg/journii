@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPostComment, listPostDetails } from '../../actions/postAction';
 import { setAlert } from '../../actions/alertAction';
 
 const CreateComment = ({ postId }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
-  const [message, setMessage] = useState(null);
-
-  const alertMessage = useSelector((state) => state.common.alerts);
-  const { alerts } = alertMessage;
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (text.length <= 1999) {
       dispatch(createPostComment(postId, { text })).then(() => {
         setText('');
+        dispatch(setAlert('comment created', 'success'));
         dispatch(listPostDetails(postId));
       });
     } else {

@@ -8,6 +8,7 @@ import ProfileGithub from './ProfileGithub';
 import ProfileTop from './ProfileTop';
 import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
+import AlertMessage from '../layout/AlertMessage';
 
 const ProfileShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ const ProfileShow = ({ match }) => {
   const profileShow = useSelector((state) => state.profiles.profile);
   const { profile, loading } = profileShow;
 
-  const [message, setMessage] = useState(null);
-
   useEffect(() => {
     dispatch(getProfileDetails(match.params.id));
     dispatch(getUserDetails(match.params.id));
@@ -33,7 +32,13 @@ const ProfileShow = ({ match }) => {
       {!loading ? (
         <div className='profileShow container'>
           <Meta title='journii | Profile' />
-          <ProfileTop profile={profile} loggedInUser={userInfo} profileUser={user} />
+          <AlertMessage />
+          <ProfileTop
+            profile={profile}
+            loggedInUser={userInfo}
+            profileUser={user}
+            loading={loading}
+          />
           {profile.github && <ProfileGithub username={profile.github} />}
           <ProfileExperience
             experiences={profile.experiences}
@@ -47,7 +52,10 @@ const ProfileShow = ({ match }) => {
           />
         </div>
       ) : (
-        <Spinner />
+        <>
+          <Spinner />
+          <AlertMessage />
+        </>
       )}
     </>
   );
