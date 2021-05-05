@@ -31,11 +31,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       maxlength: [20, 'Phone number cannot be longer than 20 characters'],
     },
-    role: {
-      type: String,
-      enum: ['user', 'publisher'],
-      default: 'user',
-    },
     about: {
       type: String,
       maxlength: [500, 'The about cannot be more than 500 characters'],
