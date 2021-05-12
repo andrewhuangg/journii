@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const colors = require('colors');
 const dotenv = require('dotenv');
 const faker = require('faker');
+const _ = require('lodash');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -74,7 +75,7 @@ const createReviews = (user) => {
 
 const createComments = (user) => {
   const commentArray = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 5; i++) {
     const comment = {
       user: user._id,
       name: user.name,
@@ -86,19 +87,23 @@ const createComments = (user) => {
   return commentArray;
 };
 
-const loadInfo = () => {
-  for (let i = 0; i < 10; i++) {
-    const user = new User({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      phone: faker.phone.phoneNumber(2),
-      about: faker.lorem.paragraph(),
-      image: faker.image.people(),
-    });
+// Import into DB
+const importData = async () => {
+  try {
+    const quantity = 20;
+    const users = [];
+    const profiles = [];
+    const posts = [];
 
-    user.save().then((userRef) => {
-      console.log(`${userRef} saved successfully`);
+    for (let i = 0; i < quantity; i++) {
+      const user = new User({
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        phone: faker.phone.phoneNumber(2),
+        about: faker.lorem.paragraph(),
+        image: `${faker.image.people()}?random=${Date.now()}`,
+      });
 
       const projectArray = createProjects();
       const experienceArray = createExperiences();
@@ -122,35 +127,35 @@ const loadInfo = () => {
         user: user._id,
       });
 
-      profile.save().then((profileRef) => {
-        console.log(`${profileRef} saved successfully`);
+      const reviewArray = createReviews(user);
+      const commentArray = createComments(user);
 
-        const reviewArray = createReviews(user);
-        const commentArray = createComments(user);
-
-        const post = new Post({
-          user: user._id,
-          text: faker.lorem.paragraph(),
-          title: faker.hacker.phrase(),
-          name: user._name,
-          image: faker.image.city(),
-          numReviews: 5,
-          reviews: reviewArray,
-          likes: [{ user: user._id }],
-          follows: [{ user: user._id }],
-          comments: commentArray,
-        });
-
-        post.save().then((postRef) => {
-          console.log(`${postRef} saved successfully`);
-        });
+      const post = new Post({
+        user: user._id,
+        text: faker.lorem.paragraph(),
+        title: faker.hacker.phrase(),
+        name: user.name,
+        image: `${faker.image.city()}?random=${Date.now()}`,
+        numReviews: 5,
+        reviews: reviewArray,
+        likes: [{ user: user._id }],
+        follows: [{ user: user._id }],
+        comments: commentArray,
       });
-    });
+
+      users.push(user);
+      profiles.push(profile);
+      posts.push(post);
+    }
+
+    users.forEach(async (user) => await User.create(user));
+    profiles.forEach(async (profile) => await Profile.create(profile));
+    posts.forEach(async (post) => await Post.create(post));
+    console.log('Data Imported...'.green.inverse);
+  } catch (error) {
+    console.error(error);
   }
 };
-
-// Import into DB
-loadInfo();
 
 // Delete Data
 const deleteData = async () => {
@@ -159,13 +164,15 @@ const deleteData = async () => {
     await Profile.deleteMany();
     await Post.deleteMany();
 
-    console.log('Data Imported...'.red.inverse);
+    console.log('Data Deleted...'.red.inverse);
     process.exit();
   } catch (error) {
     console.error(error);
   }
 };
 
-if (process.argv[2] === '-d') {
+if (process.argv[2] === '-i') {
+  importData();
+} else if (process.argv[2] === '-d') {
   deleteData();
 }

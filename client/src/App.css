@@ -2337,7 +2337,8 @@ button:hover::before,
   margin-top: 0.5rem;
 }
 
-.reviews .fa-star {
+.reviews .fa-star,
+.reviews .fa-star-half-alt {
   font-size: 0.65rem;
   color: #f0b28f;
 }
@@ -4733,7 +4734,8 @@ button:hover::before,
   white-space: nowrap;
 }
 
-.dashboard__post-container .fa-star {
+.dashboard__post-container .fa-star,
+.dashboard__post-container .fa-star-half-alt {
   font-size: 0.65rem;
   color: #f0b28f;
 }
@@ -4888,7 +4890,8 @@ button:hover::before,
           transform: scale(1.1);
 }
 
-.dashboard__stats .fa-star {
+.dashboard__stats .fa-star,
+.dashboard__stats .fa-star-half-alt {
   font-size: 0.65rem;
   color: #f0b28f;
 }
