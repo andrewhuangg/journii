@@ -133,7 +133,10 @@ const importData = async () => {
         image: `${buffUserImage}`,
       });
 
-      // Populate users array
+      // Create and save each User
+      await User.create(user);
+
+      // Populate Users array
       users.push(user);
 
       // Create and return random qty of projects and experiences
@@ -158,31 +161,28 @@ const importData = async () => {
           linkedin: 'https://www.linkedin.com/',
           instagram: 'https://www.instagram.com/',
         },
-        follows: [] /* will populate follows after loop completes*/,
+        follows: [],
         user: user._id,
       });
 
-      // Populate profiles array
+      // Create and save each Profile
+      await Profile.create(profile);
+
+      // Populate Profiles array
       profiles.push(profile);
     }
-
-    // Create and save each User
-    users.forEach(async (user) => await User.create(user));
 
     // Create array of random users
     const manyRandomUsers = (users, randomNumber) => _.sampleSize(users, randomNumber);
 
     // Populate the follows property for each profile
     const randomNumber = getRandomNumber(1, users.length - 1);
-    profiles.forEach((profile) => {
+    profiles.forEach(async (profile) => {
       manyRandomUsers(users, randomNumber).forEach((user) => {
         profile.follows.unshift({ user: user._id });
       });
-      // profile.follows = manyRandomUsers(users, randomNumber);
+      await profile.save();
     });
-
-    // Create and save each Profile
-    profiles.forEach(async (profile) => await Profile.create(profile));
 
     for (let i = 0; i < postQty; i++) {
       // Fetch and Decode image
@@ -214,8 +214,6 @@ const importData = async () => {
         rating: 0,
         likes: [],
         follows: [],
-        // likes: manyRandomUsers(users, randomUserLikesAmt),
-        // follows: manyRandomUsers(users, randomUserFollowsAmt),
         comments: commentArray,
       });
 
@@ -231,12 +229,13 @@ const importData = async () => {
         post.follows.unshift({ user: user._id })
       );
 
+      // Create and save each Post
+      await Post.create(post);
+
       // Populate posts array
       posts.push(post);
     }
 
-    // Create and save each Post
-    posts.forEach(async (post) => await Post.create(post));
     console.log('Data Imported...'.green.inverse);
   } catch (error) {
     console.error(error);
