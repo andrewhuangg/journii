@@ -30,7 +30,7 @@ const DashboardLeft = ({ userInfo, toggleModalState }) => {
         <h6 onClick={() => toggleModalState(MODAL_LIKED_POSTS, 'dashboard')}>Liked Posts</h6>
         {likedPosts.map((post) => (
           <div className='dashboard__liked-container' key={post._id}>
-            <Link to={`posts/${post._id}`}>
+            <Link to={`/posts/${post._id}`}>
               <p>{post.title}</p>
               &nbsp;
               <i className='fas fa-heart'>
@@ -45,7 +45,7 @@ const DashboardLeft = ({ userInfo, toggleModalState }) => {
         <h6 onClick={() => toggleModalState(MODAL_FOLLOWED_POSTS, 'dashboard')}>Followed Posts</h6>
         {followedPosts.map((post) => (
           <div className='dashboard__post-following-container' key={post._id}>
-            <Link to={`posts/${post._id}`}>{post.title}</Link>
+            <Link to={`/posts/${post._id}`}>{post.title}</Link>
           </div>
         ))}
       </div>
@@ -55,7 +55,7 @@ const DashboardLeft = ({ userInfo, toggleModalState }) => {
         </h6>
         {profiles.map((follower) => (
           <div className='dashboard__follower-container' key={follower._id}>
-            <Link to={`profile/${follower.user}`}>{follower.username}</Link>
+            <Link to={`/profile/${follower.user}`}>{follower.username}</Link>
           </div>
         ))}
       </div>

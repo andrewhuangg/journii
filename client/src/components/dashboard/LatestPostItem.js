@@ -22,7 +22,7 @@ const LatestPostItem = ({
   };
 
   return (
-    <Link to={`posts/${_id}`}>
+    <Link to={`/posts/${_id}`}>
       <div className='dashboard__item'>
         <div className='dashboard__image' style={randomDefaultImage} />
         <div className='dashboard__text'>

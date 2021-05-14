@@ -18,7 +18,7 @@ const TopPostItem = ({ post: { _id, title, name, text, image }, userInfo }) => {
   };
 
   return (
-    <Link to={userInfo ? `posts/${_id}` : '/'}>
+    <Link to={userInfo ? `/posts/${_id}` : '/'}>
       <div className='post__item'>
         <div className='post__image' style={randomDefaultImage}></div>
         <div className='post__text'>

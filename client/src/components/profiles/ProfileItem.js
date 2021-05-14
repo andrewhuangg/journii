@@ -30,7 +30,7 @@ const ProfileItem = ({
   return (
     <>
       {!loading && (
-        <Link to={`profile/${_id}`} className='profile-item'>
+        <Link to={`/profile/${_id}`} className='profile-item'>
           <div className='profile-item__overlay'>
             <span>see profile</span>
           </div>

@@ -21,7 +21,7 @@ const DashboardRight = ({ userInfo, toggleModalState }) => {
         <h6 onClick={() => toggleModalState(MODAL_USER_POSTS, 'dashboard')}>My Posts</h6>
         {userPosts.map((post) => (
           <div className='dashboard__post-container' key={post._id}>
-            <Link to={`posts/${post._id}`}>
+            <Link to={`/posts/${post._id}`}>
               <p>{post.title}</p>
             </Link>
           </div>
@@ -31,7 +31,7 @@ const DashboardRight = ({ userInfo, toggleModalState }) => {
         <h6 onClick={() => toggleModalState(MODAL_TOP_POSTS, 'dashboard')}>Top 20 Posts</h6>
         {topPosts.map((post) => (
           <div className='dashboard__post-container' key={post._id}>
-            <Link to={`posts/${post._id}`}>
+            <Link to={`/posts/${post._id}`}>
               <p>{post.title}</p>
               <Rating value={post.rating} />
             </Link>

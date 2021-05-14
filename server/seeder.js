@@ -3,6 +3,7 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 const faker = require('faker');
 const _ = require('lodash');
+const axios = require('axios');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -20,9 +21,9 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-const createProjects = () => {
+const createProjects = (qty) => {
   const projectArray = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < qty; i++) {
     const proj = {
       name: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
@@ -38,9 +39,9 @@ const createProjects = () => {
   return projectArray;
 };
 
-const createExperiences = () => {
+const createExperiences = (qty) => {
   const experienceArray = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < qty; i++) {
     const exp = {
       title: faker.name.jobTitle(),
       company: faker.company.companyName(),
@@ -57,25 +58,30 @@ const createExperiences = () => {
   return experienceArray;
 };
 
-const createReviews = (user) => {
+const getRandomNumber = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const createReviews = (users) => {
   const reviewArray = [];
-  for (let i = 0; i < 5; i++) {
+  users.forEach((user) => {
+    const randomRating = getRandomNumber(1, 5);
     const review = {
       name: user.name,
-      rating: faker.random.number({ min: 1, max: 5 }),
+      rating: randomRating,
       comment: faker.lorem.paragraph(),
       user: user._id,
     };
-
     reviewArray.push(review);
-  }
-
+  });
   return reviewArray;
 };
 
-const createComments = (user) => {
+const createComments = (users) => {
   const commentArray = [];
-  for (let i = 0; i < 5; i++) {
+  users.forEach((user) => {
     const comment = {
       user: user._id,
       name: user.name,
@@ -83,31 +89,60 @@ const createComments = (user) => {
       date: faker.date.recent(),
     };
     commentArray.push(comment);
-  }
+  });
   return commentArray;
+};
+
+const createImage = async (url) => {
+  try {
+    const { data } = await axios.get(`${url}`, {
+      responseType: 'arraybuffer',
+    });
+
+    const buff = await Buffer.from(data);
+    const imageString = buff.toString('base64');
+    const decodedImage = `data:image/jpeg;base64,${imageString}`;
+    return decodedImage;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Import into DB
 const importData = async () => {
   try {
-    const quantity = 20;
+    const userQty = 5; //30
+    const postQty = 5; //50
     const users = [];
     const profiles = [];
     const posts = [];
 
-    for (let i = 0; i < quantity; i++) {
+    // loop to create users and profiles
+    for (let i = 0; i < userQty; i++) {
+      // Fetch and Decode image
+      const fakerUserImageUrl = `${faker.image.people()}?random=${Date.now()}`;
+      const buffUserImage = await createImage(fakerUserImageUrl);
+
+      // Create User
       const user = new User({
         name: faker.name.findName(),
         email: faker.internet.email(),
         password: faker.internet.password(),
         phone: faker.phone.phoneNumber(2),
         about: faker.lorem.paragraph(),
-        image: `${faker.image.people()}?random=${Date.now()}`,
+        image: `${buffUserImage}`,
       });
 
-      const projectArray = createProjects();
-      const experienceArray = createExperiences();
+      // Populate users array
+      users.push(user);
 
+      // Create and return random qty of projects and experiences
+      const randomQty1 = getRandomNumber(1, 4);
+      const randomQty2 = getRandomNumber(1, 4);
+      const projectArray = createProjects(randomQty1);
+      const experienceArray = createExperiences(randomQty2);
+
+      // Create Profile for each user
       const profile = new Profile({
         username: faker.internet.userName(),
         bio: faker.lorem.paragraph(),
@@ -123,33 +158,84 @@ const importData = async () => {
           linkedin: 'https://www.linkedin.com/',
           instagram: 'https://www.instagram.com/',
         },
-        follows: [{ user: user._id }],
+        follows: [] /* will populate follows after loop completes*/,
         user: user._id,
       });
 
-      const reviewArray = createReviews(user);
-      const commentArray = createComments(user);
+      // Populate profiles array
+      profiles.push(profile);
+    }
 
+    // Create and save each User
+    users.forEach(async (user) => await User.create(user));
+
+    // Create array of random users
+    const manyRandomUsers = (users, randomNumber) => _.sampleSize(users, randomNumber);
+
+    // Populate the follows property for each profile
+    const randomNumber = getRandomNumber(1, users.length - 1);
+    profiles.forEach((profile) => {
+      manyRandomUsers(users, randomNumber).forEach((user) => {
+        profile.follows.unshift({ user: user._id });
+      });
+      // profile.follows = manyRandomUsers(users, randomNumber);
+    });
+
+    // Create and save each Profile
+    profiles.forEach(async (profile) => await Profile.create(profile));
+
+    for (let i = 0; i < postQty; i++) {
+      // Fetch and Decode image
+      const fakerPostImageUrl = `${faker.image.city()}?random=${Date.now()}`;
+      const buffPostImage = await createImage(fakerPostImageUrl);
+
+      // Random Numbers for Reviews, Comments, Likes, and Follwos
+      const randomUserReviewsAmt = getRandomNumber(1, users.length - 1);
+      const randomUserCommentsAmt = getRandomNumber(1, users.length - 1);
+      const randomUserLikesAmt = getRandomNumber(1, users.length - 1);
+      const randomUserFollowsAmt = getRandomNumber(1, users.length - 1);
+
+      // Create Review and Comment arrays
+      const reviewArray = createReviews(manyRandomUsers(users, randomUserReviewsAmt));
+      const commentArray = createComments(manyRandomUsers(users, randomUserCommentsAmt));
+
+      // Fetch random user from users
+      const randomUser = _.sample(users);
+
+      // Create Post
       const post = new Post({
-        user: user._id,
+        user: randomUser._id,
         text: faker.lorem.paragraph(),
         title: faker.hacker.phrase(),
-        name: user.name,
-        image: `${faker.image.city()}?random=${Date.now()}`,
-        numReviews: 5,
+        name: randomUser.name,
+        image: `${buffPostImage}`,
+        numReviews: reviewArray.length,
         reviews: reviewArray,
-        likes: [{ user: user._id }],
-        follows: [{ user: user._id }],
+        rating: 0,
+        likes: [],
+        follows: [],
+        // likes: manyRandomUsers(users, randomUserLikesAmt),
+        // follows: manyRandomUsers(users, randomUserFollowsAmt),
         comments: commentArray,
       });
 
-      users.push(user);
-      profiles.push(profile);
+      // Update Rating for each Post.
+      post.rating = post.reviews.reduce((acc, rev) => rev.rating + acc, 0) / post.reviews.length;
+
+      // Populate Likes and Follows with user object and id { user: user._id }
+      manyRandomUsers(users, randomUserLikesAmt).forEach((user) =>
+        post.likes.unshift({ user: user._id })
+      );
+
+      manyRandomUsers(users, randomUserFollowsAmt).forEach((user) =>
+        post.follows.unshift({ user: user._id })
+      );
+
+      // Populate posts array
       posts.push(post);
     }
 
-    users.forEach(async (user) => await User.create(user));
-    profiles.forEach(async (profile) => await Profile.create(profile));
+    // Create and save each Post
     posts.forEach(async (post) => await Post.create(post));
     console.log('Data Imported...'.green.inverse);
   } catch (error) {

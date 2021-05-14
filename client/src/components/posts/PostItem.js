@@ -23,7 +23,7 @@ const PostItem = ({
 
   return (
     <>
-      <Link to={`posts/${_id}`} className='post-item'>
+      <Link to={`/posts/${_id}`} className='post-item'>
         <div className='post-item__overlay'>
           <span>read more</span>
         </div>
