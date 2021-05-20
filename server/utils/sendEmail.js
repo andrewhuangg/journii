@@ -1,4 +1,7 @@
+const dotenv = require('dontenv');
 const nodemailer = require('nodemailer');
+
+dotenv.config({ path: '../config/config.env' });
 
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
@@ -18,7 +21,7 @@ const sendEmail = async (options) => {
   };
 
   const info = await transporter.sendMail(message);
-  console.log('Message sent: %s', info.messageId);
+  if (process.env.NODE_ENV === 'development') console.log('Message sent: %s', info.messageId);
 };
 
 module.exports = sendEmail;

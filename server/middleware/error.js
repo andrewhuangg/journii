@@ -1,11 +1,14 @@
+const dotenv = require('dotenv');
 const ErrorResponse = require('../utils/errorResponse');
+
+dotenv.config({ path: '../config/config.env' });
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
 
   // Log to console for dev
-  console.log(err);
+  if (process.env.NODE_ENV === 'development') console.log(err);
 
   // Incorrect ObjectID
   if (err.name === 'CastError') {
