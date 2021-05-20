@@ -132,7 +132,8 @@ const importData = async () => {
         password: faker.internet.password(),
         phone: faker.phone.phoneNumber(2),
         about: faker.lorem.paragraph(),
-        image: `${buffUserImage}`,
+        image: `${fakerUserImageUrl}`,
+        // image: `${buffUserImage}`,
       });
 
       // Create and save each User
@@ -210,7 +211,8 @@ const importData = async () => {
         text: faker.lorem.paragraph(),
         title: faker.hacker.phrase(),
         name: randomUser.name,
-        image: `${buffPostImage}`,
+        image: `${fakerPostImageUrl}`,
+        // image: `${buffPostImage}`,
         numReviews: reviewArray.length,
         reviews: reviewArray,
         rating: 0,
