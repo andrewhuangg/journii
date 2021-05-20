@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const ErrorResponse = require('../utils/errorResponse');
 
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: '../config/config.env' });
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
