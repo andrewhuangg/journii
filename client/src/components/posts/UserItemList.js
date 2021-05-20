@@ -15,8 +15,9 @@ import {
   MODAL_TOP_POSTS,
 } from '../../actions/types';
 import { Link } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
-const UserItemList = ({ userInfo, type, setModalState, modalState }) => {
+const UserItemList = ({ userId, type, setModalState, modalState }) => {
   const dispatch = useDispatch();
 
   const [modalList, setModalList] = useState([]);
@@ -24,38 +25,39 @@ const UserItemList = ({ userInfo, type, setModalState, modalState }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     if (type === MODAL_USER_POSTS) {
-      dispatch(listUserPosts(userInfo.id)).then((data) => {
-        setLoading(!loading);
+      dispatch(listUserPosts(userId)).then((data) => {
+        setLoading(false);
         setModalType('POSTS');
         setModalList(data);
       });
     } else if (type === MODAL_FOLLOWED_POSTS) {
-      dispatch(listFollowedPosts(userInfo.id)).then((data) => {
-        setLoading(!loading);
+      dispatch(listFollowedPosts(userId)).then((data) => {
+        setLoading(false);
         setModalType('POSTS');
         setModalList(data);
       });
     } else if (type === MODAL_LIKED_POSTS) {
-      dispatch(listLikedPosts(userInfo.id)).then((data) => {
-        setLoading(!loading);
+      dispatch(listLikedPosts(userId)).then((data) => {
+        setLoading(false);
         setModalType('POSTS');
         setModalList(data);
       });
     } else if (type === MODAL_TOP_POSTS) {
-      dispatch(listTopPosts(20)).then((data) => {
-        setLoading(!loading);
+      dispatch(listTopPosts(10)).then((data) => {
+        setLoading(false);
         setModalType('POSTS');
         setModalList(data);
       });
     } else if (type === MODAL_FOLLOWED_PROFILES) {
-      dispatch(listFollowedProfiles(userInfo.id)).then((data) => {
-        setLoading(!loading);
+      dispatch(listFollowedProfiles(userId)).then((data) => {
+        setLoading(false);
         setModalType('PROFILES');
         setModalList(data);
       });
     }
-  }, [dispatch, userInfo, type]);
+  }, [dispatch, type, userId]);
 
   const renderModalList = (modalType) => {
     return modalType === 'POSTS' ? (
@@ -67,13 +69,15 @@ const UserItemList = ({ userInfo, type, setModalState, modalState }) => {
           </div>
         </div>
         <div className='useritemlist__container'>
-          {modalList.map((post) => (
-            <div className='useritemlist__item' key={post._id}>
-              <Link to={`/posts/${post._id}`}>
-                <p>{post.title}</p>
-              </Link>
-            </div>
-          ))}
+          {!loading &&
+            modalList &&
+            modalList.map((post) => (
+              <div className='useritemlist__item' key={post._id}>
+                <Link to={`/posts/${post._id}`}>
+                  <p>{post.title}</p>
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     ) : (
@@ -83,13 +87,15 @@ const UserItemList = ({ userInfo, type, setModalState, modalState }) => {
           <div className='useritemlist__closeModal'>X</div>
         </div>
         <div className='useritemlist__container'>
-          {modalList.map((profile) => (
-            <div className='useritemlist__item' key={profile._id}>
-              <Link to={`/profile/${profile.user}`}>
-                <p>{profile.username}</p>
-              </Link>
-            </div>
-          ))}
+          {!loading &&
+            modalList &&
+            modalList.map((profile) => (
+              <div className='useritemlist__item' key={profile._id}>
+                <Link to={`/profile/${profile.user}`}>
+                  <p>{profile.username}</p>
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     );
@@ -97,7 +103,9 @@ const UserItemList = ({ userInfo, type, setModalState, modalState }) => {
 
   return (
     <>
-      <div className='useritemlist'>{renderModalList(modalType)}</div>
+      <div className='useritemlist'>
+        {!loading ? renderModalList(modalType) : <Spinner modal={true} />}
+      </div>
     </>
   );
 };

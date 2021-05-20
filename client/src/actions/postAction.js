@@ -46,18 +46,20 @@ export const listLikedPosts = (userId) => async (dispatch) => {
   }
 };
 
-export const listLatestPosts = (limit, keyword = '') => async (dispatch) => {
-  try {
-    const { data } = await axios.get(`/api/v1/posts/latest/${limit}?keyword=${keyword}`);
+export const listLatestPosts =
+  (limit, keyword = '') =>
+  async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/api/v1/posts/latest/${limit}?keyword=${keyword}`);
 
-    dispatch({
-      type: FETCH_LATEST_POSTS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch(setAlert(error.response.data.message, 'error'));
-  }
-};
+      dispatch({
+        type: FETCH_LATEST_POSTS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch(setAlert(error.response.data.message, 'error'));
+    }
+  };
 
 export const listTopPosts = (limit) => async (dispatch) => {
   try {
@@ -220,6 +222,7 @@ export const deletePost = (id) => async (dispatch, getState) => {
         userAuth: { userInfo },
       },
     } = getState();
+
     const config = {
       headers: {
         'Content-Type': 'application/json',

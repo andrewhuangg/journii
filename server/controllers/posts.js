@@ -20,17 +20,28 @@ exports.getTopPosts = asyncHandler(async (req, res) => {
 
 exports.getLatestPosts = asyncHandler(async (req, res) => {
   const limit = parseInt(req.params.limit);
-
-  const keyword = req.query.keyword
-    ? {
+  const posts = await Post.find({
+    $or: [
+      {
         title: {
           $regex: req.query.keyword,
           $options: 'i',
         },
-      }
-    : {};
-
-  const posts = await Post.find({ ...keyword })
+      },
+      {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      },
+      {
+        text: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      },
+    ],
+  })
     .sort({ createdAt: -1 })
     .limit(limit);
 

@@ -83,7 +83,9 @@ const UserProfile = () => {
 
   const unsplashImage = `${unsplashURL}${getRandomSize()}`;
   const randomDefaultImage = {
-    backgroundImage: `url(${user.image && user.image.length > 0 ? user.image : unsplashImage})`,
+    backgroundImage: `url(${
+      user.image && user.image.length > 0 ? user.image : image.length > 0 ? image : unsplashImage
+    })`,
   };
 
   return (

@@ -25,7 +25,8 @@ const app = express();
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 // MIDDLEWARE from express ~ Body Parser ~ allows us to use req.body and others..
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); //added limit due to base64 decoding
+app.use(express.urlencoded({ limit: '50mb' }));
 
 // MOUNT ROUTERS
 app.use('/api/v1/auth', auth);

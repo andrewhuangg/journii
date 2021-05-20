@@ -2,6 +2,7 @@ import { FETCH_PROFILE_LIST, FETCH_PROFILE_FOLLOWERS } from '../../actions/types
 
 const initialState = {
   profiles: [],
+  profilesFollowed: [],
   loading: true,
 };
 
@@ -10,10 +11,16 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case FETCH_PROFILE_LIST:
-    case FETCH_PROFILE_FOLLOWERS:
       return {
         ...state,
         profiles: payload,
+        loading: false,
+      };
+
+    case FETCH_PROFILE_FOLLOWERS:
+      return {
+        ...state,
+        profilesFollowed: payload,
         loading: false,
       };
 

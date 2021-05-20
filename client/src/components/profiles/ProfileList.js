@@ -5,6 +5,7 @@ import Spinner from '../layout/Spinner';
 import ProfileItem from './ProfileItem';
 import Meta from '../layout/Meta';
 import AlertMessage from '../layout/AlertMessage';
+import usePrevious from '../customHooks/usePrevious';
 
 const ProfileList = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,11 @@ const ProfileList = () => {
   const profileList = useSelector((state) => state.profiles.profileList);
   const { profiles, loading } = profileList;
 
+  const prevProfiles = usePrevious(profiles);
+
   useEffect(() => {
     dispatch(listProfiles());
+    if (prevProfiles && prevProfiles.length !== profiles.length) dispatch(listProfiles());
   }, [dispatch]);
 
   return (

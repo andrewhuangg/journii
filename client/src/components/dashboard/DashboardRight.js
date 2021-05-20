@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listUserPosts, listTopPosts } from '../../actions/postAction';
 import { Link } from 'react-router-dom';
@@ -7,36 +7,41 @@ import { MODAL_USER_POSTS, MODAL_TOP_POSTS } from '../../actions/types';
 
 const DashboardRight = ({ userInfo, toggleModalState }) => {
   const dispatch = useDispatch();
+
   const dashboardPosts = useSelector((state) => state.posts.postList);
   const { topPosts, userPosts } = dashboardPosts;
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    dispatch(listUserPosts(userInfo.id));
-    dispatch(listTopPosts(10));
-  }, [dispatch, userInfo]);
+    dispatch(listUserPosts(userInfo.id)).then((data) => data && setLoading(false));
+    dispatch(listTopPosts(10)).then((data) => data && setLoading(false));
+  }, [dispatch, userInfo.id]);
 
   return (
     <aside className='dashboard__right'>
       <div className='dashboard__right-container'>
         <h6 onClick={() => toggleModalState(MODAL_USER_POSTS, 'dashboard')}>My Posts</h6>
-        {userPosts.map((post) => (
-          <div className='dashboard__post-container' key={post._id}>
-            <Link to={`/posts/${post._id}`}>
-              <p>{post.title}</p>
-            </Link>
-          </div>
-        ))}
+        {!loading &&
+          userPosts.map((post) => (
+            <div className='dashboard__post-container' key={post._id}>
+              <Link to={`/posts/${post._id}`}>
+                <p>{post.title}</p>
+              </Link>
+            </div>
+          ))}
       </div>
       <div className='dashboard__right-container'>
-        <h6 onClick={() => toggleModalState(MODAL_TOP_POSTS, 'dashboard')}>Top 20 Posts</h6>
-        {topPosts.map((post) => (
-          <div className='dashboard__post-container' key={post._id}>
-            <Link to={`/posts/${post._id}`}>
-              <p>{post.title}</p>
-              <Rating value={post.rating} />
-            </Link>
-          </div>
-        ))}
+        <h6 onClick={() => toggleModalState(MODAL_TOP_POSTS, 'dashboard')}>Top 10 Posts</h6>
+        {!loading &&
+          topPosts.map((post) => (
+            <div className='dashboard__post-container' key={post._id}>
+              <Link to={`/posts/${post._id}`}>
+                <p>{post.title}</p>
+                <Rating value={post.rating} />
+              </Link>
+            </div>
+          ))}
       </div>
     </aside>
   );

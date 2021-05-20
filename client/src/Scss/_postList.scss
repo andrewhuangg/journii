@@ -19,6 +19,33 @@
     }
   }
 
+  &__title {
+    position: relative;
+    color: $peach;
+    transition: color 300ms ease-in-out;
+
+    &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      height: 3px;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      background: linear-gradient(to right, $mint, $mint);
+      opacity: 0;
+      transition: opacity 300ms ease-in-out;
+    }
+
+    &:hover {
+      color: $mint;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
   &__text {
     color: $darkBlue;
   }

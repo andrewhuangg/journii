@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Spinner = () => {
+const Spinner = ({ modal }) => {
   return (
     <>
-      <div className='spinner__overlay container'>
+      <div
+        className='spinner__overlay container'
+        style={modal && { height: '25rem', width: '25rem' }}
+      >
         <div className='spinner'></div>
       </div>
     </>

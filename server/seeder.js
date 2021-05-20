@@ -34,6 +34,8 @@ const createProjects = (qty) => {
       current: false,
       website: faker.internet.url(),
     };
+    proj.technologies = proj.technologies.split(',').map((tech) => tech.trim());
+    proj.features = proj.features.split(',').map((feat) => feat.trim());
     projectArray.push(proj);
   }
   return projectArray;
@@ -111,8 +113,8 @@ const createImage = async (url) => {
 // Import into DB
 const importData = async () => {
   try {
-    const userQty = 5; //30
-    const postQty = 5; //50
+    const userQty = 20; //20
+    const postQty = 30; //30
     const users = [];
     const profiles = [];
     const posts = [];
@@ -176,8 +178,8 @@ const importData = async () => {
     const manyRandomUsers = (users, randomNumber) => _.sampleSize(users, randomNumber);
 
     // Populate the follows property for each profile
-    const randomNumber = getRandomNumber(1, users.length - 1);
     profiles.forEach(async (profile) => {
+      const randomNumber = getRandomNumber(1, users.length - 1);
       manyRandomUsers(users, randomNumber).forEach((user) => {
         profile.follows.unshift({ user: user._id });
       });

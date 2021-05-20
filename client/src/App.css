@@ -410,7 +410,7 @@ button:hover::before,
 
 .hero__image {
   position: relative;
-  background-image: url("https://journii-dev.s3-us-west-1.amazonaws.com/house_on_plain.jpg");
+  background-image: url("https://journii--dev.s3-us-west-1.amazonaws.com/house_on_plain.svg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom center;
@@ -1069,6 +1069,36 @@ button:hover::before,
         -ms-flex-align: start;
             align-items: flex-start;
   }
+}
+
+.post-list__title {
+  position: relative;
+  color: #ffbb94;
+  -webkit-transition: color 300ms ease-in-out;
+  transition: color 300ms ease-in-out;
+}
+
+.post-list__title::before {
+  content: '';
+  position: absolute;
+  display: block;
+  height: 3px;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  background: -webkit-gradient(linear, left top, right top, from(#c6f1d6), to(#c6f1d6));
+  background: linear-gradient(to right, #c6f1d6, #c6f1d6);
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
+}
+
+.post-list__title:hover {
+  color: #c6f1d6;
+}
+
+.post-list__title:hover::before {
+  opacity: 1;
 }
 
 .post-list__text {
@@ -3464,8 +3494,41 @@ button:hover::before,
   }
 }
 
-.profile-project__header, .profile-project__website, .profile-project__description, .profile-project__body {
+.profile-project__description, .profile-project__body {
   margin-bottom: 1rem;
+}
+
+.profile-project__header, .profile-project__website {
+  margin-bottom: 0.5rem;
+}
+
+.profile-project__website-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.profile-project__website-container label {
+  font-size: 0.65rem;
+}
+
+.profile-project__website-container span {
+  display: block;
+  height: 0.25rem;
+  width: 0.25rem;
+  margin: 0 0.5rem;
+  background: #5faba8;
+  border-radius: 50%;
 }
 
 .profile-project__name {
@@ -3529,7 +3592,7 @@ button:hover::before,
 }
 
 .profile-project__website {
-  font-size: 1.125rem;
+  font-size: 0.65rem;
 }
 
 .profile-project__date {

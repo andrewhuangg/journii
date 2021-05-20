@@ -5,6 +5,7 @@ import PostItem from './PostItem';
 import Meta from '../layout/Meta';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
+import usePrevious from '../customHooks/usePrevious';
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,11 @@ const PostList = () => {
   const postList = useSelector((state) => state.posts.postList);
   const { posts, loading } = postList;
 
+  const prevPosts = usePrevious(posts);
+
   useEffect(() => {
     dispatch(listPosts());
+    if (prevPosts && prevPosts.length !== posts.length) dispatch(listPosts());
   }, [dispatch]);
 
   return (

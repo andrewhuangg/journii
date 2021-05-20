@@ -15,7 +15,7 @@ const DashboardMain = ({
   return (
     <section className='dashboard__main-content'>
       <Modal
-        userInfo={userInfo}
+        userId={userInfo.id}
         type={type}
         modalState={modalState}
         modalRef={modalRef}

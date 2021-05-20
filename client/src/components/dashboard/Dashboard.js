@@ -69,7 +69,7 @@ const Dashboard = ({ match }) => {
   return (
     <>
       {!loading ? (
-        <main className='dashboard container'>
+        <div className='dashboard container'>
           <Meta title='journii | Home' />
           <AlertMessage />
           <DashboardLeft userInfo={userInfo} toggleModalState={toggleModalState} />
@@ -83,7 +83,7 @@ const Dashboard = ({ match }) => {
             location={location}
           />
           <DashboardRight userInfo={userInfo} toggleModalState={toggleModalState} />
-        </main>
+        </div>
       ) : (
         <>
           <Spinner />

@@ -9,10 +9,12 @@ const Profile = require('../models/Profile');
 // @access    Public
 
 exports.getProfiles = asyncHandler(async (req, res) => {
-  const profiles = await Profile.find({}).populate({
-    path: 'user',
-    select: 'name email image',
-  });
+  const profiles = await Profile.find({})
+    .populate({
+      path: 'user',
+      select: 'name email image',
+    })
+    .sort('-createdAt');
   res.status(200).json(profiles);
 });
 
@@ -55,16 +57,8 @@ exports.createProfile = asyncHandler(async (req, res) => {
   req.body.user = req.user._id;
 
   // pull out the array fields to perform formatting, and other fields
-  const {
-    username,
-    technologies,
-    features,
-    youtube,
-    twitter,
-    facebook,
-    linkedin,
-    instagram,
-  } = req.body;
+  const { username, technologies, features, youtube, twitter, facebook, linkedin, instagram } =
+    req.body;
 
   // check for duplicate username
   const profileExists = await Profile.findOne({ username });
@@ -336,11 +330,9 @@ exports.getGithubRepo = asyncHandler(async (req, res) => {
   request(options, (err, response, body) => {
     if (err) console.error(err.message);
     if (response.statusCode !== 200) {
-      return res
-        .status(404)
-        .json({
-          message: 'no github profile found, \n remove username from profile, or try again',
-        });
+      return res.status(404).json({
+        message: 'no github profile found, \n remove username from profile, or try again',
+      });
     }
 
     res.status(200).json({ data: JSON.parse(body) });

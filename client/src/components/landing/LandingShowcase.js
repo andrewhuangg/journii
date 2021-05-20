@@ -10,7 +10,7 @@ const LandingShowcase = ({ userInfo }) => {
           autoPlay
           loop
           muted
-          src={'https://journii-dev.s3-us-west-1.amazonaws.com/journii_hero_video.mp4'}
+          src={'https://journii--dev.s3-us-west-1.amazonaws.com/journii_hero_video.mp4'}
         />
       </div>
       <div className='showcase__content'>

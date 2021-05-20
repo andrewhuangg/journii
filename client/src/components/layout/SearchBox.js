@@ -6,8 +6,10 @@ const SearchBox = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (keyword.trim()) history.push(`/search/${keyword}`);
-    setKeyword('');
+    if (keyword.trim()) {
+      history.push(`/search/${keyword}`);
+      setKeyword('');
+    }
   };
 
   const searchRef = useRef(null);

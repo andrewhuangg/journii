@@ -11,6 +11,7 @@ const PostHero = ({
   user: { id },
   userInfo,
   handleReviewSlider,
+  history,
 }) => {
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(false);
@@ -31,9 +32,8 @@ const PostHero = ({
   }, [dispatch, userInfo.id, title, follows]);
 
   const deleteHandler = (id) => {
-    dispatch(deletePost(id)).then(() => {
-      window.location.pathname = '/posts';
-    });
+    dispatch(deletePost(id));
+    history.push('/posts');
   };
 
   const postFollowHandler = (post, id) => {

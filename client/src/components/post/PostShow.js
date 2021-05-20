@@ -11,7 +11,7 @@ import PostFeature from './PostFeature';
 import Spinner from '../layout/Spinner';
 import AlertMessage from '../layout/AlertMessage';
 
-const PostShow = ({ match }) => {
+const PostShow = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,7 @@ const PostShow = ({ match }) => {
     dispatch(listPostDetails(match.params.id)).then((post) => {
       if (post) dispatch(getUserDetails(post.user.id));
     });
-  }, [dispatch, match.params.id]);
+  }, [dispatch, match.params.id, history]);
 
   const sliderRef = useRef(null);
 
@@ -51,7 +51,7 @@ const PostShow = ({ match }) => {
 
   return (
     <>
-      {!loading ? (
+      {!loading && post ? (
         <>
           <Meta title='journii | Post' />
           <AlertMessage />
@@ -68,6 +68,7 @@ const PostShow = ({ match }) => {
             handleReviewSlider={handleReviewSlider}
             userInfo={userInfo}
             user={user}
+            history={history}
           />
           <PostFeature post={post} userInfo={userInfo} />
           <CreateComment postId={post && post._id} />

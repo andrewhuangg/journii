@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAlert } from '../../actions/alertAction';
 import { createProfile } from '../../actions/profileAction';
 import Meta from '../layout/Meta';
 
-const CreateProfile = () => {
+const CreateProfile = ({ history }) => {
   const dispatch = useDispatch();
 
   const [username, setUserName] = useState('');
@@ -18,6 +18,9 @@ const CreateProfile = () => {
   const [instagram, setInstagram] = useState('');
   const [website, setWebsite] = useState('');
   const [displaySocial, toggleSocial] = useState(false);
+
+  const loginUser = useSelector((state) => state.auth.userAuth);
+  const { userInfo } = loginUser;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -34,9 +37,9 @@ const CreateProfile = () => {
         facebook,
         instagram,
       })
-    ).then(() => {
+    ).then((data) => {
       dispatch(setAlert('create profile success', 'success'));
-      window.location.pathname = '/dashboard';
+      if (data) history.push(`/profile/${userInfo.id}`);
     });
   };
 

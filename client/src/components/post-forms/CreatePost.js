@@ -40,6 +40,7 @@ const CreatePost = ({ history }) => {
     e.preventDefault();
     if (title.length <= 99) {
       dispatch(createPost({ text, title, image })).then((data) => {
+        dispatch(setAlert('create post success', 'success'));
         setText('');
         setTitle('');
         if (data) history.push(`/posts/${data._id}`);

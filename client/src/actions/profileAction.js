@@ -103,7 +103,7 @@ export const createProfile = (profile) => async (dispatch, getState) => {
       payload: data,
     });
 
-    return Promise.resolve();
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }
@@ -214,40 +214,38 @@ export const deleteExperience = (id) => async (dispatch, getState) => {
   }
 };
 
-export const updateExperience = (experience, profileId, experienceId) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    const {
-      auth: {
-        userAuth: { userInfo },
-      },
-    } = getState();
+export const updateExperience =
+  (experience, profileId, experienceId) => async (dispatch, getState) => {
+    try {
+      const {
+        auth: {
+          userAuth: { userInfo },
+        },
+      } = getState();
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    const { data } = await axios.put(
-      `/api/v1/profiles/${profileId}/experience/${experienceId}`,
-      experience,
-      config
-    );
+      const { data } = await axios.put(
+        `/api/v1/profiles/${profileId}/experience/${experienceId}`,
+        experience,
+        config
+      );
 
-    dispatch({
-      type: UPDATE_PROFILE_EXPERIENCE,
-      payload: data,
-    });
+      dispatch({
+        type: UPDATE_PROFILE_EXPERIENCE,
+        payload: data,
+      });
 
-    return Promise.resolve(data);
-  } catch (error) {
-    dispatch(setAlert(error.response.data.message, 'error'));
-  }
-};
+      return Promise.resolve(data);
+    } catch (error) {
+      dispatch(setAlert(error.response.data.message, 'error'));
+    }
+  };
 
 export const getExperience = (profileId, experienceId) => async (dispatch, getState) => {
   try {

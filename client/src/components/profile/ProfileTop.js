@@ -14,9 +14,11 @@ import AlertMessage from '../layout/AlertMessage';
 const ProfileTop = ({
   profile,
   profile: { _id, username, website, user, social, bio, follows },
+  matchParamsId,
   loggedInUser,
   profileUser,
   loading,
+  history,
 }) => {
   const dispatch = useDispatch();
 
@@ -68,9 +70,8 @@ const ProfileTop = ({
   };
 
   const deleteHandler = (id) => {
-    dispatch(deleteProfile(id)).then(() => {
-      window.location.pathname = '/profiles';
-    });
+    dispatch(deleteProfile(id));
+    history.push('/profiles');
   };
 
   const toggleModalState = (type) => {
@@ -188,7 +189,7 @@ const ProfileTop = ({
             </div>
           </div>
           <Modal
-            userInfo={loggedInUser}
+            userId={matchParamsId}
             type={type}
             modalState={modalState}
             modalRef={modalRef}

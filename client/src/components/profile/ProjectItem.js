@@ -37,7 +37,13 @@ const ProjectItem = ({
             )}
           </div>
         </div>
-        <div className='profile-project__website'>{website}</div>
+        <div className='profile-project__website'>
+          <div className='profile-project__website-container'>
+            <label>Project Site</label>
+            <span></span>
+            {website}
+          </div>
+        </div>
         <div className='profile-project__description'>{description}</div>
         <div className='profile-project__body'>
           <ul className='profile-project__ul'>

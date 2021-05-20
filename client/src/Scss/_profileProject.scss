@@ -73,11 +73,34 @@
     }
   }
 
-  &__header,
-  &__website,
   &__description,
   &__body {
     margin-bottom: 1rem;
+  }
+
+  &__header,
+  &__website {
+    margin-bottom: 0.5rem;
+  }
+
+  &__website-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    label {
+      font-size: 0.65rem;
+    }
+
+    span {
+      display: block;
+      height: 0.25rem;
+      width: 0.25rem;
+      margin: 0 0.5rem;
+      background: $darkTurquoise;
+      border-radius: 50%;
+    }
   }
 
   &__name {
@@ -131,7 +154,7 @@
   }
 
   &__website {
-    font-size: $font-med;
+    font-size: 0.65rem;
   }
 
   &__date {
