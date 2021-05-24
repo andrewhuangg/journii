@@ -1,3 +1,4 @@
+import './App.scss';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/layout/Header';
@@ -26,8 +27,6 @@ import UpdatePassword from './components/auth/UpdatePassword';
 
 import { Provider } from 'react-redux';
 import store from './store';
-
-import './App.scss';
 
 const App = () => {
   return (
