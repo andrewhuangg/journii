@@ -3,8 +3,12 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 const express = require('express');
 const path = require('path');
+const dotenv = require('dotenv');
 
 const router = express.Router();
+
+// LOAD ENV VARS
+dotenv.config({ path: '../config/config.env' });
 
 aws.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
