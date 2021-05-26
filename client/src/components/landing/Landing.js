@@ -14,10 +14,10 @@ const Landing = () => {
   const dispatch = useDispatch();
 
   const postTopRated = useSelector((state) => state.posts.postList);
-  const { topPosts } = postTopRated;
+  const { topPosts, loading } = postTopRated;
 
   const loginUser = useSelector((state) => state.auth.userAuth);
-  const { userInfo, loading } = loginUser;
+  const { userInfo } = loginUser;
 
   const loggedInUser = useSelector((state) => state.auth.userShow);
   const { currentUser } = loggedInUser;
