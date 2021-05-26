@@ -84,7 +84,9 @@ const UserItemList = ({ userId, type, setModalState, modalState }) => {
       <div className='useritemlist__wrap'>
         <div className='useritemlist__header'>
           <h3>Following</h3>
-          <div className='useritemlist__closeModal'>X</div>
+          <div className='useritemlist__closeModal' onClick={() => setModalState(!modalState)}>
+            X
+          </div>
         </div>
         <div className='useritemlist__container'>
           {!loading &&
