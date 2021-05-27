@@ -1,0 +1,144 @@
+.authRegister {
+  height: 55rem;
+  margin: 0;
+  overflow: hidden;
+
+  @include breakpoint-down(small) {
+    height: 90rem;
+    max-width: 24rem;
+    margin: 0 auto;
+  }
+
+  @include breakpoint-up(medium) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__wrapper {
+    height: 49rem;
+    background-color: hsl(30, 14%, 97%);
+    padding: 1.25rem 2.5rem;
+    border: 0;
+    border-radius: 0.625rem;
+
+    a {
+      color: $darkTurquoise;
+      text-decoration: none;
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  &__form {
+    height: 20rem;
+  }
+
+  &__image {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &__file {
+    width: 65%;
+  }
+
+  &__form-control {
+    position: relative;
+    margin-bottom: 3rem;
+    width: 18.75rem;
+
+    input {
+      width: 100%;
+      position: relative;
+      padding: 0.9375rem 0;
+      display: block;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 2px solid $darkTurquoise;
+      font-size: 1.125rem;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    input:focus,
+    input:valid {
+      outline: 0;
+      border-bottom-color: $darkTurquoise;
+    }
+
+    input:invalid {
+      box-shadow: none;
+    }
+
+    label {
+      position: absolute;
+      top: 0.9375rem;
+      left: 0;
+    }
+
+    input:not(:focus) + label span {
+      visibility: hidden;
+    }
+
+    input:focus + label span,
+    input:valid + label span {
+      visibility: visible;
+      color: $darkTurquoise;
+      transform: translateY(-1.875rem);
+    }
+
+    span {
+      display: inline-block;
+      font-size: 1.125rem;
+      min-width: 0.3125rem;
+      transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+  }
+
+  &__input:not(:focus)::placeholder {
+    color: $darkTurquoise;
+    transition: all 700ms ease-in-out;
+  }
+
+  &__input:focus::placeholder {
+    color: transparent;
+    transition: all 700ms ease-in-out;
+  }
+
+  &__btn {
+    cursor: pointer;
+    background: $tangerine;
+    display: inline-block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 5px;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__redirect {
+    margin-bottom: 0;
+
+    a:hover {
+      border-bottom: 2px solid $darkTurquoise;
+    }
+  }
+
+  &__forgotpassword {
+    font-size: $font-sm;
+  }
+}

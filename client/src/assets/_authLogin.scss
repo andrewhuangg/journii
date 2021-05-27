@@ -1,19 +1,22 @@
 .auth {
+  height: 50rem;
+  margin: 0;
+  overflow: hidden;
+
   @include breakpoint-down(small) {
     max-width: 24rem;
     margin: 0 auto;
   }
+
   @include breakpoint-up(medium) {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
 
   &__wrapper {
+    height: 35rem;
     background-color: hsl(30, 14%, 97%);
     padding: 1.25rem 2.5rem;
     border: 0;
@@ -27,7 +30,11 @@
 
   &__header {
     text-align: center;
-    margin-bottom: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  &__form {
+    height: 20rem;
   }
 
   &__image {
@@ -41,18 +48,20 @@
 
   &__form-control {
     position: relative;
-    margin: 1.25rem 0 2.5rem;
+    margin-bottom: 3rem;
     width: 18.75rem;
 
     input {
+      width: 100%;
+      position: relative;
+      padding: 0.9375rem 0;
       display: block;
       background-color: transparent;
       border: 0;
       border-bottom: 2px solid $darkTurquoise;
-      width: 100%;
-      padding: 0.9375rem 0;
       font-size: 1.125rem;
       cursor: pointer;
+      z-index: 1;
     }
 
     input:focus,

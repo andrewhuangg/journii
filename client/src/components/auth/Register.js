@@ -22,7 +22,7 @@ const Register = () => {
   const { userInfo, loading } = loginUser;
 
   const wrapLabelsWithSpan = () => {
-    const labels = document.querySelectorAll('.auth__form-control label');
+    const labels = document.querySelectorAll('.authRegister__form-control label');
     labels.forEach((label) => {
       label.innerHTML = label.innerText
         .split('')
@@ -70,22 +70,22 @@ const Register = () => {
   return (
     <>
       {!loading ? (
-        <div className='auth'>
+        <div className='authRegister'>
           <Meta title='journii | Register' />
           <AlertMessage />
-          <div className='auth__wrapper'>
-            <h1 className='auth__header'>Sign up</h1>
-            <form onSubmit={submitHandler} className='auth__form'>
-              <div className='auth__image'>
-                <label>Image</label>
+          <div className='authRegister__wrapper'>
+            <h1 className='authRegister__header'>Sign up</h1>
+            <form onSubmit={submitHandler} className='authRegister__form'>
+              <div className='authRegister__image'>
+                <label>Upload Image</label>
                 <input type='text' value={image} onChange={(e) => setImage(e.target.value)} />
-                <input type='file' className='auth__file' onChange={uploadFileHandler} />
+                <input type='file' className='authRegister__file' onChange={uploadFileHandler} />
                 {uploading && <Spinner />}
               </div>
 
-              <div className='auth__form-control'>
+              <div className='authRegister__form-control'>
                 <input
-                  className='auth__input'
+                  className='authRegister__input'
                   type='text'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -95,9 +95,9 @@ const Register = () => {
                 <label>Name</label>
               </div>
 
-              <div className='auth__form-control'>
+              <div className='authRegister__form-control'>
                 <input
-                  className='auth__input'
+                  className='authRegister__input'
                   type='text'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -107,9 +107,9 @@ const Register = () => {
                 <label>Email</label>
               </div>
 
-              <div className='auth__form-control'>
+              <div className='authRegister__form-control'>
                 <input
-                  className='auth__input'
+                  className='authRegister__input'
                   type='password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -119,9 +119,9 @@ const Register = () => {
                 <label>Password</label>
               </div>
 
-              <div className='auth__form-control'>
+              <div className='authRegister__form-control'>
                 <input
-                  className='auth__input'
+                  className='authRegister__input'
                   type='password'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -131,10 +131,10 @@ const Register = () => {
                 <label>Confirm Password</label>
               </div>
 
-              <button className='auth__btn' type='submit'>
+              <button className='authRegister__btn' type='submit'>
                 Register
               </button>
-              <p className='auth__redirect'>
+              <p className='authRegister__redirect'>
                 Have an account? <Link to='/login'>Login</Link>
               </p>
             </form>
