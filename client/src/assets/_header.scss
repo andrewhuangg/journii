@@ -34,6 +34,21 @@
     }
   }
 
+  &__mobile-cta {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    .mobile-post-btn {
+      margin-right: 1rem;
+    }
+
+    @include breakpoint-up(large) {
+      display: none;
+    }
+  }
+
   &__ul {
     display: flex;
     flex-flow: row nowrap;

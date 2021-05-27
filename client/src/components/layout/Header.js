@@ -107,7 +107,7 @@ const Header = () => {
                 {headerLinks}
                 <Link
                   to={currentUser && !currentUser.ownProfile ? '/createprofile' : '/createpost'}
-                  className='header__post-btn hide-for-mobile'
+                  className='header__post-btn'
                 >
                   Create Post
                 </Link>
@@ -119,13 +119,21 @@ const Header = () => {
               <>{authLinks}</>
             )}
           </div>
-          <div
-            className={`mobile-menu__btn open-${mobileOpen} hide-for-desktop`}
-            onClick={handleMobileMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
+          <div className='header__mobile-cta'>
+            <Link
+              to={currentUser && !currentUser.ownProfile ? '/createprofile' : '/createpost'}
+              className='header__post-btn mobile-post-btn hide-for-desktop'
+            >
+              Create Post
+            </Link>
+            <div
+              className={`mobile-menu__btn open-${mobileOpen} hide-for-desktop`}
+              onClick={handleMobileMenu}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </nav>
       </header>
