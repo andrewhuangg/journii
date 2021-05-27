@@ -9,6 +9,20 @@
   }
 
   &__image {
+    min-height: 40rem;
+    position: relative;
+    background-image: url('https://journii--dev.s3-us-west-1.amazonaws.com/house_on_plain.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+
+    @include breakpoint-down(small) {
+      flex: 3;
+      order: 2;
+      height: 100%;
+      min-height: 25rem;
+    }
+
     @include breakpoint-up(large) {
       flex: 3;
       order: 2;
@@ -20,13 +34,6 @@
       order: 2;
       height: 100%;
     }
-
-    position: relative;
-    background-image: url('https://journii--dev.s3-us-west-1.amazonaws.com/house_on_plain.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: bottom center;
-    min-height: 40rem;
   }
 
   &__text {
@@ -35,6 +42,10 @@
     h1 {
       color: $darkTurquoise;
       font-size: 2.5rem;
+
+      @include breakpoint-down(small) {
+        font-size: 2rem;
+      }
     }
 
     @include breakpoint-up(large) {
@@ -55,6 +66,10 @@
       padding: 0.5rem, 0.65rem;
       font-size: $font-med;
       background: linear-gradient(to right, $pastelGold, $sand);
+
+      @include breakpoint-down(small) {
+        font-size: $font-sm;
+      }
     }
   }
 
@@ -62,6 +77,10 @@
     display: flex;
     flex-flow: column nowrap;
     font-size: $font-med;
+
+    @include breakpoint-down(small) {
+      font-size: 1rem;
+    }
 
     p {
       margin: 0;

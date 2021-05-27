@@ -23,6 +23,10 @@
       font-size: $font-xlg;
       padding: 0.25rem 0;
 
+      @include breakpoint-down(small) {
+        font-size: 3rem;
+      }
+
       @include breakpoint-up(medium) {
         font-size: $font-lg;
       }
@@ -55,8 +59,15 @@
     }
 
     a {
+      width: 100%;
+      display: block;
       color: $darkBlue;
     }
+  }
+
+  &__main-item-wrapper {
+    display: block;
+    width: 100%;
   }
 
   &__item {
@@ -64,9 +75,16 @@
     margin-bottom: 2rem;
     border-radius: 0.35rem;
     background-color: white;
+    box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
+
     &:hover {
       transform: scale(1.02);
     }
+
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
+
     @include breakpoint-up(medium) {
       width: unset;
     }
@@ -84,13 +102,13 @@
   }
 
   &__author {
-    font-size: 0.625rem;
     margin-bottom: 0.5rem;
+    font-size: 0.625rem;
+    color: $blueGray;
   }
 
   &__title {
     font-size: $font-med;
-    word-break: break-all;
   }
 
   &__stats {

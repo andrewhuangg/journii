@@ -3,6 +3,9 @@
   background-color: hsl(0, 0%, 98%);
   flex-flow: column nowrap;
 
+  @include breakpoint-down(small) {
+  }
+
   @include breakpoint-up(medium) {
     flex-flow: row nowrap;
   }

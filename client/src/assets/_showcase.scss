@@ -9,6 +9,10 @@
   text-align: center;
   background-color: $lightSand;
 
+  @include breakpoint-down(small) {
+    height: 25rem;
+  }
+
   &__video-container {
     position: absolute;
     width: 100%;
@@ -35,16 +39,26 @@
   }
 
   &__content {
-    z-index: 1;
-    color: $pastelGold;
+    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    color: $pastelGold;
+    z-index: 1;
+
+    @include breakpoint-down(small) {
+      width: 80%;
+    }
 
     h1 {
       font-size: 3.125rem;
       margin: 1rem;
       color: $pastelGold;
+
+      @include breakpoint-down(small) {
+        width: 80%;
+        font-size: 2rem;
+      }
     }
   }
 
@@ -52,11 +66,25 @@
     width: 17.1875rem;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+      justify-content: center;
+    }
 
     a {
       width: 6rem;
       padding: 0.6rem;
-      background-image: linear-gradient(to right, $lightForrestGray, $lightForrestGray);
+      background-image: linear-gradient(to right, $lightForrestGray, $cement);
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      @include breakpoint-down(small) {
+        padding: 0.3rem;
+      }
     }
   }
 }

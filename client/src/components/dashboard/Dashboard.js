@@ -13,7 +13,6 @@ const Dashboard = ({ match }) => {
   const keyword = match.params.keyword;
 
   const [type, setType] = useState('');
-  const [location, setLocation] = useState('');
   const [modalState, setModalState] = useState(false);
   const [windowOffSet, setWindowOffSet] = useState(0);
 
@@ -37,10 +36,9 @@ const Dashboard = ({ match }) => {
     modalRef.current && !modalRef.current.contains(e.target) && setModalState(!modalState);
   };
 
-  const toggleModalState = (type, location) => {
+  const toggleModalState = (type) => {
     setModalState(!modalState);
     setType(type);
-    setLocation(location);
     setWindowOffSet(window.scrollY);
   };
 
@@ -80,7 +78,6 @@ const Dashboard = ({ match }) => {
             modalState={modalState}
             modalRef={modalRef}
             setModalState={setModalState}
-            location={location}
           />
           <DashboardRight userInfo={userInfo} toggleModalState={toggleModalState} />
         </div>

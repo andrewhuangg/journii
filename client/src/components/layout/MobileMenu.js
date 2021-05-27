@@ -7,6 +7,7 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
   const dispatch = useDispatch();
   const logoutHandler = () => {
     dispatch(logout());
+    setMobileOpen(!mobileOpen);
   };
   return (
     <>
@@ -21,52 +22,78 @@ const MobileMenu = ({ mobileRef, mobileOpen, userInfo, currentUser, setMobileOpe
             {userInfo ? (
               <>
                 <li>
-                  <Link to='/dashboard'>Dashboard</Link>
+                  <Link to='/dashboard' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Dashboard
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/posts'>Posts</Link>
+                  <Link to='/posts' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Posts
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/profiles'>Profiles</Link>
+                  <Link to='/profiles' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Profiles
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/userinfo'>Edit User</Link>
+                  <Link to='/userinfo' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Edit User
+                  </Link>
                 </li>
                 {userInfo && !currentUser.ownProfile && (
                   <li>
-                    <Link to='/createprofile'>Create Profile</Link>
+                    <Link to='/createprofile' onClick={() => setMobileOpen(!mobileOpen)}>
+                      Create Profile
+                    </Link>
                   </li>
                 )}
                 <li>
-                  <Link to='/updatepassword'>Update Password</Link>
+                  <Link to='/updatepassword' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Update Password
+                  </Link>
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <Link to='/'>Home</Link>
+                  <Link to='/' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Home
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/register'>Signup</Link>
+                  <Link to='/register' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Signup
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/login'>Login</Link>
+                  <Link to='/login' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Login
+                  </Link>
                 </li>
               </>
             )}
             {userInfo && currentUser.ownProfile && (
               <>
                 <li>
-                  <Link to={`/profile/${userInfo.id}`}>My Profile</Link>
+                  <Link to={`/profile/${userInfo.id}`} onClick={() => setMobileOpen(!mobileOpen)}>
+                    My Profile
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/editprofile'>Edit Profile</Link>
+                  <Link to='/editprofile' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Edit Profile
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/addexperience'>Add Experience</Link>
+                  <Link to='/addexperience' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Add Experience
+                  </Link>
                 </li>
                 <li>
-                  <Link to='/addproject'>Add Project</Link>
+                  <Link to='/addproject' onClick={() => setMobileOpen(!mobileOpen)}>
+                    Add Project
+                  </Link>
                 </li>
               </>
             )}

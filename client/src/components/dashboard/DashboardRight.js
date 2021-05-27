@@ -21,7 +21,7 @@ const DashboardRight = ({ userInfo, toggleModalState }) => {
   return (
     <aside className='dashboard__right'>
       <div className='dashboard__right-container'>
-        <h6 onClick={() => toggleModalState(MODAL_USER_POSTS, 'dashboard')}>My Posts</h6>
+        <h6 onClick={() => toggleModalState(MODAL_USER_POSTS)}>My Posts</h6>
         {!loading &&
           userPosts.map((post) => (
             <div className='dashboard__post-container' key={post._id}>
@@ -32,7 +32,7 @@ const DashboardRight = ({ userInfo, toggleModalState }) => {
           ))}
       </div>
       <div className='dashboard__right-container'>
-        <h6 onClick={() => toggleModalState(MODAL_TOP_POSTS, 'dashboard')}>Top 10 Posts</h6>
+        <h6 onClick={() => toggleModalState(MODAL_TOP_POSTS)}>Top 10 Posts</h6>
         {!loading &&
           topPosts.map((post) => (
             <div className='dashboard__post-container' key={post._id}>

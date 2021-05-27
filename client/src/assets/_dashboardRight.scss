@@ -3,7 +3,6 @@
     display: flex;
     flex: 1;
     order: 0;
-
     @include breakpoint-down(small) {
       flex-flow: row nowrap;
       justify-content: center;
@@ -31,6 +30,10 @@
       position: relative;
       transition: color 100ms ease-in-out;
       font-size: 0.75rem;
+
+      @include breakpoint-down(small) {
+        font-size: $font-lg;
+      }
 
       @include breakpoint-up(medium) {
         font-size: inherit;

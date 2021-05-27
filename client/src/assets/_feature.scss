@@ -12,6 +12,12 @@
       color: $darkTurquoise;
     }
 
+    p {
+      @include breakpoint-down(small) {
+        font-size: 1rem;
+      }
+    }
+
     @include breakpoint-up(large) {
       width: 60%;
     }

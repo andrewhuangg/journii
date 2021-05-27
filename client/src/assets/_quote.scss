@@ -1,7 +1,11 @@
 .quote {
-  width: 35rem;
+  width: 100%;
   position: relative;
   margin-bottom: 0.5rem;
+
+  @include breakpoint-up(medium) {
+    width: 65%;
+  }
 
   @include breakpoint-up(large) {
     width: 40rem;
@@ -16,6 +20,10 @@
   .fa-quote-right {
     left: 36rem;
 
+    @include breakpoint-down(small) {
+      left: 21rem;
+    }
+
     @include breakpoint-up(large) {
       left: 41rem;
     }
@@ -23,6 +31,10 @@
 
   .fa-quote-left {
     right: 36rem;
+
+    @include breakpoint-down(small) {
+      right: 21rem;
+    }
 
     @include breakpoint-up(large) {
       right: 41rem;
@@ -32,6 +44,10 @@
   &__body {
     line-height: 1.25;
     font-size: $font-sm;
+
+    @include breakpoint-down(small) {
+      font-size: 0.75rem;
+    }
   }
 
   &__author,

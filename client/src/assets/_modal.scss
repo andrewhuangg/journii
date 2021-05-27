@@ -65,9 +65,11 @@
   bottom: 0;
 
   &__container {
-    margin-top: 5rem;
     height: 33rem;
     width: 25.5rem;
+    margin-top: 5rem;
+    box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
+    background-color: $darkTurquoise;
 
     @include breakpoint-up(medium) {
       height: 35rem;
