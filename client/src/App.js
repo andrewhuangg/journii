@@ -24,6 +24,7 @@ import About from './components/landing/About';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import UpdatePassword from './components/auth/UpdatePassword';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -33,6 +34,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <>
+          <ScrollToTop />
           <Route path='/' component={Header} />
           <Route exact path='/' component={Landing} />
           <Switch>

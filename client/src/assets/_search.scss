@@ -5,7 +5,7 @@
     padding: 0.5rem;
     border: 0;
     width: 2rem;
-    transition: width 0.5s ease;
+    transition: width 1s ease;
   }
 
   &__btn {
@@ -15,7 +15,7 @@
     padding: 0.475rem 0.7rem;
     border-radius: 0.9rem;
     background-image: linear-gradient(to right, $tangerine, $sunsetOrange);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 1s ease;
   }
 
   &__input:focus,
