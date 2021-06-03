@@ -1,15 +1,15 @@
 .addExperience {
+  height: 100%;
+  width: 100%;
+
   @include breakpoint-up(medium) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     margin: 0;
-    margin-top: 5rem;
     overflow: hidden;
   }
-  height: 100vh;
-  width: 100vw;
 
   &__wrapper {
     background-color: hsl(0, 0%, 96%);
@@ -17,6 +17,12 @@
     border: 0;
     border-radius: 0.625rem;
     height: 98%;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
 
     @include breakpoint-up(medium) {
       height: 50rem;
@@ -40,6 +46,10 @@
       color: $dadJeansBlue;
     }
 
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
+
     @include breakpoint-up(medium) {
       width: 100%;
       align-items: flex-start;
@@ -50,6 +60,10 @@
     margin: 0 0 2rem;
     width: 30rem;
     padding: 0 0.5rem 0 0.5rem;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
 
     @include breakpoint-up(medium) {
       width: 40rem;
@@ -64,6 +78,10 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
 
     @include breakpoint-up(medium) {
       width: 40rem;
@@ -82,11 +100,20 @@
   }
 
   &__date-container {
-    margin-right: 1rem;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+
+    @include breakpoint-up(medium) {
+      margin-right: 1rem;
+    }
+  }
+
+  &__date-label {
+    @include breakpoint-down(small) {
+      width: 3.5rem;
+    }
   }
 
   &__input-checkbox {

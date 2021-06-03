@@ -5,6 +5,11 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.25rem;
+    padding: 0 1rem;
+
+    @include breakpoint-down(small) {
+      padding: 0;
+    }
   }
 
   &__grid-item {

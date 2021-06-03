@@ -37,6 +37,10 @@
     margin-bottom: 2rem;
     color: $darkBlue;
 
+    @include breakpoint-down(small) {
+      width: 22rem;
+    }
+
     @include breakpoint-up(medium) {
       order: 0;
       align-items: flex-start;
@@ -63,6 +67,10 @@
     line-height: 1.15;
     width: 22rem;
     word-break: break-all;
+
+    @include breakpoint-down(small) {
+      text-align: center;
+    }
 
     @include breakpoint-up(large) {
       width: 30rem;
@@ -121,9 +129,21 @@
       margin-right: 0.5rem;
     }
 
+    @include breakpoint-down(small) {
+      flex-flow: row wrap;
+      width: 100%;
+    }
+
     @include breakpoint-up(medium) {
       justify-content: flex-start;
       width: 102%;
+    }
+
+    button {
+      @include breakpoint-down(small) {
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+      }
     }
   }
 

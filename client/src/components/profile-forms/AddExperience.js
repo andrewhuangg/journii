@@ -86,7 +86,7 @@ const AddExperience = ({ history }) => {
                       toggleDisabled(!toDateDisabled);
                     }}
                   />
-                  <label>Current Experience</label>
+                  <label className='addExperience__date-label'>Current Experience</label>
                 </div>
 
                 <div className='addExperience__date-container'>

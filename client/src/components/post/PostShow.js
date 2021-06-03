@@ -16,6 +16,8 @@ const PostShow = ({ match, history }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const [windowOffSet, setWindowOffSet] = useState(0);
+
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo } = loginUser;
 
@@ -38,9 +40,24 @@ const PostShow = ({ match, history }) => {
   };
 
   useEffect(() => {
-    isOpen
-      ? document.addEventListener('click', handleClickSliderOpen)
-      : document.removeEventListener('click', handleClickSliderOpen);
+    const reviewSlider = document.querySelector('.review__slider');
+    if (isOpen) {
+      document.addEventListener('click', handleClickSliderOpen);
+      document.body.setAttribute(
+        'style',
+        `position: fixed;
+        top: -${windowOffSet}px;
+        left: 0;
+        right: 0;
+        `
+      );
+      reviewSlider.setAttribute('style', `top: ${windowOffSet}px`);
+      reviewSlider.scrollTo(0, windowOffSet);
+    } else {
+      document.body.setAttribute('style', '');
+      document.removeEventListener('click', handleClickSliderOpen);
+      window.scrollTo(0, windowOffSet);
+    }
 
     return () => document.removeEventListener('click', handleClickSliderOpen);
   }, [isOpen]);

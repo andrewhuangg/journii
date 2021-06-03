@@ -1,15 +1,15 @@
 .editProfile {
+  height: 100%;
+  width: 100%;
+
   @include breakpoint-up(medium) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     margin: 0;
-    margin-top: 5rem;
     overflow: hidden;
   }
-  height: 100vh;
-  width: 100vw;
 
   &__wrapper {
     display: flex;
@@ -21,6 +21,12 @@
     border: 0;
     border-radius: 0.625rem;
     height: 98%;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
 
     label {
       font-size: $font-sm;
@@ -36,8 +42,12 @@
     flex-flow: column nowrap;
 
     h3 {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       color: $darkTurquoise;
+    }
+
+    @include breakpoint-down(small) {
+      width: 100%;
     }
 
     @include breakpoint-up(medium) {
@@ -55,15 +65,19 @@
     justify-content: flex-start;
     align-items: flex-start;
 
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
+
+    @include breakpoint-up(medium) {
+      width: 40rem;
+    }
+
     small {
       font-size: 0.65rem;
       font-weight: 400;
       line-height: 1.5;
       color: $pinkLemonade;
-    }
-
-    @include breakpoint-up(medium) {
-      width: 40rem;
     }
   }
 
@@ -118,7 +132,7 @@
   }
 
   &__social-btn {
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
     text-transform: uppercase;
     border-radius: 10px;
     background-image: linear-gradient(to right, $pinkLemonade, $pinkLemonade);

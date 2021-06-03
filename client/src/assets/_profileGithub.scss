@@ -32,6 +32,10 @@
     flex-flow: column nowrap;
     align-items: center;
 
+    @include breakpoint-down(small) {
+      width: 22rem;
+    }
+
     @include breakpoint-up(medium) {
       margin: 1rem;
       display: grid;
@@ -39,6 +43,7 @@
       align-items: normal;
       gap: 1rem;
     }
+
     @include breakpoint-up(large) {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -53,6 +58,10 @@
     padding: 1rem 0.5rem;
     box-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
     transition: scale 200ms ease-in-out;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
 
     @include breakpoint-up(medium) {
       align-items: flex-start;
@@ -71,6 +80,10 @@
     flex-flow: column nowrap;
     align-items: center;
     margin-bottom: 1rem;
+
+    @include breakpoint-down(small) {
+      width: 100%;
+    }
 
     @include breakpoint-up(medium) {
       align-items: flex-start;

@@ -95,7 +95,7 @@ const AddProject = ({ history }) => {
                       toggleDisabled(!toDateDisabled);
                     }}
                   />
-                  <label>Project In Progress</label>
+                  <label className='addProject__date-label'>Project In Progress</label>
                 </div>
 
                 <div className='addProject__date-container'>

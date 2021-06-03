@@ -85,7 +85,7 @@ const CreatePost = ({ history }) => {
                 className='createPost__form-input'
                 type='text'
                 value={image}
-                placeholder='Image File'
+                placeholder='Post Image'
                 onChange={(e) => setImage(e.target.value)}
               />
               <input

@@ -2,12 +2,14 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  width: 100%;
 
   @include breakpoint-up(large) {
     align-items: flex-start;
   }
 
   &__header {
+    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -161,11 +163,14 @@
 
   &__text {
     max-height: 15rem;
-    font-size: $font-sm;
-    line-height: 1.5;
     margin-bottom: 0.75rem;
+    display: block;
+    white-space: nowrap;
     word-break: break-all;
     overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: $font-sm;
+    line-height: 1.5;
   }
 
   &__name {

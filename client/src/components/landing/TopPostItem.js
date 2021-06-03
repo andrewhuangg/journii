@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ScrollToTop from '../layout/ScrollToTop';
 
 const TopPostItem = ({ post: { _id, title, name, text, image }, userInfo }) => {
   const unsplashURL = 'https://source.unsplash.com/collection/1911873/';
@@ -18,16 +19,18 @@ const TopPostItem = ({ post: { _id, title, name, text, image }, userInfo }) => {
   };
 
   return (
-    <Link to={userInfo ? `/posts/${_id}` : '/'}>
-      <div className='post__item'>
-        <div className='post__image' style={randomDefaultImage}></div>
-        <div className='post__text'>
-          <div className='post__author'>By {name}</div>
-          <div className='post__title'>{title}</div>
-          <div className='post__description'>{text}</div>
+    <ScrollToTop>
+      <Link to={userInfo ? `/posts/${_id}` : '/'}>
+        <div className='post__item'>
+          <div className='post__image' style={randomDefaultImage}></div>
+          <div className='post__text'>
+            <div className='post__author'>By {name}</div>
+            <div className='post__title'>{title}</div>
+            <div className='post__description'>{text}</div>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </ScrollToTop>
   );
 };
 
