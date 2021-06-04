@@ -11,7 +11,6 @@ const ForgotPassword = ({ history }) => {
 
   const forgotPasswordResponse = useSelector((state) => state.auth.userAuth);
   const { passwordResponse } = forgotPasswordResponse;
-  console.log(passwordResponse);
 
   const submitHandler = (e) => {
     e.preventDefault();
