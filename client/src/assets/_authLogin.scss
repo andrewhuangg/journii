@@ -34,7 +34,8 @@
   }
 
   &__form {
-    height: 20rem;
+    height: 21rem;
+    margin-bottom: 2rem;
   }
 
   &__image {
@@ -109,12 +110,14 @@
     transition: all 700ms ease-in-out;
   }
 
-  &__btn {
+  &__btn,
+  &__demo {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem;
     cursor: pointer;
     background: $tangerine;
     display: inline-block;
-    width: 100%;
-    padding: 1rem;
     font-size: 1rem;
     border: 0;
     border-radius: 5px;
@@ -126,6 +129,11 @@
     &:active {
       transform: scale(0.98);
     }
+  }
+
+  &__demo {
+    margin-bottom: 0;
+    background: $darkTurquoise;
   }
 
   &__redirect {

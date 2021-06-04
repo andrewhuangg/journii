@@ -8,6 +8,7 @@ const LandingShowcase = ({ userInfo }) => {
       <div className='showcase__video-container container'>
         <video
           autoPlay
+          playsinline
           loop
           muted
           src={'https://journii--dev.s3-us-west-1.amazonaws.com/journii_hero_video.mp4'}

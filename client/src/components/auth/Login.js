@@ -7,9 +7,10 @@ import Meta from '../layout/Meta';
 import AlertMessage from '../layout/AlertMessage';
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
 
   const loginUser = useSelector((state) => state.auth.userAuth);
   const { userInfo, loading } = loginUser;
@@ -29,6 +30,13 @@ const Login = () => {
   }, []);
 
   if (userInfo) return <Redirect to='/dashboard' />;
+
+  const handleDemo = (e) => {
+    e.preventDefault();
+    const email = 'goldenstatewarriors@gmail.com';
+    const password = 'sfwarriors123';
+    dispatch(login(email, password));
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -71,6 +79,11 @@ const Login = () => {
               <button className='auth__btn' type='submit'>
                 Sign In
               </button>
+
+              <button className='auth__demo' onClick={handleDemo} type='submit'>
+                Demo Login
+              </button>
+
               <p className='auth__redirect'>
                 New User? <Link to='/register'>Register</Link>
               </p>

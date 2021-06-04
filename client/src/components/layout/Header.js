@@ -120,12 +120,14 @@ const Header = () => {
             )}
           </div>
           <div className='header__mobile-cta'>
-            <Link
-              to={currentUser && !currentUser.ownProfile ? '/createprofile' : '/createpost'}
-              className='header__post-btn mobile-post-btn hide-for-desktop'
-            >
-              Create Post
-            </Link>
+            {userInfo && (
+              <Link
+                to={currentUser && !currentUser.ownProfile ? '/createprofile' : '/createpost'}
+                className='header__post-btn mobile-post-btn hide-for-desktop'
+              >
+                Create Post
+              </Link>
+            )}
             <div
               className={`mobile-menu__btn open-${mobileOpen} hide-for-desktop`}
               onClick={handleMobileMenu}

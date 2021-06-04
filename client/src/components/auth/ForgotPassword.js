@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { forgotPassword } from '../../actions/authAction';
 import { setAlert } from '../../actions/alertAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Meta from '../layout/Meta';
 import AlertMessage from '../layout/AlertMessage';
 
 const ForgotPassword = ({ history }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-
-  const forgotPasswordResponse = useSelector((state) => state.auth.userAuth);
-  const { passwordResponse } = forgotPasswordResponse;
 
   const submitHandler = (e) => {
     e.preventDefault();
