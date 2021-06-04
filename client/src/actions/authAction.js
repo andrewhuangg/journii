@@ -189,13 +189,14 @@ export const forgotPassword = (email) => async (dispatch) => {
       },
     };
 
-    await axios.post(`/api/v1/auth/forgotpassword`, { email }, config);
+    const { data } = await axios.post(`/api/v1/auth/forgotpassword`, { email }, config);
 
     dispatch({
       type: FORGOT_PASSWORD,
+      payload: data,
     });
 
-    return Promise.resolve();
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }

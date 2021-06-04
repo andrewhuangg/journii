@@ -1,7 +1,14 @@
-import { CREATE_USER, LOGIN_USER, LOGOUT_USER, DESTROY_USER } from '../../actions/types';
+import {
+  CREATE_USER,
+  LOGIN_USER,
+  LOGOUT_USER,
+  DESTROY_USER,
+  FORGOT_PASSWORD,
+} from '../../actions/types';
 
 const initialState = {
   userInfo: {},
+  passwordResponse: {},
   loading: true,
 };
 
@@ -14,6 +21,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userInfo: payload,
+        loading: false,
+      };
+
+    case FORGOT_PASSWORD:
+      return {
+        ...state,
+        passwordResponse: payload,
         loading: false,
       };
 

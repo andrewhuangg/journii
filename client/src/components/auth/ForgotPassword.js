@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { forgotPassword } from '../../actions/authAction';
 import { setAlert } from '../../actions/alertAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Meta from '../layout/Meta';
 import AlertMessage from '../layout/AlertMessage';
 
@@ -9,12 +9,18 @@ const ForgotPassword = ({ history }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
 
+  const forgotPasswordResponse = useSelector((state) => state.auth.userAuth);
+  const { passwordResponse } = forgotPasswordResponse;
+  console.log(passwordResponse);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(forgotPassword(email)).then(() => {
-      setEmail('');
-      dispatch(setAlert('email sent', 'success'));
-      history.push('/resetpassword');
+    dispatch(forgotPassword(email)).then((data) => {
+      if (data && data.email) {
+        dispatch(setAlert(`${data.message}`, 'success'));
+        setEmail('');
+        history.push('/resetpassword');
+      }
     });
   };
 
