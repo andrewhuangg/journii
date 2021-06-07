@@ -237,7 +237,7 @@ export const updatePassword = (currentPassword, newPassword) => async (dispatch,
       },
     };
 
-    await axios.put(
+    const { data } = await axios.put(
       '/api/v1/auth/updatepassword',
       {
         currentPassword,
@@ -250,8 +250,8 @@ export const updatePassword = (currentPassword, newPassword) => async (dispatch,
       type: UPDATE_PASSWORD,
     });
 
-    return Promise.resolve();
+    return Promise.resolve(data);
   } catch (error) {
-    dispatch(setAlert(error.response.data.message, 'error'));
+    dispatch(setAlert('update password error, please try again', 'error'));
   }
 };

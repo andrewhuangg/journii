@@ -7,7 +7,7 @@ import Spinner from '../layout/Spinner';
 import Meta from '../layout/Meta';
 import AlertMessage from '../layout/AlertMessage';
 
-const EditPost = ({ match }) => {
+const EditPost = ({ match, history }) => {
   const dispatch = useDispatch();
   const postId = match.params.id;
 
@@ -20,22 +20,20 @@ const EditPost = ({ match }) => {
   const { post, loading } = postDetails;
 
   useEffect(() => {
-    dispatch(listPostDetails(postId)).then((data) => {
-      if (data) {
-        setText(data.text || '');
-        setTitle(data.title || '');
-        post.image && post.image.length > 0
-          ? setImage(post.image)
-          : data.image && data.image.length > 0
-          ? setImage(data.image)
-          : setImage('');
-      }
-    });
-  }, [dispatch, post.image, postId]);
+    if (postId) {
+      dispatch(listPostDetails(postId)).then((data) => {
+        if (data) {
+          setText(data.text || '');
+          setTitle(data.title || '');
+          data.image && data.image.length > 0 ? setImage(data.image) : setImage('');
+        }
+      });
+    }
+  }, [dispatch, postId, history]);
 
   const deleteHandler = (id) => {
-    dispatch(deletePost(id)).then(() => {
-      window.location.pathname = '/posts';
+    dispatch(deletePost(id)).then((data) => {
+      if (data) history.push('/posts');
     });
   };
 
@@ -64,8 +62,10 @@ const EditPost = ({ match }) => {
     e.preventDefault();
     if (title.length <= 99) {
       dispatch(updatePost({ text, title, image }, post._id)).then((data) => {
-        dispatch(setAlert('update post succcess', 'success'));
-        if (data) window.location.pathname = `/posts/${postId}`;
+        if (data) {
+          dispatch(setAlert('update post succcess', 'success'));
+          history.push(`/posts/${postId}`);
+        }
       });
     } else {
       dispatch(
@@ -97,6 +97,7 @@ const EditPost = ({ match }) => {
       {!loading ? (
         <div className='editPost'>
           <Meta title='journii | Edit Post' />
+          <AlertMessage />
           <div className='editPost__wrapper'>
             <form className='editPost__form' onSubmit={submitHandler}>
               <h3>Update Post</h3>
@@ -146,11 +147,11 @@ const EditPost = ({ match }) => {
 
               <div>
                 <button className='editPost__btn'>Update</button>
-                <button className='editPost__delete' onClick={() => deleteHandler(post._id)}>
-                  Delete
-                </button>
               </div>
             </form>
+            <button className='editPost__delete' onClick={() => deleteHandler(postId)}>
+              Delete
+            </button>
           </div>
         </div>
       ) : (

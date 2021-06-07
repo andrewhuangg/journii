@@ -38,9 +38,10 @@ const UpdateProject = ({ history, match }) => {
           if (proj) {
             setName(proj.name || '');
             setDescription(proj.description || '');
-            setTechnologies(proj.technologies || '');
-            setFeatures(proj.features || '');
             setWebsite(proj.website || '');
+
+            if (proj.technologies.length > 0) setTechnologies(proj.technologies);
+            if (proj.features.length > 0) setFeatures(proj.features);
 
             let from;
             if (proj.from) from = formatDate(proj.from);

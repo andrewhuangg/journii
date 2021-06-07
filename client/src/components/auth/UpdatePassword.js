@@ -17,11 +17,13 @@ const UpdatePassword = () => {
     if (newPassword !== confirmNewPassword) {
       dispatch(setAlert('passwords do not match', 'error'));
     } else {
-      dispatch(updatePassword(currentPassword, newPassword)).then(() => {
-        dispatch(setAlert('password updated', 'success'));
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmNewPassword('');
+      dispatch(updatePassword(currentPassword, newPassword)).then((data) => {
+        if (data) {
+          dispatch(setAlert('password updated', 'success'));
+          setCurrentPassword('');
+          setNewPassword('');
+          setConfirmNewPassword('');
+        }
       });
     }
   };

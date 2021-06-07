@@ -32,8 +32,9 @@ const PostHero = ({
   }, [dispatch, userInfo.id, title, follows]);
 
   const deleteHandler = (id) => {
-    dispatch(deletePost(id));
-    history.push('/posts');
+    dispatch(deletePost(id)).then((data) => {
+      if (data) history.push('/posts');
+    });
   };
 
   const postFollowHandler = (post, id) => {
@@ -73,7 +74,6 @@ const PostHero = ({
           <Moment format='MM/DD/YYYY'>{createdAt}</Moment>
           <div className='post-hero__cta'>
             <button className='review-btn' onClick={handleReviewSlider}>
-              {/* <button className='review-btn hide-for-mobile' onClick={handleReviewSlider}> */}
               Reviews
             </button>
             {/* loggedIn user's id and the post user id */}

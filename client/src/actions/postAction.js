@@ -230,15 +230,15 @@ export const deletePost = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/v1/posts/${id}`, config);
+    const { data } = await axios.delete(`/api/v1/posts/${id}`, config);
 
     dispatch({
       type: DESTROY_POST,
     });
 
-    return Promise.resolve();
+    return Promise.resolve(data);
   } catch (error) {
-    dispatch(setAlert(error.response.data.message, 'error'));
+    dispatch(setAlert('unable to delete post', 'error'));
   }
 };
 
@@ -290,7 +290,7 @@ export const updatePost = (post, id) => async (dispatch, getState) => {
 
     return Promise.resolve(data);
   } catch (error) {
-    dispatch(setAlert(error.response.data.message, 'error'));
+    dispatch(setAlert('unable to update post, please try again', 'error'));
   }
 };
 

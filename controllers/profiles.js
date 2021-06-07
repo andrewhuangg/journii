@@ -58,16 +58,11 @@ exports.createProfile = asyncHandler(async (req, res) => {
   req.body.user = req.user._id;
 
   // pull out the array fields to perform formatting, and other fields
-  const { username, technologies, features, youtube, twitter, facebook, linkedin, instagram } =
-    req.body;
+  const { username, youtube, twitter, facebook, linkedin, instagram } = req.body;
 
   // check for duplicate username
   const profileExists = await Profile.findOne({ username });
   if (profileExists) throw new ErrorResponse('Username is taken', 400);
-
-  // format fields array
-  if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
-  if (features) req.body.features = features.split(',').map((feat) => feat.trim());
 
   // ensure social object is built if fields are required
   const socialFields = {};
@@ -146,16 +141,25 @@ exports.createProfileProject = asyncHandler(async (req, res) => {
   if (!profile) throw new ErrorResponse(`profile not found with the id of ${req.user._id}`, 404);
 
   const { technologies, features } = req.body;
-  if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
-  if (features) req.body.features = features.split(',').map((feat) => feat.trim());
+  if (technologies.length > 0) {
+    req.body.technologies = technologies.split(',').map((tech) => tech.trim());
+  } else {
+    req.body.technologies = [];
+  }
 
-  const from = req.body.from;
-  const to = req.body.to;
+  if (features.length > 0) {
+    req.body.features = features.split(',').map((feat) => feat.trim());
+  } else {
+    req.body.features = [];
+  }
+
+  const { from, to } = req.body;
 
   if (from) req.body.from = formatDate(from);
   if (to) req.body.to = formatDate(to);
 
   profile.projects.unshift(req.body);
+
   await profile.save();
   res.status(200).json(profile.projects);
 });
@@ -173,10 +177,23 @@ exports.updateProfileProject = asyncHandler(async (req, res) => {
   if (profile.user.toString() !== req.user._id.toString())
     throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
 
-  const { technologies, features } = req.body;
+  const { technologies, features, current, from, to } = req.body;
 
-  if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
-  if (features) req.body.features = features.split(',').map((feat) => feat.trim());
+  if (from) req.body.from = formatDate(from);
+  if (to) req.body.to = formatDate(to);
+  if (current) req.body.to = '';
+
+  if (technologies.length > 0) {
+    req.body.technologies = technologies.split(',').map((tech) => tech.trim());
+  } else {
+    req.body.technologies = [];
+  }
+
+  if (features.length > 0) {
+    req.body.features = features.split(',').map((feat) => feat.trim());
+  } else {
+    req.body.features = [];
+  }
 
   profile = await Profile.findOneAndUpdate(
     { _id: req.params.id, 'projects._id': req.params.projectId },
@@ -286,6 +303,12 @@ exports.updateProfileExperience = asyncHandler(async (req, res) => {
 
   if (profile.user.toString() !== req.user._id.toString())
     throw new ErrorResponse(`User ${req.user._id} is not authorized to update this profile`, 401);
+
+  const { current, from, to } = req.body;
+
+  if (from) req.body.from = formatDate(from);
+  if (to) req.body.to = formatDate(to);
+  if (current) req.body.to = '';
 
   profile = await Profile.findOneAndUpdate(
     { _id: req.params.id, 'experiences._id': req.params.experienceId },
