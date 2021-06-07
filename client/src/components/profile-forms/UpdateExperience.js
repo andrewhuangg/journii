@@ -23,13 +23,10 @@ const UpdateExperience = ({ match, history }) => {
   const { profile, loading } = profileExperience;
 
   const formatDate = (date) => {
-    let [month, day, year] = new Date(date).toLocaleDateString('en-US').split('/');
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate;
+    const preFormatDate = date.split('T')[0];
+    let [year, month, day] = preFormatDate.split('-');
+    const postFormatDate = `${year}-${month}-${day}`;
+    return postFormatDate;
   };
 
   useEffect(() => {
@@ -42,14 +39,13 @@ const UpdateExperience = ({ match, history }) => {
             setAddress(exp.address || '');
             setDescription(exp.description || '');
 
-            let from;
-            if (exp.from) from = formatDate(exp.from);
+            let updateFrom;
+            if (exp.from) updateFrom = formatDate(exp.from);
+            setFrom(updateFrom || '');
 
-            let to;
-            if (exp.to) to = formatDate(exp.to);
-
-            setFrom(from || '');
-            setTo(to || '');
+            let updateTo;
+            if (exp.to) updateTo = formatDate(exp.to);
+            setTo(updateTo || '');
 
             if (exp.current) {
               setCurrent(exp.current || '');

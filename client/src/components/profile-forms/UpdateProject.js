@@ -25,13 +25,10 @@ const UpdateProject = ({ history, match }) => {
   const { profile, loading } = profileDetails;
 
   const formatDate = (date) => {
-    let [month, day, year] = new Date(date).toLocaleDateString('en-US').split('/');
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate;
+    const preFormatDate = date.split('T')[0];
+    let [year, month, day] = preFormatDate.split('-');
+    const postFormatDate = `${year}-${month}-${day}`;
+    return postFormatDate;
   };
 
   useEffect(() => {
@@ -40,18 +37,17 @@ const UpdateProject = ({ history, match }) => {
         dispatch(getProject(data._id, projectId)).then((proj) => {
           if (proj) {
             setName(proj.name || '');
-            setDescription(proj.name || '');
-            setTechnologies(proj.name || '');
-            setFeatures(proj.name || '');
-            setWebsite(proj.name || '');
+            setDescription(proj.description || '');
+            setTechnologies(proj.technologies || '');
+            setFeatures(proj.features || '');
+            setWebsite(proj.website || '');
 
             let from;
             if (proj.from) from = formatDate(proj.from);
+            setFrom(from || '');
 
             let to;
             if (proj.to) to = formatDate(proj.to);
-
-            setFrom(from || '');
             setTo(to || '');
 
             if (proj.current) {

@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const ErrorResponse = require('../utils/errorResponse');
 const request = require('request');
 const Profile = require('../models/Profile');
+const formatDate = require('../utils/formatDate');
 
 // @desc      Get all profiles
 // @route     GET /api/v1/profiles
@@ -148,6 +149,12 @@ exports.createProfileProject = asyncHandler(async (req, res) => {
   if (technologies) req.body.technologies = technologies.split(',').map((tech) => tech.trim());
   if (features) req.body.features = features.split(',').map((feat) => feat.trim());
 
+  const from = req.body.from;
+  const to = req.body.to;
+
+  if (from) req.body.from = formatDate(from);
+  if (to) req.body.to = formatDate(to);
+
   profile.projects.unshift(req.body);
   await profile.save();
   res.status(200).json(profile.projects);
@@ -236,6 +243,12 @@ exports.createProfileExperience = asyncHandler(async (req, res) => {
   const profile = await Profile.findOne({ user: req.user._id });
   if (!profile)
     throw new ErrorResponse(`profile not found with the user id of ${req.user._id}`, 404);
+
+  const from = req.body.from;
+  const to = req.body.to;
+
+  if (from) req.body.from = formatDate(from);
+  if (to) req.body.to = formatDate(to);
 
   profile.experiences.unshift(req.body);
   await profile.save();

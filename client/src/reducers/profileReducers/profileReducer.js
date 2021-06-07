@@ -19,8 +19,6 @@ const initialState = {
     follows: [],
     social: {},
   },
-  experience: {},
-  project: {},
   loading: true,
   githubList: [],
 };

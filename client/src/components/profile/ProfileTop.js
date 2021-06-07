@@ -70,8 +70,9 @@ const ProfileTop = ({
   };
 
   const deleteHandler = (id) => {
-    dispatch(deleteProfile(id));
-    history.push('/profiles');
+    dispatch(deleteProfile(id)).then(() => {
+      history.push('/profiles');
+    });
   };
 
   const toggleModalState = (type) => {
