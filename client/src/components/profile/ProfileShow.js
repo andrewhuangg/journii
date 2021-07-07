@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileDetails } from '../../actions/profileAction';
-import { getUserDetails } from '../../actions/authAction';
+import { getUserDetails, getMe } from '../../actions/authAction';
 import ProfileExperience from './ProfileExperience';
 import ProfileProject from './ProfileProject';
 import ProfileGithub from './ProfileGithub';
@@ -26,6 +26,7 @@ const ProfileShow = ({ match, history }) => {
   useEffect(() => {
     dispatch(getProfileDetails(matchParamsId));
     dispatch(getUserDetails(matchParamsId));
+    dispatch(getMe());
   }, [dispatch, matchParamsId, history]);
 
   return (

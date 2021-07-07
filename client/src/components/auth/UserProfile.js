@@ -120,6 +120,7 @@ const UserProfile = () => {
                   placeholder='* Enter Name'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  maxLength='30'
                 />
               </div>
               <div className='userProfile__form-control'>

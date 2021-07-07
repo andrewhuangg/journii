@@ -63,8 +63,9 @@ const EditProfile = () => {
           },
           profile._id
         )
-      );
-      dispatch(setAlert('profile updated', 'success'));
+      ).then((data) => {
+        if (data) dispatch(setAlert('profile updated', 'success'));
+      });
     }
   };
 
@@ -90,14 +91,16 @@ const EditProfile = () => {
                   value={username}
                   placeholder='Username'
                   onChange={(e) => setUserName(e.target.value)}
+                  maxLength='30'
                 />
               </div>
               <div className='editProfile__form-control'>
                 <input
                   className='editProfile__form-input'
                   type='text'
+                  placeholder='Website - https://example.com'
                   value={website}
-                  placeholder='Website'
+                  pattern='https://.*'
                   onChange={(e) => setWebsite(e.target.value)}
                 />
               </div>

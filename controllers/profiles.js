@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const ErrorResponse = require('../utils/errorResponse');
 const request = require('request');
 const Profile = require('../models/Profile');
+const Post = require('../models/Post');
 const formatDate = require('../utils/formatDate');
 
 // @desc      Get all profiles
@@ -127,6 +128,9 @@ exports.deleteProfile = asyncHandler(async (req, res) => {
   if (profile.user.toString() !== req.user._id.toString())
     throw new ErrorResponse(`User ${req.user._id} is not authorized to delete this profile`, 401);
 
+  // Remove profiles and users posts
+  await Post.deleteMany({ user: req.user._id });
+
   await profile.remove();
 
   res.status(200).json({ message: 'Profile deleted' });
@@ -183,14 +187,24 @@ exports.updateProfileProject = asyncHandler(async (req, res) => {
   if (to) req.body.to = formatDate(to);
   if (current) req.body.to = '';
 
-  if (technologies.length > 0) {
+  if (typeof technologies === 'string' && technologies.length > 0) {
     req.body.technologies = technologies.split(',').map((tech) => tech.trim());
+  } else if (Array.isArray(technologies) && technologies.length > 0) {
+    req.body.technologies = technologies
+      .join(',')
+      .split(',')
+      .map((tech) => tech.trim());
   } else {
     req.body.technologies = [];
   }
 
-  if (features.length > 0) {
+  if (typeof features === 'string' && features.length > 0) {
     req.body.features = features.split(',').map((feat) => feat.trim());
+  } else if (Array.isArray(features) && features.length > 0) {
+    req.body.features = technologies
+      .join(',')
+      .split(',')
+      .map((feat) => feat.trim());
   } else {
     req.body.features = [];
   }

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProfiles } from '../../actions/profileAction';
+import { getMe } from '../../actions/authAction';
 import Spinner from '../layout/Spinner';
 import ProfileItem from './ProfileItem';
 import Meta from '../layout/Meta';
@@ -18,6 +19,7 @@ const ProfileList = () => {
   useEffect(() => {
     dispatch(listProfiles());
     if (prevProfiles && prevProfiles.length !== profiles.length) dispatch(listProfiles());
+    dispatch(getMe());
   }, [dispatch]);
 
   return (

@@ -129,6 +129,8 @@ export const updateProfile = (profile, id) => async (dispatch, getState) => {
       type: FETCH_PROFILE_DETAILS,
       payload: data,
     });
+
+    return Promise.resolve(data);
   } catch (error) {
     dispatch(setAlert(error.response.data.message, 'error'));
   }

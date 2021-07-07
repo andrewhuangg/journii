@@ -90,6 +90,7 @@ const Register = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder='Name'
+                  maxLength='30'
                   required
                 />
                 <label>Name</label>
