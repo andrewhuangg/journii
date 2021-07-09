@@ -6,8 +6,6 @@
 
 First and foremost, thank you for visiting this application. The purpose of of journii was to provide a community a place to express, and explore ideas, while giving me the opportunity to relearn the mern stack.
 
-# Gifs
-
 # Features
 
 - Users can request for forgotten passwords and reset passwords
@@ -56,6 +54,26 @@ First and foremost, thank you for visiting this application. The purpose of of j
 - Github Api
 
 ---
+
+# Gifs
+
+### Media Queries
+
+![Alt Text](https://media.giphy.com/media/lIIcOKSqXEUTbywgmK/giphy.gif)
+
+### Reviews / Sliders
+
+![Alt Text](https://media.giphy.com/media/XgBXvh7MNKfpKmKl6c/giphy.gif)
+
+### Comments + Likes
+
+![Alt Text](https://media.giphy.com/media/QScQihiYhhTi1a4kxI/giphy.gif)
+![Alt Text](https://media.giphy.com/media/wzbk3ZNyoskVKCdz4l/giphy.gif)
+
+## Dashboard + Profile
+
+![Alt Text](https://media.giphy.com/media/0HjY1xkRm1ieZUdmHG/giphy.gif)
+![Alt Text](https://media.giphy.com/media/TlJ8CBar7urygFQVdv/giphy.gif)
 
 # Code Snippets
 
